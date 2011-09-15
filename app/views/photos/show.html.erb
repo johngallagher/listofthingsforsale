@@ -1,0 +1,25 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Thumb url:</b>
+  <%= @photo.thumb_url %>
+</p>
+
+<p>
+  <b>Small url:</b>
+  <%= @photo.small_url %>
+</p>
+
+<p>
+  <b>Large url:</b>
+  <%= @photo.large_url %>
+</p>
+
+<p>
+  <b>Caption:</b>
+  <%= @photo.caption %>
+</p>
+
+
+<%= link_to 'Edit', edit_photo_path(@photo) %> |
+<%= link_to 'Back', photos_path %>

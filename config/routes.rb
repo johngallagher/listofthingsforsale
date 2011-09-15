@@ -1,4 +1,8 @@
 Things3::Application.routes.draw do
+  resources :photos
+
+  resources :items
+
   resources :shops
 
   resources :descriptions
@@ -8,7 +12,7 @@ Things3::Application.routes.draw do
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
- root :to => "home#index"
+ root :to => "shop#index"
  
   # Sample of regular route:
   #   match 'products/:id' => 'catalog#view'
