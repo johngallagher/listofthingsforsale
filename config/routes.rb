@@ -9,10 +9,11 @@ Things3::Application.routes.draw do
 
   devise_for :users
 
+  root :to => "descriptions#index"
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
- root :to => "shop#index"
  
   # Sample of regular route:
   #   match 'products/:id' => 'catalog#view'
