@@ -1,3 +1,4 @@
+require 'ShopStatus'
 class ShopsController < ApplicationController
   # GET /shops
   # GET /shops.xml
@@ -37,6 +38,7 @@ class ShopsController < ApplicationController
     @shop = Shop.find(params[:id])
   end
 
+
   # POST /shops
   # POST /shops.xml
   def create
@@ -44,6 +46,12 @@ class ShopsController < ApplicationController
 
     respond_to do |format|
       if @shop.save
+        @item_1 = Item.new(:name => "Test Item 1", :description_text => "Hello", :shop => @shop)
+        @item_2 = Item.new(:name => "Test Item 2", :description_text => "Hello there", :shop => @shop)
+
+        @item_1.save
+        @item_2.save
+
         format.html { redirect_to(@shop, :notice => 'Shop was successfully created.') }
         format.xml  { render :xml => @shop, :status => :created, :location => @shop }
       else

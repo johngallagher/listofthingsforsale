@@ -1,5 +1,15 @@
-<p id="notice"><%= notice %></p>
 
+<% @shop.items.each do |item| %>
+<div>
+	<% @item = item %>
+	<%= render :partial => "items/show", :object => @item %>
+</div>
+<% end %>
+
+
+<% if @shop.status == ShopStatus::CREATED then %>
+<p>wow there</p>
+<% end %>
 <p>
   <b>Url:</b>
   <%= @shop.url %>
@@ -9,7 +19,3 @@
   <b>Name:</b>
   <%= @shop.name %>
 </p>
-
-
-<%= link_to 'Edit', edit_shop_path(@shop) %> |
-<%= link_to 'Back', shops_path %>
