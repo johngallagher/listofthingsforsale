@@ -9,6 +9,8 @@ gem 'sqlite3'
 
 gem 'devise', '1.4.2'
 
+gem 'activemerchant'
+
 # Use unicorn as the web server
 # gem 'unicorn'
 
