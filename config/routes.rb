@@ -7,9 +7,11 @@ Things3::Application.routes.draw do
 
   resources :descriptions
 
-  devise_for :users
+  devise_for :users, :controllers => { :registrations => "registrations", :confirmations => "confirmations" }
+  # devise_for :users , :confirmations => "confirmations"
+  
+  root :to => "shops#show"
 
-  root :to => "descriptions#index"
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

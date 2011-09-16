@@ -8,14 +8,9 @@
 
 
 <% if @shop.status == ShopStatus::CREATED then %>
-<p>wow there</p>
+	<%= render :partial => "show_created" %>
+<% elsif @shop.status == ShopStatus::SAVED then %>
+	<%= render :partial => "show_saved", :object => @shop %>
+<% elsif @shop.status == ShopStatus::CONFIRMED then %>
+	<%= render :partial => "show_free" %>
 <% end %>
-<p>
-  <b>Url:</b>
-  <%= @shop.url %>
-</p>
-
-<p>
-  <b>Name:</b>
-  <%= @shop.name %>
-</p>

@@ -1,4 +1,3 @@
-require 'ShopStatus'
 class ShopsController < ApplicationController
   # GET /shops
   # GET /shops.xml
@@ -14,11 +13,19 @@ class ShopsController < ApplicationController
   # GET /shops/1
   # GET /shops/1.xml
   def show
-    @shop = Shop.find(params[:id])
-
-    respond_to do |format|
-      format.html # show.html.erb
-      format.xml  { render :xml => @shop }
+    if session[:shop_id]
+      @shop = Shop.find(session[:shop_id])
+      logger.debug "The object is #{@shop.inspect}"
+      respond_to do |format|
+        format.html # show.html.erb
+        format.xml  { render :xml => @shop }
+      end
+      
+    elsif
+      respond_to do |format|
+        format.html { redirect_to(:action => "new") }
+        format.xml  { render :xml => @shop }
+      end
     end
   end
 
@@ -26,7 +33,7 @@ class ShopsController < ApplicationController
   # GET /shops/new.xml
   def new
     @shop = Shop.new
-
+    logger.debug "Making a new shop"
     respond_to do |format|
       format.html # new.html.erb
       format.xml  { render :xml => @shop }
@@ -46,6 +53,8 @@ class ShopsController < ApplicationController
 
     respond_to do |format|
       if @shop.save
+        session[:shop_id] = @shop.id
+        
         @item_1 = Item.new(:name => "Test Item 1", :description_text => "Hello", :shop => @shop)
         @item_2 = Item.new(:name => "Test Item 2", :description_text => "Hello there", :shop => @shop)
 

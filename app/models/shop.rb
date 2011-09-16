@@ -1,4 +1,3 @@
-require 'ShopStatus'
 class Shop < ActiveRecord::Base
    attr_accessor :description_for_shop
    has_many :items
