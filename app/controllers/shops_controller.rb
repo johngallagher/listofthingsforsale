@@ -23,19 +23,19 @@ class ShopsController < ApplicationController
   # GET /shops/1.xml
   def show
 
-    logger.debug "Seesion is #{session[:shop_id]}"
-    unless session[:shop_id].nil?
+    logger.debug "Seesion is #{session[:shop_id].inspect}"
+    if session[:shop_id].nil?
+      respond_to do |format|
+        format.html { redirect_to(:action => "new") }
+        format.xml  { render :xml => @shop }
+      end
+      return
+    else
       @shop = Shop.find(session[:shop_id])
       respond_to do |format|
         format.html # show.html.erb
         format.xml  { render :xml => @shop }
       end
-      return
-    end
-    
-    respond_to do |format|
-      format.html { redirect_to(:action => "new") }
-      format.xml  { render :xml => @shop }
     end
   end
 
@@ -59,17 +59,27 @@ class ShopsController < ApplicationController
   # POST /shops
   # POST /shops.xml
   def create
-    @shop = Shop.new(params[:shop])
+    @shop_items_description = params[:shop][:description_for_shop]
+    @shop = Shop.new(:name => "New shop")
 
     respond_to do |format|
       if @shop.save
         session[:shop_id] = @shop.id
         
-        @item_1 = Item.new(:name => "Test Item 1", :description_text => "Hello", :price => "1.50", :shop => @shop)
-        @item_2 = Item.new(:name => "Test Item 2", :description_text => "Hello there", :price => "4.00", :shop => @shop)
-
-        @item_1.save
-        @item_2.save
+        logger.debug "Params passed in are #{params}"
+        
+        ItemGenerator.new(@shop_items_description).generate_items.each do |this_item|
+          this_item.shop = @shop
+          this_item.quantity = 1
+          this_item.save
+          logger.debug "this item was #{this_item.inspect}"
+        end
+        
+        # @item_1 = Item.new(:name => "Test Item 1", :description_text => "Hello", :price => "1.50", :shop => @shop)
+        # @item_2 = Item.new(:name => "Test Item 2", :description_text => "Hello there", :price => "4.00", :shop => @shop)
+        # 
+        # @item_1.save
+        # @item_2.save
 
         format.html { redirect_to(@shop, :notice => 'Shop was successfully created.') }
         format.xml  { render :xml => @shop, :status => :created, :location => @shop }

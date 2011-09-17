@@ -11,6 +11,8 @@ gem 'devise', '1.4.5'
 
 gem 'activemerchant'
 
+gem 'geo_location'
+
 # Use unicorn as the web server
 # gem 'unicorn'
 

@@ -56,11 +56,12 @@ class ItemsController < ApplicationController
   # PUT /items/1
   # PUT /items/1.xml
   def update
+    @shop_for_item = @item.shop
     @item = Item.find(params[:id])
 
     respond_to do |format|
       if @item.update_attributes(params[:item])
-        format.html { redirect_to(@item, :notice => 'Item was successfully updated.') }
+        format.html { redirect_to(@shop_for_item, :notice => 'Item was successfully updated.') }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }
@@ -73,10 +74,11 @@ class ItemsController < ApplicationController
   # DELETE /items/1.xml
   def destroy
     @item = Item.find(params[:id])
+    @shop_for_item = @item.shop
     @item.destroy
 
     respond_to do |format|
-      format.html { redirect_to(items_url) }
+      format.html { redirect_to(@shop_for_item) }
       format.xml  { head :ok }
     end
   end

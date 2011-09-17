@@ -19,5 +19,6 @@
 </p>
 
 
-<%= link_to 'Edit', edit_item_path(@item) %> |
+<%= link_to 'Edit', edit_item_path(@item) %>
+<%= link_to 'Destroy', @item, :confirm => 'Are you sure?', :method => :delete %>
 

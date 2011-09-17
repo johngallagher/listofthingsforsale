@@ -9,6 +9,7 @@ class RegistrationsController < Devise::RegistrationsController
       @current_shop.paypal_email = resource.email
       @current_shop.save
     end
-    '/shops/' + session[:shop_id].to_s
+    shop_url(session[:shop_id])
+    # '/shops/' + session[:shop_id].to_s
   end
 end
