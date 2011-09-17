@@ -22,18 +22,20 @@ class ShopsController < ApplicationController
   # GET /shops/1
   # GET /shops/1.xml
   def show
-    if session[:shop_id]
+
+    logger.debug "Seesion is #{session[:shop_id]}"
+    unless session[:shop_id].nil?
       @shop = Shop.find(session[:shop_id])
       respond_to do |format|
         format.html # show.html.erb
         format.xml  { render :xml => @shop }
       end
-      
-    elsif
-      respond_to do |format|
-        format.html { redirect_to(:action => "new") }
-        format.xml  { render :xml => @shop }
-      end
+      return
+    end
+    
+    respond_to do |format|
+      format.html { redirect_to(:action => "new") }
+      format.xml  { render :xml => @shop }
     end
   end
 
