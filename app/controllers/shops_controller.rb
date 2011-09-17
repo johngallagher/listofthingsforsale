@@ -63,8 +63,8 @@ class ShopsController < ApplicationController
       if @shop.save
         session[:shop_id] = @shop.id
         
-        @item_1 = Item.new(:name => "Test Item 1", :description_text => "Hello", :shop => @shop)
-        @item_2 = Item.new(:name => "Test Item 2", :description_text => "Hello there", :shop => @shop)
+        @item_1 = Item.new(:name => "Test Item 1", :description_text => "Hello", :price => "1.50", :shop => @shop)
+        @item_2 = Item.new(:name => "Test Item 2", :description_text => "Hello there", :price => "4.00", :shop => @shop)
 
         @item_1.save
         @item_2.save
