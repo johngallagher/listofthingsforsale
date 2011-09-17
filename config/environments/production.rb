@@ -1,4 +1,6 @@
 Things3::Application.configure do
+  
+  
   # Settings specified here will take precedence over those in config/application.rb
 
   # The production environment is meant for finished, "live" apps.
@@ -7,7 +9,9 @@ Things3::Application.configure do
 
   # Full error reports are disabled and caching is turned on
   config.consider_all_requests_local       = false
-  config.action_controller.perform_caching = false
+  config.action_controller.perform_caching = true
+
+  config.action_mailer.raise_delivery_errors = true
 
   # Specifies the header that your server uses for sending files
   config.action_dispatch.x_sendfile_header = "X-Sendfile"
@@ -46,6 +50,6 @@ Things3::Application.configure do
 
   # Send deprecation notices to registered listeners
   config.active_support.deprecation = :notify
-  
+
   config.action_mailer.default_url_options = { :host => 'high-mist-4028.heroku.com' }
 end
