@@ -10,12 +10,20 @@ class ShopsController < ApplicationController
     end
   end
 
+  def show_public
+    
+    @shop = Shop.where("url = ?", params[:id]).find(:first)
+    respond_to do |format|
+      format.html # show.html.erb
+      format.xml  { render :xml => @shop }
+    end
+  end
+  
   # GET /shops/1
   # GET /shops/1.xml
   def show
     if session[:shop_id]
       @shop = Shop.find(session[:shop_id])
-      logger.debug "The object is #{@shop.inspect}"
       respond_to do |format|
         format.html # show.html.erb
         format.xml  { render :xml => @shop }
@@ -95,6 +103,21 @@ class ShopsController < ApplicationController
     respond_to do |format|
       format.html { redirect_to(shops_url) }
       format.xml  { head :ok }
+    end
+  end
+  
+  def take_live
+    @shop = Shop.find(params[:id])
+    @shop.status = ShopStatus::LIVE_FREE
+    @shop.url = (0...8).map{65.+(rand(25)).chr}.join.downcase
+    respond_to do |format|
+      if @shop.save
+        format.html { redirect_to(@shop, :notice => 'Shop was successfully taken live.') }
+        format.xml  { head :ok }
+      else
+        format.html { render :action => "edit" }
+        format.xml  { render :xml => @shop.errors, :status => :unprocessable_entity }
+      end
     end
   end
 end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110916170750) do
+ActiveRecord::Schema.define(:version => 20110916224159) do
 
   create_table "items", :force => true do |t|
     t.string   "name"
@@ -40,6 +40,13 @@ ActiveRecord::Schema.define(:version => 20110916170750) do
     t.datetime "updated_at"
     t.integer  "user_id"
     t.integer  "status"
+    t.string   "paypal_email"
+    t.string   "payment_type"
+    t.text     "payment_other_text"
+    t.text     "delivery_method"
+    t.boolean  "prices_include_postage"
+    t.decimal  "postage_price"
+    t.string   "postage_type"
   end
 
   create_table "users", :force => true do |t|

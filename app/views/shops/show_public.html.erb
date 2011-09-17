@@ -1,0 +1,13 @@
+<% content_for :dynamic_javascripts do %>
+  <%= javascript_include_tag "javascripts/simpleCart.js" %>
+	<script type="text/javascript">simpleCart.email = "<%= @shop.paypal_email %>";</script>
+<%end%>
+
+<h1>Welcome to this shop!</h1>
+
+<% @shop.items.each do |item| %>
+<div>
+	<% @item = item %>
+	<%= render :partial => "items/show_public", :object => @item %>
+</div>
+<% end %>

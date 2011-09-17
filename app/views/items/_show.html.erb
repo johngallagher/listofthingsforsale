@@ -1,0 +1,23 @@
+<p>
+  <b>Name:</b>
+  <%= @item.name %>
+</p>
+
+<p>
+  <b>Description text:</b>
+  <%= @item.description_text %>
+</p>
+
+<p>
+  <b>Price:</b>
+  <%= @item.price %>
+</p>
+
+<p>
+  <b>Quantity:</b>
+  <%= @item.quantity %>
+</p>
+
+
+<%= link_to 'Edit', edit_item_path(@item) %> |
+

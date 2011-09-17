@@ -1,0 +1,49 @@
+<h2>Start Selling!</h2>
+<% form_for(@shop, :url => { :action => "take_live" }) do |f| %>
+  <div class="field">
+
+	  <p>
+	    <%= f.label "Payment" %><br />
+		  <%= f.radio_button :payment_type, 'paypal', :checked => true %> 
+		  <%= f.label :payment_type_paypal, 'Paypal', :value => "paypal" %>
+		  <%= f.radio_button :payment_type, 'other' %>
+		  <%= f.label :payment_type_other, 'Other', :value => "other" %>
+		</p>
+	  <p>
+	    <%= f.label :paypal_email %><br />
+	    <%= f.text_field :paypal_email %>
+	  </p>
+	  <p>
+	    <%= f.label :payment_other_text %><br />
+	    <%= f.text_area :payment_other_text %>
+	  </p>
+
+
+	  <p>
+	    <%= f.label "Delivery" %><br />
+		  <%= f.radio_button :delivery_method, 'post', :checked => true %> 
+		  <%= f.label :delivery_method_post, 'Post', :value => "post" %>
+		  <%= f.radio_button :delivery_method, 'collection' %>
+		  <%= f.label :delivery_method_other, 'Collection', :value => "collection" %>
+		</p>
+
+	  <p>
+	    <%= f.label "Postage Included" %><br />
+	    <%= f.check_box :prices_include_postage, :checked => true  %>
+	  </p>
+	  <p>
+	    <%= f.label :postage_price %><br />
+	    <%= f.text_field :postage_price %>
+	  </p>
+
+	  <p>
+		  <%= f.radio_button :postage_type, 'flat_rate', :checked => true %> 
+		  <%= f.label :postage_type_flat, 'Flat Rate', :value => "flat_rate" %>
+		  <%= f.radio_button :postage_type, 'per_item' %>
+		  <%= f.label :postage_type_per_item, 'Per Item', :value => "per_item" %>
+		</p>
+		<p>
+		<%= f.submit "Start Selling Now!" %>
+		</p>
+  </div>
+<% end %>

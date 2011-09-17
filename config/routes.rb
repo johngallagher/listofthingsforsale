@@ -1,9 +1,13 @@
 Things3::Application.routes.draw do
+  match 'public/:id' => 'shops#show_public', :constraints => { :id => /[a-z]{8,8}/ }
+
   resources :photos
 
   resources :items
 
   resources :shops
+
+  match 'shops/:id/take_live' => 'shops#take_live'
 
   resources :descriptions
 
