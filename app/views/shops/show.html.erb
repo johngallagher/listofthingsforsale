@@ -2,11 +2,13 @@
 <%= render 'public_url' %>
 
 <% @shop.items.each do |item| %>
-<div>
+<div class="items">
 	<% @item = item %>
 	<%= render :partial => "items/show", :object => @item %>
 </div>
 <% end %>
+
+<%= link_to 'New Item', new_shop_item_path(@shop) %>
 
 
 <% if @shop.status == ShopStatus::CREATED then %>

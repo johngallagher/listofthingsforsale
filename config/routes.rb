@@ -3,9 +3,10 @@ Things3::Application.routes.draw do
 
   resources :photos
 
-  resources :items
 
-  resources :shops
+  resources :shops do
+    resources :items
+  end
 
   match 'shops/:id/take_live' => 'shops#take_live'
 

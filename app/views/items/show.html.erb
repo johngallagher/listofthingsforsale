@@ -1,25 +1,11 @@
 <p id="notice"><%= notice %></p>
+<div class="item">
+	  <h2 class="item_name"><%= @item.name %></h2>
+		<div class="details">
+			<p class="item_description"><%= @item.description_text %></p>
+			<p class="price"><%= @item.price %></p>
+			<p class="quantity"><%= @item.quantity %></p>
+		</div>
 
-<p>
-  <b>Name:</b>
-  <%= @item.name %>
-</p>
-
-<p>
-  <b>Description text:</b>
-  <%= @item.description_text %>
-</p>
-
-<p>
-  <b>Price:</b>
-  <%= @item.price %>
-</p>
-
-<p>
-  <b>Quantity:</b>
-  <%= @item.quantity %>
-</p>
-
-
-<%= link_to 'Edit', edit_item_path(@item) %> 
-<%= link_to 'Back', items_path %>
+	<%= link_to 'Edit', edit_shop_item_path(@item) %> 
+</div>

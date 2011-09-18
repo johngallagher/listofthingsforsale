@@ -23,7 +23,7 @@ class ShopsController < ApplicationController
   # GET /shops/1.xml
   def show
 
-    logger.debug "Seesion is #{session[:shop_id].inspect}"
+    logger.debug "Seesion is #{session.inspect}"
     if session[:shop_id].nil?
       respond_to do |format|
         format.html { redirect_to(:action => "new") }
@@ -60,7 +60,21 @@ class ShopsController < ApplicationController
   # POST /shops.xml
   def create
     @shop_items_description = params[:shop][:description_for_shop]
-    @shop = Shop.new(:name => "New shop")
+    
+    @location = GeoLocation.find(request.remote_ip)
+    @remote_ip = request.env["HTTP_X_FORWARDED_FOR"]
+    logger.debug "Location is #{location.inspect} from ip #{request.remote_ip} also #{@remote_ip}"
+    @shop_name = ""
+    if @location[:city].nil? || @location[:city] == "(Unknown City)"
+      if @location[:country].nil? || @location[:country] == "(Unknown Country)"
+        @shop_name = "Shop in #{location[:city]}"
+      else
+        @shop_name = "Shop in #{location[:city]}, #{location[:country]}"
+      end
+    else
+      @shop_name = "My Shop"
+    end
+    @shop = Shop.new(:name => @shop_name)
 
     respond_to do |format|
       if @shop.save

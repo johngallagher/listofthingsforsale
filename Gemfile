@@ -13,6 +13,8 @@ gem 'activemerchant'
 
 gem 'geo_location'
 
+gem 'nokogiri'
+
 # Use unicorn as the web server
 # gem 'unicorn'
 

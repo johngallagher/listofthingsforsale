@@ -1,24 +1,13 @@
-<p>
-  <b>Name:</b>
-  <%= @item.name %>
-</p>
+<div class="item">
+  <h2 class="name"><%= @item.name %></h2>
+	<div class="details">
+		<p class="description"><%= @item.description_text %></p>
+		<p class="price"><%= @item.price %></p>
+		<p class="quantity"><%= @item.quantity %></p>
+	</div>
 
-<p>
-  <b>Description text:</b>
-  <%= @item.description_text %>
-</p>
-
-<p>
-  <b>Price:</b>
-  <%= @item.price %>
-</p>
-
-<p>
-  <b>Quantity:</b>
-  <%= @item.quantity %>
-</p>
-
-
-<%= link_to 'Edit', edit_item_path(@item) %>
-<%= link_to 'Destroy', @item, :confirm => 'Are you sure?', :method => :delete %>
-
+	<div class="actions">
+		<%= link_to 'Edit', edit_shop_item_path(@shop, @item) %> 
+		<%= link_to 'Destroy', shop_item_path(@shop, @item), :confirm => 'Are you sure?', :method => :delete %>
+	</div>
+</div>

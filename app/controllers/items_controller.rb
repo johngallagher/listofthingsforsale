@@ -25,6 +25,8 @@ class ItemsController < ApplicationController
   # GET /items/new.xml
   def new
     @item = Item.new
+    @shop = Shop.find(params[:shop_id])
+    @item.shop = @shop
 
     respond_to do |format|
       format.html # new.html.erb
@@ -41,14 +43,15 @@ class ItemsController < ApplicationController
   # POST /items.xml
   def create
     @item = Item.new(params[:item])
-
+    @shop = Shop.find(params[:shop_id])
+    @item.shop = @shop
     respond_to do |format|
       if @item.save
-        format.html { redirect_to(@item, :notice => 'Item was successfully created.') }
-        format.xml  { render :xml => @item, :status => :created, :location => @item }
+        format.html { redirect_to(@shop, :notice => 'Item was successfully created.') }
+        format.xml  { render :xml => @shop_for_item, :status => :created, :location => @shop_for_item }
       else
         format.html { render :action => "new" }
-        format.xml  { render :xml => @item.errors, :status => :unprocessable_entity }
+        format.xml  { render :xml => @shop_for_item.errors, :status => :unprocessable_entity }
       end
     end
   end
@@ -56,8 +59,8 @@ class ItemsController < ApplicationController
   # PUT /items/1
   # PUT /items/1.xml
   def update
-    @shop_for_item = @item.shop
     @item = Item.find(params[:id])
+    @shop_for_item = @item.shop
 
     respond_to do |format|
       if @item.update_attributes(params[:item])

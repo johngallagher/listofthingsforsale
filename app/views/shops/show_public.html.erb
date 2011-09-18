@@ -1,6 +1,10 @@
 <% content_for :dynamic_javascripts do %>
   <%= javascript_include_tag "simpleCart.js" %>
-	<script type="text/javascript">simpleCart.email = "<%= @shop.paypal_email %>";</script>
+	<script type="text/javascript">
+		simpleCart.email = "<%= @shop.paypal_email %>";
+		simpleCart.checkoutTo = PayPal;
+		simpleCart.currency = GBP;
+	</script>
 <%end%>
 
 <h1>Welcome to this shop!</h1>
