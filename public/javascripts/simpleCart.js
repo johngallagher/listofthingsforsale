@@ -46,7 +46,7 @@ function Cart(){
 	me.shippingQuantityRate = 0;
 	me.shippingRate = 0;
 	me.shippingCost = 0;
-	me.currency = USD;
+	me.currency = GBP;
 	me.checkoutTo = PayPal;
 	me.email = "";
 	me.merchantId	 = "";
@@ -57,7 +57,7 @@ function Cart(){
 	me.MAX_COOKIE_SIZE = 4000;
 	me.cartHeaders = ['Name','Price','Quantity','Total'];
 	me.events = {};
-	me.sandbox = false;
+	me.sandbox = true;
 	me.paypalHTTPMethod = "GET";
 	/*
 		cart headers:
