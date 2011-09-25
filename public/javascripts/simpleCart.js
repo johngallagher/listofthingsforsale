@@ -285,7 +285,7 @@ function Cart(){
 		}
 		
 		if( me.notifyUrl ){
-			form.appendChild(me.createHiddenElement("return",  me.notifyUrl ));
+			form.appendChild(me.createHiddenElement("notify_url",  me.notifyUrl ));
 		}
 		
 		if( me.cancelUrl ){
