@@ -52,6 +52,7 @@ function Cart(){
 	me.merchantId	 = "";
 	me.successUrl = "http://high-mist-4028.heroku.com/payment/notify";
 	me.cancelUrl = "http://high-mist-4028.heroku.com/payment/notify";
+	me.notifyUrl = "http://high-mist-4028.heroku.com/payment/notify";
 	me.cookieDuration = 30; // default duration in days
 	me.storagePrefix = "sc_";
 	me.MAX_COOKIE_SIZE = 4000;
@@ -265,7 +266,7 @@ function Cart(){
 			
 			
 		// setup hidden fields
-		form.appendChild(me.createHiddenElement("cmd", "_cart"));
+		form.appendChild(me.createHiddenElement("cmd", "_xclick"));
 		form.appendChild(me.createHiddenElement("rm", me.paypalHTTPMethod == "POST" ? "2" : "0" ));
 		form.appendChild(me.createHiddenElement("upload", "1"));
 		form.appendChild(me.createHiddenElement("business", me.email ));
@@ -281,6 +282,10 @@ function Cart(){
 		
 		if( me.successUrl ){
 			form.appendChild(me.createHiddenElement("return",  me.successUrl ));
+		}
+		
+		if( me.notifyUrl ){
+			form.appendChild(me.createHiddenElement("return",  me.notifyUrl ));
 		}
 		
 		if( me.cancelUrl ){
@@ -314,9 +319,8 @@ function Cart(){
 
 
 		document.body.appendChild( form );
-		console.log(form)
-		
-    form.submit();
+		console.log(form)		
+    // form.submit();
 		document.body.removeChild( form );
 		
 	};
