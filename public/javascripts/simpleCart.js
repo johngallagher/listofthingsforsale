@@ -50,7 +50,7 @@ function Cart(){
 	me.checkoutTo = PayPal;
 	me.email = "";
 	me.merchantId	 = "";
-	me.successUrl = "http://localhost:3000/payment/notify";
+	me.successUrl = "http://high-mist-4028.heroku.com/payment/notify";
 	me.cancelUrl = null;
 	me.cookieDuration = 30; // default duration in days
 	me.storagePrefix = "sc_";
