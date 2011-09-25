@@ -266,7 +266,7 @@ function Cart(){
 			
 			
 		// setup hidden fields
-		form.appendChild(me.createHiddenElement("cmd", "_xclick"));
+		form.appendChild(me.createHiddenElement("cmd", "_cart"));
 		form.appendChild(me.createHiddenElement("rm", me.paypalHTTPMethod == "POST" ? "2" : "0" ));
 		form.appendChild(me.createHiddenElement("upload", "1"));
 		form.appendChild(me.createHiddenElement("business", me.email ));
