@@ -1,4 +1,5 @@
 Things3::Application.routes.draw do
+  match 'payment/notify' => 'payment#notify'
   match 'public/:id' => 'shops#show_public', :constraints => { :id => /[a-z]{8,8}/ }
 
   resources :photos

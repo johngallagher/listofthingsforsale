@@ -60,20 +60,20 @@ class ShopsController < ApplicationController
   # POST /shops.xml
   def create
     @shop_items_description = params[:shop][:description_for_shop]
-    
-    @location = GeoLocation.find(request.remote_ip)
-    @remote_ip = request.env["HTTP_X_FORWARDED_FOR"]
-    logger.debug "Location is #{location.inspect} from ip #{request.remote_ip} also #{@remote_ip}"
-    @shop_name = ""
-    if @location[:city].nil? || @location[:city] == "(Unknown City)"
-      if @location[:country].nil? || @location[:country] == "(Unknown Country)"
-        @shop_name = "Shop in #{location[:city]}"
-      else
-        @shop_name = "Shop in #{location[:city]}, #{location[:country]}"
-      end
-    else
+    @location = nil
+    # @location = GeoLocation.find(request.remote_ip)
+    # @remote_ip = request.env["HTTP_X_FORWARDED_FOR"]
+    # logger.debug "Location is #{location.inspect} from ip #{request.remote_ip} also #{@remote_ip}"
+    # @shop_name = ""
+    # if @location[:city].nil? || @location[:city] == "(Unknown City)"
+    #   if @location[:country].nil? || @location[:country] == "(Unknown Country)"
+    #     @shop_name = "Shop in #{location[:city]}"
+    #   else
+    #     @shop_name = "Shop in #{location[:city]}, #{location[:country]}"
+    #   end
+    # else
       @shop_name = "My Shop"
-    end
+    # end
     @shop = Shop.new(:name => @shop_name)
 
     respond_to do |format|

@@ -50,14 +50,14 @@ function Cart(){
 	me.checkoutTo = PayPal;
 	me.email = "";
 	me.merchantId	 = "";
-	me.successUrl = null;
+	me.successUrl = "http://localhost:3000/payment/notify";
 	me.cancelUrl = null;
 	me.cookieDuration = 30; // default duration in days
 	me.storagePrefix = "sc_";
 	me.MAX_COOKIE_SIZE = 4000;
 	me.cartHeaders = ['Name','Price','Quantity','Total'];
 	me.events = {};
-	me.sandbox = false;
+	me.sandbox = true;
 	me.paypalHTTPMethod = "GET";
 	/*
 		cart headers:
