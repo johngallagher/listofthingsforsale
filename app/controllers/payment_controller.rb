@@ -10,7 +10,7 @@ class PaymentController < ApplicationController
     logger.debug("Before acknowledge: #{notify.inspect}")
     
     if notify.acknowledge
-      logger.debug("After acknowledge: #{notify.inspect}")
+      logger.debug("After acknowledge!")
       # @payment = Payment.find_by_confirmation(notify.transaction_id) ||
       #   enrollment.invoice.payments.create(:amount => notify.amount,
       #     :payment_method => 'paypal', :confirmation => notify.transaction_id,
