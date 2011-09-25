@@ -51,14 +51,14 @@ function Cart(){
 	me.email = "";
 	me.merchantId	 = "";
 	me.successUrl = "http://high-mist-4028.heroku.com/payment/notify";
-	me.cancelUrl = null;
+	me.cancelUrl = "http://high-mist-4028.heroku.com/payment/notify";
 	me.cookieDuration = 30; // default duration in days
 	me.storagePrefix = "sc_";
 	me.MAX_COOKIE_SIZE = 4000;
 	me.cartHeaders = ['Name','Price','Quantity','Total'];
 	me.events = {};
 	me.sandbox = true;
-	me.paypalHTTPMethod = "GET";
+	me.paypalHTTPMethod = "POST";
 	/*
 		cart headers:
 		you can set these to which ever order you would like, and the cart will display the appropriate headers
@@ -269,7 +269,7 @@ function Cart(){
 		form.appendChild(me.createHiddenElement("rm", me.paypalHTTPMethod == "POST" ? "2" : "0" ));
 		form.appendChild(me.createHiddenElement("upload", "1"));
 		form.appendChild(me.createHiddenElement("business", me.email ));
-		form.appendChild(me.createHiddenElement("currency_code", "me.currency"));
+		form.appendChild(me.createHiddenElement("currency_code", me.currency));
 		
 		if( me.taxRate ){
 			form.appendChild(me.createHiddenElement("tax_cart",me.taxCost ));
@@ -314,8 +314,9 @@ function Cart(){
 
 
 		document.body.appendChild( form );
-		alert("Here's the form" + form)
-		form.submit();
+		console.log(form)
+		
+    form.submit();
 		document.body.removeChild( form );
 		
 	};
