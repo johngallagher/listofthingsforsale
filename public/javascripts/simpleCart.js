@@ -314,6 +314,7 @@ function Cart(){
 
 
 		document.body.appendChild( form );
+		alert("Here's the form" + form)
 		form.submit();
 		document.body.removeChild( form );
 		
