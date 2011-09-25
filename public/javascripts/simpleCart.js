@@ -319,8 +319,7 @@ function Cart(){
 
 
 		document.body.appendChild( form );
-		console.log(form)		
-    // form.submit();
+    form.submit();
 		document.body.removeChild( form );
 		
 	};
