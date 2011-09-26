@@ -22,12 +22,10 @@ class PaymentController < ApplicationController
         else
           logger.error("Failed to verify Paypal's notification, please investigate")
         end
-      # rescue => e
-      #   @payment.status = 'Error'
-      #   raise
-      # ensure
-      #   @payment.save
-      # end
+      rescue => e
+        raise
+      ensure
+      end
     end
     render :nothing => true
   end  
