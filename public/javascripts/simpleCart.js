@@ -277,7 +277,7 @@ function Cart(){
 		}
 		
 		if( me.shipping() !== 0){
-			form.appendChild(me.createHiddenElement("handling_cart",  me.shippingCost ));
+			form.appendChild(me.createHiddenElement("handling_cart", me.shippingCost ));
 		}
 		
 		if( me.successUrl ){
@@ -1047,6 +1047,7 @@ CartItem.prototype = {
 
 
 	parseValuesFromArray : function( array ) {
+	  console.log("heres the array: " + array)
 		if( array && array.length && array.length > 0) {
 			for(var x=0, xlen=array.length; x<xlen;x++ ){
 
@@ -1061,6 +1062,7 @@ CartItem.prototype = {
 
 				/* split the pair and save the unescaped values to the item */
 				var value = array[x].split('=');
+				console.log("Here's the list of stuff:" + value)
 				if( value.length>1 ){
 					if( value.length>2 ){
 						for(var j=2, jlen=value.length;j<jlen;j++){
