@@ -18,9 +18,9 @@ class PaymentController < ApplicationController
       #     :test => notify.test?)
       begin
         if notify.complete?
-          logger.debug("Hurrah - Status is #{notify.status}")
+          logger.debug("Hurrah - Status is #{notify.inspect}")
         else
-          logger.error("Failed to verify Paypal's notification, please investigate")
+          logger.error("Failed. Notify was: #{notify.inspect}")
         end
       rescue => e
         raise
