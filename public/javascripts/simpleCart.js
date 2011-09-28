@@ -299,6 +299,8 @@ function Cart(){
 			counter = iter+1;
 		
 			form.appendChild( me.createHiddenElement( "item_name_"		+ counter, item.name		) );
+			form.appendChild( me.createHiddenElement( "item_itemid_"		+ counter, item.itemid		) );
+			form.appendChild( me.createHiddenElement( "item_shopid_"		+ counter, item.shopid		) );
 			form.appendChild( me.createHiddenElement( "quantity_"		+ counter, item.quantity	) );
 			form.appendChild( me.createHiddenElement( "amount_"			+ counter, item.price		) );
 			form.appendChild( me.createHiddenElement( "item_number_"	+ counter, counter			) );
@@ -316,7 +318,6 @@ function Cart(){
 			form.appendChild( me.createHiddenElement( "option_index_" + counter, option_count) );
 
 		});
-
 
 		document.body.appendChild( form );
     form.submit();
