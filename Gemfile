@@ -15,6 +15,8 @@ gem 'geo_location'
 
 gem 'nokogiri'
 
+gem "nifty-generators", :group => :development
+
 # Use unicorn as the web server
 # gem 'unicorn'
 
@@ -37,3 +39,4 @@ gem 'nokogiri'
 # group :development, :test do
 #   gem 'webrat'
 # end
+gem "mocha", :group => :test
