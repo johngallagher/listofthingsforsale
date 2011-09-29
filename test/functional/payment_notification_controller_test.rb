@@ -61,23 +61,24 @@ class PaymentNotificationsControllerTest < ActionController::TestCase
       "ipn_track_id"=>"LlEfeRjfHawhnM1zyCcqrA"}
   end
   
-  def test_should_log_error_and_log_transaction_if_ipn_not_acknowledged
+  def test_should_generate_unacknowledged_notification_if_ipn_not_acknowledged
     #force ipn to return acknowledge as false
     ipn_callback = @ipn_params.merge("acknowledge" => "false")
     post :create, ipn_callback
     assert_response :success
   
     assert PaymentNotification.where(:transaction_id => ipn_callback[:txn_id], :acknowledged => false).all.count == 1
-    assert Order.where()
   end
 
-  # def test_should_log_error_and_log_transaction_if_ipn_not_completed
-  #   post :ipn, @ipn_params.merge("acknowledge" => "true", "payment_status" => "Cancelled")
-  #   assert_response 403
-  #    #some more application specific tests
-  # end
-
-  # add tests for duplicate transaction identification, etc
+  def test_should_generate_acknowledged_notification_if_ipn_acknowledged
+    #force ipn to return acknowledge as false
+    ipn_callback = @ipn_params.merge("acknowledge" => "true")
+    post :create, ipn_callback
+    assert_response :success
+  
+    assert PaymentNotification.where(:transaction_id => ipn_callback[:txn_id], :acknowledged => true).all.count == 1
+  end
+  
   
 end
 
