@@ -62,11 +62,12 @@ class PaymentNotificationsControllerTest < ActionController::TestCase
   end
   
   def test_should_log_error_and_log_transaction_if_ipn_not_acknowledged
-   #force ipn to return acknowledge as false
-    post :create, :acknowledge => "hey"
-    # post :create, @ipn_params.merge("acknowledge" => "false") 
-    assert_response 403
+    #force ipn to return acknowledge as false
+    ipn_callback = @ipn_params.merge("acknowledge" => "false")
+    post :create, ipn_callback
+    assert_response :success
   
+    assert PaymentNotification.where(:transaction_id => ipn_callback[:txn_id]).all.count == 1
     # assert !@emails.empty?
     # email = @emails.first
     # 
