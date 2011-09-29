@@ -1,11 +1,10 @@
 require 'test_helper'
-require "payment_notifications_controller"
 
-class PaymentNotificationsControllerTest < ActiveSupport::TestCase
-  include ApplicationHelper
+class PaymentNotificationsControllerTest < ActionController::TestCase
 
-  def setup
+  setup do
     @controller = PaymentNotificationsController.new
+
     @request    = ActionController::TestRequest.new
     @response   = ActionController::TestResponse.new
     
@@ -62,9 +61,10 @@ class PaymentNotificationsControllerTest < ActiveSupport::TestCase
   
   def test_should_log_error_and_log_transaction_if_ipn_not_acknowledged
    #force ipn to return acknowledge as false
-    post :create, @ipn_params.merge("acknowledge" => "false") 
+    post :create, :acknowledge => "hey"
+    # post :create, @ipn_params.merge("acknowledge" => "false") 
     assert_response 403
-
+  
     # assert !@emails.empty?
     # email = @emails.first
     # 
