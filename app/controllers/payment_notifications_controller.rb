@@ -1,4 +1,5 @@
 class PaymentNotificationsController < ApplicationController  
+  include ActiveMerchant::Billing::Integrations
   protect_from_forgery :except => [:create]  
   def create
     logger.debug("Notified!")

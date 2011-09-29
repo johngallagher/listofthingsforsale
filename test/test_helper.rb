@@ -12,5 +12,5 @@ class ActiveSupport::TestCase
   # Add more helper methods to be used by all tests here...
   
   # include Test::Unit::Assertions::ActiveRecordAssertions
-  require File.expand_path('../mocks/test/paypal_ipn_mock', __FILE__)
+  require "paypal_ipn_mock"
 end

@@ -1,4 +1,6 @@
 require 'test_helper'
+require File.expand_path('../../paypal_ipn_mock', __FILE__)
+require "payment_notifications_controller"
 
 class PaymentNotificationsControllerTest < ActionController::TestCase
 
