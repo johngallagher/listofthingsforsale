@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110928164023) do
+ActiveRecord::Schema.define(:version => 20110929165951) do
 
   create_table "items", :force => true do |t|
     t.string   "name"
@@ -30,6 +30,7 @@ ActiveRecord::Schema.define(:version => 20110928164023) do
     t.integer  "cart_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "acknowledged"
   end
 
   create_table "photos", :force => true do |t|

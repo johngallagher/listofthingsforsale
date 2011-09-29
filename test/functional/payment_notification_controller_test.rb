@@ -67,13 +67,8 @@ class PaymentNotificationsControllerTest < ActionController::TestCase
     post :create, ipn_callback
     assert_response :success
   
-    assert PaymentNotification.where(:transaction_id => ipn_callback[:txn_id]).all.count == 1
-    # assert !@emails.empty?
-    # email = @emails.first
-    # 
-    # #application specific tests
-    # assert_equal email.to.sort, ["some@email.com"].sort
-    # assert !Trans.find_by_paypal_transaction_id(@trans_id)
+    assert PaymentNotification.where(:transaction_id => ipn_callback[:txn_id], :acknowledged => false).all.count == 1
+    assert Order.where()
   end
 
   # def test_should_log_error_and_log_transaction_if_ipn_not_completed
