@@ -17,6 +17,8 @@ gem 'nokogiri'
 
 gem "nifty-generators", :group => :development
 
+gem 'ar_fixtures', :git => 'git://github.com/topfunky/ar_fixtures.git'
+
 # Use unicorn as the web server
 # gem 'unicorn'
 

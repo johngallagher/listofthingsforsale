@@ -13,10 +13,12 @@ class PaymentNotificationsController < ApplicationController
       #     :payment_method => 'paypal', :confirmation => notify.transaction_id,
       #     :description => notify.params['item_name'], :status => notify.status,
       #     :test => notify.test?)
-      PaymentNotification.create!(:params => notify.params, :status => notify.params[:payment_status], :transaction_id => notify.params[:txn_id] )
+      # PaymentNotification.create!(:params => notify.params, :status => notify.params[:payment_status], :transaction_id => notify.params[:txn_id] )
       begin
         if notify.complete?
           logger.debug("Hurrah - success. Notify is #{notify.inspect}")
+          # check buyer is correct and purchase amount and number of items are correct too.
+          
         else
           logger.error("Failed. Notify was: #{notify.inspect}")
         end
@@ -25,8 +27,6 @@ class PaymentNotificationsController < ApplicationController
       ensure
       end
     end
-    render :nothing => true
-    
     render :nothing => true  
   end  
 end

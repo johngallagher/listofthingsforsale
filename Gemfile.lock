@@ -1,3 +1,10 @@
+GIT
+  remote: git://github.com/topfunky/ar_fixtures.git
+  revision: 2c8b7cb1903a23b3309a2b6103fb5d01af5d7194
+  specs:
+    ar_fixtures (0.0.4)
+      hoe (>= 1.5.3)
+
 GEM
   remote: http://rubygems.org/
   specs:
@@ -45,6 +52,8 @@ GEM
     erubis (2.6.6)
       abstract (>= 1.0.0)
     geo_location (0.4.2)
+    hoe (2.12.3)
+      rake (~> 0.8)
     i18n (0.5.0)
     json (1.6.0)
     mail (2.2.19)
@@ -95,6 +104,7 @@ PLATFORMS
 
 DEPENDENCIES
   activemerchant
+  ar_fixtures!
   devise (= 1.4.5)
   geo_location
   mocha
