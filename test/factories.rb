@@ -25,7 +25,7 @@ Factory.define :order do |order|
 end
 
 Factory.define :johns_pending_order_for_bag_and_wallet_from_matthias_shop, :parent => :order do |order|
-  order.sequence(:buyer_paypal_email) { |n| "john#{n}@synapticmishap.com" }
+  order.buyer_paypal_email "" # on checkout there's no way of grabbing this, so when the order is pending it's blank.
   order.status "Pending"
   order.total_price 33.33
   order.session_id "854f72119322a250f6f40adfffa4a11b"
