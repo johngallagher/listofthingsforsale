@@ -63,7 +63,7 @@ class OrderFinderTest < ActiveSupport::TestCase
   end
   
   test "if order params match pending order in database should return that order" do
-    @johns_pending_order = Factory(:johns_pending_order_for_bag_and_wallet_from_matthias_shop)
+    @johns_pending_order = Factory.create(:johns_pending_order_for_bag_and_wallet_from_matthias_shop)
     assert_not_nil(@johns_pending_order)
 
     @order_params = params_for_order_matching_pending
