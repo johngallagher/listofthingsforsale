@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110929232157) do
+ActiveRecord::Schema.define(:version => 20110930155458) do
 
   create_table "items", :force => true do |t|
     t.string   "name"
@@ -23,13 +23,24 @@ ActiveRecord::Schema.define(:version => 20110929232157) do
     t.integer  "shop_id"
   end
 
+  create_table "line_items", :force => true do |t|
+    t.decimal  "unit_price"
+    t.integer  "quantity"
+    t.integer  "order_id"
+    t.integer  "item_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "orders", :force => true do |t|
     t.integer  "shop_id"
     t.datetime "ordered_on"
     t.string   "buyer_paypal_email"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.decimal  "total_price"
     t.string   "status"
+    t.string   "session_id"
   end
 
   create_table "payment_notifications", :force => true do |t|
