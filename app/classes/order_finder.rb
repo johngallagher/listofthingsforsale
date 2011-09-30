@@ -5,8 +5,15 @@ class OrderFinder
   end
   
   def find_pending
+    puts "Query string was #{query_string}"
+    puts "All Orders were #{Order.all}"
     found_orders = Order.where(query_string).all
-    found_orders.first if found_orders
+    puts "Orders found were #{found_orders}"
+    if found_orders and found_orders.count == 1
+      found_orders.first 
+    else
+      nil
+    end
   end
   
   def query_string
@@ -14,6 +21,7 @@ class OrderFinder
       :shop_id => @order_params["option_selection1_1"].to_i,
       :total_price => BigDecimal.new(@order_params["mc_gross"]),
       :session_id  => @order_params["session_id"]
-      }
+    }
   end
+  
 end

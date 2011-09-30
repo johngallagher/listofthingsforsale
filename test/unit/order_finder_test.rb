@@ -64,7 +64,17 @@ class OrderFinderTest < ActiveSupport::TestCase
   
   test "if order params match pending order in database should return that order" do
     @johns_pending_order = Factory.create(:johns_pending_order_for_bag_and_wallet_from_matthias_shop)
-    assert_not_nil(@johns_pending_order)
+
+    @order_params = params_for_order_matching_pending
+    
+    order_found = OrderFinder.new(:order_params => @order_params).find_pending
+    
+    assert_equal(@johns_pending_order, order_found)
+  end
+
+  test "if status, shop id, session id and gross are the same for two orders should return the correct order" do
+    @johns_pending_order = Factory.create(:johns_pending_order_for_bag_and_wallet_from_matthias_shop)
+    @johns_similar_pending_order = Factory.create(:johns_pending_order_for_jacket_and_belt_from_matthias_shop) # two items, same bottom line price, same session id.
 
     @order_params = params_for_order_matching_pending
     
