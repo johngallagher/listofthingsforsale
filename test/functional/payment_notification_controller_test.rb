@@ -1,6 +1,6 @@
 require 'test_helper'
 require File.expand_path('../../paypal_ipn_mock', __FILE__)
-require "payment_notifications_controller"
+require 'payment_notifications_controller'
 
 class PaymentNotificationsControllerTest < ActionController::TestCase
 
@@ -60,41 +60,6 @@ class PaymentNotificationsControllerTest < ActionController::TestCase
       "payment_gross"=>"",
       "ipn_track_id"=>"LlEfeRjfHawhnM1zyCcqrA"}
   end
-  
-  
-  # 
-  # def test_should_generate_unacknowledged_notification_if_ipn_not_acknowledged
-  #   DuplicateNotificationDetector.stubs(:is_duplicate?).returns(true)
-  #   #force ipn to return acknowledge as false
-  #   ipn_callback = @ipn_params.merge("acknowledge" => "false")
-  #   post :create, ipn_callback
-  #   assert_response :success
-  # 
-  #   assert PaymentNotification.where(:transaction_id => ipn_callback[:txn_id], :acknowledged => false).all.count == 1
-  # end
-  # 
-  # def test_should_generate_acknowledged_notification_if_ipn_acknowledged
-  #   DuplicateNotificationDetector.stubs(:is_duplicate?).returns(true)
-  #   OrderFinder.stubs(:find_pending).returns(nil)
-  #   
-  #   #force ipn to return acknowledge as false
-  #   ipn_callback = @ipn_params.merge("acknowledge" => "true")
-  #   post :create, ipn_callback
-  #   assert_response :success
-  # 
-  #   assert PaymentNotification.where(:transaction_id => ipn_callback[:txn_id], :acknowledged => true).all.count == 1
-  # end
-
-  def test_if_ipn_acknowledged_order_complete_no_duplicates_with_pending_order
-  end
-
-
-  # DuplicateNotificationDetector.stubs(:is_duplicate?).returns(true)
-  # OrderFinder.stubs(:find_pending).returns(nil)
-  # order = Order.new
-  # OrderCompletor.stubs(:complete_order).returns(order)
-  # StockManager.stubs(:adjust_stock)
-  # SimpleCartManager.stubs(:clear_cart)
 
   # def test_if_ipn_not_acknowledged
   #   
@@ -113,24 +78,25 @@ class PaymentNotificationsControllerTest < ActionController::TestCase
   # end
 
   # Happy Path
-  def test_if_ipn_acknowledged_complete_unique_found_pending_order
-    ipn_params = @ipn_params.merge("acknowledge" => "true", "payment_status" => "Complete")
+  test "if ipn is acknowledged, order is complete, transaction is unique and pending order is found, we should complete the order, adjust stock and clear out cart" do
+    ipn_params = @ipn_params.merge("acknowledge" => "true", "payment_status" => "Completed")
 
     notification = Factory.build(:payment_notification, :params => ipn_params,  :status => ipn_params[:payment_status], :transaction_id => ipn_params[:txn_id])
-    PaymentNotification.expects(:create!).returns(notification)
+    PaymentNotification.stubs(:create!).returns(notification)
     
-    DuplicateNotificationDetector.expects(:is_unique?).returns(true)
+    dnd = mock('duplicate_notification_detector')
+    DuplicateNotificationDetector.stubs(:new).returns(dnd)
+    dnd.expects(:is_unique?).returns(true)
     
-    order = Factory.build(:order)
-    OrderFinder.expects(:find_pending).returns(order)
+    pending_order = Factory.build(:order, :status => "pending")
+    OrderFinder.any_instance.stubs(:find_pending).returns(pending_order)
     
-    # completed_order = Factory(:order, :shop_id => 12, :status => "complete")
-    # OrderCompletor.expects(:complete_order).with(:notification => notification, :order => order).returns(completed_order)
-    # 
-    # StockManager.expects(:adjust_stock).with(:order => completed_order)
-    
-    SimpleCartManager.expects(:clear_cart)
-    
+    completed_order = Factory.build(:order, :status => "complete")
+
+    transaction_completor = mock('transaction_completor')
+    TransactionCompletor.expects(:new).with(:notification => notification, :pending_order => pending_order).returns(transaction_completor)
+    transaction_completor.expects(:complete_transaction)
+
     post :create, ipn_params
     assert_response :success
   end

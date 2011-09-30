@@ -17,10 +17,6 @@ gem 'nokogiri'
 
 gem "nifty-generators", :group => :development
 
-gem 'ar_fixtures', :git => 'git://github.com/topfunky/ar_fixtures.git'
-
-gem 'factory_girl'
-
 
 # Use unicorn as the web server
 # gem 'unicorn'
@@ -42,6 +38,10 @@ gem 'factory_girl'
 # put test-only gems in this group so their generators
 # and rake tasks are available in development mode:
 group :development, :test do
-  gem 'rspec-rails'
+  # gem 'rspec-rails'
+  gem 'ar_fixtures', :git => 'git://github.com/topfunky/ar_fixtures.git'
+  gem 'factory_girl'
+  gem 'mocha', '0.10.0', :require => false
 end
-gem "mocha", :group => :test
+
+
