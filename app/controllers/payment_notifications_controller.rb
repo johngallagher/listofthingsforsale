@@ -27,7 +27,7 @@ class PaymentNotificationsController < ApplicationController
       
       pending_order = OrderFinder.new(:order_params => @paypal_notification.params).find_pending
       if pending_order.nil?
-        logger.debug("Pending order not found - #{@paypal_notification.inspect}")
+        logger.debug("Pending order not found. Hacking attempt or accidental submission by another seller - #{@paypal_notification.inspect}")
         render :nothing => true and return
       end
       
