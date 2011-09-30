@@ -20,7 +20,7 @@ class PaymentNotificationsControllerTest < ActionController::TestCase
       "payment_date"=>"14:17:24 Sep 28, 2011 PDT",
       "option_name2_1"=>"shopid",
       "option_selection1_1"=>"21",
-      "payment_status"=>"Completed",
+      "payment_status"=>"Pending",
       "charset"=>"windows-1252",
       "address_zip"=>"W12 4LQ",
       "mc_shipping"=>"0.00",
@@ -61,28 +61,12 @@ class PaymentNotificationsControllerTest < ActionController::TestCase
       "ipn_track_id"=>"LlEfeRjfHawhnM1zyCcqrA"}
   end
 
-  # def test_if_ipn_not_acknowledged
-  #   
-  # end
-  # 
-  # def test_if_ipn_acknowledged_not_complete
-  #   
-  # end
-  # 
-  # def test_if_ipn_acknowledged_complete_not_unique
-  #   
-  # end
-  # 
-  # def test_if_ipn_acknowledged_complete_unique_not_found_pending_order
-  #   
-  # end
-
   # Happy Path
-  test "if ipn is acknowledged, order is complete, transaction is unique and pending order is found, we should complete the order, adjust stock and clear out cart" do
+  test "if ipn is acknowledged, order is complete, transaction is unique and pending order is found, we should complete the transaction" do
     ipn_params = @ipn_params.merge("acknowledge" => "true", "payment_status" => "Completed")
 
     notification = Factory.build(:payment_notification, :params => ipn_params,  :status => ipn_params[:payment_status], :transaction_id => ipn_params[:txn_id])
-    PaymentNotification.stubs(:create!).returns(notification)
+    PaymentNotification.expects(:create!).returns(notification)
     
     dnd = mock('duplicate_notification_detector')
     DuplicateNotificationDetector.stubs(:new).returns(dnd)
@@ -99,5 +83,74 @@ class PaymentNotificationsControllerTest < ActionController::TestCase
 
     post :create, ipn_params
     assert_response :success
+    assert notification.acknowledged
   end
+  
+  test "if ipn is acknowledged, order is complete, transaction is unique and pending order is NOT found, we should NOT complete the transaction" do
+    ipn_params = @ipn_params.merge("acknowledge" => "true", "payment_status" => "Completed")
+
+    notification = Factory.build(:payment_notification, :params => ipn_params,  :status => ipn_params[:payment_status], :transaction_id => ipn_params[:txn_id])
+    PaymentNotification.expects(:create!).returns(notification)
+    
+    dnd = mock('duplicate_notification_detector')
+    DuplicateNotificationDetector.stubs(:new).returns(dnd)
+    dnd.expects(:is_unique?).returns(true)
+    
+    OrderFinder.any_instance.stubs(:find_pending).returns(nil)
+
+    TransactionCompletor.expects(:new).never
+
+    post :create, ipn_params
+    assert_response :success
+    assert notification.acknowledged
+  end
+
+  test "if ipn is acknowledged, order is complete, transaction is a duplicate we should not complete the transaction" do
+    ipn_params = @ipn_params.merge("acknowledge" => "true", "payment_status" => "Completed")
+
+    notification = Factory.build(:payment_notification, :params => ipn_params,  :status => ipn_params[:payment_status], :transaction_id => ipn_params[:txn_id])
+    PaymentNotification.expects(:create!).returns(notification)
+    
+    dnd = mock('duplicate_notification_detector')
+    DuplicateNotificationDetector.stubs(:new).returns(dnd)
+    dnd.expects(:is_unique?).returns(false)
+    
+    OrderFinder.any_instance.expects(:find_pending).never
+    TransactionCompletor.expects(:new).never
+
+    post :create, ipn_params
+    assert_response :success
+    assert notification.acknowledged
+  end
+
+  test "if ipn is acknowledged, order is pending we should not complete the transaction" do
+    ipn_params = @ipn_params.merge("acknowledge" => "true", "payment_status" => "Pending")
+
+    notification = Factory.build(:payment_notification, :params => ipn_params,  :status => ipn_params[:payment_status], :transaction_id => ipn_params[:txn_id])
+    PaymentNotification.expects(:create!).returns(notification)
+    
+    DuplicateNotificationDetector.expects(:new).never
+    OrderFinder.any_instance.expects(:find_pending).never
+    TransactionCompletor.expects(:new).never
+
+    post :create, ipn_params
+    assert_response :success
+    assert notification.acknowledged
+  end
+
+  test "if ipn is not acknowledged, we should not complete the transaction" do
+    ipn_params = @ipn_params.merge("acknowledge" => "false")
+
+    notification = Factory.build(:payment_notification, :params => ipn_params,  :status => ipn_params[:payment_status], :transaction_id => ipn_params[:txn_id])
+    PaymentNotification.expects(:create!).returns(notification)
+    
+    DuplicateNotificationDetector.expects(:new).never
+    OrderFinder.any_instance.expects(:find_pending).never
+    TransactionCompletor.expects(:new).never
+
+    post :create, ipn_params
+    assert_response :success
+    assert !notification.acknowledged
+  end
+  
 end
