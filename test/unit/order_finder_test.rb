@@ -77,7 +77,6 @@ class OrderFinderTest < ActiveSupport::TestCase
     @johns_pending_order.save
     
     @johns_similar_pending_order = Factory.create(:johns_pending_order_for_jacket_and_belt) # two items, same bottom line price, same session id.
-    
     @johns_similar_pending_order.shop = @johns_pending_order.shop #must come from the same instance of shop
     @johns_similar_pending_order.save
     
