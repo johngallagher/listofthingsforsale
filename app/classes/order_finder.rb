@@ -21,8 +21,18 @@ class OrderFinder
   
   def filter_found_orders
     @found_orders.select! do |order|
-      order.line_items.first.item.id == @order_params["option_selection2_1"].to_i
+      line_items_match?(order.line_items)
     end
+  end
+  
+  def line_items_match?(line_items)
+    line_items.each_index do |line_item_index|
+      order_line_item_id = line_items[line_item_index].item.id
+      params_line_item_id = @order_params["option_selection2_#{line_item_index + 1}"].to_i
+      
+      return false if order_line_item_id != params_line_item_id
+    end
+    return true
   end
   
   def query_hash
