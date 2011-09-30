@@ -3,40 +3,42 @@ class PaymentNotificationsController < ApplicationController
   protect_from_forgery :except => [:create]
   
   def create
-    @notify = Paypal::Notification.new(request.raw_post)
+    @paypal_notification = Paypal::Notification.new(request.raw_post)
 
-    @notification = PaymentNotification.create!(:params => @notify.params, :status => @notify.params[:payment_status], :transaction_id => @notify.params[:txn_id] )
-    if @notify.acknowledge
-      @notification.acknowledged = true
-      begin
-        if @notify.complete?
-          validate_notification
-        else
-          logger.error("Order not completed - #{@notify.inspect}")
-        end
-      rescue => e
-        logger.error("Crash in notification validation. #{e.inspect} #{@notify.inspect}")
-        raise
-      ensure
-      end
-    else
-      logger.error("Spoofed notification - didn't come from Paypal - #{@notify.inspect}")
-      @notification.acknowledged = false
-    end
+    @notification = PaymentNotification.create!(:params => @paypal_notification.params, :status => @paypal_notification.params[:payment_status], :transaction_id => @paypal_notification.params[:txn_id] )
+    @notification.acknowledged = @paypal_notification.acknowledge
     @notification.save
-    render :nothing => true  
-  end  
-end
+    
+    begin
+      if !@notification.acknowledged
+        logger.error("Spoofed notification - didn't come from Paypal - #{@paypal_notification.inspect}")
+        render :nothing => true and return
+      end
 
-def validate_notification
-  if DuplicateNotificationDetector.new(:notification => @notification).is_unique?
-    pending_order = OrderFinder.new(:notify_params => @notify.params).find_pending
-    if pending_order
+      if !@paypal_notification.complete?
+        logger.error("Order not completed - #{@paypal_notification.inspect}")
+        render :nothing => true and return
+      end
+      
+      if !DuplicateNotificationDetector.new(:notification => @notification).is_unique?
+        logger.error("Duplicate Notification: #{@notification.inspect}")
+        render :nothing => true and return
+      end
+      
+      pending_order = OrderFinder.new(:paypal_notification_params => @paypal_notification.params).find_pending
+      if pending_order.nil?
+        logger.debug("Pending order not found - #{@paypal_notification.inspect}")
+        render :nothing => true and return
+      end
+      
       TransactionCompletor.new(:notification => @notification, :pending_order => pending_order).complete_transaction
-    else
-      logger.debug("Notification didn't come from us. Order not found.")
+
+      render :nothing => true  
+
+    rescue => e
+      logger.error("Crash in notification validation. #{e.inspect} #{@paypal_notification.inspect}")
+      raise
+    ensure
     end
-  else
-    logger.error("Duplicate Notification: #{@notification.inspect}")
-  end
+  end  
 end
