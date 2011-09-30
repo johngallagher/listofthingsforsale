@@ -12,7 +12,6 @@ class OrderFinder
   def query_string
     { :status => "Pending", 
       :shop_id => @order_params["option_selection1_1"].to_i,
-      :buyer_paypal_email => @order_params["payer_email"],
       :total_price => BigDecimal.new(@order_params["mc_gross"]),
       :session_id  => @order_params["session_id"]
       }
