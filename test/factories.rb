@@ -45,17 +45,13 @@ Factory.define :johns_pending_order_for_bag_and_wallet_from_matthias_shop, :pare
 end
 
 # Deliberately similar to above - only difference is the number of items and type of items.
-Factory.define :johns_pending_order_for_jacket_and_belt_from_matthias_shop, :parent => :pending_order_for_33_33_session_1 do |order|
+Factory.define :johns_pending_order_for_jacket_and_belt, :parent => :pending_order_for_33_33_session_1 do |order|
   order.after_create do |o|
     # add line items
     @j = Factory(:jacket_item_with_line_item)
     o.line_items << @j.line_items.first
     @b = Factory(:belt_item_with_line_item)
     o.line_items << @b.line_items.first
-    
-    # add order to matthias' shop
-    @s = Factory(:matthias_shop)
-    @s.orders << o
   end
 end
 

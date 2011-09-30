@@ -74,8 +74,13 @@ class OrderFinderTest < ActiveSupport::TestCase
 
   test "if status, shop id, session id and gross are the same for two orders should return the correct order" do
     @johns_pending_order = Factory.create(:johns_pending_order_for_bag_and_wallet_from_matthias_shop)
-    @johns_similar_pending_order = Factory.create(:johns_pending_order_for_jacket_and_belt_from_matthias_shop) # two items, same bottom line price, same session id.
-
+    @johns_pending_order.save
+    
+    @johns_similar_pending_order = Factory.create(:johns_pending_order_for_jacket_and_belt) # two items, same bottom line price, same session id.
+    
+    @johns_similar_pending_order.shop = @johns_pending_order.shop #must come from the same instance of shop
+    @johns_similar_pending_order.save
+    
     @order_params = params_for_order_matching_pending
     
     order_found = OrderFinder.new(:order_params => @order_params).find_pending
