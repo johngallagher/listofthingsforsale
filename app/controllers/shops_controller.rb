@@ -10,20 +10,26 @@ class ShopsController < ApplicationController
     end
   end
 
-  def show_public
-    
+  def show_public 
+    logger.debug "Session is #{session.inspect}"
     @shop = Shop.where("url = ?", params[:id]).find(:first)
-    respond_to do |format|
-      format.html # show.html.erb
-      format.xml  { render :xml => @shop }
+    if @shop
+      respond_to do |format|
+        format.html
+        format.xml  { render :xml => @shop }
+      end
+    else
+      respond_to do |format|
+        format.html { render 'show_invalid_shop' }
+        format.xml  { render :nothing => true }
+      end
     end
   end
   
   # GET /shops/1
   # GET /shops/1.xml
   def show
-
-    logger.debug "Seesion is #{session.inspect}"
+    logger.debug "Session is #{session.inspect}"
     if session[:shop_id].nil?
       respond_to do |format|
         format.html { redirect_to(:action => "new") }
@@ -61,19 +67,7 @@ class ShopsController < ApplicationController
   def create
     @shop_items_description = params[:shop][:description_for_shop]
     @location = nil
-    # @location = GeoLocation.find(request.remote_ip)
-    # @remote_ip = request.env["HTTP_X_FORWARDED_FOR"]
-    # logger.debug "Location is #{location.inspect} from ip #{request.remote_ip} also #{@remote_ip}"
-    # @shop_name = ""
-    # if @location[:city].nil? || @location[:city] == "(Unknown City)"
-    #   if @location[:country].nil? || @location[:country] == "(Unknown Country)"
-    #     @shop_name = "Shop in #{location[:city]}"
-    #   else
-    #     @shop_name = "Shop in #{location[:city]}, #{location[:country]}"
-    #   end
-    # else
-      @shop_name = "My Shop"
-    # end
+    @shop_name = "My Shop"
     @shop = Shop.new(:name => @shop_name)
 
     respond_to do |format|
