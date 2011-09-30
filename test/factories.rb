@@ -63,6 +63,7 @@ Factory.define :wallet_item, :class => 'Item' do |item|
 end
 
 Factory.define :wallet_line_item, :class => 'LineItem' do |line_item|
+  line_item.name "wallet"
   line_item.unit_price 22.22
   line_item.quantity 1
 end
@@ -81,6 +82,7 @@ Factory.define :bag_item, :class => 'Item' do |item|
 end
 
 Factory.define :bag_line_item, :class => 'LineItem' do |line_item|
+  line_item.name "bag"
   line_item.unit_price 11.11
   line_item.quantity 1
 end

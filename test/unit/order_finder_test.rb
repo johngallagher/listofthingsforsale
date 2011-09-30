@@ -53,9 +53,8 @@ class OrderFinderTest < ActiveSupport::TestCase
        "ipn_track_id"=>"LlEfeRjfHawhnM1zyCcqrA"}
   end
   
-  test "if nil order params should return nil" do
-    order_found = OrderFinder.new(:order_params => nil).find_pending
-    assert_nil(order_found)
+  test "if nil order params should raise" do
+    assert_raise(RuntimeError) { OrderFinder.new(:order_params => nil).find_pending }
   end
   
   test "if order params are present with no entries in database should return nil" do
@@ -65,11 +64,13 @@ class OrderFinderTest < ActiveSupport::TestCase
   
   test "if order params match pending order in database should return that order" do
     @johns_pending_order = Factory(:johns_pending_order_for_bag_and_wallet_from_matthias_shop)
+    assert_not_nil(@johns_pending_order)
+
     @order_params = params_for_order_matching_pending
     
     order_found = OrderFinder.new(:order_params => @order_params).find_pending
     
-    assert_equal(order_found, @johns_pending_order)
+    assert_equal(@johns_pending_order, order_found)
   end
   
   def params_for_order_matching_pending
@@ -107,7 +108,7 @@ class OrderFinderTest < ActiveSupport::TestCase
        "transaction_subject"=>"Shopping Cart",
        "ipn_track_id"=>"LlEfeRjfHawhnM1zyCcqrA",
 
-       "num_cart_items"=>"2",
+       "num_cart_items"=>"#{@johns_pending_order.line_items.count}",
        
        "payment_status"=>"Pending",
        "business"=>"#{@johns_pending_order.shop.user.email}",
@@ -123,9 +124,9 @@ class OrderFinderTest < ActiveSupport::TestCase
        
        "option_name2_1"=>"itemid",
        "option_selection2_1"=>"#{@johns_pending_order.line_items.first.item.id}",
-       "quantity1"=>"#{@johns_pending_order.shop_id}",
-       "mc_gross_1"=>"11.11",
-       "item_name1"=>"bag",
+       "quantity1"=>"1",
+       "mc_gross_1"=>"#{@johns_pending_order.line_items.first.unit_price}",
+       "item_name1"=>"#{@johns_pending_order.line_items.first.name}",
        "item_number1"=>"1",
 
        #item 2
@@ -134,9 +135,9 @@ class OrderFinderTest < ActiveSupport::TestCase
        
        "option_name2_2"=>"itemid",
        "option_selection2_2"=>"#{@johns_pending_order.line_items.second.item.id}",
-       "quantity2"=>"#{@johns_pending_order.shop_id}",
-       "mc_gross_2"=>"22.22",
-       "item_name2"=>"wallet",
+       "quantity2"=>"1",
+       "mc_gross_2"=>"#{@johns_pending_order.line_items.second.unit_price}",
+       "item_name2"=>"#{@johns_pending_order.line_items.second.name}",
        "item_number2"=>"2",
        
        #total
