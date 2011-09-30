@@ -1,4 +1,6 @@
 Things3::Application.routes.draw do
+  resources :orders
+
   resources :payment_notifications, :action => :create
   
   # match 'payment/notify' => 'payment#notify'
