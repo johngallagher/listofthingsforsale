@@ -57,10 +57,12 @@ class OrderFinderTest < ActiveSupport::TestCase
     order_found = OrderFinder.new(:order_params => nil).find_pending
     assert_nil(order_found)
   end
+  
   test "if order params are present with no entries in database should return nil" do
     order_found = OrderFinder.new(:order_params => @order_params).find_pending
     assert_nil(order_found)
   end
+  
   test "if order params match pending order in database should return that order" do
     @johns_pending_order = Factory(:johns_pending_order_for_bag_and_wallet_from_matthias_shop)
     @order_params = params_for_order_matching_pending
@@ -107,7 +109,7 @@ class OrderFinderTest < ActiveSupport::TestCase
 
        "num_cart_items"=>"2",
        
-       "payment_status"=>"#{@johns_pending_order.status}",
+       "payment_status"=>"Pending",
        "business"=>"#{@johns_pending_order.shop.user.email}",
        "receiver_email"=>"#{@johns_pending_order.shop.user.email}",
        "payer_email"=>"#{@johns_pending_order.buyer_paypal_email}",
@@ -140,6 +142,9 @@ class OrderFinderTest < ActiveSupport::TestCase
        #total
        "mc_gross"=>"#{@johns_pending_order.total_price}",
 
-       "payment_gross"=>"#{@johns_pending_order.total_price}" }
+       "payment_gross"=>"#{@johns_pending_order.total_price}",
+       
+       "session_id"=>"#{@johns_pending_order.session_id}" 
+       }
   end
 end
