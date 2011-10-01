@@ -13,7 +13,8 @@ class PaypalParamsGeneratorTest < ActionController::TestCase
     assert !@order.session_id.nil?
     assert @order.total_price != 0
   end
-  
+
+  # Can't get this test to pass without it crashing - test unit doesn't catch the crash as it should do.
   # test "raise exception for nil order" do
   #   assert_raise(PaypalParamsGenerator.new(:order => nil).generate_params)
   # end
