@@ -23,7 +23,7 @@ class OrderFinder
   
   def filter_found_orders
     @found_orders.select! do |order|
-      line_item_ids_match?(order.line_items)
+      line_item_ids_match?(order.line_items) and num_cart_items_match?(order)
     end
   end
   
@@ -35,6 +35,10 @@ class OrderFinder
       return false if order_line_item_id != params_line_item_id
     end
     return true
+  end
+  
+  def num_cart_items_match?(order)
+    order.line_items.count == @params_order["num_cart_items"].to_i
   end
   
   def query_hash
