@@ -69,4 +69,10 @@ class PaypalParamsToOrderAdapterTest < ActiveSupport::TestCase
     adapted_order = PaypalParamsToOrderAdapter.new(paypal_params).adapt
     assert adapted_order.total_price == @order.total_price
   end
+  
+  test "should create order with same currency" do
+    paypal_params = PaypalParamsGenerator.new(:order => @order).generate_params
+    adapted_order = PaypalParamsToOrderAdapter.new(paypal_params).adapt
+    assert adapted_order.currency == @order.currency
+  end
 end

@@ -39,7 +39,7 @@ gem "nifty-generators", :group => :development
 # and rake tasks are available in development mode:
 group :development, :test do
   # gem 'rspec-rails'
-  gem 'ar_fixtures', :git => 'git://github.com/topfunky/ar_fixtures.git'
+  # gem 'ar_fixtures', :git => 'git://github.com/topfunky/ar_fixtures.git'
   gem 'factory_girl'
   gem 'mocha', '0.10.0', :require => false
 end

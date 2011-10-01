@@ -28,6 +28,7 @@ Factory.define :pending_order_for_33_33, :class => "Order" do |order|
   order.status Status::Pending
   order.total_price 33.33
   order.session_id "854f72119322a250f6f40adfffa4a11b"
+  order.currency Currency::GBP
 end
 
 Factory.define :johns_pending_order_for_bag_and_wallet, :parent => :pending_order_for_33_33 do |order|
