@@ -2,7 +2,7 @@ class PaymentNotificationsController < ApplicationController
   include ActiveMerchant::Billing::Integrations
   protect_from_forgery :except => [:create]
   
-  def create
+  def ipn
     @paypal_notification = Paypal::Notification.new(request.raw_post)
 
     @payment_notification = PaymentNotification.create!(:params => @paypal_notification.params, :status => @paypal_notification.params[:payment_status], :transaction_id => @paypal_notification.params[:txn_id] )

@@ -51,9 +51,8 @@ function Cart(){
 	me.email = "";
 	me.merchantId	 = "";
 	me.successUrl = "http://high-mist-4028.heroku.com/";
-  // me.cancelUrl = "http://high-mist-4028.heroku.com/payment_notifications/create";
-	me.cancelUrl = "http://high-mist-4028.heroku.com/payment_notifications/create";
-	me.notifyUrl = "http://high-mist-4028.heroku.com/";
+	me.cancelUrl = "http://high-mist-4028.heroku.com/";
+	me.notifyUrl = "http://high-mist-4028.heroku.com/payment/ipn";
 	me.cookieDuration = 30; // default duration in days
 	me.storagePrefix = "sc_";
 	me.MAX_COOKIE_SIZE = 4000;

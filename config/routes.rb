@@ -1,9 +1,7 @@
 Things3::Application.routes.draw do
-  resources :orders
-
-  resources :payment_notifications, :action => :create
+  # resources :payment_notifications, :action => :create
   
-  # match 'payment/notify' => 'payment#notify' old ipn
+  match 'payment/ipn' => 'payment_notifications#ipn'
   match 'public/:id' => 'shops#show_public', :constraints => { :id => /[a-z]{8,8}/ }
 
   resources :photos
