@@ -25,7 +25,7 @@ end
 # Orders
 Factory.define :pending_order_for_33_33, :class => "Order" do |order|
   order.buyer_paypal_email "" # on checkout there's no way of grabbing this, so when the order is pending it's blank.
-  order.status "Pending"
+  order.status Status::Pending
   order.total_price 33.33
   order.session_id "854f72119322a250f6f40adfffa4a11b"
 end

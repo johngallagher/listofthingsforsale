@@ -27,6 +27,7 @@ class PaypalParamsToOrderAdapterTest < ActiveSupport::TestCase
 
     # make sure the factory has set it all up right.
     assert @order.shop_id != 0
+    assert @order.status == Status::Pending
     assert !@order.session_id.empty?
     assert !@order.session_id.blank?
     assert !@order.session_id.nil?
@@ -40,22 +41,27 @@ class PaypalParamsToOrderAdapterTest < ActiveSupport::TestCase
   end
   
   test "should create order with same status if pending" do
-    paypal_params = PaypalParamsGenerator.new(:order => @order, :payment_status => Status::Pending).generate_params
+    @order.status = Status::Pending
+    paypal_params = PaypalParamsGenerator.new(:order => @order).generate_params
     adapted_order = PaypalParamsToOrderAdapter.new(paypal_params).adapt
+    
     assert adapted_order.status == @order.status
     assert adapted_order.status == Status::Pending
   end
   
   test "should create order with same status if completed" do
-    paypal_params = PaypalParamsGenerator.new(:order => @order, :payment_status => Status::Completed).generate_params
+    @order.status = Status::Completed
+    paypal_params = PaypalParamsGenerator.new(:order => @order).generate_params
     adapted_order = PaypalParamsToOrderAdapter.new(paypal_params).adapt
-    assert adapted_order.status == @order.status and adapted_order.status == Status::Completed
+    
+    assert adapted_order.status == @order.status
+    assert adapted_order.status == Status::Completed
   end
 
   test "should create order with same session id" do
     paypal_params = PaypalParamsGenerator.new(:order => @order).generate_params
     adapted_order = PaypalParamsToOrderAdapter.new(paypal_params).adapt
-    assert adapted_order.status == @order.status and adapted_order.status == Status::Pending
+    assert adapted_order.session_id == @order.session_id
   end
   
   test "should create order with same total price" do

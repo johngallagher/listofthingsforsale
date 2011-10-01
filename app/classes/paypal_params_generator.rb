@@ -2,9 +2,9 @@ require 'status'
 
 class PaypalParamsGenerator
   def initialize(args)
-    raise RunTimeError "Order cannot be nil" if args[:order].nil?
+    raise "Order cannot be nil" if args[:order].nil?
     @order = args[:order]
-    @payment_status = args[:payment_status].nil? ? Status::Completed : args[:payment_status]
+    @payment_status = args[:payment_status].nil? ? @order.status : args[:payment_status]
     @currency = args[:currency].nil? ? "GBP" : args[:currency]
   end
   
