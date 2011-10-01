@@ -21,11 +21,11 @@ class OrderFinder
   
   def filter_found_orders
     @found_orders.select! do |order|
-      line_items_match?(order.line_items)
+      line_item_ids_match?(order.line_items)
     end
   end
   
-  def line_items_match?(line_items)
+  def line_item_ids_match?(line_items)
     line_items.each_index do |line_item_index|
       order_line_item_id = line_items[line_item_index].item.id
       params_line_item_id = @order_params["option_selection2_#{line_item_index + 1}"].to_i

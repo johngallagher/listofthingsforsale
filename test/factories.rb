@@ -23,35 +23,39 @@ end
 
 
 # Orders
-Factory.define :pending_order_for_33_33_session_1, :class => "Order" do |order|
+Factory.define :pending_order_for_33_33, :class => "Order" do |order|
   order.buyer_paypal_email "" # on checkout there's no way of grabbing this, so when the order is pending it's blank.
   order.status "Pending"
   order.total_price 33.33
   order.session_id "854f72119322a250f6f40adfffa4a11b"
 end
 
-Factory.define :johns_pending_order_for_bag_and_wallet_from_matthias_shop, :parent => :pending_order_for_33_33_session_1 do |order|
+Factory.define :johns_pending_order_for_bag_and_wallet, :parent => :pending_order_for_33_33 do |order|
   order.after_create do |o|
     # add line items
     @b = Factory(:bag_item_with_line_item)
     o.line_items << @b.line_items.first
     @w = Factory(:wallet_item_with_line_item)
     o.line_items << @w.line_items.first
-    
-    # add order to matthias' shop
-    @s = Factory(:matthias_shop)
-    @s.orders << o
   end
 end
 
 # Deliberately similar to above - only difference is the number of items and type of items.
-Factory.define :johns_pending_order_for_jacket_and_belt, :parent => :pending_order_for_33_33_session_1 do |order|
+Factory.define :johns_pending_order_for_jacket_and_belt, :parent => :pending_order_for_33_33 do |order|
   order.after_create do |o|
     # add line items
     @j = Factory(:jacket_item_with_line_item)
     o.line_items << @j.line_items.first
     @b = Factory(:belt_item_with_line_item)
     o.line_items << @b.line_items.first
+  end
+end
+
+Factory.define :johns_pending_order_for_jacket, :parent => :pending_order_for_33_33 do |order|
+  order.after_create do |o|
+    # add line items
+    @j = Factory(:jacket_item_with_line_item)
+    o.line_items << @j.line_items.first
   end
 end
 
