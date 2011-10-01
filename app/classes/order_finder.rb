@@ -23,7 +23,7 @@ class OrderFinder
   
   def filter_found_orders
     @found_orders.select! do |order|
-      line_item_ids_match?(order.line_items) and num_cart_items_match?(order)
+      line_item_ids_match?(order.line_items)
     end
   end
   
@@ -37,13 +37,9 @@ class OrderFinder
     return true
   end
   
-  def num_cart_items_match?(order)
-    order.line_items.count == @params_order["num_cart_items"].to_i
-  end
-  
   def query_hash
     { 
-      :status => "Pending", 
+      :status => Status::Pending, 
       :shop_id => @params_order["option_selection1_1"].to_i,
       :total_price => BigDecimal.new(@params_order["mc_gross"]),
       :session_id  => @params_order["session_id"]
