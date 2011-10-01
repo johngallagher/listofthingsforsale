@@ -7,6 +7,7 @@ class PaypalParamsToOrderAdapter
     @order = Order.new(:shop_id => @paypal_params["option_selection1_1"].to_i, 
     :status => @paypal_params["payment_status"], 
     :session_id => @paypal_params["session_id"],
-    :total_price => @paypal_params["mc_gross"])
+    :total_price => @paypal_params["mc_gross"],
+    :currency => @paypal_params["currency"])
   end
 end
