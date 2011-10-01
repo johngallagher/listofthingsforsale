@@ -40,11 +40,12 @@ Factory.define :johns_pending_order_for_bag_and_wallet, :parent => :pending_orde
   end
 end
 
-Factory.define :johns_pending_order_for_bag_and_wallet_from_matthias_shop, :parent => :johns_pending_order_for_bag_and_wallet do |order|
-  order.after_create do |o|
-    o.shop { Shop.where(:name => "Matthias' List of Things for Sale").first || Factory(:matthias_shop) }
-  end
-end
+# Can't get this working yet.
+# Factory.define :johns_pending_order_for_bag_and_wallet_from_matthias_shop, :parent => :johns_pending_order_for_bag_and_wallet do |order|
+#   order.after_create do |o|
+#     o.shop { Shop.where(:name => "Matthias' List of Things for Sale").first || Factory(:matthias_shop) }
+#   end
+# end
 
 
 
