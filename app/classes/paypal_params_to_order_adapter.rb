@@ -9,5 +9,9 @@ class PaypalParamsToOrderAdapter
     :session_id => @paypal_params["session_id"],
     :total_price => @paypal_params["mc_gross"],
     :currency => @paypal_params["mc_currency"])
+    @order.line_items << LineItem.new()
+    @order.line_items << LineItem.new()
+    @order    
   end
+  
 end

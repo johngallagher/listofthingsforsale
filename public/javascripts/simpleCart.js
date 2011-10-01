@@ -50,9 +50,10 @@ function Cart(){
 	me.checkoutTo = PayPal;
 	me.email = "";
 	me.merchantId	 = "";
-	me.successUrl = "http://high-mist-4028.heroku.com/payment/notify";
-	me.cancelUrl = "http://high-mist-4028.heroku.com/payment/notify";
-	me.notifyUrl = "http://high-mist-4028.heroku.com/payment/notify";
+	me.successUrl = "http://high-mist-4028.heroku.com/";
+  // me.cancelUrl = "http://high-mist-4028.heroku.com/payment_notifications/create";
+	me.cancelUrl = "http://high-mist-4028.heroku.com/payment_notifications/create";
+	me.notifyUrl = "http://high-mist-4028.heroku.com/";
 	me.cookieDuration = 30; // default duration in days
 	me.storagePrefix = "sc_";
 	me.MAX_COOKIE_SIZE = 4000;

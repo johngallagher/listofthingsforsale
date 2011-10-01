@@ -57,7 +57,7 @@ class PaymentNotificationsControllerTest < ActionController::TestCase
       "residence_country"=>"GB",
       "test_ipn"=>"1",
       "transaction_subject"=>"Shopping Cart",
-      "payment_gross"=>"",
+      "payment_gross"=>"13.00",
       "ipn_track_id"=>"LlEfeRjfHawhnM1zyCcqrA"}
   end
 

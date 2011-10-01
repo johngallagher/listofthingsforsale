@@ -31,6 +31,10 @@ Factory.define :pending_order_for_33_33, :class => "Order" do |order|
   order.currency Currency::GBP
 end
 
+Factory.define :order, :parent => :pending_order_for_33_33 do |order|
+  
+end
+
 Factory.define :johns_pending_order_for_bag_and_wallet, :parent => :pending_order_for_33_33 do |order|
   order.after_create do |o|
     # add line items

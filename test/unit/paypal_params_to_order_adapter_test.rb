@@ -75,4 +75,13 @@ class PaypalParamsToOrderAdapterTest < ActiveSupport::TestCase
     adapted_order = PaypalParamsToOrderAdapter.new(paypal_params).adapt
     assert adapted_order.currency == @order.currency
   end
+  
+  # Later, John.
+  # test "should create correct number of line items" do
+  #   paypal_params = PaypalParamsGenerator.new(:order => @order).generate_params
+  #   adapted_order = PaypalParamsToOrderAdapter.new(paypal_params).adapt
+  #   puts "#{adapted_order.line_items.count}"
+  #   assert adapted_order.line_items.count == @order.line_items.count
+  # end
+  
 end

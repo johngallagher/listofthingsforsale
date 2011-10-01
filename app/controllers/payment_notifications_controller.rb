@@ -5,12 +5,12 @@ class PaymentNotificationsController < ApplicationController
   def create
     @paypal_notification = Paypal::Notification.new(request.raw_post)
 
-    @notification = PaymentNotification.create!(:params => @paypal_notification.params, :status => @paypal_notification.params[:payment_status], :transaction_id => @paypal_notification.params[:txn_id] )
-    @notification.acknowledged = @paypal_notification.acknowledge
-    @notification.save
+    @payment_notification = PaymentNotification.create!(:params => @paypal_notification.params, :status => @paypal_notification.params[:payment_status], :transaction_id => @paypal_notification.params[:txn_id] )
+    @payment_notification.acknowledged = @paypal_notification.acknowledge
+    @payment_notification.save
     
     begin
-      if !@notification.acknowledged
+      if !@payment_notification.acknowledged
         logger.error("Spoofed notification - didn't come from Paypal - #{@paypal_notification.inspect}")
         render :nothing => true and return
       end
@@ -20,10 +20,11 @@ class PaymentNotificationsController < ApplicationController
         render :nothing => true and return
       end
       
-      if !DuplicateNotificationDetector.new(:notification => @notification).is_unique?
-        logger.error("Duplicate Notification: #{@notification.inspect}")
-        render :nothing => true and return
-      end
+      # Later.
+      # if !DuplicateNotificationDetector.new(:notification => @payment_notification).is_unique?
+      #   logger.error("Duplicate Notification: #{@payment_notification.inspect}")
+      #   render :nothing => true and return
+      # end
       
       pending_order = OrderFinder.new(:params_order => @paypal_notification.params).find_pending
       if pending_order.nil?
@@ -31,7 +32,14 @@ class PaymentNotificationsController < ApplicationController
         render :nothing => true and return
       end
       
-      TransactionCompletor.new(:notification => @notification, :pending_order => pending_order).complete_transaction
+      if @paypal_notification.params["mc_gross"] != @paypal_notification.params["payment_gross"]
+        logger.error("Payment not equal to order total - #{@paypal_notification.inspect}")
+        render :nothing => true and return
+      end
+      
+      # Add extra validations later - for item unit price etc
+      
+      TransactionCompletor.new(:notification => @payment_notification, :pending_order => pending_order).complete_transaction
 
       render :nothing => true  
 
