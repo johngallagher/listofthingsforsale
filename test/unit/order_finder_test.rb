@@ -107,10 +107,10 @@ class OrderFinderTest < ActiveSupport::TestCase
     assert_equal(pending_order, order_found)
   end
 
-  test "if status, shop id, session id and gross are the same for two orders should return the correct order" do
+  test "with two similar orders should return the correct order" do
     matthias_shop = Factory(:matthias_shop)
     pending_order = Factory(:johns_pending_order_for_bag_and_wallet, :shop => matthias_shop)
-    similar_pending_order =  Factory(:johns_pending_order_for_jacket_and_belt, :shop => matthias_shop)
+    similar_pending_order =  Factory(:johns_pending_order_for_jacket_and_belt, :shop => matthias_shop) #has the same no of items and total price
     
     params_order = params_from_pending_order(pending_order)
     
@@ -133,11 +133,29 @@ class OrderFinderTest < ActiveSupport::TestCase
   test "similar orders with more line items in param order than in pending order should return nil" do
     matthias_shop = Factory(:matthias_shop)
     pending_order = Factory(:johns_pending_order_for_jacket, :shop => matthias_shop)
-
-    params_order = params_from_pending_order(Factory.build(:johns_pending_order_for_jacket_and_belt, :shop => matthias_shop))
+    
+    wallet_item = Factory.build(:wallet_item_with_line_item, :shop => matthias_shop)
+    pending_order_with_two_items = pending_order.line_items << wallet_item.line_items.first
+    
+    puts "pending order with one item: #{pending_order} and with two #{pending_order_with_two_items}"
+    params_order = params_from_pending_order(pending_order_with_two_items)
     
     order_found = OrderFinder.new(:params_order => params_order).find_pending
     
     assert_nil(order_found)
   end
+  
+  # identical orders except for number of items
+  test "if number of items in cart is different should return nil" do
+    matthias_shop = Factory(:matthias_shop)
+    pending_order = Factory(:johns_pending_order_for_bag_and_wallet, :shop => matthias_shop)
+    
+    params_order = params_from_pending_order(pending_order)
+    params_order.merge!({"num_cart_items" => "3"})
+    
+    order_found = OrderFinder.new(:params_order => params_order).find_pending
+    
+    assert_nil(order_found)
+  end
+  
 end

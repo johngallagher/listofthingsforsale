@@ -8,10 +8,12 @@ class OrderFinder
   def find_pending
     find_orders
     filter_found_orders
-    if @found_orders and @found_orders.count == 1
+    return nil if @found_orders.nil? or @found_orders.empty?
+      
+    if @found_orders.count == 1
       @found_orders.first 
     else
-      nil
+      @found_orders
     end
   end
   
