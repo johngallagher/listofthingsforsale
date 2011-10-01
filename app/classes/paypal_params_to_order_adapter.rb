@@ -8,6 +8,6 @@ class PaypalParamsToOrderAdapter
     :status => @paypal_params["payment_status"], 
     :session_id => @paypal_params["session_id"],
     :total_price => @paypal_params["mc_gross"],
-    :currency => @paypal_params["currency"])
+    :currency => @paypal_params["mc_currency"])
   end
 end
