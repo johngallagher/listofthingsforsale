@@ -1,7 +1,7 @@
 class OrderFinder
   def initialize(args)
-    raise "order_params must not be nil" if args[:order_params].nil?
-    @order_params = args[:order_params]
+    raise "params_order must not be nil" if args[:params_order].nil?
+    @params_order = args[:params_order]
     @found_orders = nil
   end
   
@@ -28,7 +28,7 @@ class OrderFinder
   def line_item_ids_match?(line_items)
     line_items.each_index do |line_item_index|
       order_line_item_id = line_items[line_item_index].item.id
-      params_line_item_id = @order_params["option_selection2_#{line_item_index + 1}"].to_i
+      params_line_item_id = @params_order["option_selection2_#{line_item_index + 1}"].to_i
       
       return false if order_line_item_id != params_line_item_id
     end
@@ -38,9 +38,9 @@ class OrderFinder
   def query_hash
     { 
       :status => "Pending", 
-      :shop_id => @order_params["option_selection1_1"].to_i,
-      :total_price => BigDecimal.new(@order_params["mc_gross"]),
-      :session_id  => @order_params["session_id"]
+      :shop_id => @params_order["option_selection1_1"].to_i,
+      :total_price => BigDecimal.new(@params_order["mc_gross"]),
+      :session_id  => @params_order["session_id"]
     }
   end
 end
