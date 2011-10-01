@@ -5,6 +5,7 @@ class PaypalParamsGenerator
     raise RunTimeError "Order cannot be nil" if args[:order].nil?
     @order = args[:order]
     @payment_status = args[:payment_status].nil? ? Status::Completed : args[:payment_status]
+    @currency = args[:currency].nil? ? "GBP" : args[:currency]
   end
   
   def generate_params
@@ -12,6 +13,7 @@ class PaypalParamsGenerator
     add_email_params
     add_line_items_params
     add_payment_status
+    add_currency
     return @params
   end
   
@@ -46,7 +48,6 @@ private
        "payment_fee"=>"",
        "receiver_id"=>"5EC9ZN6KQH47N",
        "txn_type"=>"cart",
-       "mc_currency"=>"GBP",
        "residence_country"=>"GB",
        "test_ipn"=>"1",
        "transaction_subject"=>"Shopping Cart",
@@ -103,5 +104,9 @@ private
   
   def add_payment_status
     @params.merge!("payment_status"=>"#{@payment_status}")
+  end
+  
+  def add_currency
+    @params.merge!("mc_currency"=>"#{@currency}")
   end
 end

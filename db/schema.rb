@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110930204852) do
+ActiveRecord::Schema.define(:version => 20111001123250) do
 
   create_table "items", :force => true do |t|
     t.string   "name"
@@ -42,6 +42,7 @@ ActiveRecord::Schema.define(:version => 20110930204852) do
     t.decimal  "total_price"
     t.string   "status"
     t.string   "session_id"
+    t.string   "currency"
   end
 
   create_table "payment_notifications", :force => true do |t|

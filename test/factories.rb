@@ -40,6 +40,14 @@ Factory.define :johns_pending_order_for_bag_and_wallet, :parent => :pending_orde
   end
 end
 
+Factory.define :johns_pending_order_for_bag_and_wallet_from_matthias_shop, :parent => :johns_pending_order_for_bag_and_wallet do |order|
+  order.after_create do |o|
+    o.shop { Shop.where(:name => "Matthias' List of Things for Sale").first || Factory(:matthias_shop) }
+  end
+end
+
+
+
 # Deliberately similar to above - only difference is the number of items and type of items.
 Factory.define :johns_pending_order_for_jacket_and_belt, :parent => :pending_order_for_33_33 do |order|
   order.after_create do |o|
