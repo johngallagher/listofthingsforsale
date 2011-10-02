@@ -1,3 +1,4 @@
+$("#user_nav").after('<div id="flash_error"><%= escape_javascript(flash.delete(:error)) %></div>');
 <% @items_out_of_stock.each do |this_item| %>
   simpleCart.items['<%= this_item["id"] %>'].remove();
 <% end %>

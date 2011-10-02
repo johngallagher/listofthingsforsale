@@ -43,8 +43,9 @@ class SimpleCartController < ApplicationController
         format.js { render 'simplecart_checkout'} # runs the usual simplecart checkout code
       end
     else
+      flash[:error] = "Items that were out of stock have been removed."
       respond_to do |format|
-        format.js { render 'update_cart' => @items_out_of_stock} # remove items out of stock and show as out of stock on list page
+        format.js { render 'check_stock' => @items_out_of_stock} # remove items out of stock and show as out of stock on list page
       end
     end
   end
