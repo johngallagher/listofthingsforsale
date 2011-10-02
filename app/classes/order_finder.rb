@@ -41,8 +41,7 @@ class OrderFinder
     { 
       :status => Status::Pending, 
       :shop_id => @params_order["option_selection1_1"].to_i,
-      :total_price => BigDecimal.new(@params_order["mc_gross"]),
-      :session_id  => @params_order["session_id"]
+      :total_price => BigDecimal.new(@params_order["mc_gross"])
     }
   end
 end

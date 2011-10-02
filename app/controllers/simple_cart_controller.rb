@@ -37,6 +37,7 @@ class SimpleCartController < ApplicationController
       # Nothing out of stock so continue with checkout process
       
       # Create a pending order in our system
+      create_pending_order
       
       respond_to do |format|
         format.js { render 'simplecart_checkout'} # runs the usual simplecart checkout code
@@ -48,6 +49,17 @@ class SimpleCartController < ApplicationController
     end
   end
   
+  def create_pending_order
+    this_shop_id = params[:shopid].to_i
+    this_shop = Shop.find(this_shop_id)
+    if this_shop.nil? 
+      return
+    end
+    
+    final_total = BigDecimal.new(params[:finalTotal])
+    order = Order.create(:shop => this_shop, :total_price => final_total, :status => Status::Pending, :currency => Currency::GBP)
+    order.save!
+  end
   
   def check_stock_items
     @items_out_of_stock = []

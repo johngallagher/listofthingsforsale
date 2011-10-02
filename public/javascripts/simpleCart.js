@@ -225,9 +225,13 @@ function Cart(){
 	};
 
   me.checkStock = function () {
+		if( me.quantity === 0 ){
+			error("Cart is empty");
+			return;
+		}
     // Call back to rails with list of all items in cart to check stock
     var listItems = new Array(0);
-    
+    var shopid;
 		me.each(function(item){
 		  var thisItem = {};
 		  thisItem["id"] = item.id;
@@ -236,11 +240,12 @@ function Cart(){
 		  thisItem["quantity"] = item.quantity;
 		  thisItem["amount"] = item.price;
 		  thisItem["shopid"] = item.shopid;
+		  this_shopid = item.shopid;
 		  listItems.push(thisItem);
 		});
 		
     
-    $.post('/simple_cart/check_stock', { items: listItems } );
+    $.post('/simple_cart/check_stock', { shopid: this_shopid, finalTotal: me.finalTotal, items: listItems } );
   }
 
 	/******************************************************
