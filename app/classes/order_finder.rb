@@ -42,7 +42,7 @@ class OrderFinder
   def query_hash
     { 
       :status => Status::Pending, 
-      :shop_id => @params_order["option_selection1_1"].to_i,
+      :shop_id => @params_order["option_selection2_1"].to_i,
       :total_price => BigDecimal.new(@params_order["mc_gross"])
     }
   end
