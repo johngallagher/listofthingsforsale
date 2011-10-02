@@ -1,4 +1,19 @@
-<h2>Start Selling!</h2>
+<h2>Admin area</h2>
+
+<% if @shop.user_id.nil? then %>
+<%= render 'devise/registrations/new_short' %>
+<% else %>
+	<% if user_signed_in? %>  
+  Signed in as <%= current_user.email %>. Not you?  
+  <%= link_to "Sign out", destroy_user_session_path %>
+	<% else %>
+	<%= render :partial => "devise/confirmations/new" %>
+	<% end %>
+<% end %>
+
+
+
+<h2>Settings</h2>
 <% form_for(@shop) do |f| %>
   <div class="field">
 
@@ -47,3 +62,8 @@
 		</p>
   </div>
 <% end %>
+
+<h2>Image Upload</h2>
+<h2>URL</h2>
+<%= render :partial => "public_url" %>
+

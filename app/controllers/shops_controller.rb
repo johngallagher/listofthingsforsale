@@ -10,37 +10,37 @@ class ShopsController < ApplicationController
     end
   end
 
-  def show_public 
-    logger.debug "Session is #{session.inspect}"
-    @shop = Shop.where("url = ?", params[:id]).find(:first)
-    if @shop
-      respond_to do |format|
-        format.html
-        format.xml  { render :xml => @shop }
-      end
-    else
-      respond_to do |format|
-        format.html { render 'show_invalid_shop' }
-        format.xml  { render :nothing => true }
-      end
-    end
-  end
+  # def show_public
+  #   logger.debug "Session is #{session.inspect}"
+  #   @shop = Shop.where("url = ?", params[:id]).find(:first)
+  #   if @shop
+  #     respond_to do |format|
+  #       format.html
+  #       format.xml  { render :xml => @shop }
+  #     end
+  #   else
+  #     respond_to do |format|
+  #       format.html { render 'show_invalid_shop' }
+  #       format.xml  { render :nothing => true }
+  #     end
+  #   end
+  # end
   
   # GET /shops/1
   # GET /shops/1.xml
   def show
-    logger.debug "Session is #{session.inspect}"
-    if session[:shop_id].nil?
-      respond_to do |format|
-        format.html { redirect_to(:action => "new") }
-        format.xml  { render :xml => @shop }
-      end
-      return
+    if params[:url].nil?
+      @shop = Shop.find(params[:id])
     else
-      @shop = Shop.find(session[:shop_id])
+      @shop = Shop.where(:url => params[:url]).first
+    end
+    if session[:shop_id].to_i == @shop.id
       respond_to do |format|
-        format.html # show.html.erb
-        format.xml  { render :xml => @shop }
+        format.html { render 'admin_show', :object => @shop} # show.html.erb
+      end
+    else
+      respond_to do |format|
+        format.html { render 'show' => @shop} # show.html.erb
       end
     end
   end
@@ -58,17 +58,29 @@ class ShopsController < ApplicationController
 
   # GET /shops/1/edit
   def edit
-    @shop = Shop.find(params[:id])
+    if params[:url].nil?
+      @shop_id = params[:id]
+      @shop = Shop.find(@shop_id)
+    else
+      @shop = Shop.where(:url => params[:url]).first
+      @shop_id = @shop.id
+    end
+    # logger.debug "session is #{session.inspect} and params are #{params}"
+    unless session[:shop_id].to_i == @shop_id.to_i
+      respond_to do |format|
+        format.html { redirect_to(@shop, :notice => 'Shop cannot be edited.')} # show.html.erb
+      end
+    end      
   end
 
 
   # POST /shops
   # POST /shops.xml
   def create
-    @shop_items_description = params[:shop][:description_for_shop]
+    @shop_items_description = params[:shop][:description]
     @location = nil
     @shop_name = "My Shop"
-    @shop = Shop.new(:name => @shop_name)
+    @shop = Shop.new(:name => @shop_name, :description => @shop_items_description, :status => ShopStatus::LIVE_FREE, :url => (0...8).map{65.+(rand(25)).chr}.join.downcase)
 
     respond_to do |format|
       if @shop.save
@@ -82,12 +94,6 @@ class ShopsController < ApplicationController
           this_item.save
           logger.debug "this item was #{this_item.inspect}"
         end
-        
-        # @item_1 = Item.new(:name => "Test Item 1", :description_text => "Hello", :price => "1.50", :shop => @shop)
-        # @item_2 = Item.new(:name => "Test Item 2", :description_text => "Hello there", :price => "4.00", :shop => @shop)
-        # 
-        # @item_1.save
-        # @item_2.save
 
         format.html { redirect_to(@shop, :notice => 'Shop was successfully created.') }
         format.xml  { render :xml => @shop, :status => :created, :location => @shop }
@@ -105,6 +111,16 @@ class ShopsController < ApplicationController
 
     respond_to do |format|
       if @shop.update_attributes(params[:shop])
+        logger.debug("params changed were #{params[:shop].inspect}")
+        new_description = params[:shop][:description]
+        @shop.items.destroy_all
+        ItemGenerator.new(new_description).generate_items.each do |this_item|
+          this_item.shop = @shop
+          this_item.quantity = 1
+          this_item.save
+          logger.debug "this item was #{this_item.inspect}"
+        end
+        
         format.html { redirect_to(@shop, :notice => 'Shop was successfully updated.') }
         format.xml  { head :ok }
       else
@@ -126,18 +142,18 @@ class ShopsController < ApplicationController
     end
   end
   
-  def take_live
-    @shop = Shop.find(params[:id])
-    @shop.status = ShopStatus::LIVE_FREE
-    @shop.url = (0...8).map{65.+(rand(25)).chr}.join.downcase
-    respond_to do |format|
-      if @shop.save
-        format.html { redirect_to(@shop, :notice => 'Shop was successfully taken live.') }
-        format.xml  { head :ok }
-      else
-        format.html { render :action => "edit" }
-        format.xml  { render :xml => @shop.errors, :status => :unprocessable_entity }
-      end
-    end
-  end
+  # def take_live
+  #   @shop = Shop.find(params[:id])
+  #   @shop.status = ShopStatus::LIVE_FREE
+  #   @shop.url = (0...8).map{65.+(rand(25)).chr}.join.downcase
+  #   respond_to do |format|
+  #     if @shop.save
+  #       format.html { redirect_to(@shop, :notice => 'Shop was successfully taken live.') }
+  #       format.xml  { head :ok }
+  #     else
+  #       format.html { render :action => "edit" }
+  #       format.xml  { render :xml => @shop.errors, :status => :unprocessable_entity }
+  #     end
+  #   end
+  # end
 end

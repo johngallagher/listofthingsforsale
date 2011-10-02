@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111001123250) do
+ActiveRecord::Schema.define(:version => 20111002202658) do
 
   create_table "items", :force => true do |t|
     t.string   "name"
@@ -79,6 +79,7 @@ ActiveRecord::Schema.define(:version => 20111001123250) do
     t.boolean  "prices_include_postage"
     t.decimal  "postage_price"
     t.string   "postage_type"
+    t.text     "description"
   end
 
   create_table "users", :force => true do |t|

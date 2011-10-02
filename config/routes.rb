@@ -1,5 +1,7 @@
 Things3::Application.routes.draw do
-  # resources :payment_notifications, :action => :create
+  match ':url' => 'shops#show', :constraints => { :url => /[a-z]{8,8}/ }
+  match ':url/edit' => 'shops#edit', :constraints => { :url => /[a-z]{8,8}/ }
+
   match 'simple_cart/check_stock' => 'simple_cart#check_stock'
   match 'simple_cart/home' => 'simple_cart#home'
   match 'simple_cart/change' => 'simple_cart#change'
@@ -7,16 +9,15 @@ Things3::Application.routes.draw do
 
 
   match 'payment/ipn' => 'payment_notifications#ipn'
-  match 'public/:id' => 'shops#show_public', :constraints => { :id => /[a-z]{8,8}/ }
+
 
   resources :photos
-
 
   resources :shops do
     resources :items
   end
 
-  match 'shops/:id/take_live' => 'shops#take_live'
+  # match 'shops/:id/take_live' => 'shops#take_live'
 
   resources :descriptions
 
