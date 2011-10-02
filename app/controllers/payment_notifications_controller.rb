@@ -32,7 +32,7 @@ class PaymentNotificationsController < ApplicationController
         render :nothing => true and return
       end
       
-      if @paypal_notification.params["mc_gross"] != @paypal_notification.params["payment_gross"]
+      if BigDecimal.new(@paypal_notification.params["mc_gross"]) != pending_order.total_price
         logger.error("Payment not equal to order total - #{@paypal_notification.inspect}")
         render :nothing => true and return
       end
