@@ -1,0 +1,3 @@
+<% @items_out_of_stock.each do |this_item| %>
+  simpleCart.items['<%= this_item["id"] %>'].remove();
+<% end %>

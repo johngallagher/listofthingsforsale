@@ -44,4 +44,4 @@ group :development, :test do
   gem 'mocha', '0.10.0', :require => false
 end
 
-
+gem 'jquery-rails', '>= 1.0.12'

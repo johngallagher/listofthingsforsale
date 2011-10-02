@@ -224,6 +224,24 @@ function Cart(){
 		return result || [];
 	};
 
+  me.checkStock = function () {
+    // Call back to rails with list of all items in cart to check stock
+    var listItems = new Array(0);
+    
+		me.each(function(item){
+		  var thisItem = {};
+		  thisItem["id"] = item.id;
+		  thisItem["itemid"] = item.itemid;
+		  thisItem["name"] = item.name;
+		  thisItem["quantity"] = item.quantity;
+		  thisItem["amount"] = item.price;
+		  thisItem["shopid"] = item.shopid;
+		  listItems.push(thisItem);
+		});
+		
+    
+    $.post('/simple_cart/check_stock', { items: listItems } );
+  }
 
 	/******************************************************
 			 checkout management
@@ -291,8 +309,6 @@ function Cart(){
 		if( me.cancelUrl ){
 			form.appendChild(me.createHiddenElement("cancel_return",  me.cancelUrl ));
 		}
-		
-		
 
 		me.each(function(item,iter){
 
@@ -320,7 +336,7 @@ function Cart(){
 		});
 
 		document.body.appendChild( form );
-        form.submit();
+    form.submit();
     document.body.removeChild( form );
 		
 	};
@@ -493,7 +509,8 @@ function Cart(){
 		me.shippingCostOutlets		= getElementsByClassName('simpleCart_shippingCost');
 		me.finalTotalOutlets		= getElementsByClassName('simpleCart_finalTotal');
 
-		me.addEventToArray( getElementsByClassName('simpleCart_checkout') , simpleCart.checkout , "click");
+		me.addEventToArray( getElementsByClassName('simpleCart_checkout') , simpleCart.checkStock , "click");
+    // me.addEventToArray( getElementsByClassName('simpleCart_checkout') , simpleCart.checkout , "click");
 		me.addEventToArray( getElementsByClassName('simpleCart_empty')	, simpleCart.empty , "click" );
 		
 		me.Shelf = new Shelf();

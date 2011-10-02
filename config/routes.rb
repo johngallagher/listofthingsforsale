@@ -1,6 +1,11 @@
 Things3::Application.routes.draw do
   # resources :payment_notifications, :action => :create
-  
+  match 'simple_cart/check_stock' => 'simple_cart#check_stock'
+  match 'simple_cart/home' => 'simple_cart#home'
+  match 'simple_cart/change' => 'simple_cart#change'
+  resources :simple_cart
+
+
   match 'payment/ipn' => 'payment_notifications#ipn'
   match 'public/:id' => 'shops#show_public', :constraints => { :id => /[a-z]{8,8}/ }
 
