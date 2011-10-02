@@ -5,6 +5,7 @@ class OrderCompletor
   end
   def complete_order
     @pending_order.status = Status::Completed
+    @pending_order.save
     return @pending_order
   end
   
