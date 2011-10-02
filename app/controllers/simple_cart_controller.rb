@@ -59,6 +59,22 @@ class SimpleCartController < ApplicationController
     final_total = BigDecimal.new(params[:finalTotal])
     order = Order.create(:shop => this_shop, :total_price => final_total, :status => Status::Pending, :currency => Currency::GBP)
     order.save!
+    
+    @items_out_of_stock = []
+    items = params[:items]
+    items.keys.each do |this_item_id|
+      this_item = items[this_item_id]
+      this_item_id = this_item["itemid"].to_i
+      this_item_quantity = this_item["quantity"].to_i
+      this_item_name = this_item["name"]
+      this_item_unit_price = BigDecimal.new(this_item["amount"])
+      this_item = Item.find(this_item_id)
+      this_line_item = LineItem.create(:unit_price => this_item_unit_price, :quantity => this_item_quantity, :name => this_item_name, :item => this_item, :unit_price => this_item_unit_price)
+      this_line_item.save
+      order.line_items << this_line_item
+    end
+
+    order.save
   end
   
   def check_stock_items

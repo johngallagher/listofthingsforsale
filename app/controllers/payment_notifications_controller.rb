@@ -25,10 +25,10 @@ class PaymentNotificationsController < ApplicationController
       #   logger.error("Duplicate Notification: #{@payment_notification.inspect}")
       #   render :nothing => true and return
       # end
-      
+      logger.debug("before pending order notification is #{@paypal_notification.inspect}")
       pending_order = OrderFinder.new(:params_order => @paypal_notification.params).find_pending
       if pending_order.nil?
-        logger.debug("Pending order not found. Hacking attempt or accidental submission by another seller - #{@paypal_notification.inspect}")
+        logger.error("Pending order not found. Hacking attempt or accidental submission by another seller - #{@paypal_notification.inspect}")
         render :nothing => true and return
       end
       
