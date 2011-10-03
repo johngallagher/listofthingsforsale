@@ -17,6 +17,12 @@ gem 'nokogiri'
 
 gem "nifty-generators", :group => :development
 
+gem "remotipart", "~> 1.0"
+
+gem 'dragonfly', '~>0.9.8'
+gem 'rack-cache', :require => 'rack/cache'
+
+gem 'paperclip'
 
 # Use unicorn as the web server
 # gem 'unicorn'

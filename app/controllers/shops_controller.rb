@@ -32,6 +32,7 @@ class ShopsController < ApplicationController
       @shop = Shop.find(session[:shop_id])
       respond_to do |format|
         format.html { render 'admin_show', :object => @shop} # show.html.erb
+        format.js
       end
     end
   end
@@ -48,6 +49,7 @@ class ShopsController < ApplicationController
     
     respond_to do |format|
       format.html { render 'show' => @shop} # show.html.erb
+      format.js
     end
     
     # if session[:shop_id].to_i == @shop.id
@@ -161,22 +163,30 @@ class ShopsController < ApplicationController
   # PUT /shops/1
   # PUT /shops/1.xml
   def update
+    logger.debug("Params passed into update were: #{params.inspect}")
     @shop = Shop.find(params[:id])
 
     respond_to do |format|
       if @shop.update_attributes(params[:shop])
         logger.debug("params changed were #{params[:shop].inspect}")
         new_description = params[:shop][:description]
-        @shop.items.destroy_all
-        ItemGenerator.new(new_description).generate_items.each do |this_item|
-          this_item.shop = @shop
-          this_item.quantity = 1
-          this_item.save
-          logger.debug "this item was #{this_item.inspect}"
+        if !new_description.nil?
+          @shop.items.destroy_all
+          ItemGenerator.new(new_description).generate_items.each do |this_item|
+            this_item.shop = @shop
+            this_item.quantity = 1
+            this_item.save
+            logger.debug "this item was #{this_item.inspect}"
+          end
         end
+        # respond_to do |format|
+          format.html { render :action => "show", :shop => @shop} # show.html.erb
+          format.js
+        # end
         
-        format.html { redirect_to(@shop, :notice => 'Shop was successfully updated.') }
-        format.xml  { head :ok }
+        # format.html {render @shop }
+        # # format.html { redirect_to(@shop, :notice => 'Shop was successfully updated.') }
+        # format.xml  { head :ok }
       else
         format.html { render :action => "edit" }
         format.xml  { render :xml => @shop.errors, :status => :unprocessable_entity }

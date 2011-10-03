@@ -1,6 +1,7 @@
 <div class="simpleCart_shelfItem">
 <h2 class="item_name"><%= @item.name %></h2>
 <span class="item_price">£<%= @item.price %></span>
+<%= link_to(image_tag(@item.photo_1.url(:thumb)), @item.photo_1.url(:medium)) %>
 <span class="item_itemid" style="display:none;"><%= @item.id %></span>
 <span class="item_shopid" style="display:none;"><%= @shop.id %></span>
 

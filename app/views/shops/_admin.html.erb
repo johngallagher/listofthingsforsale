@@ -9,8 +9,30 @@ If user is not signed in and no user for shop: 1,4
 If user is being verified: 2,4
 If user is signed in: 3,4
 If user is not signed in but shop has user: 4 -->
+<script type="text/javascript" charset="utf-8">
+	function submitForm() {
+		$("form.edit_shop").submit();
+	};
+	function changeItemPhoto() {
+		itemIdToChange = $("select#item_image_name_item_image_id").val()
+		$("form.edit_item").attr("action","/items/" + itemIdToChange);
+	}
+</script>
 
 <h2>Admin area</h2>
+
+<h2>Image Upload</h2>
+<%= select :item_image_name, :item_image_id, Item.where(:shop_id => @shop.id).all.collect {|p| [ p.name, p.id ] }, options = {:onChange => "changeItemPhoto()"}, html_options = {:onChange => "changeItemPhoto()"} %>
+
+<% @item = @shop.items.first %>
+<% form_for @item, :html => { :multipart => true }, :remote => true do |f| %>
+  <div class="field">
+    <%= f.label :photo_1, :class => 'required' %><br />
+    <%= f.file_field :photo_1, :required => true %>
+  </div>
+
+	<%= f.submit %>
+<% end %>
 
 <!-- 1. Sign Up -->
 <% if !user_signed_in? and @shop.user_id.nil? %>
@@ -39,23 +61,21 @@ If user is not signed in but shop has user: 4 -->
 
 
 <h2>Settings</h2>
-<% form_for(@shop) do |f| %>
+<% form_for @shop, :remote => true do |f| %>
   <div class="field">
 
 	  <p>
 	    <%= f.label "Payment" %><br />
-		  <%= f.radio_button :payment_type, 'paypal', :checked => true %> 
-		  <%= f.label :payment_type_paypal, 'Paypal', :value => "paypal" %>
-		  <%= f.radio_button :payment_type, 'other' %>
-		  <%= f.label :payment_type_other, 'Other', :value => "other" %>
+			<%= f.check_box :payment_type , :onClick => "submitForm()" %>
+		  <%= f.label :payment_type_paypal, 'Use Paypal', :value => "paypal" %>
 		</p>
 	  <p>
 	    <%= f.label :paypal_email %><br />
-	    <%= f.text_field :paypal_email %>
+	    <%= f.text_field :paypal_email, :onBlur => "submitForm()" %>
 	  </p>
 	  <p>
 	    <%= f.label :payment_other_text %><br />
-	    <%= f.text_area :payment_other_text %>
+	    <%= f.text_area :payment_other_text, :onBlur => "submitForm()" %>
 	  </p>
 
 
@@ -65,15 +85,15 @@ If user is not signed in but shop has user: 4 -->
 		  <%= f.label :delivery_method_post, 'Post', :value => "post" %>
 		  <%= f.radio_button :delivery_method, 'collection' %>
 		  <%= f.label :delivery_method_other, 'Collection', :value => "collection" %>
-		</p>
-
+		s</p>
+		
 	  <p>
 	    <%= f.label "Postage Included" %><br />
 	    <%= f.check_box :prices_include_postage, :checked => true  %>
 	  </p>
 	  <p>
 	    <%= f.label :postage_price %><br />
-	    <%= f.text_field :postage_price %>
+	    <%= f.text_field :postage_price, :onBlur => "submitForm()"  %>
 	  </p>
 
 	  <p>
@@ -82,13 +102,9 @@ If user is not signed in but shop has user: 4 -->
 		  <%= f.radio_button :postage_type, 'per_item' %>
 		  <%= f.label :postage_type_per_item, 'Per Item', :value => "per_item" %>
 		</p>
-		<p>
-		<%= f.submit "Start Selling Now!" %>
-		</p>
   </div>
 <% end %>
 
-<h2>Image Upload</h2>
 
 
 <h2>Now make it your own</h2>

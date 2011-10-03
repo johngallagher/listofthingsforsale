@@ -1,5 +1,7 @@
 Things3::Application.routes.draw do
   devise_for :users, :controllers => { :registrations => "registrations", :confirmations => "confirmations", :sessions => "sessions" }
+
+  resources :items
   
   match ':url' => 'shops#show', :constraints => { :url => /[a-z]{8,8}/ }
   match ':url/edit' => 'shops#edit', :constraints => { :url => /[a-z]{8,8}/ }
@@ -14,6 +16,7 @@ Things3::Application.routes.draw do
   
   
   resources :photos
+
   
   resources :shops do
     resources :items
