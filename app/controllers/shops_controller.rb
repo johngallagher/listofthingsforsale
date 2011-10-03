@@ -10,21 +10,31 @@ class ShopsController < ApplicationController
     end
   end
 
-  # def show_public
-  #   logger.debug "Session is #{session.inspect}"
-  #   @shop = Shop.where("url = ?", params[:id]).find(:first)
-  #   if @shop
-  #     respond_to do |format|
-  #       format.html
-  #       format.xml  { render :xml => @shop }
-  #     end
-  #   else
-  #     respond_to do |format|
-  #       format.html { render 'show_invalid_shop' }
-  #       format.xml  { render :nothing => true }
-  #     end
-  #   end
-  # end
+  def home_edit
+    if session[:shop_id].nil?
+      respond_to do |format|
+        format.html { render :action => "new" }
+      end
+    else
+      @shop = Shop.find(session[:shop_id])
+      respond_to do |format|
+        format.html { render 'edit', :object => @shop} # show.html.erb
+      end
+    end
+  end
+
+  def home
+    if session[:shop_id].nil?
+      respond_to do |format|
+        format.html { render :action => "new" }
+      end
+    else
+      @shop = Shop.find(session[:shop_id])
+      respond_to do |format|
+        format.html { render 'admin_show', :object => @shop} # show.html.erb
+      end
+    end
+  end
   
   # GET /shops/1
   # GET /shops/1.xml
