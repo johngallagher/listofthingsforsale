@@ -1,31 +1,34 @@
 Things3::Application.routes.draw do
+  devise_for :users, :controllers => { :registrations => "registrations", :confirmations => "confirmations" }
+  
   match ':url' => 'shops#show', :constraints => { :url => /[a-z]{8,8}/ }
   match ':url/edit' => 'shops#edit', :constraints => { :url => /[a-z]{8,8}/ }
-
+  
   match 'simple_cart/check_stock' => 'simple_cart#check_stock'
   match 'simple_cart/home' => 'simple_cart#home'
   match 'simple_cart/change' => 'simple_cart#change'
   resources :simple_cart
-
-
+  
+  
   match 'payment/ipn' => 'payment_notifications#ipn'
-
-
+  
+  
   resources :photos
-
+  
   resources :shops do
     resources :items
   end
-
+  
   # match 'shops/:id/take_live' => 'shops#take_live'
-
+  
   resources :descriptions
 
-  devise_for :users, :controllers => { :registrations => "registrations", :confirmations => "confirmations" }
   # devise_for :users , :confirmations => "confirmations"
+  # devise_for :users
   
-  match 'edit' => 'shops#home_edit'
-  root :to => "shops#home"
+  # match 'edit' => 'shops#home_edit'
+  root :to => "home#index"
+  # root :to => "shops#home"
 
 
   # The priority is based upon order of creation:

@@ -5,7 +5,7 @@
 <% else %>
 	<% if user_signed_in? %>  
   Signed in as <%= current_user.email %>. Not you?  
-  <%= link_to "Sign out", destroy_user_session_path %>
+  <%= link_to "Sign out", destroy_user_session_path, :method => :delete %>
 	<% else %>
 	<%= render :partial => "devise/confirmations/new" %>
 	<% end %>
