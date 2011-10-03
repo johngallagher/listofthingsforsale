@@ -26,9 +26,8 @@ Things3::Application.routes.draw do
   # devise_for :users , :confirmations => "confirmations"
   # devise_for :users
   
-  # match 'edit' => 'shops#home_edit'
-  root :to => "home#index"
-  # root :to => "shops#home"
+  match 'edit' => 'shops#home_edit'
+  root :to => "shops#home"
 
 
   # The priority is based upon order of creation:
