@@ -22,6 +22,8 @@ gem "remotipart", "~> 1.0"
 gem 'dragonfly', '~>0.9.8'
 gem 'rack-cache', :require => 'rack/cache'
 
+gem 'aws-s3'
+
 gem 'paperclip'
 
 # Use unicorn as the web server

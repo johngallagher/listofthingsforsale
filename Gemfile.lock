@@ -34,6 +34,10 @@ GEM
       activesupport (= 3.0.10)
     activesupport (3.0.10)
     arel (2.0.10)
+    aws-s3 (0.6.2)
+      builder
+      mime-types
+      xml-simple
     bcrypt-ruby (3.0.1)
     braintree (2.11.0)
       builder (>= 2.0.0)
@@ -105,12 +109,14 @@ GEM
     tzinfo (0.3.29)
     warden (1.0.5)
       rack (>= 1.0)
+    xml-simple (1.1.0)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
   activemerchant
+  aws-s3
   devise (= 1.4.5)
   dragonfly (~> 0.9.8)
   factory_girl
