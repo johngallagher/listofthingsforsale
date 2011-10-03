@@ -506,6 +506,9 @@ function Cart(){
 
 	me.initializeView = function() {
 		var me = this;
+    me.storagePrefix = $("span.simpleCart_shopPrefix").html();
+    console.log("here's storage" + me.storagePrefix);
+		me.totalOutlets				= getElementsByClassName('simpleCart_total');
 		me.totalOutlets				= getElementsByClassName('simpleCart_total');
 		me.quantityOutlets			= getElementsByClassName('simpleCart_quantity');
 		me.cartDivs					= getElementsByClassName('simpleCart_items');
@@ -963,6 +966,7 @@ function Cart(){
 		return shipping;
 	}
 
+
 	me.initialize = function() {
 		me.initializeView();
 		me.load();
@@ -970,6 +974,7 @@ function Cart(){
 		me.ready();
 	};
 
+  
 }
 
 /********************************************************************************************************

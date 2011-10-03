@@ -7,7 +7,13 @@
 	</script>
 <%end%>
 
-<h1>xxxx's List of things for sale</h1>
+<span class="simpleCart_shopPrefix" style="display: none;">sc<%= @shop.id %>_</span>
+<h1>
+<% if @shop.url[-1,1] == "s" %>
+<%= @shop.url %>'
+<% else %>
+<%= @shop.url %>'s
+<% end %> list of things for sale</h1>
 
 <% @shop.items.each do |item| %>
 <div>
