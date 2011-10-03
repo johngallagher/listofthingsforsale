@@ -44,11 +44,14 @@ class ShopsController < ApplicationController
     else
       @shop = Shop.where(:url => params[:url]).first
     end
+    logger.debug "Session is #{session.inspect}"
     if session[:shop_id].to_i == @shop.id
+      logger.debug "session is our shop id"
       respond_to do |format|
         format.html { render 'admin_show', :object => @shop} # show.html.erb
       end
     else
+      logger.debug "session is NOT our shop id"
       respond_to do |format|
         format.html { render 'show' => @shop} # show.html.erb
       end
@@ -58,6 +61,15 @@ class ShopsController < ApplicationController
   # GET /shops/new
   # GET /shops/new.xml
   def new
+    if user_signed_in?
+      if current_user.shop
+        @shop = current_user.shop
+        respond_to do |format|
+          format.html {  redirect_to :action => 'show', :id => @shop.id and return } # show.html.erb
+        end
+      end
+    end
+    
     @shop = Shop.new
     logger.debug "Making a new shop"
     respond_to do |format|
@@ -88,12 +100,34 @@ class ShopsController < ApplicationController
   # POST /shops.xml
   def create
     @shop_items_description = params[:shop][:description]
-    @location = nil
-    @shop_name = "My Shop"
+
+    @shop_name = nil
     @shop = Shop.new(:name => @shop_name, :description => @shop_items_description, :status => ShopStatus::LIVE_FREE, :url => (0...8).map{65.+(rand(25)).chr}.join.downcase)
+
+    # if user is signed in
+    # 
+    #   if user already has a shop and they try and make one, 
+    #     redirect them to their shop.
+    #   else 
+    #     Set user id on shop to the id of current signed in user.
+    # 
+    # if user isn't signed in
+    #   set session shop id to  id of new shop
+    # 
+    # end
+
+
+
 
     respond_to do |format|
       if @shop.save
+        if user_signed_in?
+          if current_user.shop.nil?
+            current_user.shop = @shop
+            current_user.save
+          end
+        end
+        
         session[:shop_id] = @shop.id
         
         logger.debug "Params passed in are #{params}"
