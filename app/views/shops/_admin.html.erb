@@ -1,16 +1,41 @@
+<!-- Elements:
+
+1. Sign up (if no user for shop)
+2. Resend verification code (if verification is in process)
+3. Change password/email address (if user signed in and verification not in process)
+4. Change URL (always)
+
+If user is not signed in and no user for shop: 1,4
+If user is being verified: 2,4
+If user is signed in: 3,4
+If user is not signed in but shop has user: 4 -->
+
 <h2>Admin area</h2>
 
-<% if @shop.user_id.nil? then %>
-<%= render 'devise/registrations/new_short' %>
-<% else %>
-	<% if user_signed_in? %>  
-  Signed in as <%= current_user.email %>. Not you?  
-  <%= link_to "Sign out", destroy_user_session_path, :method => :delete %>
-	<% else %>
-	<%= render :partial => "devise/confirmations/new" %>
+<!-- 1. Sign Up -->
+<% if !user_signed_in? and @shop.user_id.nil? %>
+	<%= render 'devise/registrations/new_short' %>
+<% end %>
+
+
+<!-- 2. Verification resend -->
+<% if !@shop.user_id.nil? %>
+	<% if !User.find(@shop.user_id).confirmation_token.nil? %>
+		<%= render 'devise/confirmations/new' %>
 	<% end %>
 <% end %>
 
+<!-- 3. Change password and email address -->
+
+<% if user_signed_in? %>
+  Signed in as <%= current_user.email %>. Not you?
+  <%= link_to "Sign out", destroy_user_session_path, :method => :delete %>
+	Change Password/Email address area.
+<% end %>
+
+<!-- 4. Change url -->
+
+<%= render :partial => "public_url" %>
 
 
 <h2>Settings</h2>
@@ -66,6 +91,5 @@
 <h2>Image Upload</h2>
 
 
-<h2>URL</h2>
-<%= render :partial => "public_url" %>
+<h2>Now make it your own</h2>
 

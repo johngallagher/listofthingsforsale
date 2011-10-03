@@ -45,19 +45,29 @@ class ShopsController < ApplicationController
       @shop = Shop.where(:url => params[:url]).first
     end
     logger.debug "Session is #{session.inspect}"
-    if session[:shop_id].to_i == @shop.id
-      logger.debug "session is our shop id"
-      respond_to do |format|
-        format.html { render 'admin_show', :object => @shop} # show.html.erb
-      end
-    else
-      logger.debug "session is NOT our shop id"
-      respond_to do |format|
-        format.html { render 'show' => @shop} # show.html.erb
-      end
+    
+    respond_to do |format|
+      format.html { render 'show' => @shop} # show.html.erb
+    end
+    
+    # if session[:shop_id].to_i == @shop.id
+    #   show_users_shop
+    # else
+    #   show_shop
+    # end
+  end
+
+  def show_users_shop
+    respond_to do |format|
+      format.html { render 'admin_show', :shop => @shop} # show.html.erb
     end
   end
 
+  def show_shop
+    respond_to do |format|
+      format.html { render 'show' => @shop} # show.html.erb
+    end
+  end
   # GET /shops/new
   # GET /shops/new.xml
   def new
