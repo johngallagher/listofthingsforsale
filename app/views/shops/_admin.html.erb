@@ -16,22 +16,22 @@ If user is not signed in but shop has user: 4 -->
 	function changeItemPhoto() {
 		itemIdToChange = $("select#item_image_name_item_image_id").val()
 		$("form.edit_item").attr("action","/items/" + itemIdToChange);
+		$(".photo_selector").show();
 	}
 </script>
 
 <h2>Admin area</h2>
 
 <h2>Image Upload</h2>
-<%= select :item_image_name, :item_image_id, Item.where(:shop_id => @shop.id).all.collect {|p| [ p.name, p.id ] }, options = {:onChange => "changeItemPhoto()"}, html_options = {:onChange => "changeItemPhoto()"} %>
+<%= select :item_image_name, :item_image_id, Item.where(:shop_id => @shop.id).all.collect {|p| [ p.name, p.id ] }, options = {:onChange => "changeItemPhoto()", :include_blank => 'Select item'}, html_options = {:onChange => "changeItemPhoto()"} %>
 
-<% @item = @shop.items.first %>
 <% form_for @item, :html => { :multipart => true }, :remote => true do |f| %>
-  <div class="field">
+  <div class="photo_selector" style="display: none;">
     <%= f.label :photo_1, :class => 'required' %><br />
     <%= f.file_field :photo_1, :required => true %>
+		<%= f.submit %>
   </div>
 
-	<%= f.submit %>
 <% end %>
 
 <!-- 1. Sign Up -->

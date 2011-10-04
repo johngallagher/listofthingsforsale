@@ -173,14 +173,17 @@ class ShopsController < ApplicationController
         if !new_description.nil?
           @shop.items.destroy_all
           ItemGenerator.new(new_description).generate_items.each do |this_item|
-            this_item.shop = @shop
             this_item.quantity = 1
             this_item.save
             logger.debug "this item was #{this_item.inspect}"
+            @shop.items << this_item
           end
+          @shop.save
         end
+        logger.debug("Shop is #{@shop.inspect} with items #{@shop.items.inspect}")
+        @item = @shop.items.first
         # respond_to do |format|
-          format.html { render :action => "show", :shop => @shop} # show.html.erb
+          format.html { render :action => "show", :local => { :shop => @shop, :item => @item} } # show.html.erb
           format.js
         # end
         
