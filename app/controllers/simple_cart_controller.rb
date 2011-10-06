@@ -42,10 +42,10 @@ class SimpleCartController < ApplicationController
           format.js { render 'simplecart_checkout'} # runs the usual simplecart checkout code
         end
       else
-        @email_order = EmailOrder.new
-        @email_order.order = @pending_order
+
         respond_to do |format|
-          format.js { redirect_to @email_order, :action => 'show' }
+          format.js { render 'email_checkout' }
+          # format.js { redirect_to :controller => "email_orders", :action => 'new', :layout => false }
         end
       end
       

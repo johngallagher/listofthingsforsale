@@ -21,7 +21,7 @@ class EmailOrder
 
     def save
       if self.valid?
-        Notifier.order_notification(self).deliver!
+        UserNotifier.order_notification(self).deliver
         return true
       end
       return false
