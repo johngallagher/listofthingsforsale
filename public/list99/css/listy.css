@@ -163,13 +163,13 @@
 
 #aboveline
 {
-    margin-bottom: 10px;color:#000;
+    margin-bottom: 10px;
+    color: #000;
 }
 #admin
 {
     width: 100%;
     margin-top: 10px;
-
 }
 
 
@@ -180,8 +180,9 @@
 {
     padding: 0;
     margin: 0;
-    background: #fff url(nav.gif) repeat-x;
-    height: 25px;
+    width:100%;
+    height:25px;
+    border-bottom: 1px solid #eee;
 }
 #topbar DIV.topbar-centred
 {
@@ -190,94 +191,58 @@
     margin: 0px auto;
     width: 950px;
     position: relative;
-    height: 25px;
 }
 
 #topbar UL.navigation
 {
-    padding-right: 0px;
     display: block;
-    padding-left: 0px;
     float: left;
-    padding-bottom: 0px;
     margin: 0px;
-    padding-top: 0px;
+    padding: 0;
+    height:25px;
     list-style-type: none;
+    border-left: 1px solid #eee;
 }
 #topbar UL.navigation LI
-{
+{height:25px;
     padding: 0;
     margin: 0;
     display: block;
     float: left;
-    width: 100px;
-    text-indent: -9999px;
-    height: 25px;
+    border-right: 1px solid #eee; /* text-transform:uppercase; */
 }
 
-#topbar UL.navigation LI.begin
+#topbar UL.navigation LI a
 {
-    background-image: url(../images/nav_begin.gif);
+    display: block;
+    padding: 4px 20px;
+    text-decoration: none;
 }
 
-#topbar UL.navigation LI.begin-current, #topbar UL.navigation LI.begin:hover
+
+#topbar UL.navigation LI.current
 {
-    background-image: url(../images/nav_begin_active.gif);
+    background-color: #d5edf8;
 }
 
-
-#topbar UL.navigation LI.help
+#topbar UL.navigation LI.current a
 {
-    background-image: url(../images/nav_help.gif);
+    color:#000;
 }
-#topbar UL.navigation LI.help-current, #topbar UL.navigation LI.help:hover
+
+
+#topbar UL.navigation LI:hover
 {
-    background-image: url(../images/nav_help_active.gif);
+    background-color: #fff000;
 }
 
 
-
-#topbar UL.navigation LI.pricing
+#topbar UL.navigation LI.last
 {
-    background-image: url(../images/nav_pricing.gif);
-}
-#topbar UL.navigation LI.pricing-current, #topbar UL.navigation LI.pricing:hover
-{
-    background-image: url(../images/nav_pricing_active.gif);
-}
-
-
-#topbar UL.navigation LI.about
-{
-    background-image: url(../images/nav_about.gif);
-}
-#topbar UL.navigation LI.about-current, #topbar UL.navigation LI.about:hover
-{
-    background-image: url(../images/nav_about_active.gif);
 }
 
 
 
-#topbar UL.navigation LI.blog
-{
-    background-image: url(../images/nav_blog.gif);
-}
-#topbar UL.navigation LI.blog-current, #topbar UL.navigation LI.blog:hover
-{
-    background-image: url(../images/nav_blog_active.gif);
-}
-
-
-
-
-#topbar UL.navigation LI.contact
-{
-    background-image: url(../images/nav_contact.gif);
-}
-#topbar UL.navigation LI.contact-current, #topbar UL.navigation LI.contact:hover
-{
-    background-image: url(../images/nav_contact_active.gif);
-}
 
 
 
@@ -413,3 +378,9 @@
 {
     display: none;
 }
+
+
+
+
+.pricing td,.pricing th {text-align:center;border-right:1px solid #ddd;width:50%;}
+.pricing td.last, .pricing th.last {border-right:0;}

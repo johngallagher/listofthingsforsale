@@ -57,14 +57,10 @@ If user is not signed in but shop has user: 4 -->
 	                    <div class="column span-20">
 												<%= form_for(@shop) do |f| %>
 										    	<%= f.text_area :description, :id => "list1", :rows => "5", :cols => "20", :style => "width: 780px; height: 250px;" %>
-													<%= f.submit %>
 		                      <div class="column span-3 prepend-9 append-8">
 		                        <a href="javascript:;" id="listsubmit" type="submit" class="button positive" name="listsubmit" onClick="$('form.edit_shop').submit()">Save <img src="/css/plugins/buttons/icons/arrow_right.png" alt=""></a>
 													</div>
 												<% end %>
-												<br>
-	                        <a href="shop.htm" id="listsubmit" type="submit" class="button positive" name="listsubmit">Save <img src="/css/plugins/buttons/icons/arrow_right.png" alt=""></a>
-	                      </div>
 	                      <hr class="space">
 	                    </div>
 	                    <div class="column span-6 colborder">
