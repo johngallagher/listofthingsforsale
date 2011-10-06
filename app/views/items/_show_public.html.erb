@@ -1,10 +1,22 @@
 <div class="simpleCart_shelfItem">
-<h2 class="item_name"><%= @item.name %></h2>
-<span class="item_price">£<%= @item.price %></span>
-<%= link_to(image_tag(@item.photo_1.url(:thumb)), @item.photo_1.url(:medium)) %>
-<span class="item_itemid" style="display:none;"><%= @item.id %></span>
-<span class="item_shopid" style="display:none;"><%= @shop.id %></span>
-
-<a href="javascript:;" class="item_add" <% if @item.quantity == 0 then %>style="display:none;"<% end %>>Add to Cart</a>
-<a href="#"  <% if @item.quantity > 0 then %> style="display:none;"<% end %>>Sold out!</a>
+    <ul>
+			<span class="item_shopid" style="display:none;"><%= @shop.id %></span>
+				<span class="item_itemid" style="display:none;"><%= item.id %></span>
+        <li class="item_name_li"><a class="item_name" href="javascript:;" id="item<%= item_index + 1 %>"><%= item.name %></a></li>
+        <li class="item_price"><%= number_to_currency(item.price, :unit => "£") %></li>
+        <li class=" item_add"><a class="item_addtocart button" href="javascript:;" style="margin-top: 0;">Add to Cart</a></li>
+        <li class="item_image">
+					<% if item.photo_1.file? %>
+					<%= link_to(image_tag(item.photo_1.url(:thumb)), item.photo_1.url(:medium)) %>
+					<% end %>
+				</li>
+        <li class="item_description" id="item-desc<%= item_index + 1 %>" style="display: none;"><%= item.description_text %><br />
+            <% if item.quantity > 0 %>
+							<%= item.quantity %> Available
+						<% else %>
+							Sold out
+						<% end %>
+						<hr style="margin-top: 5px;">
+        </li>
+    </ul>
 </div>

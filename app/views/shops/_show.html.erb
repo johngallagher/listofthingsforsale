@@ -12,83 +12,14 @@
 <div class="container">
     <hr class="space">
     <hr class="space">
-    <h1>
-        n6fe3n's list of things for sale:</h1>
+		<h1><%= @shop.url %>&#x27;<% if @shop.url[-1,1] != "s" %>s<% end %> list of things for sale:</h1>
+		
     <div id="left" class="span-15 colborder">
-        <div id="listview">
-            <div class="simpleCart_shelfItem">
-                <ul>
-                    <li class="item_name_li"><a class="item_name" href="javascript:;" id="item1">iPod Touch
-                        16gig 2nd Gen</a></li>
-                    <li class="item_price">£70</li>
-                    <li class=" item_add"><a class="item_addtocart button" href="javascript:;" style="margin-top: 0;">
-                        Add to Cart</a></li>
-                    <li class="item_image"><a href="/images/touch500.jpg">
-                        <img src="/images/touch50.jpg"></a></li>
-                    <li class="item_description" id="item-desc1" style="display: none;">No description<br />
-                        1 Available<hr style="margin-top: 5px;">
-                    </li>
-                </ul>
-            </div>
-            <div class="simpleCart_shelfItem">
-                <ul>
-                    <li class="item_name_li"><a class="item_name" href="javascript:;" id="item3">Fender
-                        Jazz Bass Guitar</a></li>
-                    <li class="item_price">£280</li><li class=" item_add"><a class="item_addtocart button"
-                        href="javascript:;" style="margin-top: 0;">Add to Cart</a></li>
-                    <li class="item_image  "><a href="/images/guitar500.jpg">
-                        <img src="/images/guitar50.jpg"></a></li>
-                    <li class="item_description" id="item-desc3" style="display: none;">No description<br />
-                        1 Available<hr style="margin-top: 5px;">
-                    </li>
-                </ul>
-            </div>
-            <div class="simpleCart_shelfItem">
-                <ul>
-                    <li class="item_name_li"><a class="item_name" href="javascript:;" id="item2">Pearl Bracelet</a></li>
-                    <li class="item_price">£35</li><li class=" item_add"><a class="item_addtocart button"
-                        href="javascript:;" style="margin-top: 0;">Add to Cart</a></li>
-                    <li class="item_image"><a href="/images/necklace500.jpg">
-                        <img src="/images/necklace50.jpg"></a> </li>
-                    <li class="item_description" id="item-desc2" style="display: none;">Stunning original
-                        Art Deco piece dated circa 1930, the silverwork is hallmarked NL with a tiny crown
-                        symbol.<br />
-                        1 Available<hr style="margin-top: 5px;">
-                    </li>
-                </ul>
-            </div>
-            <div class="simpleCart_shelfItem">
-                <ul>
-                    <li class="item_name_li"><a class="item_name" href="javascript:;" id="item4">Nouveau
-                        Banjo CD</a></li>
-                    <li class="item_price">£5</li><li class=" item_add"><a class="item_addtocart button"
-                        href="javascript:;" style="margin-top: 0;">Add to Cart</a></li>
-                    <li class="item_image  "><a href="/images/banjo500.jpg">
-                        <img src="/images/banjo50.jpg"></a></li>
-                    <li class="item_description" id="item-desc4" style="display: none;">The quintet's infamous
-                        first album<br />
-                        1 Available<hr style="margin-top: 5px;">
-                    </li>
-                </ul>
-            </div>
-            <div class="simpleCart_shelfItem">
-                <ul>
-                    <li class="item_name_li"><a class="item_name" href="javascript:;" id="item5">Black Wallet
-                        by Jimmy Choo for H&amp;M</a></li>
-                    <li class="item_price">£20</li><li class=" item_add"><a class="item_addtocart button"
-                        href="javascript:;" style="margin-top: 0;">Add to Cart</a></li><li class="item_image  ">
-                            <a href="/images/image_1.jpg">
-                                <img src="/images/image_1s.jpg" style="width: 50px;"></a></li>
-                    <li class="item_description" id="item-desc5" style="display: none;">Brand new black
-                        leather wallet from the Jimmy Choo collection from H&M. Label inside is marked genuine
-                        leather and made in Portugal. It is brand new, literally never used once, and originally
-                        cost me £35. I still have the shiny silver and blue foil bag that it came in too
-                        if you want it.<br />
-                        1 Available<hr style="margin-top: 5px;">
-                    </li>
-                </ul>
-            </div>
-        </div>
+      <div id="listview">
+				<% @shop.items.each_index do |item_index| %>
+					<%= render :partial => "items/show_public", :locals => { :item => @shop.items[item_index], :item_index => item_index } %>
+				<% end %>
+      </div>
     </div>
     <div class="span-7 last">
         <p style="text-align: center;">

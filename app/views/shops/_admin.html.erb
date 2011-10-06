@@ -19,6 +19,14 @@ If user is not signed in but shop has user: 4 -->
 				$(".photo_selector").show();
 			}
 		</script>
+		<script src="http://connect.facebook.net/en_US/all.js"></script>
+    <script>
+       FB.init({ 
+          appId:'258055290904307', cookie:true, 
+          status:true, xfbml:true 
+       });
+    </script>
+		
 		<div id="admin">
 			<div id="aboveline" class="info" style="text-align: center; border-left: 0px; border-right: 0px; border-bottom: 0px;">
 				<span style="color: #205791">Above this line is what your customers will see.</span>
@@ -96,7 +104,11 @@ If user is not signed in but shop has user: 4 -->
 	              <div class="panel">
 	                <div class="panel-wrapper" style="text-align: left;">
 	                  <fieldset id="signupform" style="margin-top:5px;">
-	                    <legend style="font-weight:normal;">Sign up now to save your List of Things for Sale</legend> <img src="/images/facebook-connect-button.png" alt="facebook-connect-button" width="194" height="25">
+	                    <legend style="font-weight:normal;">Sign up now to save your List of Things for Sale</legend>
+											<fb:login-button perms="email">
+											         Login with Facebook
+											      </fb:login-button>
+	 <img src="/images/facebook-connect-button.png" alt="facebook-connect-button" width="194" height="25">
 	                    <hr class="space">
 	                    or
 	                    <hr class="space">
@@ -199,3 +211,4 @@ If user is not signed in but shop has user: 4 -->
 				</div>
 			</div>
 		</div>
+
