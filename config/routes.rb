@@ -1,4 +1,6 @@
 Things3::Application.routes.draw do
+  resources :email_orders
+
   devise_for :users, :controllers => { :registrations => "registrations", :confirmations => "confirmations", :sessions => "sessions" }
 
   resources :items
@@ -26,10 +28,14 @@ Things3::Application.routes.draw do
   
   resources :descriptions
 
+  match 'edit' => 'shops#home_edit'
+
+  match ':url' => 'shops#show', :constraints => { :url => /[a-z]{4,30}/ }
+  match ':url/edit' => 'shops#edit', :constraints => { :url => /[a-z]{4,30}/ }
+
   # devise_for :users , :confirmations => "confirmations"
   # devise_for :users
   
-  match 'edit' => 'shops#home_edit'
   root :to => "shops#home"
 
 

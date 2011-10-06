@@ -28,7 +28,6 @@ class SimpleCartController < ApplicationController
   end
   
   def check_stock
-    logger.debug "DATABASE operation happens here!"
     logger.debug "Params are #{params.inspect}"
     
     check_stock_items
@@ -36,8 +35,9 @@ class SimpleCartController < ApplicationController
     if @items_out_of_stock.empty?
       # Nothing out of stock so continue with checkout process
       
-      # Create a pending order in our system
       create_pending_order
+      
+      paypal_allowed
       
       respond_to do |format|
         format.js { render 'simplecart_checkout'} # runs the usual simplecart checkout code
@@ -48,6 +48,13 @@ class SimpleCartController < ApplicationController
         format.js { render 'check_stock' => @items_out_of_stock} # remove items out of stock and show as out of stock on list page
       end
     end
+  end
+  
+  def paypal_allowed
+    this_shop_id = params[:shopid].to_i
+    this_shop = Shop.find(this_shop_id)
+    
+    this_shop.payment_type == "paypal"
   end
   
   def create_pending_order

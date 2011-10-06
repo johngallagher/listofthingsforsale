@@ -62,6 +62,9 @@ class ItemsController < ApplicationController
     logger.debug("Params into item controller are #{params.inspect}")
     @item = Item.find(params[:id])
     @shop_for_item = @item.shop
+  
+    #if we're here we're uploading an image so the image upload tab should be selected
+    session[:selected_tab] = 4
 
     respond_to do |format|
       if @item.update_attributes(params[:item])

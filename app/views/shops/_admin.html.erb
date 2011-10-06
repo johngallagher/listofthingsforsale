@@ -9,23 +9,47 @@ If user is not signed in and no user for shop: 1,4
 If user is being verified: 2,4
 If user is signed in: 3,4
 If user is not signed in but shop has user: 4 -->
-		<script type="text/javascript" charset="utf-8">
-			function submitForm() {
-				$("form.edit_shop").submit();
-			};
-			function changeItemPhoto() {
-				itemIdToChange = $("select#item_image_name_item_image_id").val()
-				$("form.edit_item").attr("action","/items/" + itemIdToChange);
-				$(".photo_selector").show();
-			}
-		</script>
-		<script src="http://connect.facebook.net/en_US/all.js"></script>
-    <script>
-       FB.init({ 
-          appId:'258055290904307', cookie:true, 
-          status:true, xfbml:true 
-       });
-    </script>
+
+<% content_for :dynamic_javascripts do %>
+	<script type="text/javascript" charset="utf-8">
+		function submitForm() {
+			$("form.edit_shop").submit();
+		};
+		function changeItemPhoto() {
+			itemIdToChange = $("select#item_image_name_item_image_id").val();
+			$("form.edit_item").attr("action","/items/" + itemIdToChange);
+			$(".photo_selector").show();
+		}
+	</script>
+	<script src="http://connect.facebook.net/en_US/all.js"></script>
+  <script>
+     FB.init({ 
+        appId:'258055290904307', cookie:true, 
+        status:true, xfbml:true 
+     });
+  </script>
+  <script type="text/javascript">
+    $().ready(function () {
+        $('#coda-slider-1').codaSlider({
+            dynamicArrows: false,
+            dynamicTabs: false,
+            crossLinking: false,
+            firstPanelToLoad: <%= 
+						if session[:selected_tab] 
+							session[:selected_tab] 
+						else
+							session[:selected_tab] = 2
+						end
+							%>
+      });     
+    });
+	</script>
+<%end%>
+
+
+
+
+
 		
 		<div id="admin">
 			<div id="aboveline" class="info" style="text-align: center; border-left: 0px; border-right: 0px; border-bottom: 0px;">
@@ -141,9 +165,6 @@ If user is not signed in but shop has user: 4 -->
 	
 	
 											<% form_for @shop, :remote => true, :html => { :id => "shop_configure_cart" } do |f| %>
-											
-											 	<input type="checkbox" checked="checked"> I want a shopping cart
-	                    	<hr class="space">
 	                      <p>
 											    <%= f.label :payment_type, 'Buyers can checkout:', :class => "form_label" %><br />
 												
@@ -189,38 +210,22 @@ If user is not signed in but shop has user: 4 -->
 	                  <h2 class="title">
 	                    fhiutfutcvktctckcctcucsf
 	                  </h2>
-	                  <form>
 	                    <fieldset style="height: 280px;">
 	                      <legend style="text-align: center;">And make it your own</legend>
 	                      <p>
 	                        <label>Upload images:</label><br>
-	                        <select style="float: left; width: 190px">
-	                          <option>
-	                            Item Image: iPod Touch
-	                          </option>
-	                          <option>
-	                            Item Image: Fender Jazz Bass
-	                          </option>
-	                          <option>
-	                            Item Image: Art Deco Bracelet
-	                          </option>
-	                          <option>
-	                            Item Image: Nouveau Banjo CD
-	                          </option>
-	                          <option>
-	                            Item Image: Jimmy Choo Wallet
-	                          </option>
-	                          <option>
-	                            User Images: Logo
-	                          </option>
-	                          <option>
-	                            User Images: Profile Pic
-	                          </option>
-	                        </select> <a class="button" href="javascript:;" style="margin: 0 0 5px 10px; width: 45px; text-align: center;"><!--<img src="/css/plugins/buttons/icons/arrow_up.png" alt=""/>-->
-	                         Browse</a> <span style="font-size: 85%; width: 250px; display: block">Images are optional</span>
+													<%= select :item_image_name, :item_image_id, Item.where(:shop_id => @shop.id).all.collect {|p| [ p.name, p.id ] }, options = {:onChange => "changeItemPhoto()", :include_blank => 'Select item'}, html_options = {:onChange => "changeItemPhoto()"} %>
+													<% if @shop.items.count > 0 %>
+														<% @item = @shop.items.first %>
+														<% form_for @item, :html => { :multipart => true }, :remote => true do |f| %>
+														  <div class="photo_selector" style="display: none; margin: 0 0 5px 10px; width: 45px; text-align: center;">
+														    <%= f.file_field :photo_1, :required => true %>
+																<a class="button" href="javascript:;" onClick="$(this).closest('form').submit()"><!--<img src="/css/plugins/buttons/icons/arrow_up.png" alt=""/>-->Upload</a>
+														  </div>
+														<% end %>
+													<% end %>
 	                      </p>
 	                    </fieldset>
-	                  </form>
 	                </div>
 	              </div>
 	            </div><!-- .coda-slider -->

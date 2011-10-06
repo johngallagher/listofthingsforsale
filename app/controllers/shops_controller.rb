@@ -41,22 +41,26 @@ class ShopsController < ApplicationController
   # GET /shops/1.xml
   def show
     if params[:url].nil?
-      @shop = Shop.find(params[:id])
+      @shop_ref = params[:id]
+      @shop = Shop.find(@shop_ref)
     else
-      @shop = Shop.where(:url => params[:url]).first
+      @shop_ref = params[:url]
+      @shop = Shop.where(:url => @shop_ref).first
     end
     logger.debug "Session is #{session.inspect}"
+    
+    
+    if @shop.nil?
+      respond_to do |format|
+        format.html { render 'show_invalid_shop', :object => @shop_ref and return }
+        format.js
+      end
+    end
     
     respond_to do |format|
       format.html { render 'show' => @shop} # show.html.erb
       format.js
     end
-    
-    # if session[:shop_id].to_i == @shop.id
-    #   show_users_shop
-    # else
-    #   show_shop
-    # end
   end
 
   def show_users_shop
@@ -116,21 +120,6 @@ class ShopsController < ApplicationController
     @shop_name = nil
     @shop = Shop.new(:name => @shop_name, :description => @shop_items_description, :status => ShopStatus::LIVE_FREE, :url => (0...8).map{65.+(rand(25)).chr}.join.downcase)
 
-    # if user is signed in
-    # 
-    #   if user already has a shop and they try and make one, 
-    #     redirect them to their shop.
-    #   else 
-    #     Set user id on shop to the id of current signed in user.
-    # 
-    # if user isn't signed in
-    #   set session shop id to  id of new shop
-    # 
-    # end
-
-
-
-
     respond_to do |format|
       if @shop.save
         if user_signed_in?
@@ -166,6 +155,15 @@ class ShopsController < ApplicationController
     logger.debug("Params passed into update were: #{params.inspect}")
     @shop = Shop.find(params[:id])
 
+    if !params[:shop].nil? and !params[:shop][:url].nil?
+      # we're updating the url so keep it on tab 2.
+      session[:selected_tab] = 2
+    elsif !params[:shop].nil? and !params[:shop][:payment_type].nil?
+      session[:selected_tab] = 3
+    elsif !params[:shop].nil? and !params[:shop][:description].nil?
+      session[:selected_tab] = 1
+    end
+    
     respond_to do |format|
       if @shop.update_attributes(params[:shop])
         logger.debug("params changed were #{params[:shop].inspect}")
