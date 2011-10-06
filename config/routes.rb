@@ -1,4 +1,12 @@
 Things3::Application.routes.draw do
+  get "pages/home"
+
+  get "pages/pricing"
+
+  get "pages/contact"
+
+  get "pages/help"
+
   resources :email_orders
 
   devise_for :users, :controllers => { :registrations => "registrations", :confirmations => "confirmations", :sessions => "sessions" }

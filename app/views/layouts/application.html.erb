@@ -27,12 +27,12 @@
   <div id="topbar">
       <div class="topbar-centred">
           <ul class="navigation">
-              <li class="begin-current"><a href="http://help.listofthingsforsale.com/">Begin</a></li>
-              <li class="help"><a href="http://help.listofthingsforsale.com/">Help</a></li>
-              <li class="pricing"><a href="http://pricing.listofthingsforsale.com/">Pricing</a></li>
-              <li class="about"><a href="http://about.listofthingsforsale.com/">About</a></li>
+              <li class="begin-current"><a href="/">Home</a></li>
+              <li class="begin-current"><a href="/">My List</a></li>
+              <li class="pricing"><a href="/pages/pricing">Pricing</a></li>
               <li class="blog"><a href="http://blog.listofthingsforsale.com/">Blog</a></li>
-              <li class="contact"><a href="http://contact.listofthingsforsale.com/">Contact</a></li>
+              <li class="contact"><a href="/pages/contact">Contact</a></li>
+              <li class="help"><a href="/pages/help">Help</a></li>
               
               <% if user_signed_in? %>
                 <li class="logout"><%= link_to "Log out", destroy_user_session_path, :method => :delete %></li>
