@@ -1,4 +1,7 @@
 class EmailOrdersController < ApplicationController
+  def index
+    new
+  end
   def new
     # id is required to deal with form
     if @pending_order.nil?

@@ -27,6 +27,12 @@ class SimpleCartController < ApplicationController
     end
   end
   
+  def email_order
+    @email_order = EmailOrder.new
+    
+    redirect_to email_order_url(@email_order)
+  end
+  
   def check_stock
     logger.debug "Params are #{params.inspect}"
     
@@ -42,11 +48,15 @@ class SimpleCartController < ApplicationController
           format.js { render 'simplecart_checkout'} # runs the usual simplecart checkout code
         end
       else
-
-        respond_to do |format|
-          format.js { render 'email_checkout' }
-          # format.js { redirect_to :controller => "email_orders", :action => 'new', :layout => false }
-        end
+        
+        render :update do |page|
+            page.redirect_to 'email_orders/new'
+         end
+        # email_order
+        # respond_to do |format|
+        #   format.js { render 'email_orders/new', :content_type => Mime::HTML }
+        #   # format.js { redirect_to :controller => "email_orders", :action => 'create', :content_type => Mime::HTML }
+        # end
       end
       
     else
