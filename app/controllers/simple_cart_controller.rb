@@ -37,11 +37,18 @@ class SimpleCartController < ApplicationController
       
       create_pending_order
       
-      paypal_allowed
-      
-      respond_to do |format|
-        format.js { render 'simplecart_checkout'} # runs the usual simplecart checkout code
+      if paypal_allowed?
+        respond_to do |format|
+          format.js { render 'simplecart_checkout'} # runs the usual simplecart checkout code
+        end
+      else
+        @email_order = EmailOrder.new
+        @email_order.order = @pending_order
+        respond_to do |format|
+          format.js { redirect_to @email_order, :action => 'show' }
+        end
       end
+      
     else
       flash[:error] = "Items that were out of stock have been removed."
       respond_to do |format|
@@ -50,10 +57,9 @@ class SimpleCartController < ApplicationController
     end
   end
   
-  def paypal_allowed
+  def paypal_allowed?
     this_shop_id = params[:shopid].to_i
     this_shop = Shop.find(this_shop_id)
-    
     this_shop.payment_type == "paypal"
   end
   
@@ -83,6 +89,7 @@ class SimpleCartController < ApplicationController
     end
 
     order.save
+    @pending_order = order
   end
   
   def check_stock_items

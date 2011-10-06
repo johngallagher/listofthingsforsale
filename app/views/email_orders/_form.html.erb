@@ -1,0 +1,29 @@
+<% form_for @email_order, :url => { :action => "create" }, :html => { :method => :post } do |f| %>
+  <p>
+    <%= f.label "Name" %>
+  </p>
+  <p>
+    <%= f.text_field :sender_name %>
+  </p>
+  <p>
+    <%= f.label "Seller Email" %>
+  </p>
+  <p>
+    <%= f.text_field :seller_email %>
+  </p>
+  <p>
+    <%= f.label "Email" %>
+  </p>
+  <p>
+    <%= f.text_field :email %>
+  </p>
+  <p>
+    <%= f.label "Details" %>
+  </p>
+  <p>
+    <%= f.text_area :content %>
+  </p>
+  <p>
+    <%= f.submit "Submit" %>
+  </p>
+<% end %>
