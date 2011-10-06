@@ -8,28 +8,131 @@
 <%end%>
 
 <span class="simpleCart_shopPrefix" style="display: none;">sc<%= @shop.id %>_</span>
-<h1>
-<% if @shop.url[-1,1] == "s" %>
-<%= @shop.url %>'
-<% else %>
-<%= @shop.url %>'s
-<% end %> list of things for sale</h1>
 
-<% @shop.items.each do |item| %>
-<div>
-	<% @item = item %>
-	<%= render :partial => "items/show_public", :object => @item %>
-</div>
-<% end %>
-
-<div class="span-5 colborder" style="min-height: 280px; text-align: center;">
-    <div style="margin-bottom: 5px;">
-        You have <span class="simpleCart_quantity"></span> items in your Cart.</div>
-    <div class="simpleCart_items">
+<div class="container">
+    <hr class="space">
+    <hr class="space">
+    <h1>
+        n6fe3n's list of things for sale:</h1>
+    <div id="left" class="span-15 colborder">
+        <div id="listview">
+            <div class="simpleCart_shelfItem">
+                <ul>
+                    <li class="item_name_li"><a class="item_name" href="javascript:;" id="item1">iPod Touch
+                        16gig 2nd Gen</a></li>
+                    <li class="item_price">£70</li>
+                    <li class=" item_add"><a class="item_addtocart button" href="javascript:;" style="margin-top: 0;">
+                        Add to Cart</a></li>
+                    <li class="item_image"><a href="/images/touch500.jpg">
+                        <img src="/images/touch50.jpg"></a></li>
+                    <li class="item_description" id="item-desc1" style="display: none;">No description<br />
+                        1 Available<hr style="margin-top: 5px;">
+                    </li>
+                </ul>
+            </div>
+            <div class="simpleCart_shelfItem">
+                <ul>
+                    <li class="item_name_li"><a class="item_name" href="javascript:;" id="item3">Fender
+                        Jazz Bass Guitar</a></li>
+                    <li class="item_price">£280</li><li class=" item_add"><a class="item_addtocart button"
+                        href="javascript:;" style="margin-top: 0;">Add to Cart</a></li>
+                    <li class="item_image  "><a href="/images/guitar500.jpg">
+                        <img src="/images/guitar50.jpg"></a></li>
+                    <li class="item_description" id="item-desc3" style="display: none;">No description<br />
+                        1 Available<hr style="margin-top: 5px;">
+                    </li>
+                </ul>
+            </div>
+            <div class="simpleCart_shelfItem">
+                <ul>
+                    <li class="item_name_li"><a class="item_name" href="javascript:;" id="item2">Pearl Bracelet</a></li>
+                    <li class="item_price">£35</li><li class=" item_add"><a class="item_addtocart button"
+                        href="javascript:;" style="margin-top: 0;">Add to Cart</a></li>
+                    <li class="item_image"><a href="/images/necklace500.jpg">
+                        <img src="/images/necklace50.jpg"></a> </li>
+                    <li class="item_description" id="item-desc2" style="display: none;">Stunning original
+                        Art Deco piece dated circa 1930, the silverwork is hallmarked NL with a tiny crown
+                        symbol.<br />
+                        1 Available<hr style="margin-top: 5px;">
+                    </li>
+                </ul>
+            </div>
+            <div class="simpleCart_shelfItem">
+                <ul>
+                    <li class="item_name_li"><a class="item_name" href="javascript:;" id="item4">Nouveau
+                        Banjo CD</a></li>
+                    <li class="item_price">£5</li><li class=" item_add"><a class="item_addtocart button"
+                        href="javascript:;" style="margin-top: 0;">Add to Cart</a></li>
+                    <li class="item_image  "><a href="/images/banjo500.jpg">
+                        <img src="/images/banjo50.jpg"></a></li>
+                    <li class="item_description" id="item-desc4" style="display: none;">The quintet's infamous
+                        first album<br />
+                        1 Available<hr style="margin-top: 5px;">
+                    </li>
+                </ul>
+            </div>
+            <div class="simpleCart_shelfItem">
+                <ul>
+                    <li class="item_name_li"><a class="item_name" href="javascript:;" id="item5">Black Wallet
+                        by Jimmy Choo for H&amp;M</a></li>
+                    <li class="item_price">£20</li><li class=" item_add"><a class="item_addtocart button"
+                        href="javascript:;" style="margin-top: 0;">Add to Cart</a></li><li class="item_image  ">
+                            <a href="/images/image_1.jpg">
+                                <img src="/images/image_1s.jpg" style="width: 50px;"></a></li>
+                    <li class="item_description" id="item-desc5" style="display: none;">Brand new black
+                        leather wallet from the Jimmy Choo collection from H&M. Label inside is marked genuine
+                        leather and made in Portugal. It is brand new, literally never used once, and originally
+                        cost me £35. I still have the shiny silver and blue foil bag that it came in too
+                        if you want it.<br />
+                        1 Available<hr style="margin-top: 5px;">
+                    </li>
+                </ul>
+            </div>
+        </div>
     </div>
-    <!--use a class of simpleCart_empty to empty the cart and simpleCart_checkout to checkout -->
-    <a href="javascript:;" class="simpleCart_empty">Empty Cart</a> &nbsp;|&nbsp; <a href="javascript:;"
-        class="simpleCart_checkout">Checkout</a>
+    <div class="span-7 last">
+        <p style="text-align: center;">
+            <b>listofthingsforsale.com/yourname</b><br />
+            <span id="tagline" class="highlight">the minimal way to sell online</span></p>
+        <div id="editdescription" style="display: none;">
+            <!-- Use the Format:-->
+            Type a list into the box like this:<br />
+            <br />
+            Title&nbsp; £Price&nbsp; Description<br />
+            <br />
+            1. Currency is in $ or £<br />
+            2. Description is optional
+            <br />
+            <br />
+            If you don't want to sell anything just now,
+            <br />
+            <a href="">buy something from our list instead!</a>
+            <br />
+            <br />
+            <span style="font-size: 85%;">Coming Soon:<br />
+                1. +quantity for multiple item sales, ie +5<br />
+                2. #tags for categorising, ie #electronics</span>
+        </div>
+        <div id="cart">
+            <hr style="margin-bottom: 10px;" />
+            <p style="margin-bottom: 5px;">
+                You have <span class="simpleCart_quantity"></span>&nbsp;items in your Cart:</p>
+            <div class="simpleCart_items">
+            </div>
+            <hr style="margin-bottom: 10px;" />
+            <!--use a class of simpleCart_empty to empty the cart and simpleCart_checkout to checkout -->
+            <p>
+                Total <span class="simpleCart_total"></span>
+                <br />
+                <a href="javascript:;" class="simpleCart_empty">Empty Cart</a> &nbsp;|&nbsp; <a href="javascript:;"
+                    class="simpleCart_checkout">Checkout</a></p>
+            <hr class="space" />
+            <hr class="space" />
+            <hr class="space" />
+            <hr class="space" />
+        </div>
+    </div>
 </div>
+
 
 

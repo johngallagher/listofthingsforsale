@@ -9,103 +9,197 @@ If user is not signed in and no user for shop: 1,4
 If user is being verified: 2,4
 If user is signed in: 3,4
 If user is not signed in but shop has user: 4 -->
-<script type="text/javascript" charset="utf-8">
-	function submitForm() {
-		$("form.edit_shop").submit();
-	};
-	function changeItemPhoto() {
-		itemIdToChange = $("select#item_image_name_item_image_id").val()
-		$("form.edit_item").attr("action","/items/" + itemIdToChange);
-		$(".photo_selector").show();
-	}
-</script>
-
-<h2>Admin area</h2>
-
-<h2>Image Upload</h2>
-<%= select :item_image_name, :item_image_id, Item.where(:shop_id => @shop.id).all.collect {|p| [ p.name, p.id ] }, options = {:onChange => "changeItemPhoto()", :include_blank => 'Select item'}, html_options = {:onChange => "changeItemPhoto()"} %>
-
-<% form_for @item, :html => { :multipart => true }, :remote => true do |f| %>
-  <div class="photo_selector" style="display: none;">
-    <%= f.label :photo_1, :class => 'required' %><br />
-    <%= f.file_field :photo_1, :required => true %>
-		<%= f.submit %>
-  </div>
-
-<% end %>
-
-<!-- 1. Sign Up -->
-<% if !user_signed_in? and @shop.user_id.nil? %>
-	<%= render 'devise/registrations/new_short' %>
-<% end %>
-
-
-<!-- 2. Verification resend -->
-<% if !@shop.user_id.nil? %>
-	<% if !User.find(@shop.user_id).confirmation_token.nil? %>
-		<%= render 'devise/confirmations/new' %>
-	<% end %>
-<% end %>
-
-<!-- 3. Change password and email address -->
-
-<% if user_signed_in? %>
-  Signed in as <%= current_user.email %>. Not you?
-  <%= link_to "Sign out", destroy_user_session_path, :method => :delete %>
-	Change Password/Email address area.
-<% end %>
-
-<!-- 4. Change url -->
-
-<%= render :partial => "public_url" %>
-
-
-<h2>Settings</h2>
-<% form_for @shop, :remote => true do |f| %>
-  <div class="field">
-
-	  <p>
-	    <%= f.label "Payment" %><br />
-			<%= f.check_box :payment_type , :onClick => "submitForm()" %>
-		  <%= f.label :payment_type_paypal, 'Use Paypal', :value => "paypal" %>
-		</p>
-	  <p>
-	    <%= f.label :paypal_email %><br />
-	    <%= f.text_field :paypal_email, :onBlur => "submitForm()" %>
-	  </p>
-	  <p>
-	    <%= f.label :payment_other_text %><br />
-	    <%= f.text_area :payment_other_text, :onBlur => "submitForm()" %>
-	  </p>
-
-
-	  <p>
-	    <%= f.label "Delivery" %><br />
-		  <%= f.radio_button :delivery_method, 'post', :checked => true %> 
-		  <%= f.label :delivery_method_post, 'Post', :value => "post" %>
-		  <%= f.radio_button :delivery_method, 'collection' %>
-		  <%= f.label :delivery_method_other, 'Collection', :value => "collection" %>
-		s</p>
-		
-	  <p>
-	    <%= f.label "Postage Included" %><br />
-	    <%= f.check_box :prices_include_postage, :checked => true  %>
-	  </p>
-	  <p>
-	    <%= f.label :postage_price %><br />
-	    <%= f.text_field :postage_price, :onBlur => "submitForm()"  %>
-	  </p>
-
-	  <p>
-		  <%= f.radio_button :postage_type, 'flat_rate', :checked => true %> 
-		  <%= f.label :postage_type_flat, 'Flat Rate', :value => "flat_rate" %>
-		  <%= f.radio_button :postage_type, 'per_item' %>
-		  <%= f.label :postage_type_per_item, 'Per Item', :value => "per_item" %>
-		</p>
-  </div>
-<% end %>
-
-
-
-<h2>Now make it your own</h2>
-
+		<script type="text/javascript" charset="utf-8">
+			function submitForm() {
+				$("form.edit_shop").submit();
+			};
+			function changeItemPhoto() {
+				itemIdToChange = $("select#item_image_name_item_image_id").val()
+				$("form.edit_item").attr("action","/items/" + itemIdToChange);
+				$(".photo_selector").show();
+			}
+		</script>
+		<div id="admin">
+			<div id="aboveline" class="info" style="text-align: center; border-left: 0px; border-right: 0px; border-bottom: 0px;">
+				<span style="color: #205791">Above this line is what your customers will see.</span>
+				<div class="container">
+					<div class="coda-slider-wrapper">
+						<div id="coda-nav-1" class="coda-nav">
+							<ul>
+								<li class="tab1">
+									<h3>
+										<a href="#1"><img src="/css/plugins/buttons/icons/pencil.png" alt=""> &nbsp;1. Edit List</a>
+									</h3>
+								</li>
+								<li class="tab2">
+									<h3>
+										<a href="#2"><img src="/css/plugins/buttons/icons/tick.png" alt=""> &nbsp;2. Save Your Work</a>
+									</h3>
+								</li>
+								<li class="tab3">
+									<h3>
+										<a href="#3"><img src="/css/plugins/buttons/icons/images.png" alt=""> &nbsp;3. Upload Images</a>
+									</h3>
+								</li>
+								<li class="tab4">
+									<h3>
+										<a href="#4"><img src="/css/plugins/buttons/icons/cog.png" alt=""> &nbsp;4. Configure Cart</a>
+									</h3>
+								</li>
+							</ul>
+						</div>
+						<div class="coda-slider preload" id="coda-slider-1">
+	            <div class="coda-slider preload" id="coda-slider-1">
+	              <div class="panel">
+	                <div class="panel-wrapper" style="text-align: left;">
+	                  <fieldset style="margin-top:5px;">
+	                    <legend style="font-weight:normal;">Make required edits and press save to see the changes reflected up above</legend>
+	                    <div class="column span-20">
+												<%= form_for(@shop) do |f| %>
+										    	<%= f.text_area :description, :id => "list1", :rows => "5", :cols => "20", :style => "width: 780px; height: 250px;" %>
+													<%= f.submit %>
+		                      <div class="column span-3 prepend-9 append-8">
+		                        <a href="javascript:;" id="listsubmit" type="submit" class="button positive" name="listsubmit" onClick="$('form.edit_shop').submit()">Save <img src="/css/plugins/buttons/icons/arrow_right.png" alt=""></a>
+													</div>
+												<% end %>
+												<br>
+	                        <a href="shop.htm" id="listsubmit" type="submit" class="button positive" name="listsubmit">Save <img src="/css/plugins/buttons/icons/arrow_right.png" alt=""></a>
+	                      </div>
+	                      <hr class="space">
+	                    </div>
+	                    <div class="column span-6 colborder">
+	                      <p>
+	                        <label>Instructions</label><br>
+	                        Type a list into the box like this:<br>
+	                        <br>
+	                        Title&nbsp; £Price&nbsp; Description<br>
+	                        <br>
+	                        1. Currency is in $ or £<br>
+	                        2. Description is optional<br>
+	                        <br>
+	                        <span style="font-size: 85%;">Coming Soon:<br>
+	                        1. +quantity for multiple item sales, ie +5<br>
+	                        2. #tags for categorising, ie #electronics</span>
+	                      </p>
+	                    </div>
+	                    <div class="column span-6 colborder">
+	                      <p>
+	                        <label>Revert to a previous version</label><br>
+	                        sdfsdfsdfsdf
+	                      </p>
+	                    </div>
+	                    <div class="column span-6 last">
+	                      <p>
+	                        <label>What happens to my images?</label><br>
+	                        fsdfsdfdsfsdfsdfsdf
+	                      </p>
+	                    </div>
+	                  </fieldset>
+	                </div>
+	              </div>
+	              <div class="panel">
+	                <div class="panel-wrapper" style="text-align: left;">
+	                  <fieldset id="signupform" style="margin-top:5px;">
+	                    <legend style="font-weight:normal;">Sign up now to save your List of Things for Sale</legend> <img src="/images/facebook-connect-button.png" alt="facebook-connect-button" width="194" height="25">
+	                    <hr class="space">
+	                    or
+	                    <hr class="space">
+	                    <input type="text" class="text" style="width: 220px;" value="email address"><br>
+	                    <input type="text" class="text" style="width: 220px;" value="password"><br>
+	                    <a class="button positive" onclick="$('#signupform').fadeToggle('slow');"><img src="/css/plugins/buttons/icons/tick.png" alt=""> Sign Up</a>
+	                  </fieldset>
+	                  <hr class="space">
+	                  <fieldset id="aftersignup" style="margin-top:5px;">
+	                    <legend style="font-weight:normal;">We sent a verification email to test@test.com</legend> <input type="text" class="text" style="width: 220px;" value="verification code"><br>
+	                    <a class="button positive" style="margin-right:10px;"><img src="/css/plugins/buttons/icons/arrow_right.png" alt=""> Submit</a> <a class="button"><img src="/css/plugins/buttons/icons/email.png" alt=""> Resend Code</a>
+	                  </fieldset>
+	                  <hr class="space">
+	                  <fieldset id="Fieldset1" style="margin-top:5px;">
+	                    <legend style="font-weight:normal;">Choose a url (web address) for your list</legend> listofthingsforsale.com/ <input type="text" class="text" style="width: 120px" value="yourname"><br>
+	                    <a class="button positive"><img src="/css/plugins/buttons/icons/tick.png" alt=""> Save</a><br>
+	                  </fieldset>
+	                </div>
+	              </div>
+	              <div class="panel">
+	                <div class="panel-wrapper">
+	                  <h2 class="title">
+	                    fhiutfutcvktctckcctcucsf
+	                  </h2>
+	                  <form>
+	                    <fieldset style="height: 280px;">
+	                      <legend style="text-align: center;">And make it your own</legend>
+	                      <p>
+	                        <label>Upload images:</label><br>
+	                        <select style="float: left; width: 190px">
+	                          <option>
+	                            Item Image: iPod Touch
+	                          </option>
+	                          <option>
+	                            Item Image: Fender Jazz Bass
+	                          </option>
+	                          <option>
+	                            Item Image: Art Deco Bracelet
+	                          </option>
+	                          <option>
+	                            Item Image: Nouveau Banjo CD
+	                          </option>
+	                          <option>
+	                            Item Image: Jimmy Choo Wallet
+	                          </option>
+	                          <option>
+	                            User Images: Logo
+	                          </option>
+	                          <option>
+	                            User Images: Profile Pic
+	                          </option>
+	                        </select> <a class="button" href="javascript:;" style="margin: 0 0 5px 10px; width: 45px; text-align: center;"><!--<img src="/css/plugins/buttons/icons/arrow_up.png" alt=""/>-->
+	                         Browse</a> <span style="font-size: 85%; width: 250px; display: block">Images are optional</span>
+	                      </p>
+	                    </fieldset>
+	                  </form>
+	                </div>
+	              </div>
+	              <div class="panel">
+	                <div class="panel-wrapper">
+	                  <fieldset style="height: 280px;">
+	                    <legend style="text-align: center;">Configure your list</legend> <input type="checkbox" checked="checked"> I want a shopping cart
+	                    <hr class="space">
+	                    <form>
+	                      <p>
+	                        <label>Users can checkout:</label><br>
+	                        <input name="example" type="radio" checked="checked"> Using Paypal<br>
+	                        <input name="example" type="radio"> Just email me orders<br>
+	                        <!--<span style="font-size:85%;margin-left:25px;"><a>Add buyer instructions</a></span>-->
+	                      </p>
+	                    </form>
+	                    <form>
+	                      <p>
+	                        <label>Fulfilling orders:</label><br>
+	                        <input name="example" type="radio" checked="checked"> Prices include <select style="margin-bottom: 0px;">
+	                          <option>
+	                            UK
+	                          </option>
+	                          <option>
+	                            USA
+	                          </option>
+	                          <option>
+	                            Worldwide
+	                          </option>
+	                        </select> postage<br>
+	                        <input name="example" type="radio"> Collection / other<br>
+	                        <!--         <span style="font-size:85%;margin-bottom:10px;width:250px;"><a>Add buyer instructions</a></span> <br/>  -->
+	                         <!--            
+	<textarea style="width:260px;height:70px;margin-bottom:0;">ie. If you're in Glasgow, I run a stall at the old townhouse on the first Saturday of every month.</textarea>-->
+	                         <a class="button positive" style="width: 45px; text-align: center; margin-top: 15px"><!--<img src="/css/plugins/buttons/icons/tick.png" alt=""/>-->
+	                         Save</a>
+	                      </p>
+	                    </form><span style="float: left; font-size: 85%; width: 250px;">More postage options coming soon</span>
+	                  </fieldset>
+	                </div>
+	              </div>
+	            </div><!-- .coda-slider -->
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>

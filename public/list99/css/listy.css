@@ -1,0 +1,415 @@
+
+#tagline
+{
+    padding: 2px 5px;
+}
+
+
+#listview ul
+{
+    width: 590px;
+    float: left;
+    min-height: 53px;
+    list-style-type: none;
+    padding: 5px 0;
+    margin: 5px 0;
+    display: block;
+}
+
+#listview ul li
+{
+    float: left;
+    padding: 0 20px 0 0;
+    margin: 0;
+}
+
+#listview ul li.item_name_li
+{
+    width: 315px;
+}
+
+#listview ul li.item_price
+{
+    width: 50px;
+}
+
+#listview ul li.item_addtocart
+{
+    width: 115px;
+}
+
+#listview ul li.item_image
+{
+    width: 50px;
+    padding: 0;
+}
+
+#listview ul li.item_description
+{
+    width: 590px;
+    padding: 5px 0 0 0;
+}
+
+#listview a img
+{
+    border: 3px solid #FFF;
+}
+#listview a img:hover
+{
+    border: 3px solid #FFFF00;
+}
+
+.simpleCart_shelfItem h3, .simpleCart_shelfItem h4, .simpleCart_shelfItem p
+{
+    margin: 0 0 5px 0;
+}
+
+.simpleCart_items
+{
+    clear: both;
+    float: left;
+    margin: 0;
+    position: relative;
+}
+
+
+.itemContainer
+{
+    float: left;
+    width: 230px;
+    position: relative;
+    bottom: 0;
+    padding: 10px 0;
+}
+
+.cartHeaders
+{
+    display: none;
+}
+
+/*
+.item_thumb{
+	display:none;
+}
+
+.itemthumb
+{
+    width:50px;
+	float:left;
+	margin:0;
+	padding-top:5px;
+	height:50px;
+}
+ */
+.itemname
+{
+    width: 230px; /* 115 when quantity is to right of it*/
+    float: left;
+}
+/*
+.itemQuantity{
+	float:left;
+	margin-top:5px;
+	display:inline;
+	margin-left:65px;
+	width: 43px;
+	border:none;
+}
+.itemQuantity input
+{
+	background:none;
+	border:none;
+	width:21px;
+	height:17px;
+	background:url(../images/cartsprite.png);
+	text-align:center;
+	color:#000;
+	font:bold 11px Arial, sans-serif;
+	padding:0 9px;
+	margin:0 5px 0 0;
+	vertical-align:top;
+	padding-top:3px;
+}
+.itemQuantity input:focus{
+	outline:none;
+}
+.itemincrement a
+{float:left;
+	display:block;
+	background:url(../images/cartsprite.png) -278px -29px;
+	width:7px;
+	height:5px;
+	text-indent:-9999px;
+	overflow:hidden;
+	margin:10px 0 0 0;
+}
+.itemdecrement a
+{float:left;
+	display:block;
+	background:url(../images/cartsprite.png) -278px -35px;
+	width:7px;
+	height:5px;
+	text-indent:-9999px;
+	overflow:hidden;
+	margin:3px 0 0 0;
+}*/
+
+.itemTotal
+{
+    float: left;
+    width: 215px;
+}
+
+
+#aboveline
+{
+    margin-bottom: 10px;color:#000;
+}
+#admin
+{
+    width: 100%;
+    margin-top: 10px;
+
+}
+
+
+
+
+
+#topbar
+{
+    padding: 0;
+    margin: 0;
+    background: #fff url(nav.gif) repeat-x;
+    height: 25px;
+}
+#topbar DIV.topbar-centred
+{
+    clear: both;
+    display: block;
+    margin: 0px auto;
+    width: 950px;
+    position: relative;
+    height: 25px;
+}
+
+#topbar UL.navigation
+{
+    padding-right: 0px;
+    display: block;
+    padding-left: 0px;
+    float: left;
+    padding-bottom: 0px;
+    margin: 0px;
+    padding-top: 0px;
+    list-style-type: none;
+}
+#topbar UL.navigation LI
+{
+    padding: 0;
+    margin: 0;
+    display: block;
+    float: left;
+    width: 100px;
+    text-indent: -9999px;
+    height: 25px;
+}
+
+#topbar UL.navigation LI.begin
+{
+    background-image: url(../images/nav_begin.gif);
+}
+
+#topbar UL.navigation LI.begin-current, #topbar UL.navigation LI.begin:hover
+{
+    background-image: url(../images/nav_begin_active.gif);
+}
+
+
+#topbar UL.navigation LI.help
+{
+    background-image: url(../images/nav_help.gif);
+}
+#topbar UL.navigation LI.help-current, #topbar UL.navigation LI.help:hover
+{
+    background-image: url(../images/nav_help_active.gif);
+}
+
+
+
+#topbar UL.navigation LI.pricing
+{
+    background-image: url(../images/nav_pricing.gif);
+}
+#topbar UL.navigation LI.pricing-current, #topbar UL.navigation LI.pricing:hover
+{
+    background-image: url(../images/nav_pricing_active.gif);
+}
+
+
+#topbar UL.navigation LI.about
+{
+    background-image: url(../images/nav_about.gif);
+}
+#topbar UL.navigation LI.about-current, #topbar UL.navigation LI.about:hover
+{
+    background-image: url(../images/nav_about_active.gif);
+}
+
+
+
+#topbar UL.navigation LI.blog
+{
+    background-image: url(../images/nav_blog.gif);
+}
+#topbar UL.navigation LI.blog-current, #topbar UL.navigation LI.blog:hover
+{
+    background-image: url(../images/nav_blog_active.gif);
+}
+
+
+
+
+#topbar UL.navigation LI.contact
+{
+    background-image: url(../images/nav_contact.gif);
+}
+#topbar UL.navigation LI.contact-current, #topbar UL.navigation LI.contact:hover
+{
+    background-image: url(../images/nav_contact_active.gif);
+}
+
+
+
+
+
+
+
+
+
+
+/* Most common stuff you'll need to change */
+
+.coda-slider-wrapper
+{
+    padding: 5px 0;
+}
+.coda-slider
+{
+    background: #fff;
+}
+
+/* Use this to keep the slider content contained in a box even when JavaScript is disabled */
+.coda-slider-no-js .coda-slider
+{
+    height: 200px;
+    overflow: auto !important;
+    padding-right: 20px;
+}
+
+/* Change the width of the entire slider (without dynamic arrows) */
+.coda-slider, .coda-slider .panel
+{
+    width: 900px;
+}
+
+/* Change margin and width of the slider (with dynamic arrows) */
+.coda-slider-wrapper.arrows .coda-slider, .coda-slider-wrapper.arrows .coda-slider .panel
+{
+    width: 900px;
+}
+.coda-slider-wrapper.arrows .coda-slider
+{
+    margin: 0 10px;
+}
+
+/* Arrow styling */
+.coda-nav-left a, .coda-nav-right a
+{
+    background: #000;
+    color: #fff;
+    padding: 5px;
+    width: 100px;
+}
+
+/* Tab nav */
+.coda-nav ul li a.current
+{
+    font-weight: bold;
+    background: #fff;
+}
+
+/* Panel padding */
+.coda-slider .panel-wrapper
+{
+    padding: 20px;
+}
+
+/* Preloader */
+.coda-slider p.loading
+{
+    padding: 20px;
+    text-align: center;
+}
+
+/* Don't change anything below here unless you know what you're doing */
+
+/* Tabbed nav */
+.coda-nav ul
+{
+    clear: both;
+    display: block;
+    margin: auto;
+    overflow: hidden;
+}
+.coda-nav ul li
+{
+    display: inline;
+}
+.coda-nav ul li a
+{
+    background: #eee;
+    color: #000;
+    display: block;
+    float: left;
+    margin-right: 10px;
+    padding: 10px 15px;
+    text-decoration: none;
+}
+
+/* Miscellaneous */
+.coda-slider-wrapper
+{
+    clear: both;
+    overflow: auto;
+}
+.coda-slider
+{
+    float: left;
+    overflow: hidden;
+    position: relative;
+}
+.coda-slider .panel
+{
+    display: block;
+    float: left;
+}
+.coda-slider .panel-container
+{
+    position: relative;
+}
+.coda-nav-left, .coda-nav-right
+{
+    float: left;
+}
+.coda-nav-left a, .coda-nav-right a
+{
+    display: block;
+    text-align: center;
+    text-decoration: none;
+}
+
+#coda-slider-1 h2.title
+{
+    display: none;
+}

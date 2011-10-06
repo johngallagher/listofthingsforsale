@@ -6312,7 +6312,7 @@ jQuery.extend({
 	// setting or getting the value
 	cssProps: {
 		// normalize float css property
-		"float": jQuery.support.cssFloat ? "cssFloat" : "styleFloat"
+		"float": jQuery.support.cssFloat ? "/cssFloat" : "styleFloat"
 	},
 
 	// Get and set the style property on a DOM Node
@@ -6378,7 +6378,7 @@ jQuery.extend({
 		name = jQuery.cssProps[ name ] || name;
 
 		// cssFloat needs a special treatment
-		if ( name === "cssFloat" ) {
+		if ( name === "/cssFloat" ) {
 			name = "float";
 		}
 
@@ -8578,7 +8578,7 @@ function defaultDisplay( nodeName ) {
 			// document to it; WebKit & Firefox won't allow reusing the iframe document.
 			if ( !iframeDoc || !iframe.createElement ) {
 				iframeDoc = ( iframe.contentWindow || iframe.contentDocument ).document;
-				iframeDoc.write( ( document.compatMode === "CSS1Compat" ? "<!doctype html>" : "" ) + "<html><body>" );
+				iframeDoc.write( ( document.compatMode === "/css1Compat" ? "<!doctype html>" : "" ) + "<html><body>" );
 				iframeDoc.close();
 			}
 
@@ -8948,7 +8948,7 @@ jQuery.each([ "Height", "Width" ], function( i, name ) {
 			// Everyone else use document.documentElement or document.body depending on Quirks vs Standards mode
 			// 3rd condition allows Nokia support, as it supports the docElem prop but not CSS1Compat
 			var docElemProp = elem.document.documentElement[ "client" + name ];
-			return elem.document.compatMode === "CSS1Compat" && docElemProp ||
+			return elem.document.compatMode === "/css1Compat" && docElemProp ||
 				elem.document.body[ "client" + name ] || docElemProp;
 
 		// Get document width or height
