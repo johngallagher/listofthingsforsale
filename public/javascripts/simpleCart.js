@@ -50,9 +50,9 @@ function Cart(){
 	me.checkoutTo = PayPal;
 	me.email = "";
 	me.merchantId	 = "";
-	me.successUrl = "http://high-mist-4028.heroku.com/";
-	me.cancelUrl = "http://high-mist-4028.heroku.com/";
-	me.notifyUrl = "http://high-mist-4028.heroku.com/payment/ipn";
+	me.successUrl = "http://listofthingsforsale.com/";
+	me.cancelUrl = "http://listofthingsforsale.com/";
+	me.notifyUrl = "http://listofthingsforsale.com/payment/ipn";
 	me.cookieDuration = 30; // default duration in days
 	me.storagePrefix = "sc_";
 	me.MAX_COOKIE_SIZE = 4000;
