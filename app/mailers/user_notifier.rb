@@ -11,4 +11,12 @@ class UserNotifier < ActionMailer::Base
 
     mail :to => "john@synapticmishap.co.uk"
   end
+  
+   def order_notification(sender)
+     @sender = sender
+     mail(:to => sender.seller_email,
+          :from => sender.email,
+          :subject => "New Order")
+  end
+  
 end
