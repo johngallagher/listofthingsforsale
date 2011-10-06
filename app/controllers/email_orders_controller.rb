@@ -16,7 +16,9 @@ class EmailOrdersController < ApplicationController
       # if seller is nil, the seller hasn't signed up
       render 'seller_unknown' and return
     else
-      @email_order = EmailOrder.new(:id => 1, :content => "I'd like to have the following items please.", :order => @order, :seller_email => @seller.email) #, :order => order, :seller_email => seller.email, :content => order.inspect
+      @text = ""
+      Order.last.line_items.each { |l| @text << l.name + ", " }
+      @email_order = EmailOrder.new(:id => 1, :content => "I'd like to order the following items please: #{@text}")
     end
   end
 
@@ -25,7 +27,7 @@ class EmailOrdersController < ApplicationController
     order_to_email_id = session[:pending_order_id].to_i
     @order = Order.find(order_to_email_id)
     @seller = @order.shop.user
-    logger.debug "Ordeer is #{@order.inspect}"
+    logger.debug "Order is #{@order.inspect}"
     logger.debug "Seller is #{@seller.inspect}"
     logger.debug "params to construct with are #{params[:email_order].inspect}"
 
