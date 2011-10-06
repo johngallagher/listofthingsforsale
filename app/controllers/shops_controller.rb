@@ -31,7 +31,7 @@ class ShopsController < ApplicationController
     else
       @shop = Shop.find(session[:shop_id])
       respond_to do |format|
-        format.html { render 'admin_show', :object => @shop} # show.html.erb
+        format.html { render 'show', :object => @shop} # show.html.erb
         format.js
       end
     end
@@ -61,7 +61,7 @@ class ShopsController < ApplicationController
 
   def show_users_shop
     respond_to do |format|
-      format.html { render 'admin_show', :shop => @shop} # show.html.erb
+      format.html { render 'show', :shop => @shop} # show.html.erb
     end
   end
 

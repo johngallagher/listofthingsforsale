@@ -41,17 +41,17 @@ If user is not signed in but shop has user: 4 -->
 								</li>
 								<li class="tab2">
 									<h3>
-										<a href="#2"><img src="/css/plugins/buttons/icons/tick.png" alt=""> &nbsp;2. Save Your Work</a>
+										<a href="#2"><img src="/css/plugins/buttons/icons/tick.png" alt=""><% if user_signed_in? %>&nbsp;2. My Account<% else %>&nbsp;2. Save Your Work<% end %></a>
 									</h3>
 								</li>
 								<li class="tab3">
 									<h3>
-										<a href="#3"><img src="/css/plugins/buttons/icons/images.png" alt=""> &nbsp;3. Upload Images</a>
+										<a href="#3"><img src="/css/plugins/buttons/icons/cog.png" alt=""> &nbsp;3. Configure Cart</a>
 									</h3>
 								</li>
 								<li class="tab4">
 									<h3>
-										<a href="#4"><img src="/css/plugins/buttons/icons/cog.png" alt=""> &nbsp;4. Configure Cart</a>
+										<a href="#4"><img src="/css/plugins/buttons/icons/images.png" alt=""> &nbsp;4. Upload Images</a>
 									</h3>
 								</li>
 							</ul>
@@ -103,30 +103,84 @@ If user is not signed in but shop has user: 4 -->
 	              </div>
 	              <div class="panel">
 	                <div class="panel-wrapper" style="text-align: left;">
-	                  <fieldset id="signupform" style="margin-top:5px;">
-	                    <legend style="font-weight:normal;">Sign up now to save your List of Things for Sale</legend>
-											<fb:login-button perms="email">
-								         Login with Facebook
-								      </fb:login-button>
-	 <img src="/images/facebook-connect-button.png" alt="facebook-connect-button" width="194" height="25">
-	                    <hr class="space">
-	                    or
-	                    <hr class="space">
-	                    <input type="text" class="text" style="width: 220px;" value="email address"><br>
-	                    <input type="text" class="text" style="width: 220px;" value="password"><br>
-	                    <a class="button positive" onclick="$('#signupform').fadeToggle('slow');"><img src="/css/plugins/buttons/icons/tick.png" alt=""> Sign Up</a>
-	                  </fieldset>
+	
+										<!-- 1. Sign Up -->
+										<% if !user_signed_in? and @shop.user_id.nil? %>
+											<%= render 'devise/registrations/new_short' %>
+										<% end %>
 	
 	
-	                  <hr class="space">
-	                  <fieldset id="aftersignup" style="margin-top:5px;">
-	                    <legend style="font-weight:normal;">We sent a verification email to test@test.com</legend> <input type="text" class="text" style="width: 220px;" value="verification code"><br>
-	                    <a class="button positive" style="margin-right:10px;"><img src="/css/plugins/buttons/icons/arrow_right.png" alt=""> Submit</a> <a class="button"><img src="/css/plugins/buttons/icons/email.png" alt=""> Resend Code</a>
-	                  </fieldset>
-	                  <hr class="space">
-	                  <fieldset id="Fieldset1" style="margin-top:5px;">
-	                    <legend style="font-weight:normal;">Choose a url (web address) for your list</legend> listofthingsforsale.com/ <input type="text" class="text" style="width: 120px" value="yourname"><br>
-	                    <a class="button positive"><img src="/css/plugins/buttons/icons/tick.png" alt=""> Save</a><br>
+										<!-- 2. Verification resend -->
+										<% if !@shop.user_id.nil? %>
+											<% if !User.find(@shop.user_id).confirmation_token.nil? %>
+												<%= render 'devise/confirmations/new' %>
+											<% end %>
+										<% end %>
+
+										<!-- 3. Change password and email address -->
+
+										<% if user_signed_in? %>
+										  Signed in as <%= current_user.email %>. Not you?
+										  <%= link_to "Sign out", destroy_user_session_path, :method => :delete %>
+										<p>
+												Change Password/Email address area.
+										  </p>
+										<% end %>
+
+										<!-- 4. Change url -->
+
+										<%= render :partial => "public_url" %>
+
+	                </div>
+	              </div>
+	              <div class="panel">
+	                <div class="panel-wrapper">
+	                  <fieldset style="height: 280px;">
+	                    <legend style="text-align: center;">Configure your list</legend>
+	
+	
+	
+											<% form_for @shop, :remote => true, :html => { :id => "shop_configure_cart" } do |f| %>
+											
+											 	<input type="checkbox" checked="checked"> I want a shopping cart
+	                    	<hr class="space">
+	                      <p>
+											    <%= f.label :payment_type, 'Buyers can checkout:', :class => "form_label" %><br />
+												
+												  <%= f.radio_button :payment_type, 'paypal', :checked => true %> 
+												  <%= f.label :payment_type, 'Using Paypal', :value => 'paypal' %><br />
+												  <%= f.radio_button :payment_type, 'email' %>
+												  <%= f.label :payment_type, 'Just email me orders', :value => 'email' %>
+												
+	                        <!--<span style="font-size:85%;margin-left:25px;"><a>Add buyer instructions</a></span>-->
+	                      </p>
+												  <p>
+												    <%= f.label :delivery_method, "Fulfilling orders", :class => "form_label" %><br />
+												
+													  <%= f.radio_button :delivery_method, 'post', :checked => true %> 
+													  <%= f.label :delivery_method, 'Prices include', :value => 'post' %> <select style="margin-bottom: 0px;">
+		                          <option>
+		                            UK
+		                          </option>
+		                          <option>
+		                            USA
+		                          </option>
+		                          <option>
+		                            Worldwide
+		                          </option>
+		                        </select> postage<br>
+													  <%= f.radio_button :delivery_method, 'collection' %>
+													  <%= f.label :delivery_method, 'Collection / Other', :value => 'collection' %>
+													</p>
+	                        <!--         <span style="font-size:85%;margin-bottom:10px;width:250px;"><a>Add buyer instructions</a></span> <br/>  -->
+	                         <!--            
+	<textarea style="width:260px;height:70px;margin-bottom:0;">ie. If you're in Glasgow, I run a stall at the old townhouse on the first Saturday of every month.</textarea>-->
+	                         <a class="button positive" style="width: 45px; text-align: center; margin-top: 15px" onClick="$('form#shop_configure_cart').submit()"><!--<img src="/css/plugins/buttons/icons/tick.png" alt=""/>-->
+	                         Save</a>
+	                      </p>
+	                    </form>
+											<% end %>
+										<span style="float: left; font-size: 85%; width: 250px;">More postage options coming soon</span>
 	                  </fieldset>
 	                </div>
 	              </div>
@@ -169,48 +223,9 @@ If user is not signed in but shop has user: 4 -->
 	                  </form>
 	                </div>
 	              </div>
-	              <div class="panel">
-	                <div class="panel-wrapper">
-	                  <fieldset style="height: 280px;">
-	                    <legend style="text-align: center;">Configure your list</legend> <input type="checkbox" checked="checked"> I want a shopping cart
-	                    <hr class="space">
-	                    <form>
-	                      <p>
-	                        <label>Users can checkout:</label><br>
-	                        <input name="example" type="radio" checked="checked"> Using Paypal<br>
-	                        <input name="example" type="radio"> Just email me orders<br>
-	                        <!--<span style="font-size:85%;margin-left:25px;"><a>Add buyer instructions</a></span>-->
-	                      </p>
-	                    </form>
-	                    <form>
-	                      <p>
-	                        <label>Fulfilling orders:</label><br>
-	                        <input name="example" type="radio" checked="checked"> Prices include <select style="margin-bottom: 0px;">
-	                          <option>
-	                            UK
-	                          </option>
-	                          <option>
-	                            USA
-	                          </option>
-	                          <option>
-	                            Worldwide
-	                          </option>
-	                        </select> postage<br>
-	                        <input name="example" type="radio"> Collection / other<br>
-	                        <!--         <span style="font-size:85%;margin-bottom:10px;width:250px;"><a>Add buyer instructions</a></span> <br/>  -->
-	                         <!--            
-	<textarea style="width:260px;height:70px;margin-bottom:0;">ie. If you're in Glasgow, I run a stall at the old townhouse on the first Saturday of every month.</textarea>-->
-	                         <a class="button positive" style="width: 45px; text-align: center; margin-top: 15px"><!--<img src="/css/plugins/buttons/icons/tick.png" alt=""/>-->
-	                         Save</a>
-	                      </p>
-	                    </form><span style="float: left; font-size: 85%; width: 250px;">More postage options coming soon</span>
-	                  </fieldset>
-	                </div>
-	              </div>
 	            </div><!-- .coda-slider -->
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-

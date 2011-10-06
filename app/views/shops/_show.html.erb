@@ -1,7 +1,7 @@
 <% content_for :dynamic_javascripts do %>
   <%= javascript_include_tag "simpleCart.js" %>
 	<script type="text/javascript">
-		simpleCart.email = "<%= @shop.paypal_email %>";
+		simpleCart.email = "<% if @shop.paypal_email.nil? %>test@test.com<% else %><%= @shop.paypal_email %><% end %>";
 		simpleCart.checkoutTo = PayPal;
 		simpleCart.currency = GBP;
 	</script>

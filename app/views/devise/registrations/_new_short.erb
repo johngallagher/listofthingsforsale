@@ -1,16 +1,22 @@
-<h2>Sign Up</h2>
-
+<fieldset id="signupform" style="margin-top:5px;">
+<legend style="font-weight:normal;">Sign up now to save your List of Things for Sale</legend>
+<fb:login-button perms="email">
+Login with Facebook
+</fb:login-button>
+<img src="/images/facebook-connect-button.png" alt="facebook-connect-button" width="194" height="25">
+<hr class="space">
+or
+<hr class="space">
 <%= form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f| %>
   <%= devise_error_messages! %>
 
-  <p><%= f.label :email %><br />
-  <%= f.email_field :email %></p>
+  <%= f.email_field :email, :placeholder => "Enter your email", :class => "text", :style => "width: 220px;" %><br>
 
-  <p><%= f.label :password %><br />
-  <%= f.password_field :password %></p>
+  <%= f.password_field :password, :placeholder => "Enter your password", :class => "text", :style => "width: 220px;" %><br>
 
-  <p><%= f.label :password_confirmation %><br />
-  <%= f.password_field :password_confirmation %></p>
+  <%= f.password_field :password_confirmation, :placeholder => "Confirm your password", :class => "text", :style => "width: 220px;" %><br>
 
-  <p><%= f.submit "Save shop" %></p>
+	<a class="button positive" onclick="$('#user_new').submit();"><img src="/css/plugins/buttons/icons/tick.png" alt=""> Sign Up</a>
 <% end %>
+
+</fieldset>

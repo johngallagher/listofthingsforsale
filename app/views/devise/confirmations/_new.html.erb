@@ -1,10 +1,9 @@
-<h2>Unverified</h2>
 
 <%= form_for(resource, :as => resource_name, :url => confirmation_path(resource_name), :html => { :method => :post }) do |f| %>
-  <%= devise_error_messages! %>
-
-  <p><%= f.label :email %><br />
-  <%= f.email_field :email %></p>
-
-  <p><%= f.submit "Resend confirmation instructions" %></p>
+<%= devise_error_messages! %>
+	<fieldset id="aftersignup" style="margin-top:5px;">
+  <legend style="font-weight:normal;">Didn't get the verification email?</legend>
+  <%= f.email_field :email, :class => "text", :placeholder => "Email address" %><br>
+  <a class="button" href="javascript:;" onClick="$('#user_new').submit()"><img src="/css/plugins/buttons/icons/email.png" alt=""> Resend Code</a>
 <% end %>
+</fieldset>
