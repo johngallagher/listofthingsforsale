@@ -48,7 +48,7 @@ class SimpleCartController < ApplicationController
           format.js { render 'simplecart_checkout'} # runs the usual simplecart checkout code
         end
       else
-        
+        session[:pending_order_id] = @pending_order.id
         render :update do |page|
             page.redirect_to 'email_orders/new'
          end

@@ -3,26 +3,33 @@
     <%= f.label "Name" %>
   </p>
   <p>
-    <%= f.text_field :sender_name %>
-  </p>
-  <p>
-    <%= f.label "Seller Email" %>
-  </p>
-  <p>
-    <%= f.text_field :seller_email %>
+    <%= f.text_field :sender_name, :placeholder => "Your name" %>
   </p>
   <p>
     <%= f.label "Email" %>
   </p>
   <p>
-    <%= f.text_field :email %>
+    <%= f.text_field :email, :placeholder => "Your email address" %>
   </p>
   <p>
     <%= f.label "Details" %>
   </p>
   <p>
-    <%= f.text_area :content %>
+    <%= f.text_area :content, :placeholder => "Enter your message to the seller here" %>
   </p>
+  <p>
+    <%= f.label "Order" %>
+  </p>
+	<%= f.hidden_field :order %>
+	<%= f.hidden_field :seller_email %>
+	
+	<% if !@email_order.order.nil? %>
+		<% @email_order.order.line_items.each do |line_item| %>
+			<div id="" class="">
+				<%= line_item.name %> - <%= line_item.unit_price %>
+			</div> 
+		<% end %>
+  <% end %>
   <p>
     <%= f.submit "Submit" %>
   </p>
