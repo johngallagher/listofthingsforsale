@@ -168,17 +168,29 @@ class ShopsController < ApplicationController
       if @shop.update_attributes(params[:shop])
         logger.debug("params changed were #{params[:shop].inspect}")
         new_description = params[:shop][:description]
+        old_description = @shop.description
         if !new_description.nil?
-          @shop.items.destroy_all
-          ItemGenerator.new(new_description).generate_items.each do |this_item|
-            this_item.quantity = 1
-            this_item.save
+          @new_shop_items = []
+          @new_items = ItemGenerator.new(:new_description => new_description, :old_description => old_description, :items => @shop.items).generate_items
+          @items_to_destroy = @shop.items - @new_items
+          logger.debug "Items to destroy are #{@items_to_destroy}"
+          
+          @shop.items = []
+          
+          # @items_to_destroy.each do |this_item|
+          #   @shop.items = @shop.items - [this_item]
+          # end
+          # @shop.save
+
+          @new_items.each do |this_item|
             logger.debug "this item was #{this_item.inspect}"
             @shop.items << this_item
           end
+          
+          
           @shop.save
         end
-        logger.debug("Shop is #{@shop.inspect} with items #{@shop.items.inspect}")
+        logger.debug("After update Shop is #{@shop.inspect} with items #{@shop.items.inspect}")
         @item = @shop.items.first
         # respond_to do |format|
           format.html { render :action => "show", :local => { :shop => @shop, :item => @item} } # show.html.erb
