@@ -41,6 +41,6 @@ module Things3
     config.filter_parameters += [:password]
     
     config.autoload_paths += %W( #{config.root}/test/mocks/#{Rails.env} )
-    
+    config.autoload_paths += %W( #{ config.root }/lib/middleware )    
   end
 end
