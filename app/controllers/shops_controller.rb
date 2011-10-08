@@ -171,8 +171,6 @@ class ShopsController < ApplicationController
         old_description = @shop.description
         if !new_description.nil?
           @old_items = Array.new(@shop.items)
-          @shop.items.clear
-          @shop.save
           @new_items = ItemGenerator.new(:new_description => new_description, :old_description => old_description, :items => @old_items).generate_items
           
           # Don't destroy items, just detach them from shop. We may have all sorts of orders for these items still in the pipeline.
@@ -185,9 +183,11 @@ class ShopsController < ApplicationController
 
           # 
           logger.debug "puts items before clear are #{@new_items.inspect}"
-          
-          logger.debug "puts items after clear are #{@new_items.inspect}"
-          @shop.items = @new_items
+          @shop.items.clear
+          @new_items.each do |this_item|
+            @shop.items << Item.find(this_item.id)
+          end
+
           @shop.save
           
           # @shop.save
