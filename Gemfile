@@ -26,6 +26,8 @@ gem 'aws-s3'
 
 gem 'paperclip'
 
+gem 'omniauth'
+
 # Use unicorn as the web server
 # gem 'unicorn'
 

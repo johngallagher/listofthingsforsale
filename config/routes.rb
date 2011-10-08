@@ -1,4 +1,6 @@
 Things3::Application.routes.draw do
+  resources :authentications
+
   get "pages/home"
 
   get "pages/pricing"
