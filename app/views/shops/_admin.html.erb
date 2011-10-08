@@ -87,10 +87,10 @@ If user is not signed in but shop has user: 4 -->
 	                  <fieldset style="margin-top:5px;">
 	                    <legend style="font-weight:normal;">Make required edits and press save to see the changes reflected up above</legend>
 	                    <div class="column span-20">
-												<%= form_for(@shop) do |f| %>
+												<%= form_for @shop, :html => { :id => "shop_edit_items" } do |f| %>
 										    	<%= f.text_area :description, :id => "list1", :rows => "5", :cols => "20", :style => "width: 780px; height: 250px;" %>
 		                      <div class="column span-3 prepend-9 append-8">
-		                        <a href="javascript:;" id="listsubmit" type="submit" class="button positive" name="listsubmit" onClick="$('form.edit_shop').submit()">Save <img src="/css/plugins/buttons/icons/arrow_right.png" alt=""></a>
+		                        <a href="javascript:;" id="listsubmit" type="submit" class="button positive" name="listsubmit" onClick="$('form#shop_edit_items').submit()">Save <img src="/css/plugins/buttons/icons/arrow_right.png" alt=""></a>
 													</div>
 												<% end %>
 	                      <hr class="space">

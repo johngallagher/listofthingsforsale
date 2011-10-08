@@ -31,7 +31,7 @@ class ShopsController < ApplicationController
     else
       @shop = Shop.find(session[:shop_id])
       respond_to do |format|
-        format.html { render 'show', :object => @shop} # show.html.erb
+        format.html { redirect_to shop_url(@shop)} # show.html.erb
         format.js
       end
     end
@@ -170,31 +170,33 @@ class ShopsController < ApplicationController
         new_description = params[:shop][:description]
         old_description = @shop.description
         if !new_description.nil?
-          @new_shop_items = []
-          @new_items = ItemGenerator.new(:new_description => new_description, :old_description => old_description, :items => @shop.items).generate_items
-          @items_to_destroy = @shop.items - @new_items
-          logger.debug "Items to destroy are #{@items_to_destroy}"
-          
-          @shop.items = []
-          
-          # @items_to_destroy.each do |this_item|
-          #   @shop.items = @shop.items - [this_item]
-          # end
-          # @shop.save
-
-          @new_items.each do |this_item|
-            logger.debug "this item was #{this_item.inspect}"
-            @shop.items << this_item
-          end
-          
-          
+          @old_items = Array.new(@shop.items)
+          @shop.items.clear
           @shop.save
+          @new_items = ItemGenerator.new(:new_description => new_description, :old_description => old_description, :items => @old_items).generate_items
+          
+          # Don't destroy items, just detach them from shop. We may have all sorts of orders for these items still in the pipeline.
+          # @items_to_destroy = @shop.items - @new_items
+          # logger.debug "Items to destroy are #{@items_to_destroy}"
+          # @items_to_destroy.each do |this_item|
+          #   this_item.destroy
+          # end
+          # logger.debug "new items were #{@new_items.count} and #{@new_items.inspect}"
+
+          # 
+          logger.debug "puts items before clear are #{@new_items.inspect}"
+          
+          logger.debug "puts items after clear are #{@new_items.inspect}"
+          @shop.items = @new_items
+          @shop.save
+          
+          # @shop.save
         end
         logger.debug("After update Shop is #{@shop.inspect} with items #{@shop.items.inspect}")
         @item = @shop.items.first
         # respond_to do |format|
-          format.html { render :action => "show", :local => { :shop => @shop, :item => @item} } # show.html.erb
-          format.js
+          format.html { render :action => "show", :local => { :shop => @shop, :item => @item} and return } # show.html.erb
+          # format.js
         # end
         
         # format.html {render @shop }

@@ -50,15 +50,6 @@ class ItemGenerator
     # description.match(/([[:print:]]+) £(\d+\.*\d*) ([[:print:]]+)/)
   end
   
-  def item_from_description(description)
-    this_item_matches = matches_from_description(description)
-    if this_item_matches and this_item_matches.length >= 4
-      return item_from_matches(this_item_matches)
-    else
-      return nil
-    end
-  end
-
   def item_hash_from_description(description)
     this_item_matches = matches_from_description(description)
     Rails.logger.debug "This item matches is #{this_item_matches.inspect}"
@@ -79,28 +70,14 @@ class ItemGenerator
     item[:description_text] = matches[3]
     item[:price] = matches[2].to_f
     if matches[5]
-      item[:quantity] = matches[5].to_i
+      # if matches[5].to_i > 1
+      #   item[:quantity] = 1       # remove this when we implement quantities
+      # else
+        item[:quantity] = matches[5].to_i
+      # end
     else 
       item[:quantity] = 1
     end
-    return item
-  end
-  
-  def item_from_matches(matches)
-    item = Item.new
-    # t.string   "name"
-    # t.text     "description_text"
-    # t.decimal  "price"
-
-    item.name = matches[1]
-    item.description_text = matches[3]
-    item.price = matches[2].to_f
-    if matches[5]
-      item.quantity = matches[5].to_i
-    else 
-      item.quantity = 1
-    end
-    item.save
     return item
   end
 end
