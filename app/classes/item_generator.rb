@@ -70,11 +70,11 @@ class ItemGenerator
     item[:description_text] = matches[3]
     item[:price] = matches[2].to_f
     if matches[5]
-      # if matches[5].to_i > 1
-      #   item[:quantity] = 1       # remove this when we implement quantities
-      # else
+      if matches[5].to_i > 1
+        item[:quantity] = 1       # remove this when we implement quantities
+      else
         item[:quantity] = matches[5].to_i
-      # end
+      end
     else 
       item[:quantity] = 1
     end
