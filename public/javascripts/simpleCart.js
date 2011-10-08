@@ -26,6 +26,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
+
 var Custom="Custom",GoogleCheckout="GoogleCheckout",PayPal="PayPal",Email="Email",AustralianDollar="AUD",AUD="AUD",CanadianDollar="CAD",CAD="CAD",CzechKoruna="CZK",CZK="CZK",DanishKrone="DKK",DKK="DKK",Euro="EUR",EUR="EUR",HongKongDollar="HKD",HKD="HKD",HungarianForint="HUF",HUF="HUF",IsraeliNewSheqel="ILS",ILS="ILS",JapaneseYen="JPY",JPY="JPY",MexicanPeso="MXN",MXN="MXN",NorwegianKrone="NOK",NOK="NOK",NewZealandDollar="NZD",NZD="NZD",PolishZloty="PLN",PLN="PLN",PoundSterling="GBP",GBP="GBP",SingaporeDollar="SGD",SGD="SGD",SwedishKrona="SEK",SEK="SEK",SwissFranc="CHF",CHF="CHF",ThaiBaht="THB",THB="THB",USDollar="USD",USD="USD";
 function Cart(){
 
@@ -919,11 +920,36 @@ function Cart(){
 		if( !simpleCart.pageIsReady ){
 			simpleCart.initializeView();
 		}
+    me.updateSoldOut();
 		me.updateTotals();
 		me.updateView();
 		me.save();
 	};
 
+	me.updateSoldOut = function() {
+		me.each(function(cart_item){
+		  console.log("Checking cart item " + cart_item.id);
+      // console.log("simple cart shelf is  " + simpleCart.Shelf.items);
+		  
+		  var shelf_items = simpleCart.Shelf.items;
+		  var shelf_keys = Object.keys(shelf_items);
+      console.log("shelf keys are" + shelf_keys.length)
+      for (var i = 0; i < shelf_keys.length; i++) {
+        key = shelf_keys[i];
+        if (shelf_items[key]["name"].innerHTML == cart_item.name && parseFloat(shelf_items[key]['price'].innerHTML.substr(1)) == cart_item.price) {
+           link = $("#" + key + " a").html();
+           console.log("shelf item found! is " + link);
+            $("#" + key + " div").show();
+            $("#" + key + " a").hide();
+                     
+        } else {
+          
+          console.log("shelf item is not found in cart so set it to be visible");
+        }
+      }
+	  });
+  };
+  
 	me.updateTotals = function() {
 			
 		me.total = 0 ;
@@ -1176,6 +1202,14 @@ Shelf.prototype = {
 			}
 		};
 	}
+	
+  // keys : function () {
+  //     var keys = [];
+  //     for(var i in this) if (this.hasOwnProperty(i)) {
+  //       keys.push(i);
+  //     }
+  //     return keys;
+  //   }
 };
 
 
@@ -1198,7 +1232,8 @@ ShelfItem.prototype = {
 		var outStrings = [],
 			valueString,
 			field;
-			
+		console.log("item that was added: " + this.id)
+		
 		for( field in this ){
 			if( typeof( this[field] ) !== "function" && field !== "id" ){
 				valueString = "";
