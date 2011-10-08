@@ -949,6 +949,7 @@ function Cart(){
   		me.each(function(cart_item){
         if (shelf_item_name == cart_item.name && shelf_item_price == cart_item.price) {
           if ($("#" + key + " span.item_quantity").text() != "0") {
+            $("#" + key + " div").text("Added");
             $("#" + key + " div").show();
             $("#" + key + " a").hide();
           }

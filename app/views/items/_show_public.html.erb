@@ -6,8 +6,8 @@
         <li class="item_price"><%= number_to_currency(item.price, :unit => "£") %></li>
         <li class=" item_add">
 					<span class="item_quantity" style="display:none;"><%= item.quantity %></span>
-				<a class="item_addtocart button" href="javascript:;" style="margin-top: 0; <%= "display:none;" if item.quantity == 0 %>">Add to Cart</a>
-				<div style="margin-top: 0; <%= "display:none;" if item.quantity > 0 %>">Sold Out</div>
+					<a class="item_addtocart button" href="javascript:;" style="margin-top: 0; <%= "display:none;" if item.quantity == 0 %>">Add to Cart</a>
+					<div style="margin-top: 0; <%= "display:none;" if item.quantity > 0 %>">Sold Out</div>
         </li>
         <li class="item_image">
 					<% if item.photo_1.file? %>
