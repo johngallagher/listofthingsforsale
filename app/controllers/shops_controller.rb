@@ -57,10 +57,20 @@ class ShopsController < ApplicationController
       end
     end
     
-    respond_to do |format|
-      format.html { render 'show' => @shop} # show.html.erb
-      format.js
+    if params[:url].nil?
+      respond_to do |format|
+        # format.html { render 'show' => @shop} # show.html.erb
+        format.html { redirect_to "/#{@shop.url}" } # show.html.erb
+        format.js
+      end
+    else
+      respond_to do |format|
+        # format.html { render 'show' => @shop} # show.html.erb
+        format.html { render 'show' =>  @shop } # show.html.erb
+        format.js
+      end
     end
+    
   end
 
   def show_users_shop
@@ -157,6 +167,8 @@ class ShopsController < ApplicationController
     logger.debug("Params passed into update were: #{params.inspect}")
     @shop = Shop.find(params[:id])
 
+
+
     if !params[:shop].nil? and !params[:shop][:url].nil?
       # we're updating the url so keep it on tab 2.
       session[:selected_tab] = 2
@@ -197,8 +209,12 @@ class ShopsController < ApplicationController
         logger.debug("After update Shop is #{@shop.inspect} with items #{@shop.items.inspect}")
         @item = @shop.items.first
         # respond_to do |format|
-          format.html { render :action => "show", :local => { :shop => @shop, :item => @item} and return } # show.html.erb
-          # format.js
+          # format.html { render :action => "show", :local => { :shop => @shop, :item => @item} and return } # show.html.erb
+          
+          
+          
+          format.html { redirect_to "/#{@shop.url}" } # show.html.erb
+          format.js
         # end
         
         # format.html {render @shop }
