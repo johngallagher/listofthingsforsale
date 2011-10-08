@@ -128,10 +128,11 @@ function Cart(){
 
 		/* if the item already exists, update the quantity */
 		if( me.hasItem(newItem) ) {
-			var foundItem=me.hasItem(newItem);
-			foundItem.quantity= parseInt(foundItem.quantity,10) + parseInt(newItem.quantity,10);
-			newItem = foundItem;
-			isNew = false;
+      // JG Hack for list - don't allow multiple quantities to be added to cart for MVP
+      // var foundItem=me.hasItem(newItem);
+      // foundItem.quantity= parseInt(foundItem.quantity,10) + parseInt(newItem.quantity,10);
+      // newItem = foundItem;
+      // isNew = false;
 		} else {
 			me.items[newItem.id] = newItem;
 		}
@@ -927,26 +928,39 @@ function Cart(){
 	};
 
 	me.updateSoldOut = function() {
+     // first show all
+ 	  var shelf_items = simpleCart.Shelf.items;
+ 	  var shelf_keys = Object.keys(shelf_items);
+    for (var i = 0; i < shelf_keys.length; i++) {
+      key = shelf_keys[i];
+      if ($("#" + key + " span.item_quantity").text() != "0") {
+        $("#" + key + " div").hide();
+        $("#" + key + " a").show();
+      }
+    }          
+	  
+
+    for (var i = 0; i < shelf_keys.length; i++) {
+      key = shelf_keys[i];
+      shelf_item_price = parseFloat(shelf_items[key]['price'].innerHTML.substr(1));
+      shelf_item_name = shelf_items[key]["name"].innerHTML;
+      
+      // check each cart item to see if the shelf item is the same
+  		me.each(function(cart_item){
+        if (shelf_item_name == cart_item.name && shelf_item_price == cart_item.price) {
+          if ($("#" + key + " span.item_quantity").text() != "0") {
+            $("#" + key + " div").show();
+            $("#" + key + " a").hide();
+          }
+        }
+  	  });
+    }
+	  
+	  
 		me.each(function(cart_item){
 		  console.log("Checking cart item " + cart_item.id);
       // console.log("simple cart shelf is  " + simpleCart.Shelf.items);
 		  
-		  var shelf_items = simpleCart.Shelf.items;
-		  var shelf_keys = Object.keys(shelf_items);
-      console.log("shelf keys are" + shelf_keys.length)
-      for (var i = 0; i < shelf_keys.length; i++) {
-        key = shelf_keys[i];
-        if (shelf_items[key]["name"].innerHTML == cart_item.name && parseFloat(shelf_items[key]['price'].innerHTML.substr(1)) == cart_item.price) {
-           link = $("#" + key + " a").html();
-           console.log("shelf item found! is " + link);
-            $("#" + key + " div").show();
-            $("#" + key + " a").hide();
-                     
-        } else {
-          
-          console.log("shelf item is not found in cart so set it to be visible");
-        }
-      }
 	  });
   };
   
