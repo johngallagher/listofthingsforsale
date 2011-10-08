@@ -50,8 +50,8 @@ function Cart(){
 	me.checkoutTo = PayPal;
 	me.email = "";
 	me.merchantId	 = "";
-	me.successUrl = "http://listofthingsforsale.com/";
-	me.cancelUrl = "http://listofthingsforsale.com/";
+	me.successUrl = "http://listofthingsforsale.com/order_success";
+	me.cancelUrl = "http://listofthingsforsale.com/order_failure";
 	me.notifyUrl = "http://listofthingsforsale.com/payment/ipn";
 	me.cookieDuration = 30; // default duration in days
 	me.storagePrefix = "sc_";

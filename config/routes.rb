@@ -1,4 +1,8 @@
 Things3::Application.routes.draw do
+  get "pages/order_success"
+
+  get "pages/order_failure"
+
   match '/auth/:provider/callback' => 'authentications#create'
   
   resources :authentications
