@@ -1,4 +1,6 @@
 Things3::Application.routes.draw do
+  match '/auth/:provider/callback' => 'authentications#create'
+  
   resources :authentications
 
   get "pages/home"

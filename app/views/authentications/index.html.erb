@@ -1,18 +1,32 @@
 <% title "Authentications" %>
 
-<table>
-  <tr>
-    <th>User</th>
-    <th>Provider</th>
-    <th>Uid</th>
-  </tr>
-  <% for authentication in @authentications %>
-    <tr>
-      <td><%= authentication.user_id %></td>
-      <td><%= authentication.provider %></td>
-      <td><%= authentication.uid %></td>
-      <td><%= link_to "Destroy", authentication, :confirm => 'Are you sure?', :method => :delete %></td>
-    </tr>
-  <% end %>
-</table>
 
+<section id="deviseauth">
+    <h2>Authentication Services - Setting</h2>
+
+    <div id="currauthentications">
+        <h3>The following <%= @authentications.count == 1 ? 'account is' : 'accounts are' %> connected with your account at List of Things for Sale:</h3>
+    
+        <% @authentications.each do |authentication| %>  
+          <div class="authentications_used">  
+              <%= image_tag "#{authentication.provider}_64.png", :size => "64x64" %>
+              <div class = "user">
+                <div class="line1">Name: <%= authentication.uname %> (ID: <%= authentication.uid %>)</div>  
+                <div class="line2">Email: <%= authentication.uemail != '' ? authentication.uemail : 'not set' %></div>
+                <div class="line3">
+                    <% @authentications.count == 1 ? @msg = 'Removing the last account linked might lock you out of your account if you do not know the email/password sign-in of your local account!' : @msg = '' %>
+                    <%= link_to "Remove this authentication", authentication, :confirm => 'Are you sure you want to remove this authentication authentication? ' + @msg, :method => :delete, :class => "remove" %>
+                </div>
+              </div>
+          </div>  
+        <% end %>
+    </div>
+
+    <div id="availableauthentications">
+        <h3>You can connect more authentications to your account:</h3>
+        <div id="authentications">
+            <a href="/auth/facebook" class="authentications"><%= image_tag "facebook_64.png", :size => "64x64",  :alt => "Facebook" %>Facebook</a>
+        </div>
+        <h4>If you signed-up for List of Things for Sale via Facebook a random password has been set for the local password. You can request a new password using the "Forgot your Password?" link on the log in page.</h4>
+    </div>  
+</section>

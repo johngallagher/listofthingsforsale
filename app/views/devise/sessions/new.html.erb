@@ -1,0 +1,27 @@
+<h2>Sign in</h2>
+
+<%= form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f| %>
+  <div><%= f.label :email %><br />
+  <%= f.email_field :email %></div>
+
+  <div><%= f.label :password %><br />
+  <%= f.password_field :password %></div>
+
+  <% if devise_mapping.rememberable? -%>
+    <div><%= f.check_box :remember_me %> <%= f.label :remember_me %></div>
+  <% end -%>
+
+  <div><%= f.submit "Sign in" %></div>
+<% end %>
+
+
+<div id="remote2">
+    <div id="terms" class="box">
+        <%= link_to "Terms of Service", "#" %> 
+    </div>  
+    <div id="services" class="box">
+        <a href="/auth/facebook" class="services2"><%= image_tag "facebook_64.png", :size => "64x64",  :alt => "Facebook" %>Facebook</a>
+    </div>  
+</div>
+
+<%= render :partial => "devise/shared/links" %>
