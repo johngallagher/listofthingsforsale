@@ -133,12 +133,14 @@ class ShopsController < ApplicationController
         
         logger.debug "Params passed in are #{params}"
         
-        ItemGenerator.new(@shop_items_description).generate_items.each do |this_item|
-          this_item.shop = @shop
-          this_item.quantity = 1
-          this_item.save
-          logger.debug "this item was #{this_item.inspect}"
-        end
+        @new_items = ItemGenerator.new(:new_description => @shop_items_description, :old_description => "", :items => []).generate_items
+        @shop.items = @new_items
+        # ItemGenerator.new(@shop_items_description).generate_items.each do |this_item|
+        #   this_item.shop = @shop
+        #   this_item.quantity = 1
+        #   this_item.save
+        #   logger.debug "this item was #{this_item.inspect}"
+        # end
 
         format.html { redirect_to(@shop, :notice => 'Shop was successfully created.') }
         format.xml  { render :xml => @shop, :status => :created, :location => @shop }
