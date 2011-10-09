@@ -12,8 +12,17 @@ class ApplicationController < ActionController::Base
   
   private
 
-    # Overwriting the sign_out redirect path method
-    # def after_sign_out_path_for(resource_or_scope)
-    #   logger.debug "Heres the resource #{resource_or_scope.inspect}"
-    # end
+  # Overwriting the sign_out redirect path method
+  def after_sign_in_path_for(resource_or_scope)
+    root_url + current_user.shop.url
+  end
+  
+  def after_sign_out_path_for(resource_or_scope)
+    logger.debug "Session in after sign out path #{session.inspect}"
+    # logged_out_users_shop = Shop.find(session[:old_shop_id])
+    # root_url + logged_out_users_shop.url
+    root_url
+  end
+  
+  
 end

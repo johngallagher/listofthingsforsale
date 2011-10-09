@@ -17,8 +17,10 @@
 		
     <div id="left" class="span-15 colborder">
       <div id="listview">
-				<% @shop.items.select{ |i| i.quantity > 0 }.each do |item| %>
-					<%= render :partial => "items/show_public", :locals => { :item => item, :item_index => @shop.items.index(item) } %>
+				<% Rails.logger.debug "IN VIEW item  #{@shop.items.inspect}"%>
+				<% @shop.items.select{ |i| i.quantity > 0 }.each_index do |item_index| %>
+				<% Rails.logger.debug "IN VIEW item index is #{item_index} with #{@shop.items[item_index].inspect}"%>
+					<%= render :partial => "items/show_public", :locals => { :item => @shop.items[item_index], :item_index => item_index } %>
 				<% end %>
       </div>
 			<% @sold_out_items = @shop.items.select{ |i| i.quantity == 0 } %>

@@ -29,7 +29,7 @@
       <div class="topbar-centred">
           <ul class="navigation">
               <li class="logo"><a href="http://www.listofthingsforsale.com/"><img src="/images/list_of_things_for_sale.jpg" /></a></li>
-              <li class="<%= current if current_page_in?(root_url)%>"><a href="/">Home</a></li>
+              <li class="<%= if current_page_in?(root_url) then "current" end %>"><a href="/">Home</a></li>
               <li class="
 							<%= 
 							if !current_user_shop_url.nil? 

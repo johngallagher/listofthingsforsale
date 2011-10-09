@@ -18,12 +18,12 @@ class ShopsController < ApplicationController
     else
       @shop = Shop.find(session[:shop_id])
       respond_to do |format|
-        format.html { redirect_to shop_url(@shop)} # show.html.erb
+        format.html { render :action => "update" } # show.html.erb
         format.js
       end
     end
   end
-  
+
   # GET /shops/1
   # GET /shops/1.xml
   def show
@@ -47,12 +47,12 @@ class ShopsController < ApplicationController
     if params[:url].nil?
       respond_to do |format|
         format.html { redirect_to "/#{@shop.url}" } # show.html.erb
-        format.js
+        # format.js
       end
     else
       respond_to do |format|
         format.html { render 'show' =>  @shop } # show.html.erb
-        format.js
+        # format.js
       end
     end
     
@@ -80,19 +80,7 @@ class ShopsController < ApplicationController
 
   # GET /shops/1/edit
   def edit
-    if params[:url].nil?
-      @shop_id = params[:id]
-      @shop = Shop.find(@shop_id)
-    else
-      @shop = Shop.where(:url => params[:url]).first
-      @shop_id = @shop.id
-    end
-    # logger.debug "session is #{session.inspect} and params are #{params}"
-    unless session[:shop_id].to_i == @shop_id.to_i
-      respond_to do |format|
-        format.html { redirect_to(@shop, :notice => 'Shop cannot be edited.')} # show.html.erb
-      end
-    end      
+    @shop = Shop.find(session[:shop_id].to_i)
   end
 
 
@@ -164,7 +152,7 @@ class ShopsController < ApplicationController
         if !new_description.nil?
           @old_items = Array.new(@shop.items)
           @new_items = ItemGenerator.new(:new_description => new_description, :old_description => old_description, :items => @old_items).generate_items
-          
+          logger.debug "new items are #{@new_items}"
           logger.debug "puts items before clear are #{@new_items.inspect}"
           @shop.items.clear
           @new_items.each do |this_item|
@@ -174,9 +162,10 @@ class ShopsController < ApplicationController
           @shop.save
         end
         logger.debug("After update Shop is #{@shop.inspect} with items #{@shop.items.inspect}")
-        @item = @shop.items.first
+        # @item = @shop.items.first
         
-        format.html { redirect_to "/#{@shop.url}" } # show.html.erb
+        format.html { render :action => "show" }
+        # format.html { redirect_to "/#{@shop.url}" } # show.html.erb
         format.js
       else
         format.html { render :action => "edit" }

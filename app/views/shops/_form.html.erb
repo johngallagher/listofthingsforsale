@@ -1,23 +1,71 @@
-<%= form_for(@shop) do |f| %>
-  <% if @shop.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@shop.errors.count, "error") %> prohibited this shop from being saved:</h2>
+<div class="container">
+         <hr class="space">
+       
+        <div id="left" class="span-16">
+            <div id="listform"> 
+							<%= form_for(@shop, :html => { :id => "new_list" }) do |f| %>
+							  <% if @shop.errors.any? %>
+							    <div id="error_explanation">
+							      <h2><%= pluralize(@shop.errors.count, "error") %> prohibited this shop from being saved:</h2>
 
-      <ul>
-      <% @shop.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
+							      <ul>
+							      <% @shop.errors.full_messages.each do |msg| %>
+							        <li><%= msg %></li>
+							      <% end %>
+							      </ul>
+							    </div>
+							  <% end %>
+								<h1 style="margin:20px 0 15px 0;text-align:center;">Type a list of things for sale:</h1>
+								<% if @shop.description %>
+																<%= f.text_area :description, :rows => "5", :cols => "20", :style => "width: 600px; height: 320px;" %>
+								<% else %>
+																<%= f.text_area :description, :rows => "5", :cols => "20", :style => "width: 600px; height: 320px;", :value => "For example:
 
-  <div class="field">
-    <%= f.label :description %><br />
-    <%= f.text_area :description %>
-  </div>
-
-
-  <div class="actions">
-    <%= f.submit %>
-  </div>
-<% end %>
+								iPod Touch 16gig 2nd Gen £70
+								Fender Jazz Bass Guitar £280
+								Nouveau Banjo CD £5 The London quintet's infamous first album
+								Pearl Bracelet £35 Stunning original Art Deco piece" %>
+								  <% end %>
+								
+						    
+                <div class="column span-5 prepend-6 append-5">
+                    <a href="javascript:;" id="listsubmit" type="submit" class="button positive" onClick="$('form#new_list').submit()">Now Click Here!
+                        <img src="css/plugins/buttons/icons/arrow_right.png" alt="" />
+                    </a>
+                </div>
+								<% end %>
+                <hr class="space" />
+                <hr class="space" />
+               
+            </div>
+        </div>
+        <div class="span-7 last">
+            <p style="margin-top:70px;"> <!--text-align: center;-->
+                <!--listofthingsforsale.com/yourname<br />-->
+                <!--<img src="images/list240.gif" alt="list of things for sale" />-->
+                <span id="tagline" class="highlight">
+                    <!--the minimal way to sell online-->
+                    <b>&larr;</b> no fuss, just start using it.</span></p>
+            <div id="editdescription">
+                <!-- Use the Format:-->
+                Type a list into the box like this:<br />
+                <br />
+                Title&nbsp; £Price&nbsp; Description<br />
+                <br />
+                1. Currency is in $ or £<br />
+                2. Description is optional
+                <br />
+                <br />
+                If you don't want to sell anything just now,
+                <br />
+                <a href="#">buy something from our list instead!</a>
+                <br />
+                <br />
+                <span style="font-size: 85%;">Coming Soon:<br />
+                    1. +quantity for multiple item sales, ie +5<br />
+                    2. #tags for categorising, ie #electronics</span>
+            </div>
+        </div>
+        <hr class="space" />
+        <hr class="space" />
+</div>
