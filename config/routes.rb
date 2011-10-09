@@ -39,14 +39,14 @@ Things3::Application.routes.draw do
     resources :items
   end
   
-  # match 'shops/:id/take_live' => 'shops#take_live'
-  
   resources :descriptions
 
-  match 'edit' => 'shops#home_edit'
+  match 'your-list' => 'shops#show_current_user_list'
+  match 'pricing' => 'pages#pricing'
+  match 'contact' => 'pages#contact'
+  match 'help' => 'pages#help'
 
-  match ':url' => 'shops#show', :constraints => { :url => /[a-z]{4,30}/ }
-  match ':url/edit' => 'shops#edit', :constraints => { :url => /[a-z]{4,30}/ }
+  match ':url' => 'shops#show', :constraints => { :url => /[a-z|0-9]{4,30}/ }
 
   # devise_for :users , :confirmations => "confirmations"
   # devise_for :users

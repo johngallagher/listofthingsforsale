@@ -10,19 +10,6 @@ class ShopsController < ApplicationController
     end
   end
 
-  def home_edit
-    if session[:shop_id].nil?
-      respond_to do |format|
-        format.html { render :action => "new" }
-      end
-    else
-      @shop = Shop.find(session[:shop_id])
-      respond_to do |format|
-        format.html { render 'edit', :object => @shop} # show.html.erb
-      end
-    end
-  end
-
   def home
     if session[:shop_id].nil?
       respond_to do |format|
@@ -59,13 +46,11 @@ class ShopsController < ApplicationController
     
     if params[:url].nil?
       respond_to do |format|
-        # format.html { render 'show' => @shop} # show.html.erb
         format.html { redirect_to "/#{@shop.url}" } # show.html.erb
         format.js
       end
     else
       respond_to do |format|
-        # format.html { render 'show' => @shop} # show.html.erb
         format.html { render 'show' =>  @shop } # show.html.erb
         format.js
       end
@@ -73,17 +58,6 @@ class ShopsController < ApplicationController
     
   end
 
-  def show_users_shop
-    respond_to do |format|
-      format.html { render 'show', :shop => @shop} # show.html.erb
-    end
-  end
-
-  def show_shop
-    respond_to do |format|
-      format.html { render 'show' => @shop} # show.html.erb
-    end
-  end
   # GET /shops/new
   # GET /shops/new.xml
   def new
@@ -122,6 +96,18 @@ class ShopsController < ApplicationController
   end
 
 
+  def show_current_user_list
+    if current_user and current_user.shop
+      redirect_to "/#{current_user.shop.url}"
+    elsif session[:shop_id]
+      @shop_id = session[:shop_id]
+      @shop = Shop.find(@shop_id)
+      redirect_to "/#{@shop.url}"
+    else
+      render 'no_shop_yet'
+    end
+  end
+  
   # POST /shops
   # POST /shops.xml
   def create
@@ -145,12 +131,6 @@ class ShopsController < ApplicationController
         
         @new_items = ItemGenerator.new(:new_description => @shop_items_description, :old_description => "", :items => []).generate_items
         @shop.items = @new_items
-        # ItemGenerator.new(@shop_items_description).generate_items.each do |this_item|
-        #   this_item.shop = @shop
-        #   this_item.quantity = 1
-        #   this_item.save
-        #   logger.debug "this item was #{this_item.inspect}"
-        # end
 
         format.html { redirect_to(@shop, :notice => 'Shop was successfully created.') }
         format.xml  { render :xml => @shop, :status => :created, :location => @shop }
@@ -166,8 +146,6 @@ class ShopsController < ApplicationController
   def update
     logger.debug("Params passed into update were: #{params.inspect}")
     @shop = Shop.find(params[:id])
-
-
 
     if !params[:shop].nil? and !params[:shop][:url].nil?
       # we're updating the url so keep it on tab 2.
@@ -187,15 +165,6 @@ class ShopsController < ApplicationController
           @old_items = Array.new(@shop.items)
           @new_items = ItemGenerator.new(:new_description => new_description, :old_description => old_description, :items => @old_items).generate_items
           
-          # Don't destroy items, just detach them from shop. We may have all sorts of orders for these items still in the pipeline.
-          # @items_to_destroy = @shop.items - @new_items
-          # logger.debug "Items to destroy are #{@items_to_destroy}"
-          # @items_to_destroy.each do |this_item|
-          #   this_item.destroy
-          # end
-          # logger.debug "new items were #{@new_items.count} and #{@new_items.inspect}"
-
-          # 
           logger.debug "puts items before clear are #{@new_items.inspect}"
           @shop.items.clear
           @new_items.each do |this_item|
@@ -203,23 +172,12 @@ class ShopsController < ApplicationController
           end
 
           @shop.save
-          
-          # @shop.save
         end
         logger.debug("After update Shop is #{@shop.inspect} with items #{@shop.items.inspect}")
         @item = @shop.items.first
-        # respond_to do |format|
-          # format.html { render :action => "show", :local => { :shop => @shop, :item => @item} and return } # show.html.erb
-          
-          
-          
-          format.html { redirect_to "/#{@shop.url}" } # show.html.erb
-          format.js
-        # end
         
-        # format.html {render @shop }
-        # # format.html { redirect_to(@shop, :notice => 'Shop was successfully updated.') }
-        # format.xml  { head :ok }
+        format.html { redirect_to "/#{@shop.url}" } # show.html.erb
+        format.js
       else
         format.html { render :action => "edit" }
         format.xml  { render :xml => @shop.errors, :status => :unprocessable_entity }
@@ -238,19 +196,4 @@ class ShopsController < ApplicationController
       format.xml  { head :ok }
     end
   end
-  
-  # def take_live
-  #   @shop = Shop.find(params[:id])
-  #   @shop.status = ShopStatus::LIVE_FREE
-  #   @shop.url = (0...8).map{65.+(rand(25)).chr}.join.downcase
-  #   respond_to do |format|
-  #     if @shop.save
-  #       format.html { redirect_to(@shop, :notice => 'Shop was successfully taken live.') }
-  #       format.xml  { head :ok }
-  #     else
-  #       format.html { render :action => "edit" }
-  #       format.xml  { render :xml => @shop.errors, :status => :unprocessable_entity }
-  #     end
-  #   end
-  # end
 end

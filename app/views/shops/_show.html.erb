@@ -4,6 +4,7 @@
 		simpleCart.email = "<% if @shop.paypal_email.nil? %>test@test.com<% else %><%= @shop.paypal_email %><% end %>";
 		simpleCart.checkoutTo = PayPal;
 		simpleCart.currency = GBP;
+		simpleCart.cartHeaders = ["name", "Total"];
 	</script>
 <%end%>
 
@@ -31,49 +32,26 @@
 			<% end %>
     </div>
     <div class="span-7 last">
-        <p style="text-align: center;">
-            <b>listofthingsforsale.com/yourname</b><br />
-            <span id="tagline" class="highlight">the minimal way to sell online</span></p>
-        <div id="editdescription" style="display: none;">
-            <!-- Use the Format:-->
-            Type a list into the box like this:<br />
-            <br />
-            Title&nbsp; £Price&nbsp; Description<br />
-            <br />
-            1. Currency is in $ or £<br />
-            2. Description is optional
-            <br />
-            <br />
-            If you don't want to sell anything just now,
-            <br />
-            <a href="">buy something from our list instead!</a>
-            <br />
-            <br />
-            <span style="font-size: 85%;">Coming Soon:<br />
-                1. +quantity for multiple item sales, ie +5<br />
-                2. #tags for categorising, ie #electronics</span>
-        </div>
-        <div id="cart">
-            <hr style="margin-bottom: 10px;" />
-            <p style="margin-bottom: 5px;">
-                You have <span class="simpleCart_quantity"></span>&nbsp;items in your Cart:</p>
-            <div class="simpleCart_items">
-            </div>
-            <hr style="margin-bottom: 10px;" />
-            <!--use a class of simpleCart_empty to empty the cart and simpleCart_checkout to checkout -->
-            <p>
-                Total <span class="simpleCart_total"></span>
-                <br />
-                <a href="javascript:;" class="simpleCart_empty">Empty Cart</a> &nbsp;|&nbsp; <a href="javascript:;"
-                    class="simpleCart_checkout">Checkout</a></p>
-            <hr class="space" />
-            <hr class="space" />
-            <hr class="space" />
-            <hr class="space" />
-        </div>
-    </div>
+		        <div id="cart">
+                <p style="margin: 10px 0 5px;">
+		                You have <span class="simpleCart_quantity"></span>&nbsp;items in your Cart:</p>
+		            <div class="simpleCart_items">
+		            </div>
+		            <hr style="margin-bottom: 10px;" />
+		            <!--use a class of simpleCart_empty to empty the cart and simpleCart_checkout to checkout -->
+		            <p>
+		                Total <span class="simpleCart_total"></span>
+		                <br />
+		                <a href="javascript:;" class="simpleCart_empty">Empty Cart</a> &nbsp;|&nbsp; <a href="javascript:;"
+		                    class="simpleCart_checkout">Checkout</a></p>
+		            <hr class="space" />
+		            <hr class="space" />
+		            <hr class="space" />
+		            <hr class="space" />
+		        </div>
+		    </div>
+    <hr class="space" />
 </div>
-
 
 <script>        $(document).ready(function () {
         $("#item1").click(function () {

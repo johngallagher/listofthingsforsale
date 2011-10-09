@@ -18,7 +18,8 @@ If user is not signed in but shop has user: 4 -->
 		function changeItemPhoto() {
 			itemIdToChange = $("select#item_image_name_item_image_id").val();
 			$("form.edit_item").attr("action","/items/" + itemIdToChange);
-			$(".photo_selector").show();
+			$("#item_photo_1").show();
+			$("#upload_image_button").show();
 		}
 	</script>
   <script type="text/javascript">
@@ -40,14 +41,11 @@ If user is not signed in but shop has user: 4 -->
 <%end%>
 
 
-
-
-
-		
-		<div id="admin">
-			<div id="aboveline" class="info" style="text-align: center; border-left: 0px; border-right: 0px; border-bottom: 0px;">
-				<span style="color: #205791">Above this line is what your customers will see.</span>
-				<div class="container">
+ <hr class="space" />
+<div id="admin">
+    <div id="aboveline" class="info" style="text-align: center;padding-bottom:30px;">
+        <span style="color: #fff">Above this line is what your customers will see.</span> <!--color:#205791-->
+        <div class="container" style="background:none;padding:0;width:950px;">
 					<div class="coda-slider-wrapper">
 						<div id="coda-nav-1" class="coda-nav">
 							<ul>
@@ -146,54 +144,79 @@ If user is not signed in but shop has user: 4 -->
 
 	                </div>
 	              </div>
+	
+								       <div class="panel">
+								        <div class="panel-wrapper" style="text-align:left;">
+													<% form_for @shop, :remote => true, :html => { :id => "shop_configure_cart" } do |f| %>
+								        <div class="columnn span-11">
+								            <p>
+								                <fieldset style="height: 140px;margin-top:5px;">
+								                    <legend style="text-align: center;font-weight:normal;">Shopping Cart</legend>
+								                    <!--<input type="checkbox" checked="checked">
+								                    I want a shopping cart
+								                    <hr class="space">-->
+								
+								
+																	  <%= f.radio_button :payment_type, 'paypal', :checked => true %> 
+																	  <%= f.label :payment_type, 'Receive payments via Paypal', :value => 'paypal' %><br />
+																	  <%= f.radio_button :payment_type, 'email' %>
+																	  <%= f.label :payment_type, 'Just email me orders', :value => 'email' %>
+								
+
+								                    </div><div class="columnn span-11 last">
+								            <p>
+								                <fieldset style="height: 140px;margin-top:5px;">
+							                    <legend style="text-align: center;font-weight:normal;">Fulfilling Orders</legend>
+																  <%= f.radio_button :delivery_method, 'post', :checked => true %> 
+																  <%= f.label :delivery_method, 'Prices include', :value => 'post' %> <select style="margin-bottom: 0px;">
+					                          <option>
+					                            UK
+					                          </option>
+					                          <option>
+					                            USA
+					                          </option>
+					                          <option>
+					                            Worldwide
+					                          </option>
+					                        </select> postage<br>
+																  <%= f.radio_button :delivery_method, 'collection' %>
+																  <%= f.label :delivery_method, 'Collection / Other', :value => 'collection' %>
+									
+
+								        </div>
+												<% end %>
+								        <div class="column span-6 prepend-9"><a class="button positive" style=" text-align: center; margin-top: 0px" onClick="$('form#shop_configure_cart').submit()"><img src="css/plugins/buttons/icons/tick.png" alt=""/>Save Configuration</a></div>
+								    </div>
+	
+	
+
+	
 	              <div class="panel">
-	                <div class="panel-wrapper">
-	                  <fieldset style="height: 280px;">
-	                    <legend style="text-align: center;">Configure your list</legend>
-	
-	
-	
-											<% form_for @shop, :remote => true, :html => { :id => "shop_configure_cart" } do |f| %>
-	                      <p>
-											    <%= f.label :payment_type, 'Buyers can checkout:', :class => "form_label" %><br />
-												
-												  <%= f.radio_button :payment_type, 'paypal', :checked => true %> 
-												  <%= f.label :payment_type, 'Using Paypal', :value => 'paypal' %><br />
-												  <%= f.radio_button :payment_type, 'email' %>
-												  <%= f.label :payment_type, 'Just email me orders', :value => 'email' %>
-												
-	                        <!--<span style="font-size:85%;margin-left:25px;"><a>Add buyer instructions</a></span>-->
-	                      </p>
-												  <p>
-												    <%= f.label :delivery_method, "Fulfilling orders", :class => "form_label" %><br />
-												
-													  <%= f.radio_button :delivery_method, 'post', :checked => true %> 
-													  <%= f.label :delivery_method, 'Prices include', :value => 'post' %> <select style="margin-bottom: 0px;">
-		                          <option>
-		                            UK
-		                          </option>
-		                          <option>
-		                            USA
-		                          </option>
-		                          <option>
-		                            Worldwide
-		                          </option>
-		                        </select> postage<br>
-													  <%= f.radio_button :delivery_method, 'collection' %>
-													  <%= f.label :delivery_method, 'Collection / Other', :value => 'collection' %>
-													</p>
-	                        <!--         <span style="font-size:85%;margin-bottom:10px;width:250px;"><a>Add buyer instructions</a></span> <br/>  -->
-	                         <!--            
-	<textarea style="width:260px;height:70px;margin-bottom:0;">ie. If you're in Glasgow, I run a stall at the old townhouse on the first Saturday of every month.</textarea>-->
-	                         <a class="button positive" style="width: 45px; text-align: center; margin-top: 15px" onClick="$('form#shop_configure_cart').submit()"><!--<img src="/css/plugins/buttons/icons/tick.png" alt=""/>-->
-	                         Save</a>
-	                      </p>
-	                    </form>
+                  <div class="panel-wrapper">
+                    <fieldset style="height: 140px; margin-top:5px;">
+                      <legend style="font-weight:normal;">Upload one image for each of your items. Multiple images coming soon.</legend>
+											<% if @shop.items.count > 0 %>
+												<% @item = @shop.items.first %>
+											<% form_for @item, :html => { :multipart => true, :class => "inline" }, :remote => true do |f| %>
+                        <%= select :item_image_name, :item_image_id, Item.where(:shop_id => @shop.id).all.collect {|p| [ p.name, p.id ] }, options = {:onChange => "changeItemPhoto()", :include_blank => 'Select item'}, html_options = {:onChange => "changeItemPhoto()", :style => "float: left; width: 200px", :class => "inline"} %>
+
+
+											    <%= f.file_field :photo_1, :required => true, :class=> "button inline", :style => "float: left; margin: 5px 0 5px 10px; display:none;" %>
+													<a class="button inline" href="javascript:;" style="margin: 0 0 5px 10px; display:none;" onClick="$(this).closest('form').submit()" id="upload_image_button"><img src="css/plugins/buttons/icons/tick.png" alt="">Upload Image</a>
+													
+													
 											<% end %>
-										<span style="float: left; font-size: 85%; width: 250px;">More postage options coming soon</span>
-	                  </fieldset>
-	                </div>
-	              </div>
+													
+												<% end %>
+
+
+<!--  <a class="button inline" href="javascript:;" style="margin: 0 0 5px 10px;"><img src="css/plugins/buttons/icons/folder_picture.png" alt=""> Browse</a> <input class="text inline" value="path" style="float: left; width: 200px;margin: 1px 0 0 10px;"> <a class="button inline" href="javascript:;" style="margin: 0 0 5px 10px;"><img src="css/plugins/buttons/icons/tick.png" alt=""> Upload Image</a> -->
+                      </form>
+                    </fieldset>
+                  </div>
+                </div>
+  
+	
 	              <div class="panel">
 	                <div class="panel-wrapper">
 	                  <h2 class="title">
@@ -209,7 +232,7 @@ If user is not signed in but shop has user: 4 -->
 														<% form_for @item, :html => { :multipart => true }, :remote => true do |f| %>
 														  <div class="photo_selector" style="display: none; margin: 0 0 5px 10px; width: 45px; text-align: center;">
 														    <%= f.file_field :photo_1, :required => true %>
-																<a class="button" href="javascript:;" onClick="$(this).closest('form').submit()"><!--<img src="/css/plugins/buttons/icons/arrow_up.png" alt=""/>-->Upload</a>
+																<a class="button" href="javascript:;" onClick="$(this).closest('form').submit()" id=""><!--<img src="/css/plugins/buttons/icons/arrow_up.png" alt=""/>-->Upload</a>
 														  </div>
 														<% end %>
 													<% end %>
