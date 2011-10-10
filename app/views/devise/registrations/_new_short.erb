@@ -1,8 +1,5 @@
 <fieldset id="signupform" style="margin-top:5px;">
 <legend style="font-weight:normal;">Sign up now to save your List of Things for Sale</legend>
-<a href="/auth/facebook" class="services2"><%= image_tag "facebook-connect-button.png", :title => "Facebook Connect" %></a>
-<hr class="space">
-or
 <hr class="space">
 <%= form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f| %>
   <%= devise_error_messages! %>
