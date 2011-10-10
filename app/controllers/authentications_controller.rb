@@ -34,7 +34,7 @@ class AuthenticationsController < ApplicationController
 
            # check if user has already signed in using this authentication provider and continue with sign in process if yes
            auth = Authentication.find_by_provider_and_uid(provider, uid)
-           if auth
+           if auth && auth.user.present?
              flash[:notice] = 'Signed in successfully via ' + provider.capitalize + '.'
              sign_in_and_redirect(:user, auth.user)
            else
