@@ -49,7 +49,7 @@ class ItemGenerator
   end
   
   def matches_from_description(description)
-    description.match(/([[:print:]]+) £(\d+\.*\d*) ([[:print:]][^\+]+)(\+(\d+))?/)
+    description.match(/([[:print:]]+) £(\d+\.*\d*)( [[:print:]][^\+]*)?(\+(\d+))?/)
     # description.match(/([[:print:]]+) £(\d+\.*\d*) ([[:print:]]+)/)
   end
   
