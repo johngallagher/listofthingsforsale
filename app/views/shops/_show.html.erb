@@ -12,11 +12,15 @@
 
 <div class="container">
     <hr class="space">
-    <hr class="space">
-		<h1><%= @shop.url %>&#x27;<% if @shop.url[-1,1] != "s" %>s<% end %> list of things for sale:</h1>
+		<% if (session[:shop_id].to_i == @shop.id) or (user_signed_in? and @shop.user == current_user) %>
+			<h1 style="margin:20px 0 15px 0;text-align:center;width: 590px;">Your list of things for sale:</h1>
+		<% else %>
+			<h1 style="margin:20px 0 15px 0;text-align:center;width: 590px;"><%= @shop.url %>&#x27;<% if @shop.url[-1,1] != "s" %>s<% end %> list of things for sale:</h1>
+	  <% end %>
 		
     <div id="left" class="span-15 colborder">
       <div id="listview">
+	
 				<% @sorted_items = @shop.items.sort{ |a,b| ( a.sort_order and b.sort_order ) ? a.sort_order.to_i <=> b.sort_order.to_i : ( a.sort_order ? -1 : 1 ) } %>
 				
 				<% @sorted_items.select{ |i| i.quantity > 0 }.each do |item| %>
@@ -35,9 +39,6 @@
     </div>
     <div class="span-7 last">
 	
-	
-
-
 		  <% flash.each do |name, msg| %>
 		    <%= content_tag :p, msg, :id => "flash_#{name}" %>
 		  <% end %>
@@ -72,10 +73,6 @@
 		                <br />
 		                <a href="javascript:;" class="simpleCart_empty">Empty Cart</a> &nbsp;|&nbsp; <a href="javascript:;"
 		                    class="simpleCart_checkout">Checkout</a></p>
-		            <hr class="space" />
-		            <hr class="space" />
-		            <hr class="space" />
-		            <hr class="space" />
 		        </div>
 		    </div>
     <hr class="space" />

@@ -1,6 +1,4 @@
 <div class="container">
-         <hr class="space">
-       
         <div id="left" class="span-16">
             <div id="listform"> 
 							<%= form_for(@shop, :html => { :id => "new_list" }) do |f| %>
@@ -40,6 +38,11 @@ Pearl Bracelet £35 Stunning original Art Deco piece" %>
             </div>
         </div>
         <div class="span-7 last">
+				  <% flash.each do |name, msg| %>
+				    <%= content_tag :p, msg, :id => "flash_#{name}" %>
+				  <% end %>
+
+	
             <p style="margin-top:70px;"> <!--text-align: center;-->
                 <!--listofthingsforsale.com/yourname<br />-->
                 <img src="/images/list240.gif" alt="list of things for sale" /><br/>
