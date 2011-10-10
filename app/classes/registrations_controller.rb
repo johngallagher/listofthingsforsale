@@ -22,9 +22,11 @@ class RegistrationsController < Devise::RegistrationsController
     end
     return @redirect_url
   end
-  # 
-  # def after_sign_in_path_for(resource)
-  #   after_sign_in_path_for(resource)
-  # end
-  #  
+  
+  def after_sign_in_path_for(resource)
+    if current_user.shop
+      root_url + current_user.shop.url
+    end
+  end
+   
 end

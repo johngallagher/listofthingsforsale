@@ -1,5 +1,4 @@
 Rails.application.config.middleware.use OmniAuth::Builder do
-  Rails.logger.debug "Rails env is #{Rails.env.inspect}"
   if Rails.env.production?
     provider :facebook, '175670452514877', '2a017518bf32595d84846f0e0bb8cfec'
   else
