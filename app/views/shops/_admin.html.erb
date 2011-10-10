@@ -151,24 +151,24 @@ If user is not signed in but shop has user: 4 -->
 								        <div class="columnn span-11">
 								            <p>
 								                <fieldset style="height: 140px;margin-top:5px;">
-								                    <legend style="text-align: center;font-weight:normal;">Shopping Cart</legend>
+								                    <legend style="text-align: center;font-weight:normal;">Payment</legend>
 								                    <!--<input type="checkbox" checked="checked">
 								                    I want a shopping cart
 								                    <hr class="space">-->
 								
 								
 																	  <%= f.radio_button :payment_type, 'paypal', :checked => true %> 
-																	  <%= f.label :payment_type, 'Receive payments via Paypal', :value => 'paypal' %><br />
-																	  <%= f.radio_button :payment_type, 'email' %>
-																	  <%= f.label :payment_type, 'Just email me orders', :value => 'email' %>
-								
+																	  <%= f.label :payment_type, 'Receive payments via Paypal: ', :value => 'paypal', :style => "font-weight: normal;" %>
+																		<%= f.text_field :paypal_email, :size => "25", :placeholder => "Paypal email address" %><br/>
+																	  <%= f.radio_button :payment_type, 'email' %> 
+																	  <%= f.label :payment_type, 'Just email me', :value => 'email', :style => "font-weight: normal;" %>
 
 								                    </div><div class="columnn span-11 last">
 								            <p>
 								                <fieldset style="height: 140px;margin-top:5px;">
 							                    <legend style="text-align: center;font-weight:normal;">Fulfilling Orders</legend>
 																  <%= f.radio_button :delivery_method, 'post', :checked => true %> 
-																  <%= f.label :delivery_method, 'Prices include', :value => 'post' %> <select style="margin-bottom: 0px;">
+																  <%= f.label :delivery_method, 'Prices include', :value => 'post', :style => "font-weight: normal;" %> <select style="margin-bottom: 0px;">
 					                          <option>
 					                            UK
 					                          </option>
@@ -180,7 +180,7 @@ If user is not signed in but shop has user: 4 -->
 					                          </option>
 					                        </select> postage<br>
 																  <%= f.radio_button :delivery_method, 'collection' %>
-																  <%= f.label :delivery_method, 'Collection / Other', :value => 'collection' %>
+																  <%= f.label :delivery_method, 'Collection / Other', :value => 'collection', :style => "font-weight: normal;" %>
 									
 
 								        </div>
