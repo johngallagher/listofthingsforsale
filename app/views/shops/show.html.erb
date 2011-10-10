@@ -1,5 +1,5 @@
 <%= render :partial => "show" %>
 
-<% if (session[:shop_id].to_i == @shop.id and @shop.user.nil?) or (user_signed_in? and @shop.user == current_user) %>
+<% if (session[:shop_id].to_i == @shop.id) or (user_signed_in? and @shop.user == current_user) %>
 	<%= render :partial => "admin" %>
 <% end %>
