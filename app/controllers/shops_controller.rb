@@ -99,6 +99,7 @@ class ShopsController < ApplicationController
   # POST /shops
   # POST /shops.xml
   def create
+    session[:selected_tab] = 2
     @shop_items_description = params[:shop][:description]
 
     @shop_name = nil

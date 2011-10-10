@@ -15,11 +15,8 @@ class ApplicationController < ActionController::Base
   # Overwriting the sign_out redirect path method
   def after_sign_in_path_for(resource_or_scope)
     @redirect_url = root_url
-    if session[:shop_id]
-      @current_user_shop = Shop.find(session[:shop_id])
-      if @current_user_shop
-        @redirect_url = root_url + @current_user_shop.url
-      end
+    if current_user.shop.url
+      @redirect_url = @redirect_url + current_user.shop.url
     end
     return @redirect_url
   end

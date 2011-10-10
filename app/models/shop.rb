@@ -8,5 +8,6 @@ class Shop < ActiveRecord::Base
 
    def init
      self.status  ||= ShopStatus::CREATED
+     self.payment_type = Payments::Paypal
    end
 end
