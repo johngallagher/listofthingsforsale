@@ -116,7 +116,6 @@ If user is not signed in but shop has user: 4 -->
 	              <div class="panel">
 	                <div class="panel-wrapper" style="text-align: left;">
 	
-						        <div class="columnn span-11">
 										<!-- 1. Sign Up -->
 										<% if !user_signed_in? and @shop.user_id.nil? %>
 											<%= render 'devise/registrations/new_short' %>
@@ -141,7 +140,6 @@ If user is not signed in but shop has user: 4 -->
 
 										<!-- 4. Change url -->
 
-										</div>
 										<%= render :partial => "public_url" %>
 
 	                </div>
