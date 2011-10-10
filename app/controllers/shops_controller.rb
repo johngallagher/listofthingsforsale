@@ -18,7 +18,7 @@ class ShopsController < ApplicationController
     else
       @shop = Shop.find(session[:shop_id])
       respond_to do |format|
-        format.html { render :action => "update" } # show.html.erb
+        format.html { render :action => "update" }
         format.js
       end
     end
