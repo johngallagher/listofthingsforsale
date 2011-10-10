@@ -17,7 +17,7 @@ If user is not signed in but shop has user: 4 -->
 		};
 		function changeItemPhoto() {
 			itemIdToChange = $("select#item_image_name_item_image_id").val();
-			$("form.edit_item").attr("action","/items/" + itemIdToChange);
+			$("form.edit_item_images").attr("action","/items/" + itemIdToChange);
 			$("#item_photo_1").show();
 			$("#upload_image_button").show();
 		}
@@ -198,7 +198,7 @@ If user is not signed in but shop has user: 4 -->
 											<% @sorted_items = @shop.items.sort{ |a,b| ( a.sort_order and b.sort_order ) ? a.sort_order.to_i <=> b.sort_order.to_i : ( a.sort_order ? -1 : 1 ) } %>
 											<% if @sorted_items.count > 0 %>
 												<% @item = @sorted_items.first %>
-											<% form_for @item, :html => { :multipart => true, :class => "inline" }, :remote => true do |f| %>
+											<% form_for @item, :html => { :multipart => true, :class => "edit_item_images inline" }, :remote => true do |f| %>
                         <%= select :item_image_name, :item_image_id, @sorted_items.collect {|p| [ p.name, p.id ] }, options = {:onChange => "changeItemPhoto()", :include_blank => 'Select item'}, html_options = {:onChange => "changeItemPhoto()", :style => "float: left; width: 200px", :class => "inline"} %>
 
 
