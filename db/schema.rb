@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111009233949) do
+ActiveRecord::Schema.define(:version => 20111010175404) do
 
   create_table "authentications", :force => true do |t|
     t.integer  "user_id"
@@ -93,6 +93,7 @@ ActiveRecord::Schema.define(:version => 20111009233949) do
     t.decimal  "postage_price"
     t.string   "postage_type"
     t.text     "description"
+    t.text     "collection_description"
   end
 
   create_table "users", :force => true do |t|

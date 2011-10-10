@@ -116,6 +116,7 @@ If user is not signed in but shop has user: 4 -->
 	              <div class="panel">
 	                <div class="panel-wrapper" style="text-align: left;">
 	
+						        <div class="columnn span-11">
 										<!-- 1. Sign Up -->
 										<% if !user_signed_in? and @shop.user_id.nil? %>
 											<%= render 'devise/registrations/new_short' %>
@@ -140,6 +141,7 @@ If user is not signed in but shop has user: 4 -->
 
 										<!-- 4. Change url -->
 
+										</div>
 										<%= render :partial => "public_url" %>
 
 	                </div>
@@ -181,8 +183,7 @@ If user is not signed in but shop has user: 4 -->
 					                        </select> postage<br>
 																  <%= f.radio_button :delivery_method, 'collection' %>
 																  <%= f.label :delivery_method, 'Collection / Other', :value => 'collection', :style => "font-weight: normal;" %>
-									
-
+																	<%= f.text_area :collection_description, :placeholder => "Example: I'm at Sloans Market every Saturday.", :rows => "5", :style => "height: 70px;" %>
 								        </div>
 												<% end %>
 								        <div class="column span-6 prepend-9"><a class="button positive" style=" text-align: center; margin-top: 0px" onClick="$('form#shop_configure_cart').submit()"><img src="css/plugins/buttons/icons/tick.png" alt=""/>Save Configuration</a></div>
