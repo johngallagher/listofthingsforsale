@@ -4,7 +4,7 @@
 				<span class="item_itemid" style="display:none;"><%= item.id %></span>
         <li class="item_name_li"><a class="item_name" href="javascript:;" id="item<%= item_index + 1 %>"><%= item.name %></a></li>
         <li class="item_price"><%= number_to_currency(item.price, :unit => "£") %></li>
-        <li class=" item_add">
+        <li class=" item_add" style="width: 95px;">
 					<span class="item_quantity" style="display:none;"><%= item.quantity %></span>
 					<a class="item_addtocart button" href="javascript:;" style="margin-top: 0; <%= "display:none;" if item.quantity == 0 %>">Add to Cart</a>
 					<div style="margin-top: 0; <%= "display:none;" if item.quantity > 0 %>">Sold Out</div>

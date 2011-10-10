@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111008091238) do
+ActiveRecord::Schema.define(:version => 20111009233949) do
 
   create_table "authentications", :force => true do |t|
     t.integer  "user_id"
@@ -33,6 +33,7 @@ ActiveRecord::Schema.define(:version => 20111008091238) do
     t.string   "photo_1_content_type"
     t.integer  "photo_1_file_size"
     t.datetime "photo_1_updated_at"
+    t.integer  "sort_order"
   end
 
   create_table "line_items", :force => true do |t|
@@ -111,6 +112,7 @@ ActiveRecord::Schema.define(:version => 20111008091238) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "user_status"
+    t.string   "full_name"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true

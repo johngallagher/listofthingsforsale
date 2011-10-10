@@ -164,8 +164,8 @@ class ShopsController < ApplicationController
         logger.debug("After update Shop is #{@shop.inspect} with items #{@shop.items.inspect}")
         # @item = @shop.items.first
         
-        format.html { render :action => "show" }
-        # format.html { redirect_to "/#{@shop.url}" } # show.html.erb
+        # format.html { render :action => "show" }
+        format.html { redirect_to "/#{@shop.url}" } # show.html.erb
         format.js
       else
         format.html { render :action => "edit" }
