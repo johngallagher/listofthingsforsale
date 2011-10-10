@@ -37,6 +37,32 @@
 			<% end %>
     </div>
     <div class="span-7 last">
+	
+	
+
+
+		  <% flash.each do |name, msg| %>
+		    <%= content_tag :p, msg, :id => "flash_#{name}" %>
+		  <% end %>
+
+
+						<!-- <p class="box success">Success!<br/>
+						<b>3 items were added to your list</b><br/>
+						You're ready to start selling online. Sign up below and upload some images!
+							</p>
+
+
+				<p class="box error">Oops, something went wrong:<br/>
+					<b>Bespoke Error Message</b><br/>
+					</p> -->
+
+
+					    <p style="text-align: center;" class="sidey">
+
+			     <a href="http://listofthingsforsale.com"> <img src="/images/list240.gif" alt="list of things for sale" /></a><br/>
+			<span id="tagline" class="highlight"><a href="http://listofthingsforsale.com">the minimal way to sell online</a></span></p>
+
+
 		        <div id="cart">
                 <p style="margin: 10px 0 5px;">
 		                You have <span class="simpleCart_quantity"></span>&nbsp;items in your Cart:</p>

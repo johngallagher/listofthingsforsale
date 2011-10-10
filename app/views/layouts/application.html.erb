@@ -24,37 +24,21 @@
 
 
 
-<body>
+<body style="background-color:#fff;">
   <div id="topbar">
       <div class="topbar-centred">
           <ul class="navigation">
-              <li class="logo"><a href="http://www.listofthingsforsale.com/"><img src="/images/list_of_things_for_sale.jpg" /></a></li>
-              <li class="<%= if current_page_in?(root_url) then "current" end %>"><a href="/">Home</a></li>
-              <li class="
-							<%= 
-							if !current_user_shop_url.nil? 
-								if current_page_in?(root_url + @current_user_shop_url) 
-									"current" 
-								end
-							end
-							 %>"><a href="/your-list">Your List</a></li>
-              <li class="<%= if current_page_in?(root_url + "help") then "current" end %>"><a href="/help">Help</a></li>
-              <li class="<%= if current_page_in?(root_url + "pricing") then "current" end %>"><a href="/pricing">Pricing & Sign-Up</a></li>
-              <li class=""><a href="http://blog.listofthingsforsale.com/">Blog</a></li>
-              <li class="<%= if current_page_in?(root_url + "contact") then "current" end %>"><a href="/contact">Contact</a></li>
               
               <% if user_signed_in? %>
-                <li class="logout"><%= link_to "Log out", destroy_user_session_path, :method => :delete %></li>
+                <li class="logout" style="float:right;"><%= link_to "Log out", destroy_user_session_path, :method => :delete %></li>
               <% else %>
-                <li class="login <%= if current_page_in?(root_url + "users/sign_in") then "current" end %>"><%= link_to "Login", new_user_session_path %></li>
+                <li class="login" style="float:right;"><%= link_to "Login", new_user_session_path %></li>
               <% end %>
               
           </ul>
       </div>
   </div>
-  <% flash.each do |name, msg| %>
-    <%= content_tag :div, msg, :id => "flash_#{name}" %>
-  <% end %>
+
 
   <%= yield %>
 </body>

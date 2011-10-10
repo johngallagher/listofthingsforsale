@@ -4,6 +4,11 @@
     padding: 2px 5px;
 }
 
+.sidey a {text-decoration:none;color:#000;}
+.sidey a:hover {text-decoration:none;color:#000;}
+.sidey a img {text-decoration:none;border:none;}
+
+
 
 #listview ul
 {
@@ -182,7 +187,7 @@
     padding: 0;
     margin: 0;
     width:100%;
-    background-color:#cee6e9;
+    background-color:#fff;
     height:35px;
 }
 #topbar DIV.topbar-centred
@@ -190,71 +195,52 @@
     clear: both;
     display: block;
     margin: 0px auto;
-    width: 950px;
-    background-color:#cee6e9;
+    width: 900px;
+    background-color:#fff;
     height:35px;
 }
 
-#topbar UL.navigation
+UL.navigation
 {
     display: block;
     float: left;
-    margin: 0px;
+    margin: 10px 0 0 -20px;
     padding: 0;
+    width: 900px;
     list-style-type: none;
-    width: 950px;
-    background-color:#cee6e9;
-    height:35px;
+    background-color:#fff;
 }
-#topbar UL.navigation LI
+UL.navigation LI
 {
     padding: 0;
-    margin-top: 10px;
     display: block;
     float: left;
 }
 
-#topbar UL.navigation LI a
+UL.navigation LI a
 {
     display: block;
-    padding: 3px 20px 3px;
+    padding: 5px 20px;
     text-decoration: none;
 }
 
-#topbar UL.navigation LI a, #topbar UL.navigation LI a:hover
+UL.navigation LI.current a
 {
-    color:#000;
+    text-decoration: underline;
 }
 
-#topbar UL.navigation LI.current
+UL.navigation LI.login 
 {
-    background-color:#fff;
+    float:right;
+margin-right:-10px;
 }
 
-#topbar UL.navigation LI:hover
+
+
+UL.navigation LI a:hover
 {
-    background-color: #fff000;
-}
-
-#topbar UL.navigation LI.logo:hover
-{
-    background-color:transparent;
-}
-
-
-#topbar UL.navigation LI.logo
-{
-    background: width:200px;
-    margin:5px 0 0;
-    padding:0;
-}
-
-#topbar UL.navigation LI.logo a
-{    
-    padding: 0 80px 0 0;
-    margin:0;
-}
-
+    background-color:#fff000;
+color:#000;}
 
 
 
@@ -397,3 +383,4 @@
 
 .pricing td,.pricing th {text-align:center;border-right:1px solid #ddd;width:50%;}
 .pricing td.last, .pricing th.last {border-right:0;}
+
