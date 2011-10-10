@@ -17,12 +17,9 @@
 		
     <div id="left" class="span-15 colborder">
       <div id="listview">
-				<% Rails.logger.debug "IN VIEW item  #{@shop.items.inspect}"%>
 				<% @sorted_items = @shop.items.sort{ |a,b| ( a.sort_order and b.sort_order ) ? a.sort_order.to_i <=> b.sort_order.to_i : ( a.sort_order ? -1 : 1 ) } %>
-				<% Rails.logger.debug "IN VIEW sorted items  #{@sorted_items.inspect}"%>
 				
 				<% @sorted_items.select{ |i| i.quantity > 0 }.each do |item| %>
-				<% Rails.logger.debug "IN VIEW item index is #{@sorted_items.index(item)} with #{item.inspect}"%>
 					<%= render :partial => "items/show_public", :locals => { :item => item, :item_index => @sorted_items.index(item) } %>
 				<% end %>
       </div>

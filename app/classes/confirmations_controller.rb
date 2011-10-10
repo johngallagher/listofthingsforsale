@@ -5,19 +5,24 @@ class ConfirmationsController < Devise::ConfirmationsController
 
   # The path used after resending confirmation instructions.
   def after_resending_confirmation_instructions_path_for(resource_name)
-    shop_url(session[:shop_id])
-    # '/shops/' + session[:shop_id].to_s
+    if session[:shop_id]
+      shop_url(session[:shop_id])
+    else
+      new_shop_path
+    end
   end
 
   # The path used after confirmation.
   def after_confirmation_path_for(resource_name, resource)
-    @current_user_id = resource.id
-    # now get the shop for this logged in user
-    @current_shop = Shop.where("user_id = ?", @current_user_id).find(:first)
-    if @current_shop
-      @current_shop.status = ShopStatus::CONFIRMED
-      @current_shop.save
-      shop_url(session[:shop_id])
+    if session[:shop_id]
+      @shop = Shop.find(session[:shop_id])
+      @shop.user = resource # attach the user to the shop
+      @shop.status = ShopStatus::CONFIRMED
+      @shop.save
+      shop_url(@shop.id)
+    else
+      #if we're here, we have no shop id session. That means the user don't have a shop yet.
+      new_shop_path
     end
   end
   

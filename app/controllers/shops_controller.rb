@@ -34,7 +34,7 @@ class ShopsController < ApplicationController
       @shop_ref = params[:url]
       @shop = Shop.where(:url => @shop_ref).first
     end
-    logger.debug "Session is #{session.inspect}"
+    logger.debug "SHOW Shop is #{@shop.inspect}"
     
     
     if @shop.nil?
@@ -105,25 +105,28 @@ class ShopsController < ApplicationController
     @shop_name = nil
     @shop = Shop.new(:name => @shop_name, :description => @shop_items_description, :status => ShopStatus::LIVE_FREE, :url => (0...8).map{65.+(rand(25)).chr}.join.downcase)
 
-    respond_to do |format|
-      if @shop.save
-        if user_signed_in?
-          if current_user.shop.nil?
-            current_user.shop = @shop
-            current_user.save
-          end
+    if @shop.save
+      if user_signed_in?
+        if current_user.shop.nil?
+          current_user.shop = @shop
+          current_user.save
         end
-        
-        session[:shop_id] = @shop.id
-        
-        logger.debug "Params passed in are #{params}"
-        
-        @new_items = ItemGenerator.new(:new_description => @shop_items_description, :old_description => "", :items => []).generate_items
-        @shop.items = @new_items
-
+      end
+      
+      session[:shop_id] = @shop.id
+      
+      logger.debug "Params passed in are #{params}"
+      
+      @new_items = ItemGenerator.new(:new_description => @shop_items_description, :old_description => "", :items => []).generate_items
+      @shop.items = @new_items
+      @shop.save
+      
+      respond_to do |format|
         format.html { redirect_to(@shop, :notice => 'Shop was successfully created.') }
         format.xml  { render :xml => @shop, :status => :created, :location => @shop }
-      else
+      end
+    else
+      respond_to do |format|
         format.html { render :action => "new" }
         format.xml  { render :xml => @shop.errors, :status => :unprocessable_entity }
       end
@@ -160,12 +163,10 @@ class ShopsController < ApplicationController
             @shop.items << Item.find(this_item.id)
           end
 
-          @shop.save
         end
+        @shop.save
         logger.debug("After update Shop is #{@shop.inspect} with items #{@shop.items.inspect}")
-        # @item = @shop.items.first
-        
-        # format.html { render :action => "show" }
+
         format.html { redirect_to "/#{@shop.url}" } # show.html.erb
         format.js
       else

@@ -2,14 +2,20 @@ class RegistrationsController < Devise::RegistrationsController
   protected
 
   def after_inactive_sign_up_path_for(resource)
-    @current_shop = Shop.find(session[:shop_id])
-    if @current_shop then
-      @current_shop.user_id = resource.id
-      @current_shop.paypal_email = resource.email
-      @current_shop.save
-      session[:selected_tab] = 2
+    if session[:shop_id]
+      @current_shop = Shop.find(session[:shop_id])
+      logger.debug "AIS Current Shop is #{@current_shop}"
+      if @current_shop then
+        @current_shop.user_id = resource.id
+        @current_shop.paypal_email = resource.email
+        @current_shop.save
+        session[:selected_tab] = 2
+      end
+      logger.debug "about to redirect to #{session[:shop_id]}"
+      return shop_url(session[:shop_id])
+    else
+      new_shop_url
     end
-    shop_url(session[:shop_id])
   end
   
   
@@ -27,7 +33,9 @@ class RegistrationsController < Devise::RegistrationsController
   
   def after_sign_in_path_for(resource)
     if current_user.shop
-      root_url + current_user.shop.url
+      shop_url(current_user.shop.id)
+    else
+      new_shop_url
     end
   end
    

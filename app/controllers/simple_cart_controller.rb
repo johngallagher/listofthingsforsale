@@ -70,7 +70,8 @@ class SimpleCartController < ApplicationController
   def paypal_allowed?
     this_shop_id = params[:shopid].to_i
     this_shop = Shop.find(this_shop_id)
-    this_shop.payment_type == "paypal"
+    this_shop.payment_type == Payments::Paypal
+    logger.debug "The shop before paypal allowed is #{this_shop.inspect}"
   end
   
   def create_pending_order
