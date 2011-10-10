@@ -13,7 +13,7 @@ class ShopsController < ApplicationController
   def home
     if session[:shop_id].nil?
       respond_to do |format|
-        format.html { redirect_to :action => "new" }
+        format.html { redirect_to "/new" }
       end
     else
       @shop = Shop.find(session[:shop_id])

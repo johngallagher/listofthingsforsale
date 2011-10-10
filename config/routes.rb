@@ -1,4 +1,5 @@
 Things3::Application.routes.draw do
+  match "new" => 'shops#new'
   get "pages/order_success"
   get "pages/order_failure"
 
