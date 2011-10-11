@@ -99,13 +99,13 @@ class ShopsController < ApplicationController
         end
       end
       
-      session[:shop_id] = @shop.id
       
       logger.debug "Params passed in are #{params}"
       
       @new_items = ItemGenerator.new(:new_description => @shop_items_description, :old_description => "", :items => []).generate_items
       @shop.items = @new_items
       @shop.save
+      session[:shop_id] = @shop.id
       
       respond_to do |format|
         format.html { redirect_to(@shop, :notice => 'Shop was successfully created.') }
