@@ -3,14 +3,14 @@ Things3::Application.routes.draw do
   get "pages/order_success"
   get "pages/order_failure"
 
-  match '/auth/:provider/callback' => 'authentications#create'
-  
-  resources :authentications
+  # match '/auth/:provider/callback' => 'authentications#create'
+  # 
+  # resources :authentications
 
-  get "pages/home"
-  get "pages/pricing"
-  get "pages/contact"
-  get "pages/help"
+  # get "pages/home"
+  # get "pages/pricing"
+  # get "pages/contact"
+  # get "pages/help"
 
   resources :email_orders
 
@@ -23,24 +23,21 @@ Things3::Application.routes.draw do
   match 'simple_cart/check_stock' => 'simple_cart#check_stock'
   match 'simple_cart/home' => 'simple_cart#home'
   match 'simple_cart/change' => 'simple_cart#change'
+  
   resources :simple_cart
   
   match 'payment/ipn' => 'payment_notifications#ipn'
   
-  resources :photos
-  
   resources :shops
   
-  resources :descriptions
-
-  match 'your-list' => 'shops#show_current_user_list'
-  match 'pricing' => 'pages#pricing'
-  match 'contact' => 'pages#contact'
-  match 'help' => 'pages#help'
+  # match 'your-list' => 'shops#show_current_user_list'
+  # match 'pricing' => 'pages#pricing'
+  # match 'contact' => 'pages#contact'
+  # match 'help' => 'pages#help'
 
   match ':url' => 'shops#show', :constraints => { :url => /[a-z|0-9]{4,30}/ }
 
-  root :to => "shops#home"
+  root :to => "shops#new"
 
 
   # The priority is based upon order of creation:
