@@ -11,17 +11,17 @@ class ShopsController < ApplicationController
   end
 
   def home
-    if session[:shop_id].nil?
-      respond_to do |format|
-        format.html { redirect_to "/new" }
-      end
-    else
-      @shop = Shop.find(session[:shop_id])
-      respond_to do |format|
-        format.html { render :action => "update" }
-        format.js
-      end
+    respond_to do |format|
+      format.html { redirect_to "/new" }
     end
+    # if session[:shop_id].nil?
+    # else
+    #   @shop = Shop.find(session[:shop_id])
+    #   respond_to do |format|
+    #     format.html { render :action => "update" }
+    #     format.js
+    #   end
+    # end
   end
 
   # GET /shops/1
@@ -188,3 +188,4 @@ class ShopsController < ApplicationController
     end
   end
 end
+
