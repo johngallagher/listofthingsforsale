@@ -8,7 +8,7 @@ class SessionsController < Devise::SessionsController
   end
   
   def destroy
-    logger.debug "Session after logout is #{session.inspect}"
+   # logger.debug "Session after logout is #{session.inspect}"
     super
   end
 end

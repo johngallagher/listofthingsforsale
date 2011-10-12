@@ -43,13 +43,13 @@ class PaymentController < ApplicationController
     @enrollment = current_user.enrollments.find(params[:id])
   end
   def notify
-    logger.debug("Notified!")
+   # logger.debug("Notified!")
     notify = Paypal::Notification.new(request.raw_post)
     # enrollment = Enrollment.find(notify.item_id)
-    logger.debug("Before acknowledge: #{notify.inspect}")
+   # logger.debug("Before acknowledge: #{notify.inspect}")
     
     if notify.acknowledge
-      logger.debug("After acknowledge!")
+     # logger.debug("After acknowledge!")
       # @payment = Payment.find_by_confirmation(notify.transaction_id) ||
       #   enrollment.invoice.payments.create(:amount => notify.amount,
       #     :payment_method => 'paypal', :confirmation => notify.transaction_id,

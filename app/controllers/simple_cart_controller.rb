@@ -14,7 +14,7 @@ class SimpleCartController < ApplicationController
   end
 
   def change
-    logger.debug "DATABASE operation happens here!"
+   # logger.debug "DATABASE operation happens here!"
     stock = 0
     if stock < 1 # we don't have enough stock
       respond_to do |format|
@@ -34,7 +34,7 @@ class SimpleCartController < ApplicationController
   end
   
   def check_stock
-    logger.debug "Params are #{params.inspect}"
+   # logger.debug "Params are #{params.inspect}"
     
     check_stock_items
     
@@ -70,7 +70,7 @@ class SimpleCartController < ApplicationController
   def paypal_allowed?
     this_shop_id = params[:shopid].to_i
     this_shop = Shop.find(this_shop_id)
-    logger.debug "The shop before paypal allowed is #{this_shop.inspect}"
+   # logger.debug "The shop before paypal allowed is #{this_shop.inspect}"
     return (this_shop.payment_type == Payments::Paypal)
   end
   

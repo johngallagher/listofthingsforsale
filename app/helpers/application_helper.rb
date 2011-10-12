@@ -1,6 +1,6 @@
 module ApplicationHelper
   def current_user_shop_url
-    logger.debug "Current url is #{@current_user_shop_url}"
+   # logger.debug "Current url is #{@current_user_shop_url}"
     if session[:shop_id]
       if @current_user_shop.nil? and @current_user_shop_url.nil?
         @current_user_shop ||= Shop.find(session[:shop_id])

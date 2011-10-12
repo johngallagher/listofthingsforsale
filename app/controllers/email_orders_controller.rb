@@ -10,7 +10,7 @@ class EmailOrdersController < ApplicationController
     #   @pending_order = Order.new
     # end
     @order = Order.find(order_to_email_id)
-    logger.debug "Ordeer is #{@order.inspect}"
+   # logger.debug "Ordeer is #{@order.inspect}"
     @seller = @order.shop.user
     if @seller.nil? or @seller.email.nil?
       # if seller is nil, the seller hasn't signed up
@@ -23,13 +23,13 @@ class EmailOrdersController < ApplicationController
   end
 
   def create
-    logger.debug "params into create were #{params.inspect}"
+   # logger.debug "params into create were #{params.inspect}"
     order_to_email_id = session[:pending_order_id].to_i
     @order = Order.find(order_to_email_id)
     @seller = @order.shop.user
-    logger.debug "Order is #{@order.inspect}"
-    logger.debug "Seller is #{@seller.inspect}"
-    logger.debug "params to construct with are #{params[:email_order].inspect}"
+   # logger.debug "Order is #{@order.inspect}"
+   # logger.debug "Seller is #{@seller.inspect}"
+   # logger.debug "params to construct with are #{params[:email_order].inspect}"
 
     email = params[:email_order][:email]
     sender_name = params[:email_order][:sender_name]

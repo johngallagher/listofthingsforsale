@@ -24,7 +24,7 @@ class EmailOrder
         Notifier.order_notification(self).deliver
         return true
       end
-      Rails.logger.debug "errors are #{errors.inspect}"
+      # Rails.logger.debug "errors are #{errors.inspect}"
       return false
     end
 end

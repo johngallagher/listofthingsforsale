@@ -20,7 +20,7 @@ class ShopsController < ApplicationController
       @shop_ref = params[:url]
       @shop = Shop.where(:url => @shop_ref).first
     end
-    logger.debug "SHOW Shop is #{@shop.inspect}"
+   # logger.debug "SHOW Shop is #{@shop.inspect}"
     
     
     if @shop.nil?
@@ -57,7 +57,7 @@ class ShopsController < ApplicationController
     end
     
     @shop = Shop.new
-    logger.debug "Making a new shop"
+   # logger.debug "Making a new shop"
     respond_to do |format|
       format.html # new.html.erb
       format.xml  { render :xml => @shop }
@@ -100,7 +100,7 @@ class ShopsController < ApplicationController
       end
       
       
-      logger.debug "Params passed in are #{params}"
+     # logger.debug "Params passed in are #{params}"
       
       @new_items = ItemGenerator.new(:new_description => @shop_items_description, :old_description => "", :items => []).generate_items
       @shop.items = @new_items
@@ -122,7 +122,7 @@ class ShopsController < ApplicationController
   # PUT /shops/1
   # PUT /shops/1.xml
   def update
-    logger.debug("Params passed into update were: #{params.inspect}")
+   # logger.debug("Params passed into update were: #{params.inspect}")
     @shop = Shop.find(params[:id])
 
     if !params[:shop].nil? and !params[:shop][:url].nil?
@@ -136,14 +136,14 @@ class ShopsController < ApplicationController
     
     respond_to do |format|
       if @shop.update_attributes(params[:shop])
-        logger.debug("params changed were #{params[:shop].inspect}")
+       # logger.debug("params changed were #{params[:shop].inspect}")
         new_description = params[:shop][:description]
         old_description = @shop.description
         if !new_description.nil?
           @old_items = Array.new(@shop.items)
           @new_items = ItemGenerator.new(:new_description => new_description, :old_description => old_description, :items => @old_items).generate_items
-          logger.debug "new items are #{@new_items}"
-          logger.debug "puts items before clear are #{@new_items.inspect}"
+         # logger.debug "new items are #{@new_items}"
+         # logger.debug "puts items before clear are #{@new_items.inspect}"
           @shop.items.clear
           @new_items.each do |this_item|
             @shop.items << Item.find(this_item.id)
@@ -151,7 +151,7 @@ class ShopsController < ApplicationController
 
         end
         @shop.save
-        logger.debug("After update Shop is #{@shop.inspect} with items #{@shop.items.inspect}")
+       # logger.debug("After update Shop is #{@shop.inspect} with items #{@shop.items.inspect}")
 
         format.html { redirect_to "/#{@shop.url}" } # show.html.erb
         format.js

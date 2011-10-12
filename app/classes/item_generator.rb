@@ -15,12 +15,12 @@ class ItemGenerator
       item_hash = item_hash_from_description(this_item_description)
       if !item_hash.nil?
         @item_index = @item_index + 1
-        Rails.logger.debug "Item hash is #{item_hash.inspect}"
+        # Rails.logger.debug "Item hash is #{item_hash.inspect}"
         found_item = find_item_in_current_items(item_hash)
         if found_item.nil?
           found_item = Item.new
         end
-        Rails.logger.debug "Found item is #{found_item.inspect}"
+        # Rails.logger.debug "Found item is #{found_item.inspect}"
       
         found_item.name = item_hash[:name]
         found_item.description_text = item_hash[:description_text]
@@ -29,7 +29,7 @@ class ItemGenerator
         found_item.sort_order = @item_index
         found_item.save
         
-        Rails.logger.debug "Found item after is #{found_item.inspect}"
+        # Rails.logger.debug "Found item after is #{found_item.inspect}"
       
         @items << found_item
       end
@@ -55,7 +55,7 @@ class ItemGenerator
   
   def item_hash_from_description(description)
     this_item_matches = matches_from_description(description)
-    Rails.logger.debug "This item matches is #{this_item_matches.inspect}"
+    # Rails.logger.debug "This item matches is #{this_item_matches.inspect}"
     if this_item_matches and this_item_matches.length >= 4
       return item_hash_from_matches(this_item_matches)
     else

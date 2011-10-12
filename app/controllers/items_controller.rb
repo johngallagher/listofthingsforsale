@@ -59,7 +59,7 @@ class ItemsController < ApplicationController
   # PUT /items/1
   # PUT /items/1.xml
   def update
-    logger.debug("Params into item controller are #{params.inspect}")
+   # logger.debug("Params into item controller are #{params.inspect}")
     @item = Item.find(params[:id])
     @shop_for_item = @item.shop
   
