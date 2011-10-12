@@ -91,20 +91,17 @@ class ShopsController < ApplicationController
     @shop_name = nil
     @shop = Shop.new(:name => @shop_name, :description => @shop_items_description, :status => ShopStatus::LIVE_FREE, :url => (0...8).map{65.+(rand(25)).chr}.join.downcase)
 
+    @new_items = ItemGenerator.new(:new_description => @shop_items_description, :old_description => "", :items => []).generate_items
+    @shop.items = @new_items
     if @shop.save
+
       if user_signed_in?
         if current_user.shop.nil?
           current_user.shop = @shop
           current_user.save
         end
       end
-      
-      
-     # logger.debug "Params passed in are #{params}"
-      
-      @new_items = ItemGenerator.new(:new_description => @shop_items_description, :old_description => "", :items => []).generate_items
-      @shop.items = @new_items
-      @shop.save
+
       session[:shop_id] = @shop.id
       
       respond_to do |format|

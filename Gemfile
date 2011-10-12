@@ -28,6 +28,7 @@ gem 'paperclip'
 
 gem 'omniauth'
 
+
 # Use unicorn as the web server
 # gem 'unicorn'
 
@@ -52,6 +53,8 @@ group :development, :test do
   # gem 'ar_fixtures', :git => 'git://github.com/topfunky/ar_fixtures.git'
   gem 'factory_girl'
   gem 'mocha', '0.10.0', :require => false
+  gem 'ruby-prof'
+  gem 'test-unit'
 end
 
 gem 'jquery-rails', '>= 1.0.12'
