@@ -3,15 +3,6 @@ Things3::Application.routes.draw do
   get "pages/order_success"
   get "pages/order_failure"
 
-  # match '/auth/:provider/callback' => 'authentications#create'
-  # 
-  # resources :authentications
-
-  # get "pages/home"
-  # get "pages/pricing"
-  # get "pages/contact"
-  # get "pages/help"
-
   resources :email_orders
 
   devise_for :users, :controllers => { :registrations => "registrations", :confirmations => "confirmations", :sessions => "sessions" }
@@ -30,11 +21,6 @@ Things3::Application.routes.draw do
   
   resources :shops
   
-  # match 'your-list' => 'shops#show_current_user_list'
-  # match 'pricing' => 'pages#pricing'
-  # match 'contact' => 'pages#contact'
-  # match 'help' => 'pages#help'
-
   match ':url' => 'shops#show', :constraints => { :url => /[a-z|0-9]{4,30}/ }
 
   root :to => "shops#new"

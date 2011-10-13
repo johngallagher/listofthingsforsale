@@ -89,7 +89,8 @@ class ShopsController < ApplicationController
     @shop_items_description = params[:shop][:description]
 
     @shop_name = nil
-    @shop = Shop.new(:name => @shop_name, :description => @shop_items_description, :status => ShopStatus::LIVE_FREE, :url => (0...8).map{65.+(rand(25)).chr}.join.downcase)
+    @shop_url = (0...8).map{65.+(rand(25)).chr}.join.downcase
+    @shop = Shop.new(:name => @shop_name, :description => @shop_items_description, :status => ShopStatus::LIVE_FREE, :url => @shop_url)
 
     @new_items = ItemGenerator.new(:new_description => @shop_items_description, :old_description => "", :items => []).generate_items
     @shop.items = @new_items
@@ -105,7 +106,8 @@ class ShopsController < ApplicationController
       session[:shop_id] = @shop.id
       
       respond_to do |format|
-        format.html { redirect_to(@shop, :notice => 'Shop was successfully created.') }
+        format.html { redirect_to "/#{@shop_url}" }
+        # format.html { redirect_to(@shop, :notice => 'Shop was successfully created.') }
         format.xml  { render :xml => @shop, :status => :created, :location => @shop }
       end
     else

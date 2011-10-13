@@ -1,0 +1,22 @@
+#
+# Format:
+# 
+# <heroku_san shorthand name>:
+#   app: <Heroku app name>
+#   config:
+#     - <Heroku config:var name>: <Heroku config:var value>
+#
+production: 
+  app: high-mist-4028
+  config:
+    BUNDLE_WITHOUT: "development:test"
+    GOOGLE_ANALYTICS: "UA-12345678-1"
+
+staging: 
+  app: cold-window-3332
+  config: &default
+    BUNDLE_WITHOUT: "development:test"
+
+demo: 
+  app: show-seller-6123
+  config: *default

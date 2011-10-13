@@ -55,6 +55,7 @@ group :development, :test do
   gem 'mocha', '0.10.0', :require => false
   gem 'ruby-prof'
   gem 'test-unit'
+  gem 'heroku_san'
 end
 
 gem 'jquery-rails', '>= 1.0.12'
