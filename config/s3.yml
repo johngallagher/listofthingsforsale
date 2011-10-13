@@ -6,6 +6,10 @@ test:
   bucket: synapticmishap-list-test
   access_key_id: AKIAJSCK7ABSXXLZIRUQ
   secret_access_key: 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
+staging:
+  bucket: synapticmishap-list-staging
+  access_key_id: AKIAJSCK7ABSXXLZIRUQ
+  secret_access_key: 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
 production:
   bucket: synapticmishap-list-pro
   access_key_id: AKIAJSCK7ABSXXLZIRUQ
