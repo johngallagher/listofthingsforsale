@@ -106,7 +106,7 @@ class ShopsController < ApplicationController
       session[:shop_id] = @shop.id
       
       respond_to do |format|
-        format.html { redirect_to "/#{@shop_url}" }
+        format.html { redirect_to "http://localhost:3000/#{@shop_url}" }
         # format.html { redirect_to(@shop, :notice => 'Shop was successfully created.') }
         format.xml  { render :xml => @shop, :status => :created, :location => @shop }
       end
