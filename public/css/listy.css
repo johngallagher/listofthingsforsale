@@ -8,7 +8,7 @@
 .sidey a:hover {text-decoration:none;color:#000;}
 .sidey a img {text-decoration:none;border:none;}
 
-
+/*
 
 #listview ul
 {
@@ -63,6 +63,8 @@
 {
     border: 3px solid #FFFF00;
 }
+
+*/
 
 .simpleCart_shelfItem h3, .simpleCart_shelfItem h4, .simpleCart_shelfItem p
 {
@@ -192,13 +194,14 @@
 }
 #topbar DIV.topbar-centred
 {
-    clear: both;
     display: block;
     margin: 0px auto;
     width: 900px;
     background-color:#fff;
-    height:35px;
+padding:0;
 }
+
+
 
 UL.navigation
 {
@@ -246,141 +249,34 @@ color:#000;}
 
 
 
-
-
-
-
-
-
-/* Most common stuff you'll need to change */
-
-.coda-slider-wrapper
-{
-    padding: 0;
-}
-.coda-slider
-{
-    background: #fff;
-}
-
-/* Use this to keep the slider content contained in a box even when JavaScript is disabled */
-.coda-slider-no-js .coda-slider
-{
-    height: 200px;
-    overflow: auto !important;
-    padding-right: 20px;
-}
-
-/* Change the width of the entire slider (without dynamic arrows) */
-.coda-slider, .coda-slider .panel
-{
-    width: 950px;
-}
-
-/* Change margin and width of the slider (with dynamic arrows) */
-.coda-slider-wrapper.arrows .coda-slider, .coda-slider-wrapper.arrows .coda-slider .panel
-{
-    width: 950px;
-}
-.coda-slider-wrapper.arrows .coda-slider
-{
-    margin: 0 10px;
-}
-
-/* Arrow styling */
-.coda-nav-left a, .coda-nav-right a
-{
-    background: #000;
-    color: #fff;
-    padding: 5px;
-    width: 100px;
-}
-
-/* Tab nav */
-.coda-nav ul li a.current
-{
-    font-weight: bold;
-    background: #fff;
-}
-
-/* Panel padding */
-.coda-slider .panel-wrapper
-{
-    padding: 20px;
-}
-
-/* Preloader */
-.coda-slider p.loading
-{
-    padding: 20px;
-    text-align: center;
-}
-
-/* Don't change anything below here unless you know what you're doing */
-
-/* Tabbed nav */
-.coda-nav ul
-{
-    clear: both;
-    display: block;
-    margin: auto;
-    overflow: hidden;
-}
-.coda-nav ul li
-{
-    display: inline;
-}
-.coda-nav ul li a
-{
-    background: #cee6e9;
-    color: #000;
-    display: block;
-    float: left;
-    margin-right: 10px;
-    padding: 10px 15px;
-    text-decoration: none;
-}
-
-/* Miscellaneous */
-.coda-slider-wrapper
-{
-    clear: both;
-    overflow: auto;
-}
-.coda-slider
-{
-    float: left;
-    overflow: hidden;
-    position: relative;
-}
-.coda-slider .panel
-{
-    display: block;
-    float: left;
-}
-.coda-slider .panel-container
-{
-    position: relative;
-}
-.coda-nav-left, .coda-nav-right
-{
-    float: left;
-}
-.coda-nav-left a, .coda-nav-right a
-{
-    display: block;
-    text-align: center;
-    text-decoration: none;
-}
-
-#coda-slider-1 h2.title
-{
-    display: none;
-}
-
-
-
-
 .pricing td,.pricing th {text-align:center;border-right:1px solid #ddd;width:50%;}
 .pricing td.last, .pricing th.last {border-right:0;}
+
+
+
+.product-list {list-style-type:none;margin:0;padding:0;float:left;}
+.product-list li { margin-bottom:15px;display:block; padding:15px; float: left; margin-right:10px;width:180px;min-height:240px;border:1px solid #ddd;background-color:#f9f9f9;}  <!--border:1px solid #efefef-->
+.product-list li a {text-decoration:none;}
+.product-list li img { margin-bottom:8px; width:178px;}
+.product-list li a img  {border:1px solid #efefef;}
+.product-list li a img:hover  {border:1px solid #999;}
+.product-list li a .desc {float:left; width:178px; height:24px; overflow:hidden; line-height:12px;}
+.product-list .no-image-small {background:url(../images/no-image-small.jpg) no-repeat; width:178px; height:178px; margin-bottom:8px; border:1px solid #efefef; text-indent:-9999px;}
+
+	.alpha60 {
+	/* Fallback for web browsers that don't support RGBa */
+	background-color: rgb(0, 0, 0);
+	/* RGBa with 0.6 opacity */
+	background-color: rgba(255, 255, 255, 0.6);
+	/* For IE 5.5 - 7*/
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#99000000, endColorstr=#99000000);
+	/* For IE 8*/
+	-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#99000000, endColorstr=#99000000)";
+	}	
+
+	#adminbar {color:#000}	
+	#adminbar a {text-decoration:underline;color:#000;cursor:pointer;margin-left:2px;}
+	#adminbar a:hover {color:#666;}
+
+
 
