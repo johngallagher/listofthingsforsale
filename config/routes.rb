@@ -9,7 +9,6 @@ Things3::Application.routes.draw do
 
   resources :items
   
-  match ':url' => 'shops#show', :constraints => { :url => /[a-z]{8,8}/ }
   
   match 'simple_cart/check_stock' => 'simple_cart#check_stock'
   match 'simple_cart/home' => 'simple_cart#home'
@@ -19,10 +18,13 @@ Things3::Application.routes.draw do
   
   match 'payment/ipn' => 'payment_notifications#ipn'
   
-  resources :shops
+  resources :shops, :except => :show
   
-  match ':url' => 'shops#show', :constraints => { :url => /[a-z|0-9]{4,30}/ }
+  match ':id' => 'shops#show', :constraints => { :id => /[a-z|0-9]{4,30}/ }
 
+  
+  # match ':url' => 'shops#show', :constraints => { :url => /[a-z|0-9]{4,30}/ }
+  # 
   root :to => "shops#new"
 
 

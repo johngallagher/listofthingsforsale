@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111013153510) do
+ActiveRecord::Schema.define(:version => 20111013190612) do
 
   create_table "authentications", :force => true do |t|
     t.integer  "user_id"
@@ -94,9 +94,23 @@ ActiveRecord::Schema.define(:version => 20111013153510) do
     t.string   "postage_type"
     t.text     "description"
     t.text     "collection_description"
+    t.string   "cached_slug"
   end
 
+  add_index "shops", ["cached_slug"], :name => "index_shops_on_cached_slug", :unique => true
   add_index "shops", ["url"], :name => "index_shops_on_url", :unique => true
+
+  create_table "slugs", :force => true do |t|
+    t.string   "name"
+    t.integer  "sluggable_id"
+    t.integer  "sequence",                     :default => 1, :null => false
+    t.string   "sluggable_type", :limit => 40
+    t.string   "scope"
+    t.datetime "created_at"
+  end
+
+  add_index "slugs", ["name", "sluggable_type", "sequence", "scope"], :name => "index_slugs_on_n_s_s_and_s", :unique => true
+  add_index "slugs", ["sluggable_id"], :name => "index_slugs_on_sluggable_id"
 
   create_table "users", :force => true do |t|
     t.string   "email",                                 :default => "", :null => false

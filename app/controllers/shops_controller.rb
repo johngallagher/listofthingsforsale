@@ -13,15 +13,8 @@ class ShopsController < ApplicationController
   # GET /shops/1
   # GET /shops/1.xml
   def show
-    if params[:url].nil?
-      @shop_ref = params[:id]
-      @shop = Shop.find(@shop_ref)
-    else
-      @shop_ref = params[:url]
-      @shop = Shop.where(:url => @shop_ref).first
-    end
-   # logger.debug "SHOW Shop is #{@shop.inspect}"
-    
+    @shop_ref = params[:id]
+    @shop = Shop.find(@shop_ref)
     
     if @shop.nil?
       respond_to do |format|
@@ -30,18 +23,10 @@ class ShopsController < ApplicationController
       end
     end
     
-    if params[:url].nil?
-      respond_to do |format|
-        format.html { redirect_to "/#{@shop.url}" } # show.html.erb
-        # format.js
-      end
-    else
-      respond_to do |format|
-        format.html { render 'show' =>  @shop } # show.html.erb
-        # format.js
-      end
-    end
-    
+    respond_to do |format|
+      format.html { render 'show' =>  @shop } # show.html.erb
+      # format.js
+    end    
   end
 
   # GET /shops/new
@@ -76,7 +61,7 @@ class ShopsController < ApplicationController
     elsif session[:shop_id]
       @shop_id = session[:shop_id]
       @shop = Shop.find(@shop_id)
-      redirect_to "/#{@shop.url}"
+      redirect_to "/" + @shop.url
     else
       render 'no_shop_yet'
     end
@@ -106,7 +91,7 @@ class ShopsController < ApplicationController
       session[:shop_id] = @shop.id
       
       respond_to do |format|
-        format.html { redirect_to "/#{@shop_url}" }
+        format.html { redirect_to "/" + @shop.url }
         # format.html { redirect_to(@shop, :notice => 'Shop was successfully created.') }
         format.xml  { render :xml => @shop, :status => :created, :location => @shop }
       end
@@ -152,7 +137,8 @@ class ShopsController < ApplicationController
         @shop.save
        # logger.debug("After update Shop is #{@shop.inspect} with items #{@shop.items.inspect}")
 
-        format.html { redirect_to "/#{@shop.url}" } # show.html.erb
+        format.html { redirect_to(@shop, :notice => 'Shop was successfully created.') }
+        # format.html { redirect_to "/#{@shop.url}" } # show.html.erb
         format.js
       else
         format.html { render :action => "edit" }

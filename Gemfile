@@ -28,6 +28,7 @@ gem 'paperclip'
 
 gem 'omniauth'
 
+gem "friendly_id", "~> 3.3.0"
 
 # Use unicorn as the web server
 # gem 'unicorn'
@@ -49,13 +50,13 @@ gem 'omniauth'
 # put test-only gems in this group so their generators
 # and rake tasks are available in development mode:
 group :development, :test do
-  # gem 'rspec-rails'
-  # gem 'ar_fixtures', :git => 'git://github.com/topfunky/ar_fixtures.git'
   gem 'factory_girl'
   gem 'mocha', '0.10.0', :require => false
   gem 'ruby-prof'
   gem 'test-unit'
   gem 'heroku_san'
+  gem 'rspec-rails'
+  gem 'capybara'
 end
 
 gem 'jquery-rails', '>= 1.0.12'
