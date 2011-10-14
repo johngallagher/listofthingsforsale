@@ -1,4 +1,6 @@
 <li class="simpleCart_shelfItem">
+	<span class="item_shopid" style="display:none;"><%= @shop.id %></span>
+		<span class="item_itemid" style="display:none;"><%= item.id %></span>
   <a class="item_image" href="images/touch500.jpg">
     <% if item.photo_1.file? %>
     <%= link_to(image_tag(item.photo_1.url(:thumb)), item.photo_1.url(:medium), :class => "item_image") %>
