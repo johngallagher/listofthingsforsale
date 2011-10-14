@@ -137,8 +137,8 @@ class ShopsController < ApplicationController
         @shop.save
        # logger.debug("After update Shop is #{@shop.inspect} with items #{@shop.items.inspect}")
 
-        format.html { redirect_to(@shop, :notice => 'Shop was successfully created.') }
-        # format.html { redirect_to "/#{@shop.url}" } # show.html.erb
+        # format.html { redirect_to(@shop, :notice => 'Shop was successfully created.') }
+        format.html { redirect_to "/#{@shop.url}" } # show.html.erb
         format.js
       else
         format.html { render :action => "edit" }

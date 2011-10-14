@@ -8,83 +8,199 @@
 	</script>
 <%end%>
 
+<% if (session[:shop_id].to_i == @shop.id) or (user_signed_in? and @shop.user == current_user) %>
+	<div id="adminbar" class="box" style="font-size: 1.2em; background-color: #fff000; padding: 10px;margin-bottom:0;">
+		<% if user_signed_in? %>
+			<%= link_to "Log out", destroy_user_session_path, :method => :delete %>
+		<% else %>
+			<%= link_to "Login", new_user_session_path %>
+		<% end %>
+		<!--border-bottom:1px solid #000;-->
+		&nbsp;&nbsp;&nbsp; Edit your: <a id="editlist" onclick="javascript;" name="editlist">List</a>, <a id="editside" onclick="javascript;" name="editside">Sidebar</a>, <a id="editconfig" onclick="javascript;" name="editconfig">Config</a>, <a href="">Styling</a>, <a id="editaccount" onclick="javascript;" name="editaccount">Account</a> <span style="float: right">Your list is offline. <a href="">Publish It</a></span>
+	</div>
+	<div class="column span-23 last alpha60" id="config" style="border-bottom:1px solid #aaa; display:none;padding:20px;">
+		<div class="columnn span-11">
+			<fieldset style="height: 100px;margin-top:0;">
+				<legend style="text-align: center;font-weight:normal;">Shopping Cart</legend>
+				<form>
+					<input name="example" type="radio" checked="checked"> Recieve payments via Paypal<br>
+					<input name="example" type="radio"> Just email me orders<br>
+				</form>
+			</fieldset>
+		</div>
+		<div class="columnn span-11 last">
+			<fieldset style="height: 100px;margin-top:0;">
+				<legend style="text-align: center;font-weight:normal;">Fulfilling Orders</legend> <input name="example" type="radio" checked="checked"> Prices include <select style="margin-bottom: 0px;">
+					<option>
+						UK
+					</option>
+					<option>
+						USA
+					</option>
+					<option>
+						Worldwide
+					</option>
+				</select> postage<br>
+				<input name="example" type="radio"> Collection / other<br>
+				<span style="float: left; font-size: 85%; width: 250px;">More postage options coming soon</span>
+			</fieldset>
+		</div>
+		<div class="column span-6 prepend-9">
+			<a class="button positive" style=" text-align:center;margin-top: 0px"><img src="css/plugins/buttons/icons/tick.png" alt=""> Save Configuration</a>
+		</div>
+	</div>
+	<div class="column span-23 last alpha60" id="account" style="border-bottom:1px solid #aaa; display:none;padding:20px;">
+		<fieldset id="signupform" style="margin-top:0;">
+			<legend style="font-weight:normal;">Sign up now to save your List of Things for Sale</legend> <img src="images/facebook-connect-button.png" alt="facebook-connect-button" width="194" height="25">
+			<hr class="space">
+			or
+			<hr class="space">
+			<input type="text" class="text" style="width: 220px;" value="email address"><br>
+			<input type="text" class="text" style="width: 220px;" value="password"><br>
+			<a class="button positive" onclick="$('#signupform').fadeToggle('slow');"><img src="css/plugins/buttons/icons/tick.png" alt=""> Sign Up</a>
+		</fieldset>
+	</div>
+<% end %>
+<hr class="space">
+<hr class="space">
+
 <span class="simpleCart_shopPrefix" style="display: none;">sc<%= @shop.id %>_</span>
 
-<div class="container">
+<div id="left" class="span-17">
+    
     <hr class="space">
 		<% if (session[:shop_id].to_i == @shop.id) or (user_signed_in? and @shop.user == current_user) %>
-			<h1 style="margin:20px 0 15px 0;text-align:center;width: 590px;">Your list of things for sale:</h1>
+			<h1 style="text-align: center;">Your list of things for sale:</h1>
 		<% else %>
-			<h1 style="margin:20px 0 15px 0;text-align:center;width: 590px;"><%= @shop.url %>&#x27;<% if @shop.url[-1,1] != "s" %>s<% end %> list of things for sale:</h1>
+			<h1 style="text-align: center;"><%= @shop.url %>&#x27;<% if @shop.url[-1,1] != "s" %>s<% end %> list of things for sale:</h1>
 	  <% end %>
 		
-    <div id="left" class="span-15 colborder">
       <div id="listview">
-	
 				<% @sorted_items = @shop.items.sort{ |a,b| ( a.sort_order and b.sort_order ) ? a.sort_order.to_i <=> b.sort_order.to_i : ( a.sort_order ? -1 : 1 ) } %>
-				
-				<% @sorted_items.select{ |i| i.quantity > 0 }.each do |item| %>
-					<%= render :partial => "items/show_public", :locals => { :item => item, :item_index => @sorted_items.index(item) } %>
+				<% @in_stock_items = @sorted_items.select{ |i| i.quantity > 0 }.in_groups_of(3) %>
+				<% Rails.logger.debug "in stock items are #{@in_stock_items.inspect}"%>
+				<% @in_stock_items.each do |in_stock_items| %>
+					<ul class="product-list">
+					  <% in_stock_items.each do |in_stock_item| %>
+							<% if in_stock_item %>
+								<%= render :partial => "items/show_public", :locals => { :item => in_stock_item, :item_index => @sorted_items.index(in_stock_item) } %>
+							<% end %>
+					  <% end %>
+					</ul>
 				<% end %>
       </div>
-			<% @sold_out_items = @sorted_items.select{ |i| i.quantity == 0 } %>
-			<% if !@sold_out_items.empty? %>
-			<hr class="space">
-	      <div id="listview">
-					<% @sold_out_items.each do |item| %>
-						<%= render :partial => "items/show_public", :locals => { :item => item, :item_index => @shop.items.index(item) } %>
-					<% end %>
-	    	</div>
-			<% end %>
+			
+      <div id="listform" style="display: none;">
+				<%= form_for @shop, :html => { :id => "shop_edit_items" } do |f| %>
+		    	<%= f.text_area :description, :id => "list1", :rows => "5", :cols => "20", :style => "width: 640px; height: 400px;margin-top:0;" %>
+          <div class="column span-3 prepend-9 append-8">
+            <a href="javascript:;" id="listsubmit" type="submit" class="button positive" name="listsubmit" onClick="$('form#shop_edit_items').submit()">Save <img src="/css/plugins/buttons/icons/arrow_right.png" alt=""></a>
+					</div>
+				<% end %>
+        <hr class="space">
+        <hr class="space">
+      </div>
     </div>
-    <div class="span-7 last">
-	
-		  <% flash.each do |name, msg| %>
-		    <%= content_tag :p, msg, :id => "flash_#{name}" %>
-		  <% end %>
+    <div class="span-6 last alpha60" style="padding: 20px; margin-top: 55px;">
+      <div class="span-6 last">
+        <p style="text-align: center;" class="sidey">
+          <a href="http://listofthingsforsale.com"><img src="images/listy.gif" alt="list of things for sale"></a><br>
+          <!--<span id="tagline" class="highlight"><a href="http://listofthingsforsale.com">the minimal way to sell online</a></span>-->
+        </p>
+        <div id="sideview">
+          <h3 style="margin-bottom:10px;">
+            About Me
+          </h3>
+          <p>
+            Write whatever you want here. You could use it to tell people who you are and what you are selling. If you have a retail presence or a market stall, you could put up the details up here.
+          </p>
+          <hr>
+        </div>
+        <div id="sideedit" style="display:none;">
+          <input type="text" class="text" style="width:200px;" placeholder="About Me">
+          <p>
+            <textarea name="dummy2" id="Textarea1" rows="5" cols="20" style="width: 200px; height: 140px;">
+Write whatever you want here. You could use it to tell people who you are and what you are selling. If you have a retail presence or a market stall, you could put up the details up here.  
 
+</textarea><br>
+            <input type="submit" value="Save"> <input type="reset" value="Cancel">
+          </p>
+          <hr>
+        </div>
+        <div id="cart">
+          <!--<hr style="margin-bottom: 10px;" />-->
+          <p style="margin: 10px 0 5px;">
+            You have &nbsp;items in your Cart:
+          </p>
+          <div class="simpleCart_items"></div>
+          <hr style="margin-bottom: 10px;">
+          <!--use a class of simpleCart_empty to empty the cart and simpleCart_checkout to checkout -->
+          <p>
+            Total<br>
+            <a href="javascript:;" class="simpleCart_empty">Empty Cart</a> &nbsp;|&nbsp; <a href="javascript:;" class="simpleCart_checkout">Checkout</a>
+          </p>
+        </div>
+      </div>
+      <hr class="space">
+    </div>
+    <hr class="space">
 
-						<!-- <p class="box success">Success!<br/>
-						<b>3 items were added to your list</b><br/>
-						You're ready to start selling online. Sign up below and upload some images!
-							</p>
-
-
-				<p class="box error">Oops, something went wrong:<br/>
-					<b>Bespoke Error Message</b><br/>
-					</p> -->
-
-
-					    <p style="text-align: center;" class="sidey">
-
-			     <a href="http://listofthingsforsale.com"> <img src="/images/list240.gif" alt="list of things for sale" /></a><br/>
-			<span id="tagline" class="highlight"><a href="http://listofthingsforsale.com">the minimal way to sell online</a></span></p>
-
-
-		        <div id="cart">
-                <p style="margin: 10px 0 5px;">
-		                You have <span class="simpleCart_quantity"></span>&nbsp;items in your Cart:</p>
-		            <div class="simpleCart_items">
-		            </div>
-		            <hr style="margin-bottom: 10px;" />
-		            <!--use a class of simpleCart_empty to empty the cart and simpleCart_checkout to checkout -->
-		            <p>
-		                Total <span class="simpleCart_total"></span>
-		                <br />
-		                <a href="javascript:;" class="simpleCart_empty">Empty Cart</a> &nbsp;|&nbsp; <a href="javascript:;"
-		                    class="simpleCart_checkout">Checkout</a></p>
-		        </div>
-		    </div>
-    <hr class="space" />
 </div>
 
-<script>        $(document).ready(function () {
-        $("#item1").click(function () {
-            $("#item-desc1").fadeToggle('slow');
-        }); $("#item2").click(function () { $("#item-desc2").fadeToggle('slow'); }); $("#item3").click(function 
-() { $("#item-desc3").fadeToggle('slow'); }); $("#item4").click(function () {
-    $("#item-desc4").fadeToggle('slow');
-}); $("#item5").click(function () { $("#item-desc5").fadeToggle('slow'); });
-    });
-</script>
 
+<script type="text/javascript">
+$(document).ready(function () {
+          $('#editlist').click(function 
+() {
+              $('#listform').fadeToggle('fast', function () {
+                  $('#listview').fadeToggle('fast');
+              });
+          });
+      });
+         
+          
+
+</script> <script type="text/javascript">
+    $(document).ready(function () {
+              $('#editaccount').click(function 
+  () {
+                  $('#account').slideToggle('slow');
+                  });
+              });
+
+
+
+
+</script> <script type="text/javascript">
+  $(document).ready(function () {
+            $('#editconfig').click(function 
+() {
+                $('#config').slideToggle('slow');
+                });
+            });
+   
+
+
+
+</script> <script type="text/javascript">
+              $(document).ready(function () {
+                        $('#editside').click(function 
+() {
+                            $('#sideview').fadeToggle('fast', function () {
+                                $('#sideedit').fadeToggle('fast');
+                            });
+                        });
+                    });
+         
+          
+
+</script> <script type="text/javascript">
+$(document).ready(function () {
+          $("#item1").click(function () {
+              $("#item-desc1").fadeToggle('slow');
+          }); $("#item2").click(function () { $("#item-desc2").fadeToggle('slow'); }); $("#item3").click(function 
+() { $("#item-desc3").fadeToggle('slow'); }); $("#item4").click(function () {
+  $("#item-desc4").fadeToggle('slow');
+}); $("#item5").click(function () { $("#item-desc5").fadeToggle('slow'); });
+      });
+</script>

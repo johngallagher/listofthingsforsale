@@ -1,26 +1,19 @@
-<div class="simpleCart_shelfItem">
-    <ul>
-			<span class="item_shopid" style="display:none;"><%= @shop.id %></span>
-				<span class="item_itemid" style="display:none;"><%= item.id %></span>
-        <li class="item_name_li"><a class="item_name" href="javascript:;" id="item<%= item_index + 1 %>"><%= item.name %></a></li>
-        <li class="item_price"><%= number_to_currency(item.price, :unit => "£") %></li>
-        <li class=" item_add" style="width: 105px;">
-					<span class="item_quantity" style="display:none;"><%= item.quantity %></span>
-					<a class="item_addtocart button" href="javascript:;" style="margin-top: 0; <%= "display:none;" if item.quantity == 0 %>">Add to Cart</a>
-					<div style="margin-top: 0; <%= "display:none;" if item.quantity > 0 %>">Sold Out</div>
-        </li>
-        <li class="item_image">
-					<% if item.photo_1.file? %>
-					<%= link_to(image_tag(item.photo_1.url(:thumb)), item.photo_1.url(:medium)) %>
-					<% end %>
-				</li>
-        <li class="item_description" id="item-desc<%= item_index + 1 %>" style="display: none;"><%= item.description_text %><br />
-            <% if item.quantity > 0 %>
-							<%= item.quantity %> Available
-						<% else %>
-							Sold out
-						<% end %>
-						<hr style="margin-top: 5px;">
-        </li>
-    </ul>
-</div>
+<li class="simpleCart_shelfItem">
+	<a class="item_image" href="images/touch500.jpg">
+		<% if item.photo_1.file? %>
+		<%= link_to(image_tag(item.photo_1.url(:thumb)), item.photo_1.url(:medium), :class => "item_image") %>
+		<% end %>
+		
+		<span class="desc"><a class="item_name" href="javascript:;" id="item1" name="item1"><%= item.name %></a></span>
+   <div class="item_description" id="item-desc<%= item_index + 1 %>" style="display: none;"><%= item.description_text %><br />
+     <% if item.quantity > 0 %>
+			<%= item.quantity %> Available
+		<% else %>
+			Sold out
+		<% end %>
+	</div>
+	<span class="item_price price"><%= number_to_currency(item.price, :unit => "£") %></span>
+	<span class="item_add" style="float: right;">
+		<a class="item_addtocart button" href="javascript:;" style="margin-top: 0; <%= "display:none;" if item.quantity == 0 %>">Add to Cart</a>
+	</span>
+</li>
