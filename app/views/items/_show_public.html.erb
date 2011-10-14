@@ -1,14 +1,17 @@
 <li class="simpleCart_shelfItem">
-	<span class="item_shopid" style="display:none;"><%= @shop.id %></span>
-		<span class="item_itemid" style="display:none;"><%= item.id %></span>
-  <a class="item_image" href="images/touch500.jpg">
-    <% if item.photo_1.file? %>
+  <span class="item_shopid" style="display:none;"><%= @shop.id %></span>
+  <span class="item_itemid" style="display:none;"><%= item.id %></span>
+  <div style="width: 178px; height: 178px;">
+  <% if item.photo_1.file? %>
     <%= link_to(image_tag(item.photo_1.url(:thumb)), item.photo_1.url(:medium), :class => "item_image") %>
-    <% end %>
-    
-    <span class="desc"><a class="item_name" href="javascript:;" id="item1" name="item1"><%= item.name %></a></span>
-   <div class="item_description" id="item-desc<%= item_index + 1 %>" style="display: none;"><%= item.description_text %><br />
-     <% if item.quantity > 0 %>
+  <% else %>
+    <img src="/images/no-image-small.jpg" alt="">
+  <% end %>
+  </div>
+
+  <span class="desc"><a class="item_name" href="javascript:;" id="item1" name="item1"><%= item.name %></a></span>
+  <div class="item_description" id="item-desc<%= item_index + 1 %>" style="display: none;"><%= item.description_text %><br />
+    <% if item.quantity > 0 %>
       <%= item.quantity %> Available
     <% else %>
       Sold out
