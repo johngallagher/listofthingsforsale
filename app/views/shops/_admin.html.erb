@@ -11,17 +11,17 @@ If user is signed in: 3,4
 If user is not signed in but shop has user: 4 -->
 
 <% content_for :dynamic_javascripts do %>
-	<script type="text/javascript" charset="utf-8">
-		function submitForm() {
-			$("form.edit_shop").submit();
-		};
-		function changeItemPhoto() {
-			itemIdToChange = $("select#item_image_name_item_image_id").val();
-			$("form.edit_item_images").attr("action","/items/" + itemIdToChange);
-			$("#item_photo_1").show();
-			$("#upload_image_button").show();
-		}
-	</script>
+  <script type="text/javascript" charset="utf-8">
+    function submitForm() {
+      $("form.edit_shop").submit();
+    };
+    function changeItemPhoto() {
+      itemIdToChange = $("select#item_image_name_item_image_id").val();
+      $("form.edit_item_images").attr("action","/items/" + itemIdToChange);
+      $("#item_photo_1").show();
+      $("#upload_image_button").show();
+    }
+  </script>
   <script type="text/javascript">
     $().ready(function () {
         $('#coda-slider-1').codaSlider({
@@ -29,15 +29,15 @@ If user is not signed in but shop has user: 4 -->
             dynamicTabs: false,
             crossLinking: false,
             firstPanelToLoad: <%= 
-						if session[:selected_tab] 
-							session[:selected_tab] 
-						else
-							session[:selected_tab] = 2
-						end
-							%>
+            if session[:selected_tab] 
+              session[:selected_tab] 
+            else
+              session[:selected_tab] = 2
+            end
+              %>
       });     
     });
-	</script>
+  </script>
 <%end%>
 
 
@@ -46,168 +46,168 @@ If user is not signed in but shop has user: 4 -->
     <div id="aboveline" class="info" style="text-align: center;padding-bottom:30px;">
         <span style="color: #fff">Above this line is what your customers will see.</span> <!--color:#205791-->
         <div class="container" style="background:none;padding:0;width:950px;">
-					<div class="coda-slider-wrapper">
-						<div id="coda-nav-1" class="coda-nav">
-							<ul>
-								<li class="tab1">
-									<h3>
-										<a href="#1"><img src="/css/plugins/buttons/icons/pencil.png" alt=""> &nbsp;1. Edit List</a>
-									</h3>
-								</li>
-								<li class="tab2">
-									<h3>
-										<a href="#2"><img src="/css/plugins/buttons/icons/tick.png" alt=""><% if user_signed_in? %>&nbsp;2. My Account<% else %>&nbsp;2. Save Your Work<% end %></a>
-									</h3>
-								</li>
-								<li class="tab3">
-									<h3>
-										<a href="#3"><img src="/css/plugins/buttons/icons/cog.png" alt=""> &nbsp;3. Configure Cart</a>
-									</h3>
-								</li>
-								<li class="tab4">
-									<h3>
-										<a href="#4"><img src="/css/plugins/buttons/icons/images.png" alt=""> &nbsp;4. Upload Images</a>
-									</h3>
-								</li>
-							</ul>
-						</div>
-						<div class="coda-slider preload" id="coda-slider-1">
-	            <div class="coda-slider preload" id="coda-slider-1">
-	              <div class="panel">
-	                <div class="panel-wrapper" style="text-align: left;">
-	                  <fieldset style="margin-top:5px;">
-	                    <legend style="font-weight:normal;">Make required edits and press save to see the changes reflected up above</legend>
-	                    <div class="column span-20">
-												<%= form_for @shop, :html => { :id => "shop_edit_items" } do |f| %>
-										    	<%= f.text_area :description, :id => "list1", :rows => "5", :cols => "20", :style => "width: 780px; height: 250px;" %>
-		                      <div class="column span-3 prepend-9 append-8">
-		                        <a href="javascript:;" id="listsubmit" type="submit" class="button positive" name="listsubmit" onClick="$('form#shop_edit_items').submit()">Save <img src="/css/plugins/buttons/icons/arrow_right.png" alt=""></a>
-													</div>
-												<% end %>
-	                      <hr class="space">
-	                    </div>
-	                    <div class="column span-6 colborder">
-	                      <p>
-	                        <label>Instructions</label><br>
-	                        Type a list into the box like this:<br>
-	                        <br>
-	                        Title&nbsp; £Price&nbsp; Description<br>
-	                        <br>
-	                        1. Currency is in £ ($ coming soon)<br />
-	                        2. Description is optional<br>
-	                        <br>
-	                        <span style="font-size: 85%;">Coming Soon:<br>
-	                        1. +quantity for multiple item sales, ie +5<br>
-	                        2. #tags for categorising, ie #electronics</span>
-	                      </p>
-	                    </div>
-	                    <div class="column span-6 colborder">
-	                      <p>
-	                        <label>Revert to a previous version</label><br>This functionality is coming soon. Each time you make changes to your list we'll be saving each version so that you can go back to a previous one if you make a mistake.</p>
-	                    </div>
-	                    <div class="column span-6 last">
-	                      <p>
-	                        <label>What happens to my images?</label><br>After saving your list, click the upload images tab and there's a dropdown with a list of items to add images for.<p>If you already uploaded images for these items, they'll still be there after you've edited your list provided either the title or description of the item stays the same. If you change both title and description you'll need to upload the image again.
-	                      </p>
-	                    </div>
-	                  </fieldset>
-	                </div>
-	              </div>
-	              <div class="panel">
-	                <div class="panel-wrapper" style="text-align: left;">
-	
-										<!-- 1. Sign Up -->
-										<% if !user_signed_in? and @shop.user_id.nil? %>
-											<%= render 'devise/registrations/new_short' %>
-										<% end %>
-	
-	
-										<!-- 2. Verification resend -->
-										<% if !@shop.user_id.nil? %>
-											<% if !User.find(@shop.user_id).confirmation_token.nil? %>
-												<%= render 'devise/confirmations/new' %>
-											<% end %>
-										<% end %>
+          <div class="coda-slider-wrapper">
+            <div id="coda-nav-1" class="coda-nav">
+              <ul>
+                <li class="tab1">
+                  <h3>
+                    <a href="#1"><img src="/css/plugins/buttons/icons/pencil.png" alt=""> &nbsp;1. Edit List</a>
+                  </h3>
+                </li>
+                <li class="tab2">
+                  <h3>
+                    <a href="#2"><img src="/css/plugins/buttons/icons/tick.png" alt=""><% if user_signed_in? %>&nbsp;2. My Account<% else %>&nbsp;2. Save Your Work<% end %></a>
+                  </h3>
+                </li>
+                <li class="tab3">
+                  <h3>
+                    <a href="#3"><img src="/css/plugins/buttons/icons/cog.png" alt=""> &nbsp;3. Configure Cart</a>
+                  </h3>
+                </li>
+                <li class="tab4">
+                  <h3>
+                    <a href="#4"><img src="/css/plugins/buttons/icons/images.png" alt=""> &nbsp;4. Upload Images</a>
+                  </h3>
+                </li>
+              </ul>
+            </div>
+            <div class="coda-slider preload" id="coda-slider-1">
+              <div class="coda-slider preload" id="coda-slider-1">
+                <div class="panel">
+                  <div class="panel-wrapper" style="text-align: left;">
+                    <fieldset style="margin-top:5px;">
+                      <legend style="font-weight:normal;">Make required edits and press save to see the changes reflected up above</legend>
+                      <div class="column span-20">
+                        <%= form_for @shop, :html => { :id => "shop_edit_items" } do |f| %>
+                          <%= f.text_area :description, :id => "list1", :rows => "5", :cols => "20", :style => "width: 780px; height: 250px;" %>
+                          <div class="column span-3 prepend-9 append-8">
+                            <a href="javascript:;" id="listsubmit" type="submit" class="button positive" name="listsubmit" onClick="$('form#shop_edit_items').submit()">Save <img src="/css/plugins/buttons/icons/arrow_right.png" alt=""></a>
+                          </div>
+                        <% end %>
+                        <hr class="space">
+                      </div>
+                      <div class="column span-6 colborder">
+                        <p>
+                          <label>Instructions</label><br>
+                          Type a list into the box like this:<br>
+                          <br>
+                          Title&nbsp; £Price&nbsp; Description<br>
+                          <br>
+                          1. Currency is in £ ($ coming soon)<br />
+                          2. Description is optional<br>
+                          <br>
+                          <span style="font-size: 85%;">Coming Soon:<br>
+                          1. +quantity for multiple item sales, ie +5<br>
+                          2. #tags for categorising, ie #electronics</span>
+                        </p>
+                      </div>
+                      <div class="column span-6 colborder">
+                        <p>
+                          <label>Revert to a previous version</label><br>This functionality is coming soon. Each time you make changes to your list we'll be saving each version so that you can go back to a previous one if you make a mistake.</p>
+                      </div>
+                      <div class="column span-6 last">
+                        <p>
+                          <label>What happens to my images?</label><br>After saving your list, click the upload images tab and there's a dropdown with a list of items to add images for.<p>If you already uploaded images for these items, they'll still be there after you've edited your list provided either the title or description of the item stays the same. If you change both title and description you'll need to upload the image again.
+                        </p>
+                      </div>
+                    </fieldset>
+                  </div>
+                </div>
+                <div class="panel">
+                  <div class="panel-wrapper" style="text-align: left;">
+  
+                    <!-- 1. Sign Up -->
+                    <% if !user_signed_in? and @shop.user_id.nil? %>
+                      <%= render 'devise/registrations/new_short' %>
+                    <% end %>
+  
+  
+                    <!-- 2. Verification resend -->
+                    <% if !@shop.user_id.nil? %>
+                      <% if !User.find(@shop.user_id).confirmation_token.nil? %>
+                        <%= render 'devise/confirmations/new' %>
+                      <% end %>
+                    <% end %>
 
-										<!-- 3. Change password and email address -->
+                    <!-- 3. Change password and email address -->
 
-										<% if user_signed_in? %>
-										  Logged in as <%= current_user.email %>. Not you?
-										  <%= link_to "Log out", destroy_user_session_path, :method => :delete %>
-										<p>
-										</p>
-										<% end %>
+                    <% if user_signed_in? %>
+                      Logged in as <%= current_user.email %>. Not you?
+                      <%= link_to "Log out", destroy_user_session_path, :method => :delete %>
+                    <p>
+                    </p>
+                    <% end %>
 
-										<!-- 4. Change url -->
+                    <!-- 4. Change url -->
 
-										<%= render :partial => "public_url" %>
+                    <%= render :partial => "public_url" %>
 
-	                </div>
-	              </div>
-	
-								       <div class="panel">
-								        <div class="panel-wrapper" style="text-align:left;">
-													<% form_for @shop, :html => { :id => "shop_configure_cart" } do |f| %>
-								        <div class="columnn span-11">
-								            <p>
-								                <fieldset style="height: 140px;margin-top:5px;">
-								                    <legend style="text-align: center;font-weight:normal;">Payment</legend>
-								                    <!--<input type="checkbox" checked="checked">
-								                    I want a shopping cart
-								                    <hr class="space">-->
-								
-								
-																	  <%= f.radio_button :payment_type, 'paypal', :checked => true %> 
-																	  <%= f.label :payment_type, 'Receive payments via Paypal: ', :value => 'paypal', :style => "font-weight: normal;" %>
-																		<%= f.text_field :paypal_email, :size => "25", :placeholder => "Paypal email address" %><br/>
-																	  <%= f.radio_button :payment_type, 'email' %> 
-																	  <%= f.label :payment_type, 'Just email me', :value => 'email', :style => "font-weight: normal;" %>
+                  </div>
+                </div>
+  
+                       <div class="panel">
+                        <div class="panel-wrapper" style="text-align:left;">
+                          <% form_for @shop, :html => { :id => "shop_configure_cart" } do |f| %>
+                        <div class="columnn span-11">
+                            <p>
+                                <fieldset style="height: 140px;margin-top:5px;">
+                                    <legend style="text-align: center;font-weight:normal;">Payment</legend>
+                                    <!--<input type="checkbox" checked="checked">
+                                    I want a shopping cart
+                                    <hr class="space">-->
+                
+                
+                                    <%= f.radio_button :payment_type, 'paypal', :checked => true %> 
+                                    <%= f.label :payment_type, 'Receive payments via Paypal: ', :value => 'paypal', :style => "font-weight: normal;" %>
+                                    <%= f.text_field :paypal_email, :size => "25", :placeholder => "Paypal email address" %><br/>
+                                    <%= f.radio_button :payment_type, 'email' %> 
+                                    <%= f.label :payment_type, 'Just email me', :value => 'email', :style => "font-weight: normal;" %>
 
-								                    </div><div class="columnn span-11 last">
-								            <p>
-								                <fieldset style="height: 140px;margin-top:5px;">
-							                    <legend style="text-align: center;font-weight:normal;">Fulfilling Orders</legend>
-																  <%= f.radio_button :delivery_method, 'post', :checked => true %> 
-																  <%= f.label :delivery_method, 'Prices include', :value => 'post', :style => "font-weight: normal;" %> <select style="margin-bottom: 0px;">
-					                          <option>
-					                            UK
-					                          </option>
-					                          <option>
-					                            USA
-					                          </option>
-					                          <option>
-					                            Worldwide
-					                          </option>
-					                        </select> postage<br>
-																  <%= f.radio_button :delivery_method, 'collection' %>
-																  <%= f.label :delivery_method, 'Collection / Other', :value => 'collection', :style => "font-weight: normal;" %>
-																	<%= f.text_area :collection_description, :placeholder => "Example: I'm at Sloans Market every Saturday.", :rows => "5", :style => "height: 70px;" %>
-								        </div>
-												<% end %>
-								        <div class="column span-6 prepend-9"><a class="button positive" style=" text-align: center; margin-top: 0px" onClick="$('form#shop_configure_cart').submit()"><img src="css/plugins/buttons/icons/tick.png" alt=""/>Save Configuration</a></div>
-								    </div>
-	
-	
+                                    </div><div class="columnn span-11 last">
+                            <p>
+                                <fieldset style="height: 140px;margin-top:5px;">
+                                  <legend style="text-align: center;font-weight:normal;">Fulfilling Orders</legend>
+                                  <%= f.radio_button :delivery_method, 'post', :checked => true %> 
+                                  <%= f.label :delivery_method, 'Prices include', :value => 'post', :style => "font-weight: normal;" %> <select style="margin-bottom: 0px;">
+                                    <option>
+                                      UK
+                                    </option>
+                                    <option>
+                                      USA
+                                    </option>
+                                    <option>
+                                      Worldwide
+                                    </option>
+                                  </select> postage<br>
+                                  <%= f.radio_button :delivery_method, 'collection' %>
+                                  <%= f.label :delivery_method, 'Collection / Other', :value => 'collection', :style => "font-weight: normal;" %>
+                                  <%= f.text_area :collection_description, :placeholder => "Example: I'm at Sloans Market every Saturday.", :rows => "5", :style => "height: 70px;" %>
+                        </div>
+                        <% end %>
+                        <div class="column span-6 prepend-9"><a class="button positive" style=" text-align: center; margin-top: 0px" onClick="$('form#shop_configure_cart').submit()"><img src="css/plugins/buttons/icons/tick.png" alt=""/>Save Configuration</a></div>
+                    </div>
+  
+  
 
-	
-	              <div class="panel">
+  
+                <div class="panel">
                   <div class="panel-wrapper">
                     <fieldset style="height: 140px; margin-top:5px;">
                       <legend style="font-weight:normal;">Upload one image for each of your items. Multiple images coming soon.</legend>
-											<% @sorted_items = @shop.items.sort{ |a,b| ( a.sort_order and b.sort_order ) ? a.sort_order.to_i <=> b.sort_order.to_i : ( a.sort_order ? -1 : 1 ) } %>
-											<% if @sorted_items.count > 0 %>
-												<% @item = @sorted_items.first %>
-											<% form_for @item, :html => { :multipart => true, :class => "edit_item_images inline" }, :remote => true do |f| %>
+                      <% @sorted_items = @shop.items.sort{ |a,b| ( a.sort_order and b.sort_order ) ? a.sort_order.to_i <=> b.sort_order.to_i : ( a.sort_order ? -1 : 1 ) } %>
+                      <% if @sorted_items.count > 0 %>
+                        <% @item = @sorted_items.first %>
+                      <% form_for @item, :html => { :multipart => true, :class => "edit_item_images inline" }, :remote => true do |f| %>
                         <%= select :item_image_name, :item_image_id, @sorted_items.collect {|p| [ p.name, p.id ] }, options = {:onChange => "changeItemPhoto()", :include_blank => 'Select item'}, html_options = {:onChange => "changeItemPhoto()", :style => "float: left; width: 200px", :class => "inline"} %>
 
 
-											    <%= f.file_field :photo_1, :required => true, :class=> "button inline", :style => "float: left; margin: 5px 0 5px 10px; display:none;" %>
-													<a class="button inline" href="javascript:;" style="margin: 0 0 5px 10px; display:none;" onClick="$(this).closest('form').submit()" id="upload_image_button"><img src="css/plugins/buttons/icons/tick.png" alt="">Upload Image</a>
-													
-													
-											<% end %>
-													
-												<% end %>
+                          <%= f.file_field :photo_1, :required => true, :class=> "button inline", :style => "float: left; margin: 5px 0 5px 10px; display:none;" %>
+                          <a class="button inline" href="javascript:;" style="margin: 0 0 5px 10px; display:none;" onClick="$(this).closest('form').submit()" id="upload_image_button"><img src="css/plugins/buttons/icons/tick.png" alt="">Upload Image</a>
+                          
+                          
+                      <% end %>
+                          
+                        <% end %>
 
 
 <!--  <a class="button inline" href="javascript:;" style="margin: 0 0 5px 10px;"><img src="css/plugins/buttons/icons/folder_picture.png" alt=""> Browse</a> <input class="text inline" value="path" style="float: left; width: 200px;margin: 1px 0 0 10px;"> <a class="button inline" href="javascript:;" style="margin: 0 0 5px 10px;"><img src="css/plugins/buttons/icons/tick.png" alt=""> Upload Image</a> -->
@@ -216,10 +216,10 @@ If user is not signed in but shop has user: 4 -->
                   </div>
                 </div>
   
-	
-	            </div><!-- .coda-slider -->
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
+  
+              </div><!-- .coda-slider -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>

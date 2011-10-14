@@ -13,8 +13,14 @@ class ShopsController < ApplicationController
   # GET /shops/1
   # GET /shops/1.xml
   def show
-    @shop_ref = params[:id]
-    @shop = Shop.find(@shop_ref)
+    if params[:url]
+      @shop_ref = params[:url]
+      @shop = Shop.find(@shop_ref)
+    else
+      @shop_ref = params[:id]
+      @shop = Shop.find(@shop_ref)
+      redirect_to "/" + @shop.url and return
+    end
     
     if @shop.nil?
       respond_to do |format|

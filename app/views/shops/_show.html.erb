@@ -1,47 +1,59 @@
 <% content_for :dynamic_javascripts do %>
   <%= javascript_include_tag "simpleCart.js" %>
-	<script type="text/javascript">
-		simpleCart.email = "<% if @shop.paypal_email.nil? %>test@test.com<% else %><%= @shop.paypal_email %><% end %>";
-		simpleCart.checkoutTo = PayPal;
-		simpleCart.currency = GBP;
-		simpleCart.cartHeaders = ["name", "Total"];
-	</script>
-<%end%>
+  <script type="text/javascript">
+    simpleCart.email = "<% if @shop.paypal_email.nil? %>test@test.com<% else %><%= @shop.paypal_email %><% end %>";
+    simpleCart.checkoutTo = PayPal;
+    simpleCart.currency = GBP;
+    simpleCart.cartHeaders = ["name", "Total"];
+  </script>
+  <script type="text/javascript" charset="utf-8">
+    function submitForm() {
+      $("form.edit_shop").submit();
+    };
+    function changeItemPhoto() {
+      itemIdToChange = $("select#item_image_name_item_image_id").val();
+      $("form.edit_item_images").attr("action","/items/" + itemIdToChange);
+      $("#item_photo_1").show();
+      $("#upload_image_button").show();
+    }
+  </script>
+  
+<% end %>
 
 
 
 <% if (session[:shop_id].to_i == @shop.id) or (user_signed_in? and @shop.user == current_user) %>
-	<div id="adminbar" class="box" style="font-size: 1.2em; background-color: #fff000; padding: 10px;margin-bottom:0;">
-		<!--border-bottom:1px solid #000;-->
-		Edit your: <a id="editlist" onclick="javascript;" name="editlist">List</a>, <a id="editconfig" onclick="javascript;" name="editconfig">Config</a>, <a id="editaccount" onclick="javascript;" name="editaccount">Account</a>, <a id="editimages" onclick="javascript;" name="editimages">Images</a> 
-		<span style="float: right">
-			<% if user_signed_in? %>
-				<%= link_to "Log out", destroy_user_session_path, :method => :delete %>
-			<% else %>
-				<%= link_to "Login", new_user_session_path %>
-			<% end %>
-		</span>
-	</div>
-	<div class="column span-23 last alpha60" id="config" style="border-bottom:1px solid #aaa; display:none;padding:20px;">
-		<% form_for @shop, :html => { :id => "shop_configure_cart" } do |f| %>
-	    <div class="columnn span-11">
+  <div id="adminbar" class="box" style="font-size: 1.2em; background-color: #fff000; padding: 10px;margin-bottom:0;">
+    <!--border-bottom:1px solid #000;-->
+    Edit your: <a id="editlist" onclick="javascript:;" name="editlist">List</a>, <a id="editconfig" onclick="javascript:;" name="editconfig">Config</a>, <a id="editaccount" onclick="javascript:;" name="editaccount">Account</a>, <a id="editimages" onclick="javascript:;" name="editimages">Images</a> 
+    <span style="float: right">
+      <% if user_signed_in? %>
+        <%= link_to "Log out", destroy_user_session_path, :method => :delete %>
+      <% else %>
+        <%= link_to "Login", new_user_session_path %>
+      <% end %>
+    </span>
+  </div>
+  <div class="column span-23 last alpha60" id="config" style="border-bottom:1px solid #aaa; display:none;padding:20px;">
+    <% form_for @shop, :html => { :id => "shop_configure_cart" } do |f| %>
+      <div class="columnn span-11">
         <p>
           <fieldset style="height: 140px;margin-top:5px;">
             <legend style="text-align: center;font-weight:normal;">Payment</legend>
-					  <%= f.radio_button :payment_type, 'paypal', :checked => true %> 
-					  <%= f.label :payment_type, 'Receive payments via Paypal: ', :value => 'paypal', :style => "font-weight: normal;" %>
-						<%= f.text_field :paypal_email, :size => "25", :placeholder => "Paypal email address" %><br/>
-					  <%= f.radio_button :payment_type, 'email' %> 
-					  <%= f.label :payment_type, 'Just email me', :value => 'email', :style => "font-weight: normal;" %>
-					</fieldset>
-				</p>
+            <%= f.radio_button :payment_type, 'paypal', :checked => true %> 
+            <%= f.label :payment_type, 'Receive payments via Paypal: ', :value => 'paypal', :style => "font-weight: normal;" %>
+            <%= f.text_field :paypal_email, :size => "25", :placeholder => "Paypal email address" %><br/>
+            <%= f.radio_button :payment_type, 'email' %> 
+            <%= f.label :payment_type, 'Just email me', :value => 'email', :style => "font-weight: normal;" %>
+          </fieldset>
+        </p>
       </div>
-			<div class="columnn span-11 last">
+      <div class="columnn span-11 last">
         <p>
            <fieldset style="height: 140px;margin-top:5px;">
              <legend style="text-align: center;font-weight:normal;">Fulfilling Orders</legend>
-					  <%= f.radio_button :delivery_method, 'post', :checked => true %> 
-					  <%= f.label :delivery_method, 'Prices include', :value => 'post', :style => "font-weight: normal;" %> <select style="margin-bottom: 0px;">
+            <%= f.radio_button :delivery_method, 'post', :checked => true %> 
+            <%= f.label :delivery_method, 'Prices include', :value => 'post', :style => "font-weight: normal;" %> <select style="margin-bottom: 0px;">
                <option>
                  UK
                </option>
@@ -52,60 +64,60 @@
                  Worldwide
                </option>
              </select> postage<br>
-					  <%= f.radio_button :delivery_method, 'collection' %>
-					  <%= f.label :delivery_method, 'Collection / Other', :value => 'collection', :style => "font-weight: normal;" %>
-						<%= f.text_area :collection_description, :placeholder => "Example: I'm at Sloans Market every Saturday.", :rows => "5", :style => "height: 70px;" %>
-					</fieldset>
-				</p>
-	    </div>
-		<% end %>
+            <%= f.radio_button :delivery_method, 'collection' %>
+            <%= f.label :delivery_method, 'Collection / Other', :value => 'collection', :style => "font-weight: normal;" %>
+            <%= f.text_area :collection_description, :placeholder => "Example: I'm at Sloans Market every Saturday.", :rows => "5", :style => "height: 70px;" %>
+          </fieldset>
+        </p>
+      </div>
+    <% end %>
     <div class="column span-6 prepend-9"><a class="button positive" style=" text-align: center; margin-top: 0px" onClick="$('form#shop_configure_cart').submit()"><img src="css/plugins/buttons/icons/tick.png" alt=""/>Save Configuration</a>
-		</div>
-	</div>
-	<div class="column span-23 last alpha60" id="account" style="border-bottom:1px solid #aaa; display:none;padding:20px;">
+    </div>
+  </div>
+  <div class="column span-23 last alpha60" id="account" style="border-bottom:1px solid #aaa; display:none;padding:20px;">
 
-		<!-- 1. Sign Up -->
-		<% if !user_signed_in? and @shop.user_id.nil? %>
-			<%= render 'devise/registrations/new_short' %>
-		<% end %>
-
-
-		<!-- 2. Verification resend -->
-		<% if !@shop.user_id.nil? %>
-			<% if !User.find(@shop.user_id).confirmation_token.nil? %>
-				<%= render 'devise/confirmations/new' %>
-			<% end %>
-		<% end %>
-
-		<!-- 3. Change password and email address -->
-
-		<% if user_signed_in? %>
-		  Logged in as <%= current_user.email %>. Not you?
-		  <%= link_to "Log out", destroy_user_session_path, :method => :delete %>
-		<p>
-		</p>
-		<% end %>
-
-		<!-- 4. Change url -->
-
-		<%= render :partial => "public_url" %>
-	</div>
-	<div class="column span-23 last alpha60" id="images" style="border-bottom:1px solid #aaa; display:none;padding:20px;">
-		<fieldset style="height: 140px; margin-top:5px;">
-			<legend style="font-weight:normal;">Upload one image for each of your items. Multiple images coming soon.</legend>
-			<% @sorted_items = @shop.items.sort{ |a,b| ( a.sort_order and b.sort_order ) ? a.sort_order.to_i <=> b.sort_order.to_i : ( a.sort_order ? -1 : 1 ) } %>
-			<% if @sorted_items.count > 0 %>
-				<% @item = @sorted_items.first %>
-				<% form_for @item, :html => { :multipart => true, :class => "edit_item_images inline" }, :remote => true do |f| %>
-					<%= select :item_image_name, :item_image_id, @sorted_items.collect {|p| [ p.name, p.id ] }, options = {:onChange => "changeItemPhoto()", :include_blank => 'Select item'}, html_options = {:onChange => "changeItemPhoto()", :style => "float: left; width: 200px", :class => "inline"} %>
+    <!-- 1. Sign Up -->
+    <% if !user_signed_in? and @shop.user_id.nil? %>
+      <%= render 'devise/registrations/new_short' %>
+    <% end %>
 
 
-					<%= f.file_field :photo_1, :required => true, :class=> "button inline", :style => "float: left; margin: 5px 0 5px 10px; display:none;" %>
-					<a class="button inline" href="javascript:;" style="margin: 0 0 5px 10px; display:none;" onClick="$(this).closest('form').submit()" id="upload_image_button"><img src="css/plugins/buttons/icons/tick.png" alt="">Upload Image</a>
-				<% end %>
-			<% end %>
-		</fieldset>
-	</div>
+    <!-- 2. Verification resend -->
+    <% if !@shop.user_id.nil? %>
+      <% if !User.find(@shop.user_id).confirmation_token.nil? %>
+        <%= render 'devise/confirmations/new' %>
+      <% end %>
+    <% end %>
+
+    <!-- 3. Change password and email address -->
+
+    <% if user_signed_in? %>
+      Logged in as <%= current_user.email %>. Not you?
+      <%= link_to "Log out", destroy_user_session_path, :method => :delete %>
+    <p>
+    </p>
+    <% end %>
+
+    <!-- 4. Change url -->
+
+    <%= render :partial => "public_url" %>
+  </div>
+  <div class="column span-23 last alpha60" id="images" style="border-bottom:1px solid #aaa; display:none;padding:20px;">
+    <fieldset style="height: 140px; margin-top:5px;">
+      <legend style="font-weight:normal;">Upload one image for each of your items. Multiple images coming soon.</legend>
+      <% @sorted_items = @shop.items.sort{ |a,b| ( a.sort_order and b.sort_order ) ? a.sort_order.to_i <=> b.sort_order.to_i : ( a.sort_order ? -1 : 1 ) } %>
+      <% if @sorted_items.count > 0 %>
+        <% @item = @sorted_items.first %>
+        <% form_for @item, :html => { :multipart => true, :class => "edit_item_images inline" }, :remote => true do |f| %>
+          <%= select :item_image_name, :item_image_id, @sorted_items.collect {|p| [ p.name, p.id ] }, options = {:onChange => "changeItemPhoto()", :include_blank => 'Select item'}, html_options = {:onChange => "changeItemPhoto()", :style => "float: left; width: 200px", :class => "inline"} %>
+
+
+          <%= f.file_field :photo_1, :required => true, :class=> "button inline", :style => "float: left; margin: 5px 0 5px 10px; display:none;" %>
+          <a class="button inline" href="javascript:;" style="margin: 0 0 5px 10px; display:none;" onClick="$(this).closest('form').submit()" id="upload_image_button"><img src="css/plugins/buttons/icons/tick.png" alt="">Upload Image</a>
+        <% end %>
+      <% end %>
+    </fieldset>
+  </div>
 
 <% end -%>
 
@@ -118,84 +130,84 @@
 <div id="left" class="span-17">
     
     <hr class="space">
-		<% if (session[:shop_id].to_i == @shop.id) or (user_signed_in? and @shop.user == current_user) %>
-			<h1 style="text-align: center;">Your list of things for sale:</h1>
-		<% else %>
-			<h1 style="text-align: center;"><%= @shop.url %>&#x27;<% if @shop.url[-1,1] != "s" %>s<% end %> list of things for sale:</h1>
-	  <% end %>
-		
+    <% if (session[:shop_id].to_i == @shop.id) or (user_signed_in? and @shop.user == current_user) %>
+      <h1 style="text-align: center;">Your list of things for sale:</h1>
+    <% else %>
+      <h1 style="text-align: center;"><%= @shop.url %>&#x27;<% if @shop.url[-1,1] != "s" %>s<% end %> list of things for sale:</h1>
+    <% end %>
+    
       <div id="listview">
-				<% @sorted_items = @shop.items.sort{ |a,b| ( a.sort_order and b.sort_order ) ? a.sort_order.to_i <=> b.sort_order.to_i : ( a.sort_order ? -1 : 1 ) } %>
-				<% @in_stock_items = @sorted_items.select{ |i| i.quantity > 0 }.in_groups_of(3) %>
-				<% @in_stock_items.each do |in_stock_items| %>
-					<ul class="product-list">
-					  <% in_stock_items.each do |in_stock_item| %>
-							<% if in_stock_item %>
-								<%= render :partial => "items/show_public", :locals => { :item => in_stock_item, :item_index => @sorted_items.index(in_stock_item) } %>
-							<% end %>
-					  <% end %>
-					</ul>
-				<% end %>
-				<% @sold_out_items = @sorted_items.select{ |i| i.quantity == 0 }.in_groups_of(3) %>
-				<% @sold_out_items.each do |sold_out_items| %>
-					<ul class="product-list">
-					  <% sold_out_items.each do |sold_out_item| %>
-							<% if sold_out_item %>
-								<%= render :partial => "items/show_public", :locals => { :item => sold_out_item, :item_index => @sorted_items.index(sold_out_item) } %>
-							<% end %>
-					  <% end %>
-					</ul>
-				<% end %>
+        <% @sorted_items = @shop.items.sort{ |a,b| ( a.sort_order and b.sort_order ) ? a.sort_order.to_i <=> b.sort_order.to_i : ( a.sort_order ? -1 : 1 ) } %>
+        <% @in_stock_items = @sorted_items.select{ |i| i.quantity > 0 }.in_groups_of(3) %>
+        <% @in_stock_items.each do |in_stock_items| %>
+          <ul class="product-list">
+            <% in_stock_items.each do |in_stock_item| %>
+              <% if in_stock_item %>
+                <%= render :partial => "items/show_public", :locals => { :item => in_stock_item, :item_index => @sorted_items.index(in_stock_item) } %>
+              <% end %>
+            <% end %>
+          </ul>
+        <% end %>
+        <% @sold_out_items = @sorted_items.select{ |i| i.quantity == 0 }.in_groups_of(3) %>
+        <% @sold_out_items.each do |sold_out_items| %>
+          <ul class="product-list">
+            <% sold_out_items.each do |sold_out_item| %>
+              <% if sold_out_item %>
+                <%= render :partial => "items/show_public", :locals => { :item => sold_out_item, :item_index => @sorted_items.index(sold_out_item) } %>
+              <% end %>
+            <% end %>
+          </ul>
+        <% end %>
       </div>
 
-			
+      
       <div id="listform" style="display: none;">
-				<%= form_for @shop, :html => { :id => "shop_edit_items" } do |f| %>
-		    	<%= f.text_area :description, :id => "list1", :rows => "5", :cols => "20", :style => "width: 640px; height: 400px;margin-top:0;" %>
+        <%= form_for @shop, :html => { :id => "shop_edit_items" } do |f| %>
+          <%= f.text_area :description, :id => "list1", :rows => "5", :cols => "20", :style => "width: 640px; height: 400px;margin-top:0;" %>
           <div class="column span-3 prepend-9 append-8">
             <a href="javascript:;" id="listsubmit" type="submit" class="button positive" name="listsubmit" onClick="$('form#shop_edit_items').submit()">Save <img src="/css/plugins/buttons/icons/arrow_right.png" alt=""></a>
-					</div>
-				<% end %>
+          </div>
+        <% end %>
         <hr class="space">
         <hr class="space">
       </div>
     </div>
     <div class="span-6 last alpha60" style="padding: 20px; margin-top: 55px;">
       <div class="span-6 last">
-	
-	
-							<!-- <p class="box success">Success!<br/>
-							<b>3 items were added to your list</b><br/>
-							You're ready to start selling online. Sign up below and upload some images!
-								</p>
+  
+  
+              <!-- <p class="box success">Success!<br/>
+              <b>3 items were added to your list</b><br/>
+              You're ready to start selling online. Sign up below and upload some images!
+                </p>
 
 
-					<p class="box error">Oops, something went wrong:<br/>
-						<b>Bespoke Error Message</b><br/>
-						</p> -->
+          <p class="box error">Oops, something went wrong:<br/>
+            <b>Bespoke Error Message</b><br/>
+            </p> -->
 
 
-						    <p style="text-align: center;" class="sidey">
+                <p style="text-align: center;" class="sidey">
 
-				     <a href="http://listofthingsforsale.com"> <img src="/images/list240.gif" alt="list of things for sale" /></a><br/>
-				<span id="tagline" class="highlight"><a href="http://listofthingsforsale.com">the minimal way to sell online</a></span></p>
+             <a href="http://listofthingsforsale.com"> <img src="/images/list240.gif" alt="list of things for sale" /></a><br/>
+        <span id="tagline" class="highlight"><a href="http://listofthingsforsale.com">the minimal way to sell online</a></span></p>
 
 
-			        <div id="cart">
-			            <p style="margin: 10px 0 5px;">
-			                You have <span class="simpleCart_quantity"></span>&nbsp;items in your Cart:</p>
-			            <div class="simpleCart_items">
-			            </div>
-			            <hr style="margin-bottom: 10px;" />
-			            <!--use a class of simpleCart_empty to empty the cart and simpleCart_checkout to checkout -->
-			            <p>
-			                Total <span class="simpleCart_total"></span>
-			                <br />
-			                <a href="javascript:;" class="simpleCart_empty">Empty Cart</a> &nbsp;|&nbsp; <a href="javascript:;"
-			                    class="simpleCart_checkout">Checkout</a></p>
-			        </div>
-	
-	
+              <div id="cart">
+                  <p style="margin: 10px 0 5px;">
+                      You have <span class="simpleCart_quantity"></span>&nbsp;items in your Cart:</p>
+                  <div class="simpleCart_items">
+                  </div>
+                  <hr style="margin-bottom: 10px;" />
+                  <!--use a class of simpleCart_empty to empty the cart and simpleCart_checkout to checkout -->
+                  <p>
+                      Total <span class="simpleCart_total"></span>
+                      <br />
+                      <a href="javascript:;" class="simpleCart_empty">Empty Cart</a> &nbsp;|&nbsp; <a href="javascript:;"
+                          class="simpleCart_checkout">Checkout</a></p>
+              </div>
+  
+  
   
       </div>
       <hr class="space">
@@ -206,55 +218,80 @@
 
 
 <script type="text/javascript">
-$(document).ready(function () {
-          $('#editlist').click(function () {
-              $('#listform').fadeToggle('fast', function () {
-                  $('#listview').fadeToggle('fast');
-              });
-          });
+  function hideAccount() {
+    if ($("#account").is(":visible")) {
+      $('#account').slideToggle('slow');
+    };
+  };
+  function hideImages() {
+    if ($("#images").is(":visible")) {
+      $('#images').slideToggle('slow');
+    };
+  };
+  function hideConfig() {
+    if ($("#config").is(":visible")) {
+      $('#config').slideToggle('slow');
+    };
+  };
+  function hideList() {
+    if ($("#listform").is(":visible")) {
+      $('#listform').fadeToggle('fast', function () {
+          $('#listview').fadeToggle('fast');
       });
-         
-          
-
-</script> <script type="text/javascript">
-    $(document).ready(function () {
-              $('#editaccount').click(function 
-  () {
-                  $('#account').slideToggle('slow');
-                  });
-              });
-
-
-
-
-</script> <script type="text/javascript">
+    };
+  };
   $(document).ready(function () {
-            $('#editconfig').click(function 
-() {
-                $('#config').slideToggle('slow');
-                });
-            });
-   
+    $('#editlist').click(function () {
+      editinglist = $("#listform").is(":visible");
+      if (editinglist) {
+        $('#listform').fadeToggle('fast', function () {
+            $('#listview').fadeToggle('fast');
+        });
+      } else {
+        $('#listview').fadeToggle('fast', function () {
+            $('#listform').fadeToggle('fast');
+        });
+      };
+      hideConfig();
+      hideAccount();
+      hideImages();
+    });
+  
+    $('#editconfig').click(function () {
+      $('#config').slideToggle('slow');
+      hideList();
+      hideAccount();
+      hideImages();
+    });
+
+    $('#editimages').click(function () {
+      $('#images').slideToggle('slow');
+      hideList();
+      hideAccount();
+      hideConfig();
+    });
+
+    $('#editaccount').click(function () {
+      $('#account').slideToggle('slow');
+      hideList();
+      hideConfig();
+      hideImages();
+    });
+
+  });
+  
+</script>
 
 
-
-</script> <script type="text/javascript">
-              $(document).ready(function () {
-                        $('#editside').click(function 
-() {
-                            $('#sideview').fadeToggle('fast', function () {
-                                $('#sideedit').fadeToggle('fast');
-                            });
-                        });
-                    });
-         
-          
-
-</script> <script type="text/javascript">
+<script type="text/javascript">
 $(document).ready(function () {
           $("#item1").click(function () {
               $("#item-desc1").fadeToggle('slow');
-          }); $("#item2").click(function () { $("#item-desc2").fadeToggle('slow'); }); $("#item3").click(function 
+          }); 
+          $("#item2").click(function () { 
+            $("#item-desc2").fadeToggle('slow'); 
+          }); 
+          $("#item3").click(function 
 () { $("#item-desc3").fadeToggle('slow'); }); $("#item4").click(function () {
   $("#item-desc4").fadeToggle('slow');
 }); $("#item5").click(function () { $("#item-desc5").fadeToggle('slow'); });

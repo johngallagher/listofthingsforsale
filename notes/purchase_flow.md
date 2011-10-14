@@ -94,7 +94,7 @@ if notify.acknowledge
   begin
     if notify.complete?
       check buyer is correct
-			check purchase amount and number of items are correct too.
+      check purchase amount and number of items are correct too.
 
       
     else
@@ -105,7 +105,7 @@ if notify.acknowledge
   ensure
   end
 else
-	#
+  #
 end
 
 Purchase flow V2
@@ -115,34 +115,34 @@ Purchase flow V2
 1. User clicks on add to cart
 2. Item is added to cart. MVP - we sell out immediately. Add to cart button is disappeared/greyed out.
 3. User clicks on checkout
-		- Check that everything in the cart is still in stock. 
-				If it's not, take the out of stock items out of the cart, refresh the list and show error message
-				If everything is in stock, continue.
-		- Rails gets sent a message to create a new Order that stores ip address, shop id, line items and total price. Set status to "pending payment"
-		- Simple cart does it's thing - submits ip address, shop id, line item details (item id, price, quantity) and total price to Paypal
+    - Check that everything in the cart is still in stock. 
+        If it's not, take the out of stock items out of the cart, refresh the list and show error message
+        If everything is in stock, continue.
+    - Rails gets sent a message to create a new Order that stores ip address, shop id, line items and total price. Set status to "pending payment"
+    - Simple cart does it's thing - submits ip address, shop id, line item details (item id, price, quantity) and total price to Paypal
 
 
 4. We get a notify callback to PaymentNotificationController
-	
+  
 5. Post it back to paypal to acknowledge
-	If paypal don't acknowledge, the notification was spoofed
-		set notification.acknowledged to false
-		exit 
-		
-	If paypal acknowledge successfully, 
-		set notification.acknowledged to true
-		continue
+  If paypal don't acknowledge, the notification was spoofed
+    set notification.acknowledged to false
+    exit 
+    
+  If paypal acknowledge successfully, 
+    set notification.acknowledged to true
+    continue
 
 6. Check the order is complete.
-	If it isn't, the payment hasn't been made. So log error and exit. Maybe send an email to the buyer and seller saying "this transaction was refused etc"
+  If it isn't, the payment hasn't been made. So log error and exit. Maybe send an email to the buyer and seller saying "this transaction was refused etc"
 
 7. Find a PaymentNotification with the same transaction ID as the notify callback.
-	If we find another notification with the same tx id, we log an error in the log file - duplicate transaction id and exit.
-	If not, create a payment notification from the params.
+  If we find another notification with the same tx id, we log an error in the log file - duplicate transaction id and exit.
+  If not, create a payment notification from the params.
 
 8. Find an Order with status of pending payment, the same ip address, the same shop id and seller email, the same line item details, and same total price as in the notify object.
-	If we don't find an order, someone has tried to buy fraudulently, so log error to log file
-	If we find one, the order is genuine. Attach the payment notification to the order and add the buyers email address to the order.
+  If we don't find an order, someone has tried to buy fraudulently, so log error to log file
+  If we find one, the order is genuine. Attach the payment notification to the order and add the buyers email address to the order.
 
 9. Set status of the found order to "Completed" and save
 10. Decrease the quantity of item for each line item from the order by one
