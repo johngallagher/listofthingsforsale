@@ -34,7 +34,7 @@ class SimpleCartController < ApplicationController
   end
   
   def check_stock
-   # logger.debug "Params are #{params.inspect}"
+   logger.debug "Params are #{params.inspect}"
     
     check_stock_items
     
