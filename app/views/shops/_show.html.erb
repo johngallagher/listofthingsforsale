@@ -67,7 +67,7 @@
       <div id="listform" style="display: none;">
         <%= form_for @shop, :html => { :id => "shop_edit_items" } do |f| %>
           <%= f.text_area :description, :id => "list1", :rows => "5", :cols => "20", :style => "width: 640px; height: 400px;margin-top:0;" %>
-          <div class="column span-3 prepend-9 append-8">
+          <div class="column span-3 prepend-7 append-8">
             <a href="javascript:;" id="listsubmit" type="submit" class="button positive" name="listsubmit" onClick="$('form#shop_edit_items').submit()">Save <img src="/css/plugins/buttons/icons/arrow_right.png" alt=""></a>
           </div>
         <% end %>
