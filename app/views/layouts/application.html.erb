@@ -21,14 +21,18 @@
 </script><%= yield :dynamic_javascripts %>
   </head>
   <body style="background-color:#fff;">
-    <hr class="space">
     
     <div class="container" style="background-color: transparent;">
+
+      <hr class="space">
+      <%= render :partial => "shops/admin_bar", :locals => { :shop => @shop } %>
+
       <% flash.each do |name, msg| %>
         <%= content_tag :p, msg, :id => "flash_#{name}" %>
       <% end %>
 
       <%= devise_error_messages! %>
+
 
       <%= yield %>
     </div>

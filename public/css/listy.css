@@ -257,7 +257,7 @@ color:#000;}
 .product-list {list-style-type:none;margin:0;padding:0;float:left;}
 .product-list li { margin-bottom:15px;display:block; padding:15px; float: left; margin-right:10px;width:180px;min-height:240px;border:1px solid #ddd;background-color:#f9f9f9;}  <!--border:1px solid #efefef-->
 .product-list li a {text-decoration:none;}
-.product-list li img { margin-bottom:8px; width:178px;}
+.product-list li img { margin-bottom:8px; }
 .product-list li a img  {border:1px solid #efefef;}
 .product-list li a img:hover  {border:1px solid #999;}
 .product-list li a .desc {float:left; width:178px; height:24px; overflow:hidden; line-height:12px;}
