@@ -1,28 +1,33 @@
 <li class="simpleCart_shelfItem">
   <span class="item_shopid" style="display:none;"><%= @shop.id %></span>
   <span class="item_itemid" style="display:none;"><%= item.id %></span>
-  <div style="width: 178px; height: 178px; text-align: center; margin-bottom: 10px;">
+    
   <% if item.photo_1.file? %>
+  <div style="width: 180px; height: 135px; padding: 0; margin: 0 0 14px 0; text-align: center;">
     <%= link_to(image_tag(item.photo_1.url(:thumb)), item.photo_1.url(:medium), :class => "item_image") %>
-  <% else %>
-    <img src="/images/no-image-small.jpg" alt="">
-  <% end %>
   </div>
+  <% else %>
+      <div class="no-image">Image Coming Soon</div>
+    <!-- <img src="/images/no-image-small.jpg" alt=""> -->
+  <% end %>
 
-  <span class="desc"><a class="item_name" href="javascript:;" id="item1" name="item1"><%= item.name %></a></span>
+  <a class="item_name itemtitle" href="javascript:;" id="item<%= item_index + 1 %>" name="item<%= item_index + 1 %>"><%= item.name %></a>
   <div class="item_description" id="item-desc<%= item_index + 1 %>" style="display: none;"><%= item.description_text %><br />
     <% if item.quantity > 0 %>
       <%= item.quantity %> Available
     <% else %>
       Sold out
     <% end %>
+    <hr class="space" style="margin-bottom:10px;"/>
   </div>
-  <span class="item_price price"><%= number_to_currency(item.price, :unit => "£") %></span>
-  <span class="item_add" style="float: right;">
+  <span class="item_add">
     
     <span style="<%= "display:none;" if item.quantity == 0 %>">
       <a class="item_addtocart button" href="javascript:;" style="margin: 0;">Add to Cart</a>
     </span>  
-    <div style="margin-top: 0; <%= "display:none;" if item.quantity > 0 %>">Sold Out</div>
+    <div class="added-to-cart" style="<%= "display:none;" if item.quantity > 0 %>">Sold Out</div>
   </span>
+  
+  <span class="item_price price"><%= number_to_currency(item.price, :unit => "£") %></span>
+  
 </li>
