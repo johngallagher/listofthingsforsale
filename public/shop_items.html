@@ -1,0 +1,75 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html>
+  <head>
+    <title></title>
+  </head>
+  <body>
+
+    <div id="left" class="span-17">
+      <hr class="space">
+      <h1 style="text-align: center;">
+        Your list of things for sale:
+      </h1>
+      <div id="listview" style="display: block;">
+        <ul class="product-list">
+          <li class="simpleCart_shelfItem">
+            <span class="item_shopid" style="display:none;">980191015</span> <span class="item_itemid" style="display:none;">980191544</span> <a class="item_image" href="images/touch500.jpg"></a><a class="item_name" href="javascript:;" id="item1" name="item1">iPod Touch 16gig 2nd Gen</a>
+            <div class="item_description" id="item-desc1" style="display: none;">
+              In excellent condition<br>
+              1 Available
+            </div><span class="item_price price">£70.00</span> <span class="item_add" style="float: right;" id="s1"><span style=""><a class="item_addtocart button" href="javascript:;" style="margin: 0;">Add to Cart</a></span></span>
+            <div style="margin-top: 0px; display: none;">
+              Sold Out
+            </div>
+          </li>
+          <li class="simpleCart_shelfItem">
+            <span class="item_shopid" style="display:none;">980191015</span> <span class="item_itemid" style="display:none;">980191545</span> <a class="item_image" href="images/touch500.jpg"></a><a href="http://s3.amazonaws.com/synapticmishap-list-dev/medium/980191545/Nathan%20Table%201.jpg?1318375772" class="item_image"><img alt="Nathan table 1" src="http://s3.amazonaws.com/synapticmishap-list-dev/thumb/980191545/Nathan%20Table%201.jpg?1318375772"></a> <span class="desc"><a class="item_name" href="javascript:;" id="item1" name="item1">Fender Jazz Bass Guitar</a></span>
+            <div class="item_description" id="item-desc2" style="display: none;">
+              Never been played<br>
+              1 Available
+            </div><span class="item_price price">£280.00</span> <span class="item_add" style="float: right;" id="s2"><span style=""><a class="item_addtocart button" href="javascript:;" style="margin-top: 0px; margin-right: 0px; margin-bottom: 0px; margin-left: 0px; display: none;">Add to Cart</a></span></span>
+            <div style="margin-top: 0px;">
+              Added
+            </div>
+          </li>
+          <li class="simpleCart_shelfItem">
+            <span class="item_shopid" style="display:none;">980191015</span> <span class="item_itemid" style="display:none;">980191794</span> <a class="item_image" href="images/touch500.jpg"></a><a class="item_name" href="javascript:;" id="item1" name="item1">Fender Guitar</a>
+            <div class="item_description" id="item-desc3" style="display: none;">
+              been played<br>
+              1 Available
+            </div>
+            <span class="item_price price">£280.00</span>
+            <span class="item_add" style="float: right;" id="s3">
+              <span style="">
+                <a class="item_addtocart button" href="javascript:;" style="margin: 0;">Add to Cart</a>
+              </span>
+            </span>
+            <div style="margin-top: 0px; display: none;">
+              Sold Out
+            </div>
+          </li>
+        </ul>
+      </div>
+      <div id="listform" style="display: none;">
+        <form accept-charset="UTF-8" action="/shops/frtlmd" class="edit_shop" id="shop_edit_items" method="post" name="shop_edit_items">
+          <div style="margin:0;padding:0;display:inline">
+            <input name="utf8" type="hidden" value="✓"><input name="_method" type="hidden" value="put"><input name="authenticity_token" type="hidden" value="frVRFvS1ejgpD7IkgRybA0np8ZxFM4a1PVIYLggeDKI=">
+          </div>
+          <textarea cols="20" id="list1" name="shop[description]" rows="5" style="width: 640px; height: 400px;margin-top:0;">
+For example:
+
+iPod Touch 16gig 2nd Gen £70 In excellent condition
+Fender Jazz Bass Guitar £280 Never been played
+
+Fender Guitar £280  been played
+</textarea>
+          <div class="column span-3 prepend-9 append-8">
+            <a href="javascript:;" id="listsubmit" type="submit" class="button positive" name="listsubmit" onclick="$('form#shop_edit_items').submit()">Save <img src="/css/plugins/buttons/icons/arrow_right.png" alt=""></a>
+          </div>
+        </form>
+        <hr class="space">
+        <hr class="space">
+      </div>
+    </div>
+  </body>
+</html>

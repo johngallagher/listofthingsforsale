@@ -1,4 +1,9 @@
 
+html {
+overflow: -moz-scrollbars-vertical; 
+overflow-y: scroll;
+}
+
 #tagline
 {
     padding: 2px 5px;
@@ -8,7 +13,7 @@
 .sidey a:hover {text-decoration:none;color:#000;}
 .sidey a img {text-decoration:none;border:none;}
 
-
+/*
 
 #listview ul
 {
@@ -63,6 +68,8 @@
 {
     border: 3px solid #FFFF00;
 }
+
+*/
 
 .simpleCart_shelfItem h3, .simpleCart_shelfItem h4, .simpleCart_shelfItem p
 {
@@ -192,13 +199,14 @@
 }
 #topbar DIV.topbar-centred
 {
-    clear: both;
     display: block;
     margin: 0px auto;
     width: 900px;
     background-color:#fff;
-    height:35px;
+padding:0;
 }
+
+
 
 UL.navigation
 {
@@ -246,141 +254,170 @@ color:#000;}
 
 
 
-
-
-
-
-
-
-/* Most common stuff you'll need to change */
-
-.coda-slider-wrapper
-{
-    padding: 0;
-}
-.coda-slider
-{
-    background: #fff;
-}
-
-/* Use this to keep the slider content contained in a box even when JavaScript is disabled */
-.coda-slider-no-js .coda-slider
-{
-    height: 200px;
-    overflow: auto !important;
-    padding-right: 20px;
-}
-
-/* Change the width of the entire slider (without dynamic arrows) */
-.coda-slider, .coda-slider .panel
-{
-    width: 950px;
-}
-
-/* Change margin and width of the slider (with dynamic arrows) */
-.coda-slider-wrapper.arrows .coda-slider, .coda-slider-wrapper.arrows .coda-slider .panel
-{
-    width: 950px;
-}
-.coda-slider-wrapper.arrows .coda-slider
-{
-    margin: 0 10px;
-}
-
-/* Arrow styling */
-.coda-nav-left a, .coda-nav-right a
-{
-    background: #000;
-    color: #fff;
-    padding: 5px;
-    width: 100px;
-}
-
-/* Tab nav */
-.coda-nav ul li a.current
-{
-    font-weight: bold;
-    background: #fff;
-}
-
-/* Panel padding */
-.coda-slider .panel-wrapper
-{
-    padding: 20px;
-}
-
-/* Preloader */
-.coda-slider p.loading
-{
-    padding: 20px;
-    text-align: center;
-}
-
-/* Don't change anything below here unless you know what you're doing */
-
-/* Tabbed nav */
-.coda-nav ul
-{
-    clear: both;
-    display: block;
-    margin: auto;
-    overflow: hidden;
-}
-.coda-nav ul li
-{
-    display: inline;
-}
-.coda-nav ul li a
-{
-    background: #cee6e9;
-    color: #000;
-    display: block;
-    float: left;
-    margin-right: 10px;
-    padding: 10px 15px;
-    text-decoration: none;
-}
-
-/* Miscellaneous */
-.coda-slider-wrapper
-{
-    clear: both;
-    overflow: auto;
-}
-.coda-slider
-{
-    float: left;
-    overflow: hidden;
-    position: relative;
-}
-.coda-slider .panel
-{
-    display: block;
-    float: left;
-}
-.coda-slider .panel-container
-{
-    position: relative;
-}
-.coda-nav-left, .coda-nav-right
-{
-    float: left;
-}
-.coda-nav-left a, .coda-nav-right a
-{
-    display: block;
-    text-align: center;
-    text-decoration: none;
-}
-
-#coda-slider-1 h2.title
-{
-    display: none;
-}
-
-
-
-
 .pricing td,.pricing th {text-align:center;border-right:1px solid #ddd;width:50%;}
 .pricing td.last, .pricing th.last {border-right:0;}
+
+
+
+.product-list {list-style-type:none;margin:0;padding:0;float:left;}
+.product-list li { margin-bottom:15px;display:block; padding:15px; float: left; margin-right:10px;width:180px;border:1px solid #ddd;background-color:#f9f9f9;}  <!--border:1px solid #efefef-->
+.product-list li a {text-decoration:none;}
+/*.product-list li img { margin-bottom:6px;}*/
+.product-list li a img  {border:1px solid #ddd;}
+.product-list li a img:hover  {border:1px solid #999;}
+/*.product-list li span a img  {border:none;} */
+.product-list li a.itemtitle {float:left; width:180px;text-align:center;font-size:14px;line-height:14px;height:18px;margin-bottom:5px;overflow:hidden;}
+.product-list .no-image {background:url(../images/no-image-small.jpg) no-repeat; float: left; width:180px; height:135px; margin-bottom:14px; border:1px solid #ddd; text-indent:-9999px;}
+.product-list .upload-image {background:url(../images/click-to-upload2.jpg) no-repeat; float: left; width:180px; height:135px; margin-bottom:14px; border:1px solid #ddd; text-indent:-9999px;}
+
+.product-list li .price {
+    color: #FF6600;
+    float: right;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: right;
+    width: 70px;
+margin:5px 0 0 0;
+}
+
+
+	.alpha60 {
+	/* Fallback for web browsers that don't support RGBa */
+	background-color: rgb(0, 0, 0);
+	/* RGBa with 0.6 opacity */
+	background-color: rgba(255, 255, 255, 0.6);
+	/* For IE 5.5 - 7*/
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#99000000, endColorstr=#99000000);
+	/* For IE 8*/
+	-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#99000000, endColorstr=#99000000)";
+	}	
+
+	#adminbar {color:#000}	
+	#adminbar a {text-decoration:underline;color:#000;cursor:pointer;margin-left:2px;}
+	#adminbar a:hover {color:#666;}
+
+
+
+
+
+	.ctabuttons {
+	    list-style: none;
+	    float: left;
+	    margin-bottom:0;
+	    padding: 0;
+		clear:both;
+	}
+	.ctabuttons li {
+	    float: left;
+	    display: block;
+	    margin:0 20px 0 0;
+	    padding: 0;
+	}
+	.cta {
+	    float: left;
+	    display: inline-block;
+	    padding: 0 20px;
+	    color: #fff;
+	    text-shadow: 1px 1px 0px rgba(0, 0, 0, 0.35);
+	    font: bold 18px Helvetica, Arial, sans-serif;
+	    height: 50px;
+	    text-decoration: none;
+	    line-height: 50px;
+		white-space: nowrap;
+	    border-radius: 5px;
+	    -webkit-border-radius: 5px;
+	    -moz-border-radius: 5px;
+	    -o-border-radius: 5px;
+	    position: relative;
+	    z-index: 10;
+	    -moz-box-shadow: 0 0 3px rgba(0, 0, 0, 0.5);
+	    -webkit-box-shadow: 0 0 3px rgba(0, 0, 0, 0.5);
+	    box-shadow: 0 0 3px rgba(0, 0, 0, 0.5);
+	    -ms-filter: "progid:DXImageTransform.Microsoft.Shadow(Strength=2, Direction=120, Color='#333333')";
+	    filter: progid:DXImageTransform.Microsoft.Shadow(Strength=2, Direction=120, Color='#333333');
+		-moz-user-select: none;
+		-webkit-user-select:none;
+		-khtml-user-select: none;
+		user-select: none;
+		overflow: visible;
+		outline: none;
+	}
+	.cta:before {
+	    content: "";
+	    display: block;
+	    position: absolute;
+	    z-index: -1;
+	    top: 0;
+	    left: 0;
+	    right: 0;
+	    bottom: 0;
+	    border-radius: 5px;
+	    -webkit-border-radius: 5px;
+	    -moz-border-radius: 5px;
+	    -o-border-radius: 5px;
+	}
+	.cta:hover {
+	    -moz-box-shadow: 0 2px 4px rgba(0, 0, 0, 0.35);
+	    -webkit-box-shadow: 0 2px 4px rgba(0, 0, 0, 0.35);
+	    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.35);
+	}
+	.cta:active {
+	    -moz-box-shadow: 0 0 0;
+	    -webkit-box-shadow: 0 0 0;
+	    box-shadow: 0 0 0;
+	}
+	
+	
+	.cta-green {
+	    border: solid 1px #00922d;
+	    background: #00b638;
+	    background: -webkit-gradient(linear, left top, left bottom, from(#50de76), to(#00b638));
+	    background: -moz-linear-gradient(top, #50de76, #00b638);
+	    background: -ms-linear-gradient(top, #50de76, #00b638);
+	    background: -o-linear-gradient(top, #50de76, #00b638);
+		filter:  progid:DXImageTransform.Microsoft.gradient(startColorStr='#50de76', EndColorStr='#00b638');
+		-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorStr='#50de76', EndColorStr='#00b638')";
+	}
+	.cta-green:before {
+	    border: solid 1px #78e695;
+	    border-color: rgba(255, 255, 255, 0.35);
+	}
+	.cta-green:hover {
+	    color: #fff;
+	    border: solid 1px #006e22;
+	    background: -webkit-gradient(linear, left top, left bottom, from(#5cec82), to(#00c43c));
+	    background: -moz-linear-gradient(top, #5cec82, #00c43c);
+	    background: -ms-linear-gradient(top, #5cec82, #00c43c);
+	    background: -o-linear-gradient(top, #5cec82, #00c43c);
+		filter:  progid:DXImageTransform.Microsoft.gradient(startColorStr='#5cec82', EndColorStr='#00c43c');
+		-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorStr='#5cec82', EndColorStr='#00c43c')";
+	}
+	.cta-green:active {
+	    color: #fff;
+	    border: solid 1px #006e22;
+	    background: -webkit-gradient(linear, left top, left bottom, from(#00b638), to(#50de76));
+	    background: -moz-linear-gradient(top, #00b638, #50de76);
+	    background: -ms-linear-gradient(top, #00b638, #50de76);
+	    background: -o-linear-gradient(top, #00b638, #50de76);
+		filter:  progid:DXImageTransform.Microsoft.gradient(startColorStr='#00b638', EndColorStr='#50de76');
+		-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorStr='#00b638', EndColorStr='#50de76')";
+	}
+	
+
+
+#backgrounds
+{list-style-type:none;margin:0;padding:0;padding:13px;height:240px;}
+
+#backgrounds li {float:left;padding:0;margin:0;border:2px solid #fff;height:75px;overflow:hidden}
+
+#backgrounds li.currentbg {border:2px solid #ff0000;}
+
+
+.added-to-cart {
+  float: left;
+  font-size: 16px;
+  text-align: left;
+  margin: 5px 0 0 0;
+}
+
 

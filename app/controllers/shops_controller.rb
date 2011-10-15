@@ -13,8 +13,14 @@ class ShopsController < ApplicationController
   # GET /shops/1
   # GET /shops/1.xml
   def show
-    @shop_ref = params[:id]
-    @shop = Shop.find(@shop_ref)
+    if params[:url]
+      @shop_ref = params[:url]
+      @shop = Shop.find(@shop_ref)
+    else
+      @shop_ref = params[:id]
+      @shop = Shop.find(@shop_ref)
+      redirect_to "/" + @shop.url and return
+    end
     
     if @shop.nil?
       respond_to do |format|
@@ -106,17 +112,14 @@ class ShopsController < ApplicationController
   # PUT /shops/1
   # PUT /shops/1.xml
   def update
-   # logger.debug("Params passed into update were: #{params.inspect}")
+   logger.debug("Params passed into update were: #{params.inspect}")
     @shop = Shop.find(params[:id])
 
-    if !params[:shop].nil? and !params[:shop][:url].nil?
-      # we're updating the url so keep it on tab 2.
-      session[:selected_tab] = 2
-    elsif !params[:shop].nil? and !params[:shop][:payment_type].nil?
-      session[:selected_tab] = 3
-    elsif !params[:shop].nil? and !params[:shop][:description].nil?
-      session[:selected_tab] = 1
-    end
+    updated_list = (!params[:shop].nil? and !params[:shop][:description].nil?)
+    updated_config = (!params[:shop].nil? and !params[:shop][:payment_type].nil?)
+    updated_url = (!params[:shop].nil? and !params[:shop][:url].nil?)
+    updated_images = (!params[:shop].nil? and !params[:item].nil?)
+    
     
     respond_to do |format|
       if @shop.update_attributes(params[:shop])
@@ -126,8 +129,6 @@ class ShopsController < ApplicationController
         if !new_description.nil?
           @old_items = Array.new(@shop.items)
           @new_items = ItemGenerator.new(:new_description => new_description, :old_description => old_description, :items => @old_items).generate_items
-         # logger.debug "new items are #{@new_items}"
-         # logger.debug "puts items before clear are #{@new_items.inspect}"
           @shop.items.clear
           @new_items.each do |this_item|
             @shop.items << Item.find(this_item.id)
@@ -137,8 +138,8 @@ class ShopsController < ApplicationController
         @shop.save
        # logger.debug("After update Shop is #{@shop.inspect} with items #{@shop.items.inspect}")
 
-        format.html { redirect_to(@shop, :notice => 'Shop was successfully created.') }
-        # format.html { redirect_to "/#{@shop.url}" } # show.html.erb
+        # format.html { redirect_to(@shop, :notice => 'Shop was successfully created.') }
+        format.html { redirect_to "/#{@shop.url}" }
         format.js
       else
         format.html { render :action => "edit" }

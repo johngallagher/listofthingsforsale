@@ -18,9 +18,10 @@ Things3::Application.routes.draw do
   
   match 'payment/ipn' => 'payment_notifications#ipn'
   
-  resources :shops, :except => :show
+  resources :shops
   
-  match ':id' => 'shops#show', :constraints => { :id => /[a-z|0-9]{4,30}/ }
+  match ':url' => 'shops#show', :constraints => { :url => /[a-z|0-9]{4,30}/ }
+
 
   
   # match ':url' => 'shops#show', :constraints => { :url => /[a-z|0-9]{4,30}/ }

@@ -1,13 +1,13 @@
 <div class="item">
   <h2 class="name"><%= @item.name %></h2>
-	<div class="details">
-		<p class="description"><%= @item.description_text %></p>
-		<p class="price"><%= @item.price %></p>
-		<p class="quantity"><%= @item.quantity %></p>
-	</div>
+  <div class="details">
+    <p class="description"><%= @item.description_text %></p>
+    <p class="price"><%= @item.price %></p>
+    <p class="quantity"><%= @item.quantity %></p>
+  </div>
 
-	<div class="actions">
-		<%= link_to 'Edit', edit_shop_item_path(@shop, @item) %> 
-		<%= link_to 'Destroy', shop_item_path(@shop, @item), :confirm => 'Are you sure?', :method => :delete %>
-	</div>
+  <div class="actions">
+    <%= link_to 'Edit', edit_shop_item_path(@shop, @item) %> 
+    <%= link_to 'Destroy', shop_item_path(@shop, @item), :confirm => 'Are you sure?', :method => :delete %>
+  </div>
 </div>

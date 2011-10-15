@@ -1,0 +1,108 @@
+<% if shop and ((session[:shop_id].to_i == shop.id) or (user_signed_in? and shop.user == current_user)) %>
+  <div id="adminbar" class="box" style="font-size: 1.2em; background-color: #fff000; padding: 10px;margin-bottom:0;">
+    <!--border-bottom:1px solid #000;-->
+    Edit your: <a id="editlist" onclick="javascript:;" name="editlist">List</a>, <a id="editconfig" onclick="javascript:;" name="editconfig">Config</a>, <a id="editaccount" onclick="javascript:;" name="editaccount">Account</a>, <a id="editimages" onclick="javascript:;" name="editimages">Images</a> 
+    <span style="float: right">
+      <% if user_signed_in? %>
+        <%= link_to "Log out", destroy_user_session_path, :method => :delete %>
+      <% else %>
+        <%= link_to "Login", new_user_session_path %>
+      <% end %>
+    </span>
+  </div>
+  <div class="column span-23 last alpha60" id="config" style="border-bottom:1px solid #aaa; display:none;padding:20px;">
+    <% form_for shop, :remote => true, :html => { :id => "shop_configure_cart" } do |f| %>
+      <div class="columnn span-11">
+        <p>
+          <fieldset style="height: 140px;margin-top:5px;">
+            <legend style="text-align: center;font-weight:normal;">Payment</legend>
+            <%= f.radio_button :payment_type, 'paypal', :checked => true %> 
+            <%= f.label :payment_type, 'Receive payments via Paypal: ', :value => 'paypal', :style => "font-weight: normal;" %>
+            <%= f.text_field :paypal_email, :size => "25", :placeholder => "Paypal email address" %><br/>
+            <%= f.radio_button :payment_type, 'email' %> 
+            <%= f.label :payment_type, 'Just email me', :value => 'email', :style => "font-weight: normal;" %>
+          </fieldset>
+        </p>
+      </div>
+      <div class="columnn span-11 last">
+        <p>
+           <fieldset style="height: 140px;margin-top:5px;">
+             <legend style="text-align: center;font-weight:normal;">Fulfilling Orders</legend>
+            <%= f.radio_button :delivery_method, 'post', :checked => true %> 
+            <%= f.label :delivery_method, 'Prices include', :value => 'post', :style => "font-weight: normal;" %> <select style="margin-bottom: 0px;">
+               <option>
+                 UK
+               </option>
+               <option>
+                 USA
+               </option>
+               <option>
+                 Worldwide
+               </option>
+             </select> postage<br>
+            <%= f.radio_button :delivery_method, 'collection' %>
+            <%= f.label :delivery_method, 'Collection / Other', :value => 'collection', :style => "font-weight: normal;" %>
+            <%= f.text_area :collection_description, :placeholder => "Example: I'm at Sloans Market every Saturday.", :rows => "5", :style => "height: 70px;" %>
+          </fieldset>
+        </p>
+      </div>
+    <% end %>
+    <div class="column span-6 prepend-9"><a class="button positive" style=" text-align: center; margin-top: 0px" onClick="$('form#shop_configure_cart').submit()"><img src="css/plugins/buttons/icons/tick.png" alt=""/>Save Configuration</a>
+    </div>
+  </div>
+  <div class="column span-23 last alpha60" id="account" style="border-bottom:1px solid #aaa; display:none;padding:20px;">
+
+    <!-- 1. Sign Up -->
+    <% if !user_signed_in? and shop.user_id.nil? %>
+      <%= render 'devise/registrations/new_short' %>
+    <% end %>
+
+
+    <!-- 2. Verification resend -->
+    <% if !shop.user_id.nil? %>
+      <% if !User.find(shop.user_id).confirmation_token.nil? %>
+        <%= render 'devise/confirmations/new' %>
+      <% end %>
+    <% end %>
+
+    <!-- 3. Change password and email address -->
+
+    <% if user_signed_in? %>
+      Logged in as <%= current_user.email %>. Not you?
+      <%= link_to "Log out", destroy_user_session_path, :method => :delete %>
+    <p>
+    </p>
+    <% end %>
+
+    <!-- 4. Change url -->
+
+    <%= render :partial => "public_url" %>
+  </div>
+  <div class="column span-23 last alpha60" id="images" style="border-bottom:1px solid #aaa; display:none;padding:20px;">
+    <fieldset style="height: 60px; margin-top:5px;">
+      <legend style="font-weight:normal;">Upload one image for each of your items. Multiple images coming soon.</legend>
+      <% @sorted_items = shop.items.sort{ |a,b| ( a.sort_order and b.sort_order ) ? a.sort_order.to_i <=> b.sort_order.to_i : ( a.sort_order ? -1 : 1 ) } %>
+      <% if @sorted_items.count > 0 %>
+        <% @item = @sorted_items.first %>
+        <% form_for @item, :html => { :multipart => true, :class => "edit_item_images inline" }, :remote => true do |f| %>
+          <%= select :item_image_name, :item_image_id, @sorted_items.collect {|p| [ p.name, p.id ] }, options = {:onChange => "changeItemPhoto()", :include_blank => 'Select item'}, html_options = {:onChange => "changeItemPhoto()", :style => "float: left; width: 200px", :class => "inline"} %>
+
+
+          <%= f.file_field :photo_1, :required => true, :class=> "button inline", :style => "float: left; margin: 5px 0 5px 10px; display:none;" %>
+          <a class="button inline" href="javascript:;" style="margin: 0 0 5px 10px; display:none;" onClick="$(this).closest('form').submit()" id="upload_image_button"><img src="css/plugins/buttons/icons/tick.png" alt="">Upload Image</a>
+        <% end %>
+      <% end %>
+    </fieldset>
+  </div>
+
+<% else %>
+<ul class="navigation" style="width: 930px; margin: 0;padding: 10px;padding-bottom: 5px;border-top-width: 0px;padding-top: 5px;"> 
+    <li class="login" style="float:right; font-size: 1.2em;">
+    <% if user_signed_in? %>
+      <%= link_to "Log out", destroy_user_session_path, :method => :delete %>
+    <% else %>
+      <%= link_to "Login", new_user_session_path %>
+    <% end %>
+  </li>
+</ul>
+<% end -%>

@@ -22,14 +22,14 @@ redirect to page which thanks the buyer. Somehow...
 
 
 
-–	Confirm that the payment status is Completed.
+–  Confirm that the payment status is Completed.
 PayPal sends IPN messages for pending and denied payments as well; do not ship until the payment has cleared.
 
 
 
-–	Use the transaction ID to verify that the transaction has not already been processed, which prevents duplicate transactions from being processed.
-Typically, you store transaction IDs in a database so that you know you are only processing unique transactions. –	Validate that the receiver’s email address is registered to you.
-This check provides additional protection against fraud. –	Verify that the price, item description, and so on, match the transaction on your website.
+–  Use the transaction ID to verify that the transaction has not already been processed, which prevents duplicate transactions from being processed.
+Typically, you store transaction IDs in a database so that you know you are only processing unique transactions. –  Validate that the receiver’s email address is registered to you.
+This check provides additional protection against fraud. –  Verify that the price, item description, and so on, match the transaction on your website.
 
 7. Iftheverifiedresponsepassesthechecks,takeactionbasedonthevalueofthetxn_type variable if it exists; otherwise, take action based on the value of the reason_code variable.
 8. IftheresponseisINVALIDortheresponsecodeisnot200,savethemessageforfurther investigation.
