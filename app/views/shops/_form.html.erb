@@ -1,5 +1,4 @@
 <hr class="space">
-<hr class="space">
 
         <div id="left" class="span-16">
             <div id="listform"> 
@@ -17,9 +16,9 @@
                 <% end %>
                 <h1 style="margin:20px 0 15px 0;text-align:center;">Type a list of things for sale:</h1>
                 <% if @shop.description %>
-                                <%= f.text_area :description, :rows => "5", :cols => "20", :style => "width: 600px; height: 320px;" %>
+                                <%= f.text_area :description, :rows => "5", :cols => "20", :style => "width: 600px; height: 250px;" %>
                 <% else %>
-                                <%= f.text_area :description, :rows => "5", :cols => "20", :style => "width: 600px; height: 320px;", :value => "For example:
+                                <%= f.text_area :description, :rows => "5", :cols => "20", :style => "width: 600px; height: 250px;", :value => "For example:
 
 iPod Touch 16gig 2nd Gen £70 In excellent condition
 Fender Jazz Bass Guitar £280 Never been played
@@ -60,11 +59,11 @@ Pearl Bracelet £35 Stunning original Art Deco piece" %>
                 If you don't want to sell anything just now,
                 <br />
                 <a href="/matthias">buy something from our list instead!</a>
-                <br />
+                <!-- <br />
                 <br />
                 <span style="font-size: 85%;">Coming Soon:<br />
                     1. +quantity for multiple item sales, ie +5<br />
-                    2. #tags for categorising, ie #electronics</span>
+                    2. #tags for categorising, ie #electronics</span> -->
             </div>
         </div>
         <hr class="space" />

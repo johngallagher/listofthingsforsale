@@ -20,12 +20,6 @@
   
 <% end %>
 
-
-
-
-
-
-<hr class="space">
 <hr class="space">
 
 <span class="simpleCart_shopPrefix" style="display: none;">sc<%= @shop.id %>_</span>
@@ -34,9 +28,9 @@
     
     <hr class="space">
     <% if (session[:shop_id].to_i == @shop.id) or (user_signed_in? and @shop.user == current_user) %>
-      <h1 style="text-align: center;">Your list of things for sale:</h1>
+      <h1 style="margin:20px 0 15px 0;text-align:center;">Your list of things for sale:</h1>
     <% else %>
-      <h1 style="text-align: center;"><%= @shop.url %>&#x27;<% if @shop.url[-1,1] != "s" %>s<% end %> list of things for sale:</h1>
+      <h1 style="margin:20px 0 15px 0;text-align:center;"><%= @shop.url %>&#x27;<% if @shop.url[-1,1] != "s" %>s<% end %> list of things for sale:</h1>
     <% end %>
     
       <div id="listview">
@@ -66,7 +60,7 @@
       
       <div id="listform" style="display: none;">
         <%= form_for @shop, :html => { :id => "shop_edit_items" } do |f| %>
-          <%= f.text_area :description, :id => "list1", :rows => "5", :cols => "20", :style => "width: 640px; height: 400px;margin-top:0;" %>
+          <%= f.text_area :description, :id => "list1", :rows => "5", :cols => "20", :style => "width: 640px; height: 250px; margin-top:0;" %>
           <div class="column span-3 prepend-7 append-8">
             <a href="javascript:;" id="listsubmit" type="submit" class="button positive" name="listsubmit" onClick="$('form#shop_edit_items').submit()">Save <img src="/css/plugins/buttons/icons/arrow_right.png" alt=""></a>
           </div>

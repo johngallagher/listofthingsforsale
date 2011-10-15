@@ -97,7 +97,7 @@ class ShopsController < ApplicationController
       session[:shop_id] = @shop.id
       
       respond_to do |format|
-        format.html { redirect_to "/" + @shop.url, :notice => 'List was successfully created.' }
+        format.html { redirect_to "/" + @shop.url }
         # format.html { redirect_to(@shop, :notice => 'Shop was successfully created.') }
         format.xml  { render :xml => @shop, :status => :created, :location => @shop }
       end
@@ -139,7 +139,7 @@ class ShopsController < ApplicationController
        # logger.debug("After update Shop is #{@shop.inspect} with items #{@shop.items.inspect}")
 
         # format.html { redirect_to(@shop, :notice => 'Shop was successfully created.') }
-        format.html { redirect_to "/#{@shop.url}", :notice => 'List was successfully updated.' }
+        format.html { redirect_to "/#{@shop.url}" }
         format.js
       else
         format.html { render :action => "edit" }
