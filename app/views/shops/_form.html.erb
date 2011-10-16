@@ -16,14 +16,13 @@
                 <% end %>
                 <h1 style="margin:20px 0 15px 0;text-align:center;">Type a list of things for sale:</h1>
                 <% if @shop.description %>
-                                <%= f.text_area :description, :rows => "5", :cols => "20", :style => "width: 600px; height: 250px;" %>
+                                <%= f.text_area :description, :rows => "5", :cols => "20", :style => "width: 600px; height: 250px;font-size: 0.9em;font-family: Courier;" %>
                 <% else %>
-                                <%= f.text_area :description, :rows => "5", :cols => "20", :style => "width: 600px; height: 250px;", :value => "For example:
+                                <%= f.text_area :description, :rows => "5", :cols => "20", :style => "width: 600px; height: 250px; font-size: 0.9em;font-family: Courier;", :value => "For example:
 
-iPod Touch 16gig 2nd Gen £70 In excellent condition
-Fender Jazz Bass Guitar £280 Never been played
-Nouveau Banjo CD £5 The London quintet's infamous first album
-Pearl Bracelet £35 Stunning original Art Deco piece" %>
+iPhone 3GS £70
+Fender Guitar £280
+Pocket Watch £5 Excellent condition" %>
                   <% end %>
                 
                 
