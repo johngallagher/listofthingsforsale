@@ -15,11 +15,14 @@ class ShopsController < ApplicationController
   def show
     if params[:url]
       @shop_ref = params[:url]
-      @shop = Shop.find(@shop_ref)
+      @shop = Shop.where(:url => @shop_ref).first
     else
       @shop_ref = params[:id]
-      @shop = Shop.find(@shop_ref)
-      redirect_to "/" + @shop.url and return
+      @shop = Shop.find_by_id(@shop_ref)
+      if !@shop.nil? 
+        redirect_to "/" + @shop.url 
+        return
+      end
     end
     
     if @shop.nil?
