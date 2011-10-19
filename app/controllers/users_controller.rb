@@ -2,7 +2,11 @@ class UsersController < ApplicationController
   def change_plan
     @user = User.find(params[:id])
     @plan = Plan.find(params[:user][:plan_id])
-    @user.plan = @plan
+    if @plan.name == "Business"
+      
+    else
+      # Cancel subscription
+    end
     if @user.save
       render :json => {:success => true, :plan_name => @plan.name}
       # render "show_plan", :locals => {:plan => @user.plan}

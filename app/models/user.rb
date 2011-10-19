@@ -9,8 +9,7 @@ class User < ActiveRecord::Base
   attr_accessible :email, :password, :password_confirmation, :remember_me
   
   has_one :shop
-  belongs_to :plan
-
+  has_one :subscription
   # after_initialize :init
   # 
   # def init
