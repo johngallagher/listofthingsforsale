@@ -9,10 +9,10 @@ class User < ActiveRecord::Base
   attr_accessible :email, :password, :password_confirmation, :remember_me
   
   has_one :shop
-  has_one :subscription
-  def subscription_name
-    if subscription
-      subscription.name
+  belongs_to :plan
+  def plan_name
+    if plan
+      plan.name
     else
       ""
     end
