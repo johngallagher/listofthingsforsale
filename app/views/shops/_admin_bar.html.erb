@@ -59,24 +59,8 @@
     <%= render 'devise/confirmations/new' %>
 
     <% if current_user %>
-      <% form_for(current_user, :url => "/user/#{current_user.id}/change_plan", :remote => true, :html => { :id => "change-plan" }) do |f| %>
-        <p>
-          <%= f.label :plan_id, "Select Plan" %><br />
-          <%= f.select(:plan_id, [["Business", 1], ["Personal", 2]], {:include_blank => 'None'}) %>
-        </p>
-        <p><%= f.submit "Submit" %></p>
-      <% end %>
-      <div id="show-plan">
-        <p>
-          You're on the <span id="plan-name"><%= shop.user.plan_name %></span> plan.
-          <a href="javascript:;" onClick="">Change</a>
-        </p>
-      </div>
-    <% end %>
-    <% if user_signed_in? %>
-        Logged in as <%= current_user.email %>. Not you?
-        <%= link_to "Log out", destroy_user_session_path, :method => :delete %>
-      <p>Change Email Area</p>
+      <%= render :partial => 'plan', :locals => {:shop => shop} %>
+      <%= render :partial => 'change_email_password' %>
     <% end %>
 
     <!-- 4. Change url -->
