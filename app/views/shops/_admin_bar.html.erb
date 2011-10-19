@@ -58,9 +58,8 @@
     <%= render 'devise/registrations/new_short' %>
     <%= render 'devise/confirmations/new' %>
 
-    <% if shop.user %>
-      <% form_for shop.user do |f| %>
-        <%= f.error_messages %>
+    <% if current_user %>
+      <% form_for(current_user, :url => "/user/#{current_user.id}/change_plan", :remote => true, :html => { :id => "change-plan" }) do |f| %>
         <p>
           <%= f.label :plan_id, "Select Plan" %><br />
           <%= f.select(:plan_id, [["Business", 1], ["Personal", 2]], {:include_blank => 'None'}) %>
@@ -69,7 +68,7 @@
       <% end %>
       <div id="show-plan">
         <p>
-          You're on the <%= shop.user.subscription_name %> plan.
+          You're on the <span id="plan-name"><%= shop.user.plan_name %></span> plan.
           <a href="javascript:;" onClick="">Change</a>
         </p>
       </div>
@@ -101,22 +100,85 @@
     </fieldset>
   </div>
   
+  <!-- Scripts to update visibility of forms on page load -->
+  
+  <script type="text/javascript">
+    function showSignUp () {
+      hideSelectAndShowPlan();
+      $("fieldset#signupform").show();
+      $("fieldset#aftersignup").hide();
+    }
+    function showVerify () {
+      hideSelectAndShowPlan();
+      $("fieldset#signupform").hide();
+      $("fieldset#aftersignup").show();
+    }
+    function showSelectPlan () {
+      hideSignUpAndVerify();
+      $("form#change-plan").show();
+      $("div#show-plan").hide();
+    }
+    function showShowPlan () {
+      hideSignUpAndVerify();
+      $("form#change-plan").hide();
+      $("div#show-plan").show();
+    }
+    
+    function hideSignUpAndVerify () {
+      $("fieldset#signupform").hide();
+      $("fieldset#aftersignup").hide();
+    }
+    function hideSelectAndShowPlan () {
+      $("form#change-plan").hide();
+      $("div#show-plan").hide();
+    }
+    
+    function showChangeEmailAndPassword () {
+      $("fieldset#changeemail").show();
+    }
+    function hideChangeEmailAndPassword () {
+      $("fieldset#changeemail").hide();
+    }
+    
+    $(document).ready(function () {
+      <% if user_signed_in? %>
+        showChangeEmailAndPassword();
+        <% if current_user.plan %>
+          showShowPlan();
+        <% else %>
+          showSelectPlan();
+        <% end %>
+      <% else %>
+        hideChangeEmailAndPassword();
+        <% if @shop.user_id.nil? %>
+          showSignUp();
+        <% else %>
+          showVerify();
+        <% end %>
+      <% end %>
+    });
+  </script>
+  
   <script type="text/javascript">
   $(document).ready(function () {
     $("form#user_new").bind('ajax:success', function(evt, data, status, xhr) {
       if(data.success == true) {
-        // if it is successful it will redirect to the location 
-        // returned by the custom sessions controller line:
-        // return render :json => {:success => true, :redirect => after_sign_in_path_for(resource)}
-
-        console.log("About to redirect");
+        console.log("Successful sign up");
         // window.location.href = data.redirect;
-        $("fieldset#signupform").hide();
-        $("fieldset#verify").show();
-        $("fieldset#changeemail").hide();
+        showVerify();
+        
       } else {
-        //if it is a failure do the following
-        console.log("Data failure");
+        console.log("Sign Up Failure");
+        // Show errors
+      }
+    });
+    $("form#change-plan").bind('ajax:success', function(evt, data, status, xhr) {
+      if(data.success == true) {
+        $("div#show-plan span#plan-name").text(data.plan_name);
+        showShowPlan();
+      } else {
+        console.log("Plan Change Failure");
+        // Show errors
       }
     });
   });

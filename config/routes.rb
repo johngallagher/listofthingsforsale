@@ -1,10 +1,12 @@
 Things3::Application.routes.draw do
+  
   match "new" => 'shops#new'
   get "pages/order_success"
   get "pages/order_failure"
 
   resources :email_orders
-
+  
+  match "user/:id/change_plan" => "users#change_plan"
   devise_for :users, :controllers => { :registrations => "registrations", :confirmations => "confirmations", :sessions => "sessions" }
 
   resources :items
@@ -17,6 +19,7 @@ Things3::Application.routes.draw do
   resources :simple_cart
   
   match 'payment/ipn' => 'payment_notifications#ipn'
+
   
   resources :shops
   

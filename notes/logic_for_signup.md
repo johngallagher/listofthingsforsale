@@ -1,19 +1,23 @@
 Logic for sign up panels
 
 Sign Up form
-Show if no user for shop
+Show if no user signed in
+and no user for shop
 
 
 Verify
-Show if user hasn't been verified
+Show if no user signed in
+and user for shop
 
 
 Select plan
-Show if user for shop and user has no plan
+Show if user signed in
+and user has no plan
 
 
 Show plan
-Show if user has been verified and has a subscription
+Show if user signed in
+and user has plan
 
 Show logout/change email address
 Show if a user is signed in
@@ -51,3 +55,17 @@ To get around this, we could use the accepts_nested_attributes_for :subscription
   </p>
   <p><%= f.submit "Submit" %></p>
 <% end %>
+
+
+
+
+DAMMIT.
+
+OK. So what's the issue? The issue is we need a controller that changes the plan for a user.
+
+We've got a user. This always exists. And we've got a few different plans to select from.
+
+So really what we need is a user controller. But because of the way devise works, if we make this, we might cause conflicts and problems.
+
+So let's try creating a shop resource above devise, but only for the update_plan action.
+

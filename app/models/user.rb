@@ -10,6 +10,18 @@ class User < ActiveRecord::Base
   
   has_one :shop
   belongs_to :plan
+
+  # after_initialize :init
+  # 
+  # def init
+  #   if self.plan.nil?
+  #     no_plan = Plan.where(:name => "None").first
+  #     if no_plan
+  #       self.plan = no_plan
+  #     end
+  #   end
+  # end
+
   def plan_name
     if plan
       plan.name
