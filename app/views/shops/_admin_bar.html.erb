@@ -54,26 +54,30 @@
   </div>
   <div class="column span-23 last alpha60" id="account" style="border-bottom:1px solid #aaa; display:none;padding:20px;">
 
-    <!-- 1. Sign Up -->
-    <% if !user_signed_in? and shop.user_id.nil? %>
-      <%= render 'devise/registrations/new_short' %>
-    <% end %>
 
+    <%= render 'devise/registrations/new_short' %>
+    <%= render 'devise/confirmations/new' %>
 
-    <!-- 2. Verification resend -->
-    <% if !shop.user_id.nil? %>
-      <% if !User.find(shop.user_id).confirmation_token.nil? %>
-        <%= render 'devise/confirmations/new' %>
+    <% if shop.user %>
+      <% form_for shop.user do |f| %>
+        <%= f.error_messages %>
+        <p>
+          <%= f.label :plan_id, "Select Plan" %><br />
+          <%= f.select(:plan_id, [["Business", 1], ["Personal", 2]], {:include_blank => 'None'}) %>
+        </p>
+        <p><%= f.submit "Submit" %></p>
       <% end %>
+      <div id="show-plan">
+        <p>
+          You're on the <%= shop.user.subscription_name %> plan.
+          <a href="javascript:;" onClick="">Change</a>
+        </p>
+      </div>
     <% end %>
-
-    <!-- 3. Change password and email address -->
-
     <% if user_signed_in? %>
-      Logged in as <%= current_user.email %>. Not you?
-      <%= link_to "Log out", destroy_user_session_path, :method => :delete %>
-    <p>
-    </p>
+        Logged in as <%= current_user.email %>. Not you?
+        <%= link_to "Log out", destroy_user_session_path, :method => :delete %>
+      <p>Change Email Area</p>
     <% end %>
 
     <!-- 4. Change url -->
@@ -96,6 +100,27 @@
       <% end %>
     </fieldset>
   </div>
+  
+  <script type="text/javascript">
+  $(document).ready(function () {
+    $("form#user_new").bind('ajax:success', function(evt, data, status, xhr) {
+      if(data.success == true) {
+        // if it is successful it will redirect to the location 
+        // returned by the custom sessions controller line:
+        // return render :json => {:success => true, :redirect => after_sign_in_path_for(resource)}
+
+        console.log("About to redirect");
+        // window.location.href = data.redirect;
+        $("fieldset#signupform").hide();
+        $("fieldset#verify").show();
+        $("fieldset#changeemail").hide();
+      } else {
+        //if it is a failure do the following
+        console.log("Data failure");
+      }
+    });
+  });
+  </script>  
 
 <% else %>
 <ul class="navigation" style="width: 930px; margin: 0;padding: 10px;padding-bottom: 5px;border-top-width: 0px;padding-top: 5px;"> 
@@ -108,3 +133,5 @@
   </li>
 </ul>
 <% end -%>
+
+
