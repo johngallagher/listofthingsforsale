@@ -7,15 +7,6 @@ class Subscription < ActiveRecord::Base
   
   attr_accessor :paypal_payment_token
   
-  def self.free_plan
-    free_plan = Plan.where("price == 0").first
-    if free_plan.nil?
-      free_plan = Plan.create(:name => "Personal", :price => 0)
-      free_plan.save
-    end
-    Subscription.new(:plan_id => free_plan.id)
-  end
-  
   def save_with_payment
     if valid?
       save_with_paypal_payment

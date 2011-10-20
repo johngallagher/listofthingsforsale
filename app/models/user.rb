@@ -24,9 +24,9 @@ class User < ActiveRecord::Base
   #   end
   # end
 
-  def plan_name
-    if subscription
-      "Test"
+  def subscription_plan_name
+    if subscription and subscription.plan
+      subscription.plan.name
     else
       ""
     end

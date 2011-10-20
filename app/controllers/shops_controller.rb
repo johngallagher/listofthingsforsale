@@ -26,16 +26,6 @@ class ShopsController < ApplicationController
       end
     end
 
-    if params[:PayerID]
-      @subscription = @shop.user.subscription
-      @subscription.paypal_customer_token = params[:PayerID]
-      @subscription.paypal_payment_token = params[:token]
-      @subscription.email = @subscription.paypal.checkout_details.email
-      @subscription.save_with_payment
-      redirect_to "/" + @shop.url 
-      return
-    end
-    
     if @shop.nil?
       respond_to do |format|
         format.html { render 'show_invalid_shop', :object => @shop_ref and return }

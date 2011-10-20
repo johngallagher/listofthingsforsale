@@ -59,26 +59,32 @@ To get around this, we could use the accepts_nested_attributes_for :subscription
 
 
 
-DAMMIT.
+Next step - fix all the weird issues and get it setting subscription to nil if free plan chosen.
 
-OK. So what's the issue? The issue is we need a controller that changes the plan for a user.
+How do we determine plan has been chosen if the user has no subscription?
 
-We've got a user. This always exists. And we've got a few different plans to select from.
+Maybe on verify we set a session? Or maybe we have a special value that indicates free.
 
-So really what we need is a user controller. But because of the way devise works, if we make this, we might cause conflicts and problems.
-
-So let's try creating a shop resource above devise, but only for the update_plan action.
-
-This isn't ideal now we need to integrate it with paypal.
-
-So we'll create a form with nested attributes.
-
-We have:
-
-User has a subscription which belongs to a plan.
-
-What do we need? Let's forget making the default that the user has no subscription for now.
-
-No, let's keep that in in fact.
+None of these make sense. Let's just have a "plan selected" tickbox in user.
 
 
+
+Process
+
+Sign Up and verify
+
+Select plan
+
+If personal
+click save
+user update with new details
+set plan_selected to true
+set subscription to nil
+
+
+If business
+click paypal
+Goes off to paypal
+Comes back to users/id?paypal_token info etc
+user update with token details
+sets

@@ -29,9 +29,8 @@ class SubscriptionsController < ApplicationController
   def paypal_checkout
     plan = Plan.find(params[:plan_id])
     subscription = plan.subscriptions.build
-    return_url = root_url + current_user.shop.url
     redirect_to subscription.paypal.checkout_url(
-      return_url: return_url + "?plan_id=#{params[:plan_id]}",
+      return_url: user_url(current_user) + "/subscribe",
       cancel_url: root_url
     )
   end

@@ -1,11 +1,9 @@
 module ApplicationHelper
   def setup_user(user)
     returning(user) do |u|
-      # unless u.subscription.present?
-        sub = Subscription.create(:plan_id => 2, :email => u.email)
-        sub.save
-        u.subscription = sub
-      # end
+      unless u.subscription.present?
+        u.build_subscription
+      end
     end
   end
     

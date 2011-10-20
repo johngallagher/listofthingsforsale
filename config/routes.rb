@@ -10,8 +10,8 @@ Things3::Application.routes.draw do
   resources :email_orders
   
   resources :users, :only => [:update]
+  match "users/:id/subscribe" => "users#update"
   
-  # match "user/:id/update" => "users#update"
   devise_for :users, :controllers => { :registrations => "registrations", :confirmations => "confirmations", :sessions => "sessions" }
 
   resources :items

@@ -7,7 +7,7 @@
     <p>
       <%= f.fields_for :subscription do |subscription| -%>
         <%= subscription.label :plan_id, "Select Plan" %><br />
-        <%= subscription.select(:plan_id, [["Business", 2], ["Personal", 1]], {:include_blank => 'None'}) %>
+        <%= subscription.select(:plan_id, [["Business", 2], ["Personal", nil]], {:include_blank => 'None'}) %>
         <%= subscription.hidden_field :paypal_customer_token %>
         <%= subscription.hidden_field :paypal_payment_token %>
 
@@ -32,7 +32,7 @@
   
   <div id="show-plan">
     <p>
-      You're on the <span id="plan-name"><%= @user.subscription.plan.name %></span> plan.
+      You're on the <span id="plan-name"><%= @user.subscription_plan_name %></span> plan.
     </p>
     <a href="javascript:;" onClick="showSelectPlan()">Change</a>
   </div>
