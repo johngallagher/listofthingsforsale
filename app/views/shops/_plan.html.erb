@@ -1,15 +1,38 @@
 <fieldset id="your_plan" class="columnn span-10">
   <legend>Your Plan</legend>
-  <% form_for(current_user, :url => "/user/#{current_user.id}/change_plan", :remote => true, :html => { :id => "change-plan" }) do |f| %>
+  
+  
+  <% @user = setup_user(current_user) %>
+  <% form_for(@user, :remote => true, :html => { :id => "change-plan" }) do |f| %>
     <p>
-      <%= f.label :plan_id, "Select Plan" %><br />
-      <%= f.select(:plan_id, [["Business", 1], ["Personal", 2]], {:include_blank => 'None'}) %>
+      <%= f.fields_for :subscription do |subscription| -%>
+        <%= subscription.label :plan_id, "Select Plan" %><br />
+        <%= subscription.select(:plan_id, [["Business", 2], ["Personal", 1]], {:include_blank => 'None'}) %>
+        <%= subscription.hidden_field :paypal_customer_token %>
+        <%= subscription.hidden_field :paypal_payment_token %>
+
+        <div id="paypal_checkout">
+          <%= link_to image_tag("https://www.paypal.com/en_US/i/btn/btn_xpressCheckout.gif"), paypal_checkout_path(plan_id: 2) %>
+        </div>
+
+        <div id="billing_fields">
+          <div class="field">
+            <%= subscription.label :email %>
+            <%= subscription.text_field :email %>
+          </div>
+        </div>
+        
+      <% end -%>
     </p>
     <p><%= f.submit "Submit" %></p>
   <% end %>
+  
+
+  
+  
   <div id="show-plan">
     <p>
-      You're on the <span id="plan-name"><%= shop.user.plan_name %></span> plan.
+      You're on the <span id="plan-name"><%= @user.subscription.plan.name %></span> plan.
     </p>
     <a href="javascript:;" onClick="showSelectPlan()">Change</a>
   </div>

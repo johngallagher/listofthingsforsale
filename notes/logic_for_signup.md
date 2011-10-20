@@ -69,3 +69,16 @@ So really what we need is a user controller. But because of the way devise works
 
 So let's try creating a shop resource above devise, but only for the update_plan action.
 
+This isn't ideal now we need to integrate it with paypal.
+
+So we'll create a form with nested attributes.
+
+We have:
+
+User has a subscription which belongs to a plan.
+
+What do we need? Let's forget making the default that the user has no subscription for now.
+
+No, let's keep that in in fact.
+
+

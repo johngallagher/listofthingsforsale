@@ -10,11 +10,14 @@ class User < ActiveRecord::Base
   
   has_one :shop
   has_one :subscription
+
+  accepts_nested_attributes_for :subscription, :update_only => true
+  
   # after_initialize :init
   # 
   # def init
-  #   if self.plan.nil?
-  #     no_plan = Plan.where(:name => "None").first
+  #   if self.subscription.nil?
+  #     no_plan = Subscription.where(:name => "None").first
   #     if no_plan
   #       self.plan = no_plan
   #     end
@@ -22,8 +25,8 @@ class User < ActiveRecord::Base
   # end
 
   def plan_name
-    if plan
-      plan.name
+    if subscription
+      "Test"
     else
       ""
     end

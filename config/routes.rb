@@ -1,12 +1,15 @@
 Things3::Application.routes.draw do
   
+  get 'paypal/checkout', to: 'subscriptions#paypal_checkout'
   match "new" => 'shops#new'
   get "pages/order_success"
   get "pages/order_failure"
 
   resources :email_orders
   
-  match "user/:id/change_plan" => "users#change_plan"
+  resources :users, :only => [:update]
+  
+  # match "user/:id/update" => "users#update"
   devise_for :users, :controllers => { :registrations => "registrations", :confirmations => "confirmations", :sessions => "sessions" }
 
   resources :items

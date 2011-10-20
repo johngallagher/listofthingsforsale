@@ -1,9 +1,9 @@
 class UsersController < ApplicationController
-  def change_plan
+  def update
     @user = User.find(params[:id])
     @plan = Plan.find(params[:user][:plan_id])
     if @plan.name == "Business"
-      
+      # Create new subscription
     else
       # Cancel subscription
     end
