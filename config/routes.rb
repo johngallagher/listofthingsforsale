@@ -1,6 +1,8 @@
 Things3::Application.routes.draw do
   
+  resources :subscriptions
   get 'paypal/checkout', to: 'subscriptions#paypal_checkout'
+  
   match "new" => 'shops#new'
   get "pages/order_success"
   get "pages/order_failure"

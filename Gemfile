@@ -30,6 +30,8 @@ gem 'omniauth'
 
 gem "friendly_id", "~> 3.3.0"
 
+gem 'paypal-recurring'
+
 # Use unicorn as the web server
 # gem 'unicorn'
 

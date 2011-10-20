@@ -18,11 +18,22 @@ class ShopsController < ApplicationController
       @shop = Shop.where(:url => @shop_ref).first
     else
       @shop_ref = params[:id]
-      @shop = Shop.find_by_id(@shop_ref)
-      if !@shop.nil? 
-        redirect_to "/" + @shop.url 
-        return
+      begin
+        @shop = Shop.find(@shop_ref)
+        # redirect_to "/" + @shop.url 
+        # return
+      rescue
       end
+    end
+
+    if params[:PayerID]
+      @subscription = @shop.user.subscription
+      @subscription.paypal_customer_token = params[:PayerID]
+      @subscription.paypal_recurring_profile_token = params[:token]
+      @subscription.email = @subscription.paypal.checkout_details.email
+      @subscription.save
+      redirect_to "/" + @shop.url 
+      return
     end
     
     if @shop.nil?

@@ -154,6 +154,7 @@ GEM
       activesupport (>= 2.3.2)
       cocaine (>= 0.0.2)
       mime-types
+    paypal-recurring (0.1.6)
     polyglot (0.3.2)
     pyu-ruby-sasl (0.0.3.3)
     rack (1.2.3)
@@ -245,6 +246,7 @@ DEPENDENCIES
   nokogiri
   omniauth
   paperclip
+  paypal-recurring
   rack-cache
   rails (= 3.0.10)
   remotipart (~> 1.0)
