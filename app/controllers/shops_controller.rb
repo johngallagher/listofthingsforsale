@@ -20,8 +20,8 @@ class ShopsController < ApplicationController
       @shop_ref = params[:id]
       begin
         @shop = Shop.find(@shop_ref)
-        # redirect_to "/" + @shop.url 
-        # return
+        redirect_to "/" + @shop.url 
+        return
       rescue
       end
     end
@@ -29,9 +29,9 @@ class ShopsController < ApplicationController
     if params[:PayerID]
       @subscription = @shop.user.subscription
       @subscription.paypal_customer_token = params[:PayerID]
-      @subscription.paypal_recurring_profile_token = params[:token]
+      @subscription.paypal_payment_token = params[:token]
       @subscription.email = @subscription.paypal.checkout_details.email
-      @subscription.save
+      @subscription.save_with_payment
       redirect_to "/" + @shop.url 
       return
     end
