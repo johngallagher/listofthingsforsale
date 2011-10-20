@@ -7,24 +7,20 @@
     <p>
       <%= f.fields_for :subscription do |subscription| -%>
         <%= subscription.label :plan_id, "Select Plan" %><br />
-        <%= subscription.select(:plan_id, [["Business", 2], ["Personal", nil]], {:include_blank => 'None'}) %>
+        <%= subscription.radio_button :plan_id, '2' %>
+        <%= subscription.label :plan_id_2, 'Business' %>
+        <%= subscription.radio_button :plan_id, '' %>
+        <%= subscription.label :plan_id_, 'Personal' %>
         <%= subscription.hidden_field :paypal_customer_token %>
         <%= subscription.hidden_field :paypal_payment_token %>
 
-        <div id="paypal_checkout">
-          <%= link_to image_tag("https://www.paypal.com/en_US/i/btn/btn_xpressCheckout.gif"), paypal_checkout_path(plan_id: 2) %>
+        <div id="paypal_checkout" style="display:none;">
+          <%= link_to image_tag("https://www.paypal.com/en_US/i/btn/btn_xpressCheckout.gif"), paypal_checkout_path() %>
         </div>
-
-        <div id="billing_fields">
-          <div class="field">
-            <%= subscription.label :email %>
-            <%= subscription.text_field :email %>
-          </div>
-        </div>
-        
       <% end -%>
+      <%= f.check_box :plan_selected, :style => "display: none;" %>
     </p>
-    <p><%= f.submit "Submit" %></p>
+    <p><%= f.submit "Save", :style => "display: none;" %> <%= submit_tag "Cancel" %></p>
   <% end %>
   
 

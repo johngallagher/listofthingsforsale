@@ -97,12 +97,73 @@
       $("fieldset#signupform").hide();
       $("fieldset#aftersignup").show();
     }
+    function setChangePlanSubmitEnabled (enabled) {
+      $("form#change-plan input#user_submit").attr("disabled", !enabled);
+    }
+    function setChangePlanSubmitVisible (visible) {
+      if (visible) {
+        $("form#change-plan input#user_submit").show();
+      } else {
+        $("form#change-plan input#user_submit").hide();
+      };
+    }
+    function setPaypalCheckoutVisible (visible) {
+      if (visible) {
+        $("div#paypal_checkout").show();
+      } else {
+        $("div#paypal_checkout").hide();
+      };
+    }
+    
+    function hideOtherAccountDetails () {
+      $("fieldset#Fieldset1").hide();
+      $("fieldset#your_account").hide();
+    }
+
+    function showOtherAccountDetails () {
+      $("fieldset#Fieldset1").show();
+      $("fieldset#your_account").show();
+    }
+    
+    function updateOtherAccountDetailsVisibility () {
+      no_plan_selected = !$("#user_plan_selected").is(':checked')
+      if (no_plan_selected) {
+        hideOtherAccountDetails();
+      } else {
+        showOtherAccountDetails();
+      };
+    }
+    
+    function updateChangePlanForm () {
+      on_business_plan = ($("span#plan-name").text() == "Business");
+      personal_plan_selected = $("input#user_subscription_attributes_plan_id_").is(':checked')
+      business_plan_selected = $("input#user_subscription_attributes_plan_id_2").is(':checked')
+      updateOtherAccountDetailsVisibility();
+      
+      if(personal_plan_selected) {
+        setChangePlanSubmitEnabled(true);
+        setChangePlanSubmitVisible(true);
+        setPaypalCheckoutVisible(false);
+        
+      } else if(business_plan_selected) {
+        setChangePlanSubmitEnabled(true);
+        setChangePlanSubmitVisible(false);
+        if (on_business_plan) {
+          setPaypalCheckoutVisible(false);
+        } else {
+          setPaypalCheckoutVisible(true);
+        };
+      };
+    }
+    
     function showSelectPlan () {
+      updateOtherAccountDetailsVisibility();
       hideSignUpAndVerify();
       $("form#change-plan").show();
       $("div#show-plan").hide();
     }
     function showShowPlan () {
+      updateOtherAccountDetailsVisibility();
       hideSignUpAndVerify();
       $("form#change-plan").hide();
       $("div#show-plan").show();
@@ -127,7 +188,8 @@
     $(document).ready(function () {
       <% if user_signed_in? %>
         showChangeEmailAndPassword();
-        <% if current_user.subscription %>
+        updateChangePlanForm();
+        <% if current_user.plan_selected %>
           showShowPlan();
         <% else %>
           showSelectPlan();
@@ -145,6 +207,9 @@
   
   <script type="text/javascript">
   $(document).ready(function () {
+    $("input:radio[name='user[subscription_attributes][plan_id]']").change(function() {
+      updateChangePlanForm();
+    });
     $("form#user_new").bind('ajax:success', function(evt, data, status, xhr) {
       if(data.success == true) {
         console.log("Successful sign up");
@@ -158,6 +223,9 @@
     });
     $("form#change-plan").bind('ajax:success', function(evt, data, status, xhr) {
       if(data.success == true) {
+        $("#user_plan_selected").attr('checked','checked');
+        updateOtherAccountDetailsVisibility();
+        
         $("div#show-plan span#plan-name").text(data.plan_name);
         showShowPlan();
       } else {

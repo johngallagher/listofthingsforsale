@@ -24,6 +24,6 @@ class Subscription < ActiveRecord::Base
   end
 
   def payment_provided?
-    paypal_payment_token.present?
+    paypal_customer_token.present? and paypal_recurring_profile_token.present?
   end
 end

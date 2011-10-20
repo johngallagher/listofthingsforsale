@@ -28,7 +28,7 @@ class User < ActiveRecord::Base
     if subscription and subscription.plan
       subscription.plan.name
     else
-      ""
+      "Personal"
     end
   end
 end

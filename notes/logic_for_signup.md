@@ -80,11 +80,39 @@ click save
 user update with new details
 set plan_selected to true
 set subscription to nil
-
+redirects to shop
 
 If business
 click paypal
 Goes off to paypal
 Comes back to users/id?paypal_token info etc
-user update with token details
-sets
+sets plan selected to true
+sets up subscription for user
+updates user with token details and paypal details
+redirects to shop
+
+New Logic
+
+Sign Up form
+Show if no user signed in
+and no user for shop
+
+
+Verify
+Show if no user signed in
+and user for shop
+
+
+Select plan
+Show if user signed in
+and user hasn't selected a plan
+
+
+Show plan
+Show if user signed in
+and user has selected a plan
+
+Show logout/change email address
+Show if a user is signed in
+
+

@@ -1,6 +1,12 @@
 class UsersController < ApplicationController
-  def update
+  before_filter :find_user
+  before_filter :check_for_cancel, :only => [:update]
+  
+  def find_user
     @user = User.find(params[:id])
+  end
+  
+  def update
     if params[:PayerID]       # Only way we can subscribe to business is with a Paypal payment callback
       subscribe_to_business
     else
@@ -12,6 +18,7 @@ class UsersController < ApplicationController
     @user.plan_selected = true
     if @user.subscription
       #cancel subscription with paypal
+      @user.subscription.destroy
       @user.subscription = nil
     end
     
@@ -33,5 +40,14 @@ class UsersController < ApplicationController
     @user.save
     redirect_to "/" + @user.shop.url, :notice => "Subscription successful! Thankyou."
     return
+  end
+  
+private
+
+  def check_for_cancel
+    if params[:commit] == "Cancel"
+      render :json => {:success => true, :plan_name => @user.subscription_plan_name }
+      return
+    end
   end
 end
