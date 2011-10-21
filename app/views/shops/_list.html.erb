@@ -1,0 +1,35 @@
+<div id="listview">
+  <% @sorted_items = shop.items.sort{ |a,b| ( a.sort_order and b.sort_order ) ? a.sort_order.to_i <=> b.sort_order.to_i : ( a.sort_order ? -1 : 1 ) } %>
+  <% @in_stock_items = @sorted_items.select{ |i| i.quantity > 0 }.in_groups_of(3) %>
+  <% @in_stock_items.each do |in_stock_items| %>
+    <ul class="product-list">
+      <% in_stock_items.each do |in_stock_item| %>
+        <% if in_stock_item %>
+          <%= render :partial => "items/show_public", :locals => { :item => in_stock_item, :item_index => @sorted_items.index(in_stock_item) } %>
+        <% end %>
+      <% end %>
+    </ul>
+  <% end %>
+  <% @sold_out_items = @sorted_items.select{ |i| i.quantity == 0 }.in_groups_of(3) %>
+  <% @sold_out_items.each do |sold_out_items| %>
+    <ul class="product-list">
+      <% sold_out_items.each do |sold_out_item| %>
+        <% if sold_out_item %>
+          <%= render :partial => "items/show_public", :locals => { :item => sold_out_item, :item_index => @sorted_items.index(sold_out_item) } %>
+        <% end %>
+      <% end %>
+    </ul>
+  <% end %>
+</div>
+
+
+<div id="listform" style="display: none;">
+  <%= form_for shop, :html => { :id => "shop_edit_items" } do |f| %>
+    <%= f.text_area :description, :id => "list1", :rows => "5", :cols => "20", :style => "width: 640px; height: 250px; margin-top:0; font-size: 0.9em;font-family: Courier;" %>
+    <div class="column span-3 prepend-7 append-8">
+      <a href="javascript:;" id="listsubmit" type="submit" class="button positive" name="listsubmit" onClick="$('form#shop_edit_items').submit()">Save <img src="/css/plugins/buttons/icons/arrow_right.png" alt=""></a>
+    </div>
+  <% end %>
+  <hr class="space">
+  <hr class="space">
+</div>

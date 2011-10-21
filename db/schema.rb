@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111020132041) do
+ActiveRecord::Schema.define(:version => 20111021154834) do
 
   create_table "authentications", :force => true do |t|
     t.integer  "user_id"
@@ -103,6 +103,12 @@ ActiveRecord::Schema.define(:version => 20111020132041) do
     t.text     "description"
     t.text     "collection_description"
     t.string   "cached_slug"
+    t.text     "about_me"
+    t.string   "style"
+    t.string   "profile_photo_file_name"
+    t.string   "profile_photo_content_type"
+    t.integer  "profile_photo_file_size"
+    t.datetime "profile_photo_updated_at"
   end
 
   add_index "shops", ["cached_slug"], :name => "index_shops_on_cached_slug", :unique => true

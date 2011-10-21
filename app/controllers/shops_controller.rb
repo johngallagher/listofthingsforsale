@@ -26,16 +26,14 @@ class ShopsController < ApplicationController
       end
     end
 
-    if @shop.nil?
+    if @shop.nil? || (@shop.user != current_user and @shop.status == ShopStatus::Offline)
       respond_to do |format|
         format.html { render 'show_invalid_shop', :object => @shop_ref and return }
-        format.js
       end
     end
     
     respond_to do |format|
-      format.html { render 'show' =>  @shop } # show.html.erb
-      # format.js
+      format.html { render 'show' =>  @shop }
     end    
   end
 
@@ -123,7 +121,8 @@ class ShopsController < ApplicationController
     updated_config = (!params[:shop].nil? and !params[:shop][:payment_type].nil?)
     updated_url = (!params[:shop].nil? and !params[:shop][:url].nil?)
     updated_images = (!params[:shop].nil? and !params[:item].nil?)
-    
+    updated_about_me = (!params[:shop].nil? and !params[:about_me].nil?)
+    updated_styling = (!params[:shop].nil? and !params[:styling].nil?)
     
     respond_to do |format|
       if @shop.update_attributes(params[:shop])
@@ -140,14 +139,16 @@ class ShopsController < ApplicationController
 
         end
         @shop.save
-       # logger.debug("After update Shop is #{@shop.inspect} with items #{@shop.items.inspect}")
+        # logger.debug "format is: #{format.inspect}"
+        
+        # logger.debug("After update Shop is #{@shop.inspect} with items #{@shop.items.inspect}")
 
         # format.html { redirect_to(@shop, :notice => 'Shop was successfully created.') }
-        format.html { redirect_to "/#{@shop.url}" }
-        format.js
+        format.html { redirect_to "/#{@shop.url}" and return }
+        render :json => {:success => true, :about_me => @shop.about_me } and return
       else
-        format.html { render :action => "edit" }
-        format.xml  { render :xml => @shop.errors, :status => :unprocessable_entity }
+        format.html { render :action => "edit" and return }
+        format.xml  { render :xml => @shop.errors, :status => :unprocessable_entity and return }
       end
     end
   end
