@@ -145,7 +145,8 @@ class ShopsController < ApplicationController
 
         # format.html { redirect_to(@shop, :notice => 'Shop was successfully created.') }
         format.html { redirect_to "/#{@shop.url}" and return }
-        render :json => {:success => true, :about_me => @shop.about_me } and return
+        format.js { render :action => "update", :locals => {:shop => @shop }}
+        
       else
         format.html { render :action => "edit" and return }
         format.xml  { render :xml => @shop.errors, :status => :unprocessable_entity and return }

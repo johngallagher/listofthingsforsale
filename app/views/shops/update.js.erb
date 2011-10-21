@@ -1,0 +1,3 @@
+$("div#aboutmeview h1").text('<%= escape_javascript(shop.about_me.first) %>');
+$("div#aboutmeview span").text('<%= escape_javascript(shop.about_me[1..-1]) %>');
+hideAll();
