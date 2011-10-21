@@ -10,17 +10,17 @@
 </div>
 
 <div id="sidebarform" style="display:none;">
-       <%= form_for @shop, :remote => true, :html => { :multipart => true, :id => "shop_edit_about_me" } do |f| %>
-       <% if @shop.profile_photo.file? %>
-          <div class="span-6 last" style="margin:0; padding:0;">
-         <%= image_tag(@shop.profile_photo.url(:profile), :style => "margin-bottom:10px;") %><br/>
-         </div>
-         <% end %>
-        <%= f.file_field :profile_photo %>
-        <%= f.text_area :about_me, :rows => "5", :cols => "20", :style => "width: 200px; height: 140px;" %><br />
-        <%= f.submit "Save", :disable_with => 'Saving...' %>
-       <% end %>
-
+  <%= form_for @shop, :remote => true, :html => { :multipart => true, :id => "shop_edit_about_me" } do |f| %>
+    <%= f.label :profile_photo, :style => "font-weight: normal;" %>
+    <%= f.file_field :profile_photo %>
+    <% if @shop.profile_photo.file? %>
+      <div class="span-6 last" style="margin:0; padding:0;">
+        <%= image_tag(@shop.profile_photo.url(:profile), :style => "margin-bottom:10px;") %><br/>
+      </div>
+    <% end %>
+    <%= f.text_area :about_me, :rows => "5", :cols => "20", :style => "width: 200px; height: 140px;" %><br />
+    <%= f.submit "Save", :disable_with => 'Saving...' %>
+  <% end %>
 <hr>
 </div>
 
