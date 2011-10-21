@@ -83,7 +83,7 @@ class ShopsController < ApplicationController
 
     @shop_name = nil
     @shop_url = (0...8).map{65.+(rand(25)).chr}.join.downcase
-    @shop = Shop.new(:name => @shop_name, :description => @shop_items_description, :status => ShopStatus::LIVE_FREE, :url => @shop_url)
+    @shop = Shop.new(:name => @shop_name, :description => @shop_items_description, :url => @shop_url)
 
     @new_items = ItemGenerator.new(:new_description => @shop_items_description, :old_description => "", :items => []).generate_items
     @shop.items = @new_items
