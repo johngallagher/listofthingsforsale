@@ -74,38 +74,44 @@
     </div>
     <div class="span-6 last alpha60" style="padding: 20px; margin-top: 55px;">
       <div class="span-6 last">
-  
-  
-              <!-- <p class="box success">Success!<br/>
-              <b>3 items were added to your list</b><br/>
-              You're ready to start selling online. Sign up below and upload some images!
-                </p>
+      <p style="text-align: center;margin-bottom:5px;" class="sidey">
+          <a href="http://listofthingsforsale.com">
+              <img src="images/listy.gif" alt="list of things for sale" /></a><br />
+          <!--<span id="tagline" class="highlight"><a href="http://listofthingsforsale.com">the minimal way to sell online</a></span>-->
+      </p>
 
+      <div id="sidebarview">
+        <div class="span-6 last" style="margin:0 0 5px 0;">
+          <img src="images/profile_pic.jpg">
+        </div>
+        <h1 class="alt" style="float: left; padding:0;margin: 3px 5px 0 0; font-size: 2.7em">W</h1>rite whatever you want here. You could use it to tell people who you are and what you are selling. If you have a retail presence or a market stall, you could put up the details up here.  
+        <hr style="margin-top:5px;">
+      </div>
 
-          <p class="box error">Oops, something went wrong:<br/>
-            <b>Bespoke Error Message</b><br/>
-            </p> -->
-
-
-                <p style="text-align: center;" class="sidey">
-
-             <a href="http://listofthingsforsale.com"> <img src="/images/list240.gif" alt="list of things for sale" /></a><br/>
-        <span id="tagline" class="highlight"><a href="http://listofthingsforsale.com">the minimal way to sell online</a></span></p>
-
-
-              <div id="cart">
-                  <p style="margin: 10px 0 5px;">
-                      You have <span class="simpleCart_quantity"></span>&nbsp;items in your Cart:</p>
-                  <div class="simpleCart_items">
-                  </div>
-                  <hr style="margin-bottom: 10px;" />
-                  <!--use a class of simpleCart_empty to empty the cart and simpleCart_checkout to checkout -->
-                  <p>
-                      Total <span class="simpleCart_total"></span>
-                      <br />
-                      <a href="javascript:;" class="simpleCart_empty">Empty Cart</a> &nbsp;|&nbsp; <a href="javascript:;"
-                          class="simpleCart_checkout">Checkout</a></p>
-              </div>
+      <div id="sidebarform" style="display:none;">
+        <div class="span-6 last" style="margin:0; padding:0;">
+           <img src="images/profile_pic.jpg" style="margin-bottom:10px;"><br/><input type="submit" value="Upload Profile Pic / Logo">
+           <p>
+          <textarea name="dummy2" id="Textarea1" rows="5" cols="20" style="width: 200px; height: 140px;">Write whatever you want here. You could use it to tell people who you are and what you are selling. If you have a retail presence or a market stall, you could put up the details up here.  
+          </textarea><br />
+          <input type="submit" value="Save">
+          <input type="reset" value="Cancel"></p>
+      <hr>
+      </div>
+      </div>
+      <div id="cart">
+          <p style="margin: 10px 0 5px;">
+              You have <span class="simpleCart_quantity"></span>&nbsp;items in your Cart:</p>
+          <div class="simpleCart_items">
+          </div>
+          <hr style="margin-bottom: 10px;" />
+          <!--use a class of simpleCart_empty to empty the cart and simpleCart_checkout to checkout -->
+          <p>
+              Total <span class="simpleCart_total"></span>
+              <br />
+              <a href="javascript:;" class="simpleCart_empty">Empty Cart</a> &nbsp;|&nbsp; <a href="javascript:;"
+                  class="simpleCart_checkout">Checkout</a></p>
+      </div>
   
   
   
@@ -118,19 +124,34 @@
 
 
 <script type="text/javascript">
-  function hideAccount() {
-    if ($("#account").is(":visible")) {
-      $('#account').slideToggle('slow');
+  // ** Hide **
+  function hideList() {
+    if ($("#listform").is(":visible")) {
+      $('#listform').fadeToggle('fast', function () {
+          $('#listview').fadeToggle('fast');
+      });
     };
   };
-  function hideImages() {
-    if ($("#images").is(":visible")) {
-      $('#images').slideToggle('slow');
+  function hideSidebar() {
+    if ($("#sidebarform").is(":visible")) {
+      $('#sidebarform').fadeToggle('fast', function () {
+          $('#sidebarview').fadeToggle('fast');
+      });
+    };
+  };
+  function hideStyling() {
+    if ($("#styling").is(":visible")) {
+      $('#styling').slideToggle('slow');
     };
   };
   function hideConfig() {
     if ($("#config").is(":visible")) {
       $('#config').slideToggle('slow');
+    };
+  };
+  function hideAccount() {
+    if ($("#account").is(":visible")) {
+      $('#account').slideToggle('slow');
     };
   };
   function hidePrepublish() {
@@ -141,13 +162,68 @@
       });
     };
   };
+  // ** Unused **
+  function hideImages() {
+    if ($("#images").is(":visible")) {
+      $('#images').slideToggle('slow');
+    };
+  };
 
+  // ** Show **
+  function showList() {
+    editinglist = $("#listform").is(":visible");
+    if (editinglist) {
+      $('#listform').fadeToggle('fast', function () {
+          $('#listview').fadeToggle('fast');
+      });
+    } else {
+      $('#listview').fadeToggle('fast', function () {
+          $('#listform').fadeToggle('fast');
+      });
+    };
+    hideConfig();
+    hideAccount();
+    hideImages();
+    hidePrepublish();
+    hideSidebar();
+    hideStyling();
+  };
+  
+  function showSidebar() {
+    editingsidebar = $("#sidebarform").is(":visible");
+    if (editingsidebar) {
+      $('#sidebarform').fadeToggle('fast', function () {
+          $('#sidebarview').fadeToggle('fast');
+      });
+    } else {
+      $('#sidebarview').fadeToggle('fast', function () {
+          $('#sidebarform').fadeToggle('fast');
+      });
+    };
+    hideList();
+    hideConfig();
+    hideAccount();
+    hideImages();
+    hidePrepublish();
+    hideStyling();
+  };
+  function showStyling() {
+    $('#styling').slideToggle('slow');
+    hideList();
+    hideAccount();
+    hideImages();
+    hidePrepublish();
+    hideSidebar();
+  };
+  
   function showAccount() {
     $('#account').slideToggle('slow');
     hideList();
     hideConfig();
     hideImages();
     hidePrepublish();
+    hideSidebar();
+    hideStyling();
   };
   function showImages() {
     $('#images').slideToggle('slow');
@@ -155,6 +231,8 @@
     hideAccount();
     hideConfig();
     hidePrepublish();
+    hideSidebar();
+    hideStyling();
   };
   function showConfig() {
     $('#config').slideToggle('slow');
@@ -162,6 +240,8 @@
     hideAccount();
     hideImages();
     hidePrepublish();
+    hideSidebar();
+    hideStyling();
   };
   
   function showPrepublish() {
@@ -170,50 +250,40 @@
       $('a#prepublish-action').click(hidePrepublish());
       $('div#prepublish').slideToggle('slow');
     };
+    hideList();
+    hideAccount();
+    hideImages();
+    hideSidebar();
+    hideStyling();
   };
   
-  function hideList() {
-    if ($("#listform").is(":visible")) {
-      $('#listform').fadeToggle('fast', function () {
-          $('#listview').fadeToggle('fast');
-      });
-    };
-  };
+  
   $(document).ready(function () {
-
     $('#editlist').click(function () {
-      editinglist = $("#listform").is(":visible");
-      if (editinglist) {
-        $('#listform').fadeToggle('fast', function () {
-            $('#listview').fadeToggle('fast');
-        });
-      } else {
-        $('#listview').fadeToggle('fast', function () {
-            $('#listform').fadeToggle('fast');
-        });
-      };
-      hideConfig();
-      hideAccount();
-      hideImages();
-      hidePrepublish();
+      showList();
+    });
+
+    $('#editsidebar').click(function () {
+      showSidebar();
+    });
+
+    $('#editstyling').click(function () {
+      showStyling();
     });
   
     $('#editconfig').click(function () {
       showConfig()
     });
 
-    $('#editimages').click(function () {
-      showImages();
-    });
-
     $('#editaccount').click(function () {
       showAccount();
     });
 
+    $('#editimages').click(function () {
+      showImages();
+    });
   });
-  
 </script>
-
 
 <script type="text/javascript">
 $(document).ready(function () {
@@ -223,8 +293,9 @@ $(document).ready(function () {
           $("#item2").click(function () { 
             $("#item-desc2").fadeToggle('slow'); 
           }); 
-          $("#item3").click(function 
-() { $("#item-desc3").fadeToggle('slow'); }); $("#item4").click(function () {
+          $("#item3").click(function () { 
+            $("#item-desc3").fadeToggle('slow'); 
+          }); $("#item4").click(function () {
   $("#item-desc4").fadeToggle('slow');
 }); $("#item5").click(function () { $("#item-desc5").fadeToggle('slow'); });
       });
