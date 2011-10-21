@@ -164,10 +164,6 @@ class ShopsController < ApplicationController
     end
   end
   
-  def ready_to_publish?
-    
-  end
-
   def prepublish
     @shop = Shop.where(:url => params[:url]).first
     ShopPublisher.new(:shop => @shop).prepublish

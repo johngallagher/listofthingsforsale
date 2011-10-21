@@ -1,0 +1,540 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"
+   "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>List of Things For Sale</title>
+    <link rel="stylesheet" href="css/screen.css" type="text/css" media="screen, projection">
+    <link rel="stylesheet" href="css/print.css" type="text/css" media="print">
+    <!--[if lt IE 8]><link rel="stylesheet" href="css/ie.css" type="text/css" media="screen, projection"><![endif]-->
+    <link rel="stylesheet" href="css/plugins/fancy-type/screen.css" type="text/css" media="screen, projection">
+    <link rel="stylesheet" href="css/plugins/buttons/screen.css" type="text/css" media="screen, projection">
+    <link rel="stylesheet" href="css/listy.css" type="text/css" media="screen, projection">
+    <link rel="stylesheet" href="css/src/forms.css" type="text/css" media="screen, projection">
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
+    <script type="text/javascript" src="js/jquery.easing.1.3.js"></script>
+    <script type="text/javascript" src="js/jquery.coda-slider-2.0.js"></script>
+    <script type="text/javascript">
+        $().ready(function () {
+            $('#coda-slider-1').codaSlider({
+                dynamicArrows: false,
+                dynamicTabs: false,
+                crossLinking: false,
+                firstPanelToLoad: 2
+
+            });
+        });</script>
+    <script type="text/javascript" src="js/simpleCart.min.js"></script>
+    <script type="text/javascript">
+        simpleCart.email = "test@listofthingsforsale.com";
+        simpleCart.checkoutTo = PayPal;
+        simpleCart.currency = GBP;
+        simpleCart.cartHeaders = ["name", "Total"];</script>
+    <!-- "Quantity_input", "increment", "decrement", "Thumb_image" -->
+</head>
+<body style="background: url(images/bright_squares.png) top left repeat;">
+    <!-- subtle_orange_emboss.png  /  little_pluses.png /grunge_wall.png / cardboard.png / felt.png / grid_bg.png / washi.png / gold_scale.png bright_squares.png -->
+    <hr class="space">
+    <div class="container" style="background-color: transparent;">
+        <!--
+	<div style="font-size:1.1em; text-align:right;"><a href="">Login</a>, <a href="">Sign Up</a> | <a href=""><img src="images/connect_small.jpg" style="padding-top:5px;"></a></div>-->
+        <div id="adminbar" class="box" style="font-size: 1.2em; background-color: #fff000; padding: 10px;margin-bottom:0;">
+            <!--border-bottom:1px solid #000;-->
+            Edit your: 
+<a id="editlist" onclick="javascript;">List</a>, 
+<a id="editside" onclick="javascript;">Sidebar</a>, 
+<a id="editstyling" onclick="javascript;">Background<!--Styling--></a>, 
+<a id="editconfig" onclick="javascript;">Config</a>, 
+<a id="editaccount" onclick="javascript;">Account</a>
+            
+
+<span style="float: right">
+<!--<a id="showlogin" onclick="javascript;">Login</a>&nbsp;&nbsp;&nbsp;-->Your list
+                is offline. <a  id="showpublish" onclick="javascript;">Publish It</a></span></div>
+
+				<div class="column span-23 last alpha60" id="config" style="border-bottom:1px solid #ccc; display:none;padding:20px;">
+
+								<div class="columnn span-11">
+						            
+						                <fieldset style="height: 100px;margin-top:0;">
+						                    <legend style="text-align: center;font-weight:normal;">Shopping Cart</legend>
+
+						                    <form>
+						                        <input name="example" type="radio" checked="checked">
+						                        Recieve payments via Paypal<br>
+						                        <input name="example" type="radio">
+						                        Just email me orders<br />
+
+						                    
+						                    </form>
+
+						                    </div>
+						<div class="columnn span-11 last">
+						            
+						                <fieldset style="height: 100px;margin-top:0;">
+						                    <legend style="text-align: center;font-weight:normal;">Fulfilling Orders</legend>
+						                        <input name="example" type="radio" checked="checked">
+						                        Prices include
+						                        <select style="margin-bottom: 0px;">
+						                            <option>UK</option>
+						                            <option>USA</option>
+						                            <option>Worldwide</option>
+						                        </select>
+						                        postage<br />
+						                        <input name="example" type="radio">
+						                        Collection / other<br />
+
+
+						                    <span style="float: left; font-size: 85%; width: 250px;">More postage options coming
+						                        soon</span></fieldset>
+
+						        </div>
+						        <div class="column span-6 prepend-9">
+				<a class="button positive" style=" text-align:center;margin-top: 0px"><img src="css/plugins/buttons/icons/tick.png" alt=""/>
+						                            Save Configuration</a>
+						</div>
+
+						</div>
+
+
+
+<div class="column span-23 last alpha60" id="account" style="border-bottom:1px solid #ccc; display:none;padding:20px;">
+
+						                                             <fieldset id="signupform" style="margin-top:0;">
+		                                        <legend style="font-weight:normal;">Sign up now to save your List of Things for Sale</legend>
+
+		                                            <img src="images/facebook-connect-button.png" alt="facebook-connect-button" width="194"
+		                                                height="25" /><hr class="space">
+		                                            or<hr class="space">
+		                                            <input type="text" class="text" style="width: 220px;" value="email address" /><br />
+		                                            <input type="text" class="text" style="width: 220px;" value="password" /><br />
+		                                            <a class="button positive" onclick="$('#signupform').fadeToggle('slow');"><img src="css/plugins/buttons/icons/tick.png" alt="" /> Sign Up</a>
+
+
+		                                       </fieldset>
+
+	</div>
+
+
+
+
+
+
+
+	<div class="column span-23 last alpha60" id="login" style="border-bottom:1px solid #ccc; display:none;padding:20px;">
+
+							                                
+					    <div class="span-7 prepend-4 colborder">
+				         
+							<h2>Sign in</h2>
+
+							<form accept-charset="UTF-8" action="/users/sign_in" class="user_new" id="user_new" method="post"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="&#x2713;" /><input name="authenticity_token" type="hidden" value="6F6pbngmYul7ouqIIO/9NRCX8BdIPF464jvLPBIRltA=" /></div>
+							  <p><label for="user_email">Email</label><br />
+							  <input id="user_email" name="user[email]" size="30" type="email" value="" /></p>
+
+							  <p><label for="user_password">Password</label><br />
+							  <input id="user_password" name="user[password]" size="30" type="password" /></p>
+
+							    <p><input name="user[remember_me]" type="hidden" value="0" /><input id="user_remember_me" name="user[remember_me]" type="checkbox" value="1" /> <label for="user_remember_me">Remember me</label></p>
+
+							  <p><input id="user_submit" name="commit" type="submit" value="Sign in" /></p>
+							</form>
+
+
+							  <a href="/users/password/new">I forgot my password</a><br />
+
+						
+
+
+</div>
+							
+
+				        <div class="span-8 prepend-1 last">
+				           	<h2>Sign up</h2>
+
+							<form accept-charset="UTF-8" action="/users" class="user_new" id="user_new" method="post"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="&#x2713;" /><input name="authenticity_token" type="hidden" value="6F6pbngmYul7ouqIIO/9NRCX8BdIPF464jvLPBIRltA=" /></div>
+
+
+							  <p><label for="user_email">Email</label><br />
+							  <input id="user_email" name="user[email]" size="30" type="email" value="" /></p>
+
+							  <p><label for="user_password">Password</label><br />
+							  <input id="user_password" name="user[password]" size="30" type="password" /></p>
+
+							  <p><label for="user_password_confirmation">Password confirmation</label><br />
+							  <input id="user_password_confirmation" name="user[password_confirmation]" size="30" type="password" /></p>
+
+							  <p><input id="user_submit" name="commit" type="submit" value="Sign up" /></p>
+							</form>
+
+
+
+						
+				    </div>		
+							
+							
+							
+							
+							
+
+		</div>
+
+
+
+
+
+
+
+	<div class="column span-24 alpha60 last" id="styling" style="border-bottom:1px solid #ccc; display:none;">
+
+							                                        
+			                                       <ul id="backgrounds">
+				
+				<li><img src="images/none.jpg" width="150" height="150" alt="None"></li>
+				<li><img src="images/card.jpg" width="150" height="150" alt="Card"></li>
+				<li><img src="images/concrete3.jpg" width="150" height="150" alt="Concrete3"></li>
+					<li class="currentbg"><img src="images/bright_sq.jpg" width="150" height="150" alt="Bright Sq"></li>
+				<li><img src="images/cork.jpg" width="150" height="150" alt="Cork"></li>
+				<li><img src="images/elast.jpg" width="150" height="150" alt="Elast"></li>
+				<li><img src="images/felt.jpg" width="150" height="150" alt="Felt"></li>
+				<li><img src="images/gold_scale.jpg" width="150" height="150" alt="Gold Scale"></li>
+				<li><img src="images/green.jpg" width="150" height="150" alt="Green"></li>
+				<li><img src="images/grid.jpg" width="150" height="150" alt="Grid"></li>
+				<!--<li><img src="images/grunge.jpg" width="150" height="150" alt="Grunge"></li>-->
+				<li><img src="images/little_plus.jpg" width="150" height="150" alt="Little Plus"></li>
+				<!--<li><img src="images/paper3.jpg" width="150" height="150" alt="Paper3"></li>-->
+				<li><img src="images/pins.jpg" width="150" height="150" alt="Pins"></li>
+				<li><img src="images/smoothe.jpg" width="150" height="150" alt="Smoothe"></li>
+			
+				<li><img src="images/soft_circle.jpg" width="150" height="150" alt="Soft Circle"></li>
+				<!--<li><img src="images/soft_wallpaper.jpg" width="150" height="150" alt="Soft Wallpaper"></li>-->
+				<li><img src="images/stucco.jpg" width="150" height="150" alt="Stucco"></li>
+				<li><img src="images/subtle_orange.jpg" width="150" height="150" alt="Subtle Orange"></li>
+				<li><img src="images/vich.jpg" width="150" height="150" alt="Vich"></li>
+				<li><img src="images/washi.jpg" width="150" height="150" alt="Washi"></li>
+				
+				
+				
+				</ul>
+
+		</div>
+
+
+
+	<div class="column span-23 last alpha60" id="publish" style="border-bottom:1px solid #ccc; padding:20px;display:none;">
+
+
+		<h2 style="">Ready to go!</h2>
+		<p>Superb, it's time to put it online. Click this button:</p>
+			<a class="button positive"><img src="css/plugins/buttons/icons/tick.png" alt="" />Publish It!</a>
+			
+			
+			<hr class="space"><hr/>
+			<h2 style="">Almost There</h2>
+			<p>You're nearly ready to put your list online. Just do this first:</p>
+<p>			1. <a>Login / Sign-Up</a><br/>
+			2. <a>Configure Shopping Cart</a></p>
+			Once you've done these 2 things, hit publish again to put your list online.
+				
+			
+
+
+								                                        <!--     <fieldset id="signupform" style="margin-top:0;">
+				                                        <legend style="font-weight:normal;">Check your details and click the publish button to put your list online:</legend>
+
+<table style="background-color:#fff"><tr><td>List</td><td>Items</td><td>7 items added</td><td><a>Edit List</a></td></tr>
+<tr><td>&nbsp;</td><td>Images</td><td>7 items have images uploaded</td><td><a>Edit Images</a></td></tr>	
+<tr><td>Sidebar</td><td>About Me</td><td>Text saved</td><td><a>Edit Sidebar</a></td></tr>
+<tr><td>&nbsp;</td><td>Profile Pic</td><td>Image uploaded</td><td><a>Edit Sidebar</a></td></tr>
+<tr><td>Config</td><td>Shopping Cart</td><td>Paypal email is matthias@espritdescalier.co.uk</td><td><a>Edit Config</a></td></tr>
+<tr><td>&nbsp;</td><td>Orders<td>Prices include UK postage</td><td><a>Edit Config</a></td></tr>
+<tr><td>Account</td><td>Sign-Up</td><td>Signed up with Facebook Connect</td><td><a>Edit Account</a></td></tr>
+<tr><td>&nbsp;</td><td>Verification</td><td>email address matthias@espritdescalier.co.uk verfied</td><td><a>Edit Account</a></td></tr>
+<tr><td>&nbsp;</td><td>Plan</td><td>You are on the free plan</td><td><a>Edit Account</a></td></tr>
+<tr><td>&nbsp;</td><td>URL</td><td>http://listofthingsforsale.com/matthias</td><td><a>Edit Account</a></td>
+</tr></table>
+
+  <a class="button positive"><img src="css/plugins/buttons/icons/tick.png" alt="" />Publish</a>
+
+
+
+				                                       </fieldset>-->
+
+			</div>
+
+
+
+
+
+        <hr class="space">
+<hr class="space">
+        <!--<h1>
+            <input id="listname" class="title" value="d34tds" style="width:175px;height:35px;font-size:1em;font-weight:bold;text-align:right;font-face:helvetica;"><label for "listname">'s list of things for sale:</h1>-->
+        <div id="left" class="span-17">
+            
+                <h1 style="text-align: center;">
+                    Your list of things for sale:</h1>
+                    <div id="listview">
+                <ul class="product-list">
+                    <li class="simpleCart_shelfItem"><a class="item_image" href="images/touch500.jpg">
+                        <img src="images/guitar180.jpg"></a><a class="item_name itemtitle" href="javascript:;"
+                            id="item1">iPod Touch 16gig</a>
+                        <div class="item_description" id="item-desc1" style="display: none;margin-top:5px;">
+                            No description No description No description No description No description No description
+                            No description <br />
+                            1 Available <hr class="space" style="margin-bottom:10px;"/>
+                        </div>
+                         <span class="item_add">
+                            <a class="item_addtocart button" href="javascript:;" style="margin: 0;"><!--<img src="images/cart.png"> -->Add to Cart</a></span>
+
+<span class="item_price price">&pound;90.00</span>
+
+                    </li>
+                    
+
+
+
+					<li class="simpleCart_shelfItem"><div class="no-image">Image Coming Soon</div><a class="item_name itemtitle" href="javascript:;"
+                            id="item1">iPod Touch 16gig</a>
+                        <div class="item_description" id="item-desc1" style="display: none;">
+                            No description No description No description No description No description No description
+                            No description<br />
+                            1 Available
+                        </div>
+                         <span class="item_add">
+                            <a class="item_addtocart button" href="javascript:;" style="margin: 0;"><!--<img src="images/cart.png"> -->Add to Cart</a></span>
+
+<span class="item_price price">&pound;90.00</span>
+
+</li>
+
+
+
+
+
+										<li class="simpleCart_shelfItem"><div class="upload-image">Click to upload image</div><a class="item_name itemtitle" href="javascript:;"
+					                            id="item1">iPod Touch 16gig</a>
+					                        <div class="item_description" id="item-desc1" style="display: none;">
+					                            No description No description No description No description No description No description
+					                            No description<br />
+					                            1 Available
+					                        </div>
+					                         <span class="item_add">
+					                            <a class="item_addtocart button" href="javascript:;" style="margin: 0;"><!--<img src="images/cart.png"> -->Add to Cart</a></span>
+
+					<span class="item_price price">&pound;90.00</span>
+					                    </li>
+
+
+
+
+
+
+
+
+
+
+
+            </div>
+            <div id="listform" style="display: none;">
+                <textarea name="listarea" id="list1" rows="5" cols="20" style="width: 640px; height: 250px;margin-top:0;">
+ie.
+iPod Touch 16gig 2nd Gen £70
+Fender Jazz Bass Guitar £280
+Nouveau Banjo CD £5 The London quintet's infamous first album
+Pearl Bracelet £35 Stunning original Art Deco piece</textarea>
+                <div class="column span-5 prepend-7 append-5">
+                    <a href="shop.htm" id="listsubmit" type="submit" class="button positive">Save
+                        <img src="css/plugins/buttons/icons/arrow_right.png" alt="" />
+                    </a>
+                </div>
+                <hr class="space" />
+                <hr class="space" />
+            </div>
+        </div>
+        <div class="span-6 last alpha60" style="padding: 20px; margin-top: 55px;">
+            <div class="span-6 last">
+            <p style="text-align: center;margin-bottom:5px;" class="sidey">
+                    <a href="http://listofthingsforsale.com">
+                        <img src="images/listy.gif" alt="list of things for sale" /></a><br />
+                    <!--<span id="tagline" class="highlight"><a href="http://listofthingsforsale.com">the minimal way to sell online</a></span>-->
+                </p>
+
+             <div id="sideview">
+                 
+                <div class="span-6 last" style="margin:0 0 5px 0;">
+<img src="images/profile_pic.jpg"></div>
+               	<h1 class="alt" style="float: left; padding:0;margin: 3px 5px 0 0; font-size: 2.7em">
+	                    W</h1>rite whatever you want here. You could use it to tell people who you are and what you are selling. If you have a retail presence or a market stall, you could put up the details up here.  
+                
+            <hr style="margin-top:5px;">
+            </div>
+
+            <div id="sideedit" style="display:none;">
+	
+	
+	<div class="span-6 last" "style="margin:0; padding:0;">
+                 <img src="images/profile_pic.jpg" style="margin-bottom:10px;"><br/><input type="submit" value="Upload Profile Pic / Logo">
+
+            <p>
+                <textarea name="dummy2" id="Textarea1" rows="5" cols="20" style="width: 200px; height: 140px;">Write whatever you want here. You could use it to tell people who you are and what you are selling. If you have a retail presence or a market stall, you could put up the details up here.  
+                </textarea><br />
+                <input type="submit" value="Save">
+                <input type="reset" value="Cancel"></p>
+            <hr>
+            </div>
+                <div id="cart">
+                    <!--<hr style="margin-bottom: 10px;" />-->
+                    <p style="margin: 10px 0 5px;">
+                        You have <span class="simpleCart_quantity"></span>&nbsp;items in your Cart:</p>
+                    <div class="simpleCart_items">
+                    </div>
+                    <hr style="margin-bottom: 10px;" color:bbb;/>
+                    <!--use a class of simpleCart_empty to empty the cart and simpleCart_checkout to checkout -->
+                    <p>
+                        Total <span class="simpleCart_total"></span>
+                        <br />
+                        <a href="javascript:;" class="simpleCart_empty">Empty Cart</a> &nbsp;|&nbsp; <a href="javascript:;"
+                            class="simpleCart_checkout">Checkout</a></p>
+                </div>
+            </div>
+
+
+
+       
+<!--
+  <hr>
+
+			            <p style="margin:0;">
+
+			                Seller: Matthias<br />
+			                Member Since: October 2011<br />
+			                For Sale: 7 Items<br>
+			                Sold: 3 Items<br/>
+			                Total Sales: £55</p>
+			              
+
+-->
+
+        </div></div>
+<hr class="space">
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $('#editlist').click(function 
+    () {
+                    $('#listview').fadeToggle('fast', function () {
+                        $('#listform').fadeToggle('fast');
+                    });
+                });
+            });
+               
+                
+
+              </script>
+
+
+
+
+				<script type="text/javascript">
+		            $(document).ready(function () {
+		                $('#editaccount').click(function 
+		    () {
+		                    $('#account').slideToggle('slow');
+		                    });
+		                });
+
+
+
+
+		              </script>
+
+
+			<script type="text/javascript">
+	            $(document).ready(function () {
+	                $('#editconfig').click(function 
+	    () {
+	                    $('#config').slideToggle('slow');
+	                    });
+	                });
+	       
+
+
+
+	              </script>
+
+
+
+
+				<script type="text/javascript">
+		            $(document).ready(function () {
+		                $('#editstyling').click(function 
+		    () {
+		                    $('#styling').slideToggle('slow');
+		                    });
+		                });
+
+
+
+
+		              </script>
+
+
+
+
+
+						<script type="text/javascript">
+				            $(document).ready(function () {
+				                $('#showlogin').click(function 
+				    () {
+				                    $('#login').slideToggle('slow');
+				                    });
+				                });
+
+
+
+
+				              </script>
+				
+				
+									<script type="text/javascript">
+							            $(document).ready(function () {
+							                $('#showpublish').click(function 
+							    () {
+							                    $('#publish').slideToggle('slow');
+							                    });
+							                });
+
+
+
+
+							              </script>
+
+
+
+                      <script type="text/javascript">
+                          $(document).ready(function () {
+                              $('#editside').click(function 
+    () {
+                                  $('#sideview').fadeToggle('fast', function () {
+                                      $('#sideedit').fadeToggle('fast');
+                                  });
+                              });
+                          });
+               
+                
+
+              </script>
+
+
+
+        <script>            $(document).ready(function () {
+                $("#item1").click(function () {
+                    $("#item-desc1").fadeToggle('slow');
+                }); $("#item2").click(function () { $("#item-desc2").fadeToggle('slow'); }); $("#item3").click(function 
+    () { $("#item-desc3").fadeToggle('slow'); }); $("#item4").click(function () {
+        $("#item-desc4").fadeToggle('slow');
+    }); $("#item5").click(function () { $("#item-desc5").fadeToggle('slow'); });
+            });
+        </script>
+</body>
+</html>

@@ -1,20 +1,10 @@
 
-<ul class="navigation" style="width: 930px; margin: 0;padding: 10px;padding-bottom: 5px;border-top-width: 0px;padding-top: 5px;"> 
-    <li class="login" style="float:right; font-size: 1.2em;">
-    <% if user_signed_in? %>
-      <%= link_to "Log out", destroy_user_session_path, :method => :delete %>
-    <% else %>
-      <%= link_to "Login / Signup", new_user_session_path %>
-    <% end %>
-  </li>
-</ul>
-
 <% if shop and ((session[:shop_id].to_i == shop.id) or (user_signed_in? and shop.user == current_user)) %>
   <div id="adminbar" class="box" style="font-size: 1.2em; background-color: #fff000; padding: 10px; margin-bottom:0; float: left; width: 930px;">
     <!--border-bottom:1px solid #000;-->
     Edit your: <a id="editlist" onclick="javascript:;" name="editlist">List</a>, <a id="editconfig" onclick="javascript:;" name="editconfig">Config</a>, <a id="editaccount" onclick="javascript:;" name="editaccount">Account</a>, <a id="editimages" onclick="javascript:;" name="editimages">Images</a>
     
-    <div style="float: right;">List is offline&nbsp;&nbsp;&nbsp;<%= link_to "Publish...", {:action => "prepublish"}, :remote => true, :id => "prepublish-action" %></div>
+    <div style="float: right; width: 80px; text-align: right;"><%= link_to "Publish...", {:action => "prepublish"}, :remote => true, :id => "prepublish-action" %></div><div style="float: right; width: 100px; text-align: center;">List is offline</div>
   </div>
   <div class="column span-23 last alpha60" id="config" style="border-bottom:1px solid #aaa; display:none;padding:20px;">
     <% form_for shop, :remote => true, :html => { :id => "shop_configure_cart" } do |f| %>
