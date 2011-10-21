@@ -133,6 +133,45 @@
       $('#config').slideToggle('slow');
     };
   };
+  function hidePrepublish() {
+    if ($("div#prepublish").is(":visible")) {
+      $('a#prepublish-action').text("Publish...");
+      $('div#prepublish').slideToggle('slow', function() {
+        $('div#prepublish').remove();
+      });
+    };
+  };
+
+  function showAccount() {
+    $('#account').slideToggle('slow');
+    hideList();
+    hideConfig();
+    hideImages();
+    hidePrepublish();
+  };
+  function showImages() {
+    $('#images').slideToggle('slow');
+    hideList();
+    hideAccount();
+    hideConfig();
+    hidePrepublish();
+  };
+  function showConfig() {
+    $('#config').slideToggle('slow');
+    hideList();
+    hideAccount();
+    hideImages();
+    hidePrepublish();
+  };
+  
+  function showPrepublish() {
+    if (!$("div#prepublish").is(":visible")) {
+      $('a#prepublish-action').text("Cancel");
+      $('a#prepublish-action').click(hidePrepublish());
+      $('div#prepublish').slideToggle('slow');
+    };
+  };
+  
   function hideList() {
     if ($("#listform").is(":visible")) {
       $('#listform').fadeToggle('fast', function () {
@@ -141,6 +180,7 @@
     };
   };
   $(document).ready(function () {
+
     $('#editlist').click(function () {
       editinglist = $("#listform").is(":visible");
       if (editinglist) {
@@ -155,27 +195,19 @@
       hideConfig();
       hideAccount();
       hideImages();
+      hidePrepublish();
     });
   
     $('#editconfig').click(function () {
-      $('#config').slideToggle('slow');
-      hideList();
-      hideAccount();
-      hideImages();
+      showConfig()
     });
 
     $('#editimages').click(function () {
-      $('#images').slideToggle('slow');
-      hideList();
-      hideAccount();
-      hideConfig();
+      showImages();
     });
 
     $('#editaccount').click(function () {
-      $('#account').slideToggle('slow');
-      hideList();
-      hideConfig();
-      hideImages();
+      showAccount();
     });
 
   });

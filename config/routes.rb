@@ -2,7 +2,7 @@ Things3::Application.routes.draw do
   
   resources :subscriptions
   get 'paypal/checkout', to: 'subscriptions#paypal_checkout'
-  
+
   match "new" => 'shops#new'
   get "pages/order_success"
   get "pages/order_failure"
@@ -30,6 +30,7 @@ Things3::Application.routes.draw do
   
   match ':url' => 'shops#show', :constraints => { :url => /[a-z|0-9]{4,30}/ }
 
+  match ':url/prepublish' => 'shops#prepublish', :constraints => { :url => /[a-z|0-9]{4,30}/ }
 
   
   # match ':url' => 'shops#show', :constraints => { :url => /[a-z|0-9]{4,30}/ }

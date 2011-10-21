@@ -7,6 +7,7 @@ class UsersController < ApplicationController
   end
   
   def update
+    @user.plan_selected = true
     if params[:PayerID]       # Only way we can subscribe to business is with a Paypal payment callback
       subscribe_to_business
     else
@@ -15,7 +16,6 @@ class UsersController < ApplicationController
   end
   
   def subscribe_to_personal
-    @user.plan_selected = true
     if @user.subscription
       #cancel subscription with paypal
       @user.subscription.destroy
@@ -30,7 +30,6 @@ class UsersController < ApplicationController
   end
   
   def subscribe_to_business
-    @user.plan_selected = true
     @subscription = @user.build_subscription
     @subscription.plan = Plan.business_plan
     @subscription.paypal_customer_token = params[:PayerID]

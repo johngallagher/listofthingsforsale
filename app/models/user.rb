@@ -31,4 +31,8 @@ class User < ActiveRecord::Base
       "Personal"
     end
   end
+  
+  def verified?
+    self.confirmed_at.present?
+  end
 end

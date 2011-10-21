@@ -4,6 +4,7 @@
   <div id="adminbar" class="box" style="font-size: 1.2em; background-color: #fff000; padding: 10px;margin-bottom:0;">
     <!--border-bottom:1px solid #000;-->
     Edit your: <a id="editlist" onclick="javascript:;" name="editlist">List</a>, <a id="editconfig" onclick="javascript:;" name="editconfig">Config</a>, <a id="editaccount" onclick="javascript:;" name="editaccount">Account</a>, <a id="editimages" onclick="javascript:;" name="editimages">Images</a> 
+    <%= link_to "Publish...", {:action => "prepublish"}, :remote => true, :id => "prepublish-action" %>
     <span style="float: right">
       <% if user_signed_in? %>
         <%= link_to "Log out", destroy_user_session_path, :method => :delete %>

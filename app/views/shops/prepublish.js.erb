@@ -1,0 +1,13 @@
+if ($("div#prepublish").is(":visible")) {
+  hidePrepublish();
+} else {
+  console.log("INVisible");
+  $('div#images').after("<%= escape_javascript(render :partial => 'prepublish', :locals => {:shop => @shop }) %>");
+  showPrepublish();
+}
+
+
+hideConfig();
+hideAccount();
+hideImages();
+

@@ -1,0 +1,10 @@
+<div class="column span-23 last alpha60" id="prepublish" style="border-bottom:1px solid #aaa; display:none;padding:20px;">
+  <% if shop.publishing_errors.empty? %>
+    <h2>Ready to publish!</h2>
+  <% else %>
+    <h2>Correct the following:</h2>
+    <% shop.publishing_errors.each do |error| %>
+      <a href="javascript:;" onclick="show<%= error.domain %>()"><%= error.message %></a>
+    <% end %>
+  <% end %>
+</div>
