@@ -1,0 +1,16 @@
+<div class="column span-23 last alpha60" id="images" style="border-bottom:1px solid #aaa; display:none;padding:20px;">
+  <fieldset style="height: 60px; margin-top:5px;">
+    <legend style="font-weight:normal;">Upload one image for each of your items. Multiple images coming soon.</legend>
+    <% @sorted_items = shop.items.sort{ |a,b| ( a.sort_order and b.sort_order ) ? a.sort_order.to_i <=> b.sort_order.to_i : ( a.sort_order ? -1 : 1 ) } %>
+    <% if @sorted_items.count > 0 %>
+      <% @item = @sorted_items.first %>
+      <% form_for @item, :html => { :multipart => true, :class => "edit_item_images inline" }, :remote => true do |f| %>
+        <%= select :item_image_name, :item_image_id, @sorted_items.collect {|p| [ p.name, p.id ] }, options = {:onChange => "changeItemPhoto()", :include_blank => 'Select item'}, html_options = {:onChange => "changeItemPhoto()", :style => "float: left; width: 200px", :class => "inline"} %>
+
+
+        <%= f.file_field :photo_1, :required => true, :class=> "button inline", :style => "float: left; margin: 5px 0 5px 10px; display:none;" %>
+        <a class="button inline" href="javascript:;" style="margin: 0 0 5px 10px; display:none;" onClick="$(this).closest('form').submit()" id="upload_image_button"><img src="css/plugins/buttons/icons/tick.png" alt="">Upload Image</a>
+      <% end %>
+    <% end %>
+  </fieldset>
+</div>

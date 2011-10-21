@@ -1,0 +1,13 @@
+<div class="column span-23 last alpha60" id="account" style="border-bottom:1px solid #aaa; display:none;padding:20px;">
+
+
+  <%= render 'devise/registrations/new_short' %>
+  <%= render 'devise/confirmations/new' %>
+
+  <% if current_user %>
+    <%= render :partial => 'plan', :locals => {:shop => shop} %>
+    <%= render :partial => 'change_email_password' %>
+  <% end %>
+
+  <%= render :partial => "public_url" %>
+</div>

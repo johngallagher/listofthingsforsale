@@ -10,7 +10,7 @@ class Shop < ActiveRecord::Base
   after_initialize :init
 
   def init
-    self.status  ||= ShopStatus::CREATED
+    self.status  ||= ShopStatus::Offline
     self.payment_type ||= Payments::Paypal
     self.publishing_errors ||= []
   end

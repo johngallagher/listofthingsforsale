@@ -171,11 +171,17 @@ class ShopsController < ApplicationController
   end
 
   def publish
-    
+    @shop = Shop.where(:url => params[:url]).first
+    @shop.status = ShopStatus::Online
+    @shop.save
+    render :action => "refresh"
   end
   
   def unpublish
-    
+    @shop = Shop.where(:url => params[:url]).first
+    @shop.status = ShopStatus::Offline
+    @shop.save
+    render :action => "refresh"
   end
 end
 

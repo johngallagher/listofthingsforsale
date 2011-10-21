@@ -17,7 +17,6 @@ class ConfirmationsController < Devise::ConfirmationsController
     if session[:shop_id]
       @shop = Shop.find(session[:shop_id])
       @shop.user = resource # attach the user to the shop
-      @shop.status = ShopStatus::CONFIRMED
       @shop.save
       shop_url(@shop.id)
     else
