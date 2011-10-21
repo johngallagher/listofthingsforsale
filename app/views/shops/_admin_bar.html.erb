@@ -137,6 +137,10 @@
         <% end %>
       <% end %>
     });
+    
+    function updateBackgroundForm() {
+      $("form#shop-background-edit-form").submit();
+    }
   </script>
   
   <script type="text/javascript">
@@ -167,16 +171,6 @@
         // Show errors
       }
     });
-    // $("form#shop_edit_about_me").bind('ajax:success', function(evt, data, status, xhr) {
-    //   if(data.success == true) {
-    //     $("div#aboutmeview h1").text(data.about_me.substring(0, 1));
-    //     $("div#aboutmeview span").text(data.about_me.substring(1));
-    //     hideAll();
-    //   } else {
-    //     console.log("Edit Change Failure");
-    //     // Show errors
-    //   }
-    // });
     
   });
   </script>  

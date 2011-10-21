@@ -6,7 +6,7 @@ class Shop < ActiveRecord::Base
   has_many :items
   belongs_to :user
   has_many :orders
-  
+  has_one :background
 
   after_initialize :init
 

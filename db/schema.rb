@@ -11,12 +11,22 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111021154834) do
+ActiveRecord::Schema.define(:version => 20111021174236) do
 
   create_table "authentications", :force => true do |t|
     t.integer  "user_id"
     t.string   "provider"
     t.string   "uid"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "backgrounds", :force => true do |t|
+    t.string   "name"
+    t.string   "background_image_file_name"
+    t.string   "background_image_content_type"
+    t.integer  "background_image_file_size"
+    t.datetime "background_image_updated_at"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -109,6 +119,7 @@ ActiveRecord::Schema.define(:version => 20111021154834) do
     t.string   "profile_photo_content_type"
     t.integer  "profile_photo_file_size"
     t.datetime "profile_photo_updated_at"
+    t.integer  "background_id"
   end
 
   add_index "shops", ["cached_slug"], :name => "index_shops_on_cached_slug", :unique => true

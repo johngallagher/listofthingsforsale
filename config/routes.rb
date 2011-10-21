@@ -1,4 +1,6 @@
 Things3::Application.routes.draw do
+
+  resources :backgrounds
   
   resources :subscriptions
   get 'paypal/checkout', to: 'subscriptions#paypal_checkout'
