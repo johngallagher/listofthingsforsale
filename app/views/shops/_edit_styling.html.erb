@@ -8,8 +8,8 @@
     <% end %>
 		</li>
 	  <% Background.all.each do |this_background| %>
-	    <li onclick="updateBackgroundForm()" class="background-select<%= if @shop.background_id == this_background.id then " currentbg" end %>">
-	      <%= f.radio_button :background_id, this_background.id, :style => "display:none;" %>
+	    <li class="background-select<%= if @shop.background_id == this_background.id then " currentbg" end %>">
+	      <%= f.radio_button :background_id, this_background.id, :style => "display:none;", :onchange => "updateBackgroundForm()" %>
         <%= label_tag "shop_background_id_" + this_background.id.to_s do %>
           <%= image_tag (this_background.background_image.url(:profile)) %>
         <% end %>
