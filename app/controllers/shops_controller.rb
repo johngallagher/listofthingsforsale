@@ -25,8 +25,8 @@ class ShopsController < ApplicationController
       rescue
       end
     end
-
-    if @shop.nil? || ((@shop.user.nil? || @shop.user != current_user) and @shop.status == ShopStatus::Offline)
+    current_user_editing_own_shop = ((session[:shop_id].to_i == @shop.id) or (user_signed_in? and @shop.user == current_user))
+    if @shop.nil? || (!current_user_editing_own_shop and @shop.status == ShopStatus::Offline)
       respond_to do |format|
         format.html { render 'show_invalid_shop', :object => @shop_ref and return }
       end

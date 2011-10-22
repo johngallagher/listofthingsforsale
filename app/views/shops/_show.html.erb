@@ -26,8 +26,12 @@
 <hr class="space">
 
 <span class="simpleCart_shopPrefix" style="display: none;">sc<%= @shop.id %>_</span>
-<% background = Background.find(@shop.background_id) %>
-<span id="background_url" style="display: none;"><%= background.background_image.url(:profile) %></span>
+<% if !@shop.background_id.nil? %>
+  <% background = Background.find_by_id(@shop.background_id) %>
+  <% if !background.nil? %>
+    <span id="background_url" style="display: none;"><%= background.background_image.url(:profile) %></span>
+  <% end %>
+<% end %>
 
 <div id="left" class="span-17">
   <hr class="space">
