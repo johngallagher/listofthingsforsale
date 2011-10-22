@@ -26,7 +26,7 @@ class ShopsController < ApplicationController
       end
     end
 
-    if @shop.nil? || (@shop.user != current_user and @shop.status == ShopStatus::Offline)
+    if @shop.nil? || ((@shop.user.nil? || @shop.user != current_user) and @shop.status == ShopStatus::Offline)
       respond_to do |format|
         format.html { render 'show_invalid_shop', :object => @shop_ref and return }
       end
@@ -128,7 +128,7 @@ class ShopsController < ApplicationController
     respond_to do |format|
       if @shop.update_attributes(params[:shop])
        # logger.debug("params changed were #{params[:shop].inspect}")
-        new_description = params[:shop][:description]
+        new_description = params[:shop][:description] unless params[:shop].nil?
         old_description = @shop.description
         if !new_description.nil?
           @old_items = Array.new(@shop.items)

@@ -5,7 +5,7 @@
     <ul class="product-list">
       <% in_stock_items.each do |in_stock_item| %>
         <% if in_stock_item %>
-          <%= render :partial => "items/show_public", :locals => { :item => in_stock_item, :item_index => @sorted_items.index(in_stock_item) } %>
+          <%= render :partial => "items/show_public", :locals => { :shop => shop, :item => in_stock_item, :item_index => @sorted_items.index(in_stock_item) } %>
         <% end %>
       <% end %>
     </ul>
@@ -15,7 +15,7 @@
     <ul class="product-list">
       <% sold_out_items.each do |sold_out_item| %>
         <% if sold_out_item %>
-          <%= render :partial => "items/show_public", :locals => { :item => sold_out_item, :item_index => @sorted_items.index(sold_out_item) } %>
+          <%= render :partial => "items/show_public", :locals => { :shop => shop, :item => sold_out_item, :item_index => @sorted_items.index(sold_out_item) } %>
         <% end %>
       <% end %>
     </ul>

@@ -1,13 +1,19 @@
 <div class="column span-24 alpha60 last" id="styling" style="border-bottom:1px solid #ccc; display:none;">
   <% form_for(@shop, :remote => true, :html => { :id => "shop-background-edit-form"}) do |f| -%>
 	<ul id="backgrounds">
-		<li><a onclick="updateBackgroundForm()"><img src="images/none.jpg" width="150" height="150" alt="None"></a></li>
-		
+		<li onclick="updateBackgroundForm()" class="background-select<%= if @shop.background_id.nil? || @shop.background_id == 0 then " currentbg" end %>">
+    <%= f.radio_button :background_id, 0, :style => "display:none;" %>
+    <%= label_tag "shop_background_id_0" do %>
+      <%= image_tag ("none.jpg") %>
+    <% end %>
+		</li>
 	  <% Background.all.each do |this_background| %>
 	    <li onclick="updateBackgroundForm()" class="background-select<%= if @shop.background_id == this_background.id then " currentbg" end %>">
-	      <%= f.radio_button :background_id, this_background.id %>
-	      <%= f.label "background_id_" + this_background.id.to_s, "Background Id" %>
-        <%=  image_tag(this_background.background_image.url(:profile)) %>
+	      <%= f.radio_button :background_id, this_background.id, :style => "display:none;" %>
+        <%= label_tag "shop_background_id_" + this_background.id.to_s do %>
+          <%= image_tag (this_background.background_image.url(:profile)) %>
+        <% end %>
+	      
 	    </li>
 	  <% end %>
 		</ul>

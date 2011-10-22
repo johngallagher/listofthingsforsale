@@ -141,10 +141,24 @@
     function updateBackgroundForm() {
       $("form#shop-background-edit-form").submit();
     }
+    
+    function updateBackgroundSelected() {
+      // Update background to that selected
+      url = $(".currentbg img").attr('src');
+      $("body").attr('style', 'background: url(\'' + url.replace(/'/g, "\\'") + '\') top left repeat;');
+    }
   </script>
   
   <script type="text/javascript">
   $(document).ready(function () {
+    updateBackgroundSelected();
+    $("input#item_photo_1.file").filestyle({ 
+         image: "images/click-to-upload2.jpg",
+         imageheight : 135,
+         imagewidth : 180,
+         width : 0
+     });
+    
     $("input:radio[name='user[subscription_attributes][plan_id]']").change(function() {
       updateChangePlanForm();
     });
@@ -171,6 +185,17 @@
         // Show errors
       }
     });
+    $("input:radio[name='shop[background_id]']").change(function(evt, data, status, xhr) {
+      // Update background selected
+      $(".background-select").removeClass("currentbg");
+      $(".background-select input:radio:checked").parent().addClass("currentbg");
+      updateBackgroundSelected();
+    });
+    $("input#item_photo_1").change(function () { 
+      form_id_changed = this.parentNode.parentNode.id;
+      $("form#" + form_id_changed).submit();
+    });
+    
     
   });
   </script>  
