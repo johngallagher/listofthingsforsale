@@ -26,6 +26,8 @@
 <hr class="space">
 
 <span class="simpleCart_shopPrefix" style="display: none;">sc<%= @shop.id %>_</span>
+<% background = Background.find(@shop.background_id) %>
+<span id="background_url" style="display: none;"><%= background.background_image.url(:profile) %></span>
 
 <div id="left" class="span-17">
   <hr class="space">
@@ -207,8 +209,19 @@
     hideStyling();
   };
   
+  function updateBackgroundSelected() {
+    // Update background to that selected
+    if ($(".currentbg img").length > 0) {
+      url = $(".currentbg img").attr('src');
+    } else {
+      url = $("span#background_url").text();
+    };
+    $("body").attr('style', 'background: url(\'' + url.replace(/'/g, "\\'") + '\') top left repeat;');
+  }
   
   $(document).ready(function () {
+    updateBackgroundSelected();
+    
     $('#editlist').click(function () {
       showList();
     });
