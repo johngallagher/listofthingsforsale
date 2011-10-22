@@ -6,7 +6,7 @@ class Shop < ActiveRecord::Base
   has_many :items
   belongs_to :user
   has_many :orders
-  has_one :background
+  has_one :background, :class_name => "Background", :foreign_key => "id"
 
   after_initialize :init
 

@@ -120,9 +120,10 @@ class ShopsController < ApplicationController
     updated_list = (!params[:shop].nil? and !params[:shop][:description].nil?)
     updated_config = (!params[:shop].nil? and !params[:shop][:payment_type].nil?)
     updated_url = (!params[:shop].nil? and !params[:shop][:url].nil?)
-    updated_images = (!params[:shop].nil? and !params[:item].nil?)
-    updated_about_me = (!params[:shop].nil? and !params[:about_me].nil?)
-    updated_styling = (!params[:shop].nil? and !params[:styling].nil?)
+    updated_about_me = (!params[:shop].nil? and !params[:shop][:about_me].nil?)
+    updated_background = (!params[:shop].nil? and !params[:shop][:background_id].nil?)
+    
+    hide_all_panes_after_update = !updated_background
     
     respond_to do |format|
       if @shop.update_attributes(params[:shop])
@@ -139,13 +140,9 @@ class ShopsController < ApplicationController
 
         end
         @shop.save
-        # logger.debug "format is: #{format.inspect}"
-        
-        # logger.debug("After update Shop is #{@shop.inspect} with items #{@shop.items.inspect}")
 
-        # format.html { redirect_to(@shop, :notice => 'Shop was successfully created.') }
         format.html { redirect_to "/#{@shop.url}" and return }
-        format.js { render :action => "update", :locals => {:shop => @shop }}
+        format.js { render :action => "update", :locals => {:shop => @shop, :hide_all => hide_all_panes_after_update }}
         
       else
         format.html { render :action => "edit" and return }

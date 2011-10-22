@@ -5,7 +5,9 @@
 		
 	  <% Background.all.each do |this_background| %>
 	    <li onclick="updateBackgroundForm()" class="background-select<%= if @shop.background_id == this_background.id then " currentbg" end %>">
-        <%= image_tag(this_background.background_image.url(:profile)) %>
+	      <%= f.radio_button :background_id, this_background.id %>
+	      <%= f.label "background_id_" + this_background.id.to_s, "Background Id" %>
+        <%=  image_tag(this_background.background_image.url(:profile)) %>
 	    </li>
 	  <% end %>
 		</ul>
