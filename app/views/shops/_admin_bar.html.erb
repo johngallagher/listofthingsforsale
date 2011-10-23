@@ -32,13 +32,13 @@
       $("fieldset#aftersignup").show();
     }
     function setChangePlanSubmitEnabled (enabled) {
-      $("form#change-plan input#user_submit").attr("disabled", !enabled);
+      $("div#user_submit").attr("disabled", !enabled);
     }
     function setChangePlanSubmitVisible (visible) {
       if (visible) {
-        $("form#change-plan input#user_submit").show();
+        $("div#user_submit").show();
       } else {
-        $("form#change-plan input#user_submit").hide();
+        $("div#user_submit").hide();
       };
     }
     function setPaypalCheckoutVisible (visible) {
