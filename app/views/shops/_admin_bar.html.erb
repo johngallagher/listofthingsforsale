@@ -5,7 +5,7 @@
     Edit your: <a id="editlist" onclick="javascript:;" name="editlist">List</a>, <a id="editsidebar" onclick="javascript:;" name="editsidebar">Sidebar</a>, <a id="editstyling" onclick="javascript:;" name="editstyling">Background</a>, <a id="editconfig" onclick="javascript:;" name="editconfig">Config</a>, <a id="editaccount" onclick="javascript:;" name="editaccount">Account</a>
     
     <div style="float: right; text-align: right;">
-      Your list is <%= if @shop.status == ShopStatus::Online then  "online" else "offline" end %>
+      Your list is <%= if @shop.status == ShopStatus::Online then  "online" else "offline" end %>.
       <% if @shop.status == ShopStatus::Online %>
         <%= link_to "Unpublish It", {:action => "unpublish"}, :remote => true, :id => "unpublish-action" %></div>
       <% else %>
