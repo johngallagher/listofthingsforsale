@@ -146,6 +146,7 @@
   
   <script type="text/javascript">
   $(document).ready(function () {
+    $("table.pricing").attr('style', 'background:transparent;'); // For weird Chrome bug where table rows don't alternate correctly.
     $('input[type="file"]').attr('size', '14'); // For Firefox input file field widths
     $("input:radio[name='user[subscription_attributes][plan_id]']").change(function() {
       updateChangePlanForm();
