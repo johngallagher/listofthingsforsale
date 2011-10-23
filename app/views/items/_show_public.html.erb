@@ -1,36 +1,21 @@
-<style type="text/css" media="screen">
-
-#item_photo_1 {
-position: relative;
-height: 135px;
-width: 180px;
-display: inline;
-cursor: pointer;
-opacity: 0;
-margin-left: 0px;
-}
-
-</style>
 <li class="simpleCart_shelfItem">
   <span class="item_shopid" style="display:none;"><%= @shop.id %></span>
   <span class="item_itemid" style="display:none;"><%= item.id %></span>
+
+  <% if shop and ((session[:shop_id].to_i == shop.id) or (user_signed_in? and shop.user == current_user)) %>
+  <% form_for item, :remote => true, :html => { :multipart => true, :id => "item_edit_" + item.id.to_s } do |f| -%>
+    <%= f.file_field :photo_1, :class => "file", :style => "width: 180px;" %>
+  <% end -%>
+  <% end %>
     
   <% if item.photo_1.file? %>
   <div style="width: 180px; height: 135px; padding: 0; margin: 0 0 14px 0; text-align: center;">
     <%= link_to(image_tag(item.photo_1.url(:thumb)), item.photo_1.url(:medium), :class => "item_image") %>
   </div>
   <% else %>
-  <% if shop and ((session[:shop_id].to_i == shop.id) or (user_signed_in? and shop.user == current_user)) %>
-  <% form_for item, :remote => true, :html => { :multipart => true, :id => "item_edit_" + item.id.to_s } do |f| -%>
-    <%= f.file_field :photo_1, :class => "file" %>
-    <!-- <div class="upload-image">Image Coming Soon</div> -->
-    <!-- <img src="/images/no-image-small.jpg" alt=""> -->
+    <div class="no-image">Image Coming Soon</div>
+  <% end %>
   
-  <% end -%>
-  <% else %>
-  <div class="no-image">Image Coming Soon</div>
-  <% end %>
-  <% end %>
 
   <a class="item_name itemtitle" href="javascript:;" id="item<%= item_index + 1 %>" name="item<%= item_index + 1 %>"><%= item.name %></a>
   <div class="item_description" id="item-desc<%= item_index + 1 %>" style="display: none;"><%= item.description_text %><br />

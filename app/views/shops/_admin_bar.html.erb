@@ -146,13 +146,7 @@
   
   <script type="text/javascript">
   $(document).ready(function () {
-    $("input#item_photo_1.file").filestyle({ 
-         image: "images/click-to-upload2.jpg",
-         imageheight : 135,
-         imagewidth : 180,
-         width : 0
-     });
-    
+    $('input[type="file"]').attr('size', '14'); // For Firefox input file field widths
     $("input:radio[name='user[subscription_attributes][plan_id]']").change(function() {
       updateChangePlanForm();
     });
@@ -186,7 +180,8 @@
       updateBackgroundSelected();
     });
     $("input#item_photo_1").change(function () { 
-      form_id_changed = this.parentNode.parentNode.id;
+      console.log("HOO HOO");
+      form_id_changed = this.parentNode.id;
       $("form#" + form_id_changed).submit();
     });
     
