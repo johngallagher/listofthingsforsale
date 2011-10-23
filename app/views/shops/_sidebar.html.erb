@@ -1,27 +1,56 @@
-<div id="sidebarview">
-    <% if @shop.profile_photo.file? %>
-    <div class="span-6 last" style="margin:0 0 5px 0;">
-      <%= image_tag(@shop.profile_photo.url(:profile)) %>
-    </div>
-    <% end %>
-  
-  <div id="aboutmeview"><h1 class="alt" style="float: left; padding:0;margin: 3px 5px 0 0; font-size: 2.7em"><%= @shop.about_me.first %></h1><span><%= @shop.about_me[1..-1] %></span></div>
-  <hr style="margin-top:5px;">
+<% if @shop.profile_photo.file? %>
+<div class="span-7 last" style="padding:0; margin:0; height: <%=@shop.profile_photo_height.to_s%>px;">
+    <div style="width: 270px; text-align:center;"><%= image_tag(@shop.profile_photo.url(:profile)) %></div>
 </div>
+<% else %>
+<div class="span-7 last" style="padding:0; margin:0; height: 35px;">
+</div>
+<% end %>
+<div class="span-6 last alpha60" style="padding: 20px; margin-top: 0px;">
+  <div id="sidebarview">  <div class="span-6 last" style="margin:0;padding:0;">
+      <p style="text-align: center;margin-bottom:5px;" class="sidey">
+        <a href="http://listofthingsforsale.com"><img src="images/listy.gif" alt="list of things for sale" /></a><br />
+      </p>
 
-<div id="sidebarform" style="display:none;">
+      <div id="aboutmeview"><h1 class="alt" style="float: left; padding:0;margin: 3px 5px 0 0; font-size: 2.7em"><%= @shop.about_me.first %></h1><span><%= @shop.about_me[1..-1] %></span></div>
+      <hr style="margin-top:5px;">
+    </div>
+  </div>
+
+  <div id="sidebarform" style="display: none;">  
   <%= form_for @shop, :remote => true, :html => { :multipart => true, :id => "shop_edit_about_me" } do |f| %>
-    <%= f.label :profile_photo, :style => "font-weight: normal;" %>
-    <%= f.file_field :profile_photo %>
-    <% if @shop.profile_photo.file? %>
-      <div class="span-6 last" style="margin:0; padding:0;">
-        <%= image_tag(@shop.profile_photo.url(:profile), :style => "margin-bottom:10px;") %><br/>
+      <span>Profile Picture: </span><%= f.file_field :profile_photo, :style => "margin-bottom: 15px; width: 130px;" %>
+
+      <div class="span-6 last" style="margin:0;padding:0;">
+        <p style="text-align: center;margin-bottom:5px;" class="sidey">
+        <a href="http://listofthingsforsale.com"><img src="images/listy.gif" alt="list of things for sale" /></a><br />
+        </p>
+
+        <%= f.text_area :about_me, :rows => "5", :cols => "20", :style => "width: 200px; height: 140px;" %><br />
+        <%= f.submit "Save", :disable_with => 'Saving...' %>
+
+        <hr style="margin-top:5px;">
       </div>
     <% end %>
-    <%= f.text_area :about_me, :rows => "5", :cols => "20", :style => "width: 200px; height: 140px;" %><br />
-    <%= f.submit "Save", :disable_with => 'Saving...' %>
-  <% end %>
-<hr>
+  </div>
+  <div id="cart">
+    <p style="margin: 10px 0 5px;">
+        You have <span class="simpleCart_quantity"></span>&nbsp;items in your Cart:</p>
+    <div class="simpleCart_items">
+    </div>
+    <hr style="margin-bottom: 10px;" />
+    <!--use a class of simpleCart_empty to empty the cart and simpleCart_checkout to checkout -->
+    <p>
+        Total <span class="simpleCart_total"></span>
+        <br />
+        <a href="javascript:;" class="simpleCart_empty">Empty Cart</a> &nbsp;|&nbsp; <a href="javascript:;" class="simpleCart_checkout">Checkout</a></p>
+  </div>  
+</div>
+
 </div>
 
 
+
+
+</div>
+</div>

@@ -24,6 +24,7 @@
 <% end %>
 
 <hr class="space">
+<hr class="space">
 
 <span class="simpleCart_shopPrefix" style="display: none;">sc<%= @shop.id %>_</span>
 <% if !@shop.background_id.nil? %>
@@ -34,35 +35,15 @@
 <% end %>
 
 <div id="left" class="span-17">
-  <hr class="space">
   <% if (session[:shop_id].to_i == @shop.id) or (user_signed_in? and @shop.user == current_user) %>
-    <h1 style="margin:20px 0 15px 0;text-align:center;">Your list of things for sale:</h1>
+    <h1 style="text-align:center;">Your list of things for sale:</h1>
   <% else %>
-    <h1 style="margin:20px 0 15px 0;text-align:center;"><%= @shop.url %>&#x27;<% if @shop.url[-1,1] != "s" %>s<% end %> list of things for sale:</h1>
+    <h1 style="text-align:center;"><%= @shop.url %>&#x27;<% if @shop.url[-1,1] != "s" %>s<% end %> list of things for sale:</h1>
   <% end %>
   <%= render :partial => 'list', :locals => {:shop => @shop} %>
 </div>
 
-<div class="span-6 last alpha60" style="padding: 20px; margin-top: 55px;">
-  <div class="span-6 last">
-  <p style="text-align: center;margin-bottom:5px;" class="sidey">
-      <a href="http://listofthingsforsale.com"><img src="images/listy.gif" alt="list of things for sale" /></a><br />
-  </p>
-
   <%= render :partial => 'sidebar' %>
-</div>
-<div id="cart">
-  <p style="margin: 10px 0 5px;">
-      You have <span class="simpleCart_quantity"></span>&nbsp;items in your Cart:</p>
-  <div class="simpleCart_items">
-  </div>
-  <hr style="margin-bottom: 10px;" />
-  <!--use a class of simpleCart_empty to empty the cart and simpleCart_checkout to checkout -->
-  <p>
-      Total <span class="simpleCart_total"></span>
-      <br />
-      <a href="javascript:;" class="simpleCart_empty">Empty Cart</a> &nbsp;|&nbsp; <a href="javascript:;" class="simpleCart_checkout">Checkout</a></p>
-</div>
 
   </div>
   <hr class="space">
