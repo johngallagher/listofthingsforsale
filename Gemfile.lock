@@ -213,6 +213,7 @@ GEM
       json_pure
       rubyzip
     sqlite3 (1.3.4)
+    statsmix (0.1.10)
     systemu (2.2.0)
     term-ansicolor (1.0.6)
     test-unit (2.4.0)
@@ -256,4 +257,5 @@ DEPENDENCIES
   rspec-rails
   ruby-prof
   sqlite3
+  statsmix
   test-unit
