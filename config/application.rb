@@ -42,5 +42,9 @@ module Things3
     
     config.autoload_paths += %W( #{config.root}/test/mocks/#{Rails.env} )
     config.autoload_paths += %W( #{ config.root }/lib/middleware )    
+    
+    if Rails.env == "production"
+      config.middleware.use("Rack::GoogleAnalytics", :web_property_id => "UA-26531520-1")
+    end
   end
 end
