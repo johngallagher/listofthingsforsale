@@ -1,9 +1,7 @@
 <hr class="space">
 <hr class="space">
-<hr class="space">
-<hr class="space">
 
-        <div id="left" class="span-16">
+        <div id="left" class="span-17">
             <div id="listform"> 
               <%= form_for(@shop, :html => { :id => "new_list" }) do |f| %>
                 <% if @shop.errors.any? %>
@@ -20,9 +18,9 @@
                 
                 <h1 style="margin-top:6px;text-align:center;">Type a list of things for sale:</h1>
                 <% if @shop.description %>
-                                <%= f.text_area :description, :rows => "5", :cols => "20", :style => "width: 600px; height: 250px;font-size: 0.9em;font-family: Courier;" %>
+                                <%= f.text_area :description, :rows => "5", :cols => "20", :style => "width: 658px; height: 250px;font-size: 0.9em;font-family: Courier;" %>
                 <% else %>
-                                <%= f.text_area :description, :rows => "5", :cols => "20", :style => "width: 600px; height: 250px; font-size: 0.9em;font-family: Courier;", :value => "For example:
+                                <%= f.text_area :description, :rows => "5", :cols => "20", :style => "width: 658px; height: 250px; font-size: 0.9em;font-family: Courier;", :value => "For example:
 
 iPhone 3GS £70
 Fender Guitar £280
@@ -43,25 +41,18 @@ Pocket Watch £5 Excellent condition" %>
         </div>
         <div class="span-7 last">
   
-            <p style="margin-top:60px;"> <!--text-align: center;-->
+            <p style="margin-top:60px; text-align: center;"> <!--text-align: center;-->
                 <!--listofthingsforsale.com/yourname<br />-->
                 <img src="/images/list240.gif" alt="list of things for sale" /><br/>
                 <span id="tagline" class="highlight">
-                    <!--the minimal way to sell online-->
-                    <b>&larr;</b> no fuss, just sell some stuff.</span></p>
-            <div id="editdescription">
-                <!-- Use the Format:-->
+            <div id="editdescription" style=" text-align: center;">
                 Type a list into the box like this:<br />
                 <br />
-                Title&nbsp; £Price&nbsp; Description<br />
+                <span id="tagline" class="highlight"><b>&larr;</b> Title&nbsp; $Price&nbsp; Description</span><br />
                 <br />
-                1. Currency is in £ ($ coming soon)<br />
-                2. Description is optional
+                If you don't want to sell anything,
                 <br />
-                <br />
-                If you don't want to sell anything just now,
-                <br />
-                <a href="/matthias">buy something from our list instead!</a>
+                <a href="/matthias">buy something from our list!</a>
                 <br />
                 <br />
                 <span style="font-size: 85%;">Coming Soon:<br />
