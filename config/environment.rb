@@ -6,9 +6,6 @@ Things3::Application.initialize!
 
 Things3::Application.configure do
   config.action_mailer.delivery_method = :smtp
-end
-
-Rails::Initializer.run do |config|
   config.action_controller.ip_spoofing_check = false
 end
 
