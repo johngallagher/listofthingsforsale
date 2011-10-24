@@ -17,6 +17,11 @@
 
     <script type="text/javascript" src="/javascripts/jquery.easing.1.3.js"></script>
     <script type="text/javascript" src="/javascripts/jquery.coda-slider-2.0.js"></script>
+<<<<<<< HEAD
+    <!-- <script type="text/javascript" src="/javascripts/jquery.filestyle.js"></script>
+    <script type="text/javascript" src="/javascripts/upclick.js"></script> -->
+=======
+>>>>>>> MakeClickToUploadImageWorkOnAllBrowsers
   <%= yield :dynamic_javascripts %>
   </head>
   <body style="background-color:#fff;">

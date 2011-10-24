@@ -146,7 +146,11 @@
   
   <script type="text/javascript">
   $(document).ready(function () {
+<<<<<<< HEAD
     $("table.pricing").attr('style', 'background:transparent;'); // For weird Chrome bug where table rows don't alternate correctly.
+    $('input[type="file"]').attr('size', '14'); // For Firefox input file field widths
+=======
+>>>>>>> MakeClickToUploadImageWorkOnAllBrowsers
     $("input:radio[name='user[subscription_attributes][plan_id]']").change(function() {
       updateChangePlanForm();
     });
@@ -180,8 +184,13 @@
       updateBackgroundSelected();
     });
     $("input#item_photo_1").change(function () { 
+<<<<<<< HEAD
+      console.log("HOO HOO");
+      form_id_changed = this.parentNode.id;
+=======
       form_id_changed = this.parentNode.parentNode.id;
       console.log("Form id to be submitted: " + form_id_changed);
+>>>>>>> MakeClickToUploadImageWorkOnAllBrowsers
       $("form#" + form_id_changed).submit();
     });
     
