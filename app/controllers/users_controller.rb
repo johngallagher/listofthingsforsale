@@ -23,7 +23,7 @@ class UsersController < ApplicationController
     end
     
     if @user.save
-      render :json => {:success => true, :plan_name => "Personal"}
+      render :json => {:success => true, :plan_name => PlanNames::Free}
     else
       render :json => {:success => false, :errors => @user.errors}
     end

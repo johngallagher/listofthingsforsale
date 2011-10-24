@@ -69,7 +69,7 @@
     }
     
     function updateChangePlanForm () {
-      on_business_plan = ($("span#plan-name").text() == "Business");
+      on_business_plan = ($("span#plan-name").text() == "Early Adopter");
       personal_plan_selected = $("input#user_subscription_attributes_plan_id_").is(':checked')
       business_plan_selected = $("input#user_subscription_attributes_plan_id_2").is(':checked')
       updateOtherAccountDetailsVisibility();

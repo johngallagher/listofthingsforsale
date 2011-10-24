@@ -48,7 +48,7 @@
         
         <%= f.fields_for :subscription do |subscription| -%>
           <td><%= subscription.radio_button :plan_id, '2' %>
-          <%= subscription.label :plan_id_2, 'I want the Pro Account' %></td>
+          <%= subscription.label :plan_id_2, 'I want the Early Adopter Account' %></td>
           <td class="last"><%= subscription.radio_button :plan_id, '' %>
           <%= subscription.label :plan_id_, 'I want the Free Basic Account' %>
           <%= subscription.hidden_field :paypal_customer_token %>

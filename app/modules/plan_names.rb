@@ -1,4 +1,4 @@
 module PlanNames
-  Free = "Personal"
-  Paid = "Business"
+  Free = "Free Basic"
+  Paid = "Early Adopter"
 end
