@@ -51,6 +51,7 @@ class ShopsController < ApplicationController
         @shop = current_user.shop
         respond_to do |format|
           format.html {  redirect_to :action => 'show', :id => @shop.id and return } # show.html.erb
+          
         end
       end
     end

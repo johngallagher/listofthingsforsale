@@ -5,7 +5,7 @@ class PaypalParamsGenerator
     raise "Order cannot be nil" if args[:order].nil?
     @order = args[:order]
     @payment_status = args[:payment_status].nil? ? @order.status : args[:payment_status]
-    @currency = args[:currency].nil? ? "GBP" : args[:currency]
+    @currency = args[:currency].nil? ? "USD" : args[:currency]
   end
   
   def generate_params
