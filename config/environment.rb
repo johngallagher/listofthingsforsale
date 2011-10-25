@@ -6,7 +6,6 @@ Things3::Application.initialize!
 
 Things3::Application.configure do
   config.action_mailer.delivery_method = :smtp
-  config.action_controller.ip_spoofing_check = false
 end
 
 # Ensure the gateway is in test mode
