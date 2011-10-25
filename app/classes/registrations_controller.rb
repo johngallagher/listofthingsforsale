@@ -10,7 +10,11 @@ class RegistrationsController < Devise::RegistrationsController
       else
         set_flash_message :notice, :inactive_signed_up, :reason => inactive_reason(resource) if is_navigational_format?
         expire_session_data_after_sign_in!
-        return render :json => {:success => true, :redirect => after_inactive_sign_up_path_for(resource)}
+        if request.referrer.include?("/users/")
+          respond_with resource, :location => after_inactive_sign_up_path_for(resource)
+        else
+          return render :json => {:success => true, :redirect => after_inactive_sign_up_path_for(resource)}
+        end
       end
     else
       clean_up_passwords(resource)
