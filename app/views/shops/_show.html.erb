@@ -237,16 +237,16 @@
 
 <script type="text/javascript">
 $(document).ready(function () {
-          $("#item1").click(function () {
-              $("#item-desc1").fadeToggle('slow');
-          }); 
-          $("#item2").click(function () { 
-            $("#item-desc2").fadeToggle('slow'); 
-          }); 
-          $("#item3").click(function () { 
-            $("#item-desc3").fadeToggle('slow'); 
-          }); $("#item4").click(function () {
-  $("#item-desc4").fadeToggle('slow');
-}); $("#item5").click(function () { $("#item-desc5").fadeToggle('slow'); });
-      });
+  $('a.[id^="item"]').click(function () {
+    if ($(this).siblings(".item_description").is(':visible')) {
+      $(this).siblings(".item_description").fadeToggle('slow');
+      $("a.itemtitle").css("height", "18px");
+      $(this).css("height", "18px");
+    } else {
+      $(this).css("height", "auto");
+      $("a.itemtitle").css("height", "18px");
+      $(this).siblings(".item_description").fadeToggle('slow');
+    };
+  }); 
+});
 </script>
