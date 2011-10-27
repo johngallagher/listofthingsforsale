@@ -32,7 +32,7 @@ module Things3
     # config.i18n.default_locale = :de
 
     # JavaScript files you want as :defaults (application.js is always included).
-    config.action_view.javascript_expansions[:defaults] = %w(jquery.min jquery_ujs)
+    config.action_view.javascript_expansions[:defaults] = %w(jquery_ujs)
 
     # Configure the default encoding used in templates for Ruby 1.9.
     config.encoding = "utf-8"
@@ -42,5 +42,9 @@ module Things3
     
     config.autoload_paths += %W( #{config.root}/test/mocks/#{Rails.env} )
     config.autoload_paths += %W( #{ config.root }/lib/middleware )    
+    
+    if Rails.env == "production"
+      config.middleware.use("Rack::GoogleAnalytics", :web_property_id => "UA-26531520-1")
+    end
   end
 end

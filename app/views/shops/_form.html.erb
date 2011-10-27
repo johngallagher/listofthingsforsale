@@ -1,6 +1,6 @@
 <hr class="space">
 
-        <div id="left" class="span-16">
+        <div id="left" class="span-17">
             <div id="listform"> 
               <%= form_for(@shop, :html => { :id => "new_list" }) do |f| %>
                 <% if @shop.errors.any? %>
@@ -14,19 +14,20 @@
                     </ul>
                   </div>
                 <% end %>
-                <h1 style="margin:20px 0 15px 0;text-align:center;">Type a list of things for sale:</h1>
+                
+                <h1 style="margin-top:6px;text-align:center;">Type a list of things for sale:</h1>
                 <% if @shop.description %>
-                                <%= f.text_area :description, :rows => "5", :cols => "20", :style => "width: 600px; height: 250px;font-size: 0.9em;font-family: Courier;" %>
+                                <%= f.text_area :description, :rows => "5", :cols => "20", :style => "width: 650px; height: 250px;font-size: 0.9em;font-family: Courier;" %>
                 <% else %>
-                                <%= f.text_area :description, :rows => "5", :cols => "20", :style => "width: 600px; height: 250px; font-size: 0.9em;font-family: Courier;", :value => "For example:
+                                <%= f.text_area :description, :rows => "5", :cols => "20", :style => "width: 650px; height: 250px; font-size: 0.9em;font-family: Courier;", :value => "For example:
 
-iPhone 3GS £70
-Fender Guitar £280
-Pocket Watch £5 Excellent condition" %>
+iPhone 3GS $70
+Fender Guitar $280
+Pocket Watch $5 Excellent condition" %>
                   <% end %>
                 
                 
-                <div class="column span-5 prepend-6 append-5">
+                  <div class="column span-5 prepend-6 append-5" style="padding:0 270px;">
                     <a href="javascript:;" id="listsubmit" type="submit" class="button positive" onClick="$('form#new_list').submit()">Now Click Here!
                         <img src="/css/plugins/buttons/icons/arrow_right.png" alt="" />
                     </a>
@@ -37,33 +38,24 @@ Pocket Watch £5 Excellent condition" %>
                
             </div>
         </div>
-        <div class="span-7 last">
-  
-            <p style="margin-top:70px;"> <!--text-align: center;-->
-                <!--listofthingsforsale.com/yourname<br />-->
-                <img src="/images/list240.gif" alt="list of things for sale" /><br/>
-                <span id="tagline" class="highlight">
-                    <!--the minimal way to sell online-->
-                    <b>&larr;</b> no fuss, just sell some stuff.</span></p>
-            <div id="editdescription">
-                <!-- Use the Format:-->
-                Type a list into the box like this:<br />
-                <br />
-                Title&nbsp; £Price&nbsp; Description<br />
-                <br />
-                1. Currency is in £ ($ coming soon)<br />
-                2. Description is optional
-                <br />
-                <br />
-                If you don't want to sell anything just now,
-                <br />
-                <a href="/matthias">buy something from our list instead!</a>
-                <br />
-                <br />
-                <span style="font-size: 85%;">Coming Soon:<br />
-                    1. +quantity for multiple item sales, ie +5<br />
-                    2. #tags for categorising, ie #electronics</span>
-            </div>
+        <div class="span-6 last" style="width:240px; padding:0px 15px">
+          <p style="margin-top:60px; text-align: center;">
+            <img src="/images/list240.gif" alt="list of things for sale"><br>
+          </p>
+          <div id="editdescription">
+            Type a list of things you want to sell into the box with each line like this:<br>
+            <p style="margin-top:15px;text-align: center;">
+              <span id="tagline" class="highlight"><b>←</b> Title &nbsp; $Price &nbsp; Description</span>
+            </p>
+            <p>
+              If you don't want to sell anything yet,<br>
+              <a href="http://listofthingsforsale.com/matthias">buy something from our list instead!</a><br>
+              <br>
+              <span style="font-size: 85%;">Coming Soon:<br>
+              1. +quantity for multiple item sales, ie +5<br>
+              2. #tags for categorising, ie #electronics</span>
+            </p>
+          </div>
         </div>
         <hr class="space" />
         <hr class="space" />

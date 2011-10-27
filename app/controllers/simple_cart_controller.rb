@@ -82,7 +82,7 @@ class SimpleCartController < ApplicationController
     end
     
     final_total = BigDecimal.new(params[:finalTotal])
-    order = Order.create(:shop => this_shop, :total_price => final_total, :status => Status::Pending, :currency => Currency::GBP)
+    order = Order.create(:shop => this_shop, :total_price => final_total, :status => Status::Pending, :currency => Currency::USD)
     order.save!
     
     @items_out_of_stock = []

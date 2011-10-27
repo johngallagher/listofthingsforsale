@@ -1,4 +1,12 @@
 module ApplicationHelper
+  def setup_user(user)
+    returning(user) do |u|
+      unless u.subscription.present?
+        u.build_subscription
+      end
+    end
+  end
+    
   def current_user_shop_url
    # logger.debug "Current url is #{@current_user_shop_url}"
     if session[:shop_id]

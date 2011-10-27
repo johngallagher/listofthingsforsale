@@ -1,0 +1,37 @@
+<div class="column span-23 last alpha60" id="config" style="border-bottom:1px solid #aaa; display:none;padding:20px;">
+  <% form_for shop, :remote => true, :html => { :id => "shop_configure_cart" } do |f| %>
+    <div class="columnn span-11">
+        <fieldset style="height: 150px;margin-top:5px;">
+          <legend style="text-align: center;font-weight:normal;">Payment</legend>
+          <%= f.radio_button :payment_type, 'paypal', :checked => true %> 
+          <%= f.label :payment_type, 'Receive payments via Paypal: ', :value => 'paypal', :style => "font-weight: normal;" %>
+          <%= f.text_field :paypal_email, :size => "25", :placeholder => "Paypal email address" %><br/>
+          <%= f.radio_button :payment_type, 'email' %> 
+          <%= f.label :payment_type, 'Just email me', :value => 'email', :style => "font-weight: normal;" %>
+        </fieldset>
+    </div>
+    <div class="columnn span-11 last">
+         <fieldset style="height: 150px;margin-top:5px;">
+           <legend style="text-align: center;font-weight:normal;">Fulfilling Orders</legend>
+          <%= f.radio_button :delivery_method, 'post', :checked => true %> 
+          <%= f.label :delivery_method, 'Prices include', :value => 'post', :style => "font-weight: normal;" %> <select style="margin-bottom: 0px;">
+             <option>
+               USA
+             </option>
+             <option>
+               UK
+             </option>
+             <option>
+               Worldwide
+             </option>
+           </select> postage<br>
+          <%= f.radio_button :delivery_method, 'collection' %>
+          <%= f.label :delivery_method, 'Collection / Other', :value => 'collection', :style => "font-weight: normal;" %>
+          <%= f.text_area :collection_description, :placeholder => "Example: I'm at Sloans Market every Saturday.", :rows => "5", :style => "height: 70px;" %>
+        </fieldset>
+    </div>
+  <% end %>
+  <div class="column span-6 prepend-9">
+    <a class="button positive" style=" text-align: center; margin-top: 0px" onClick="$('form#shop_configure_cart').submit()"><img src="css/plugins/buttons/icons/tick.png" alt=""/>Save Configuration</a>
+  </div>
+</div>

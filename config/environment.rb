@@ -9,5 +9,5 @@ Things3::Application.configure do
 end
 
 # Ensure the gateway is in test mode
- ActiveMerchant::Billing::Base.gateway_mode = :test
- ActiveMerchant::Billing::Base.integration_mode = :test
+ ActiveMerchant::Billing::Base.gateway_mode = :production
+ ActiveMerchant::Billing::Base.integration_mode = :production

@@ -1,0 +1,19 @@
+
+<%= form_for @background, :html => { :multipart => true } do |f| %>
+  <% if @background.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@background.errors.count, "error") %> prohibited this background from being saved:</h2>
+
+      <ul>
+      <% @background.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <%= f.file_field :background_image %>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

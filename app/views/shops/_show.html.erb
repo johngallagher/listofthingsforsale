@@ -1,9 +1,9 @@
 <% content_for :dynamic_javascripts do %>
   <%= javascript_include_tag "simpleCart.js" %>
   <script type="text/javascript">
-    simpleCart.email = "<% if @shop.paypal_email.nil? %>test@test.com<% else %><%= @shop.paypal_email %><% end %>";
+    simpleCart.email = "<% if @shop.paypal_email.nil? %>testing@listofthingsforsale.com<% else %><%= @shop.paypal_email %><% end %>";
     simpleCart.checkoutTo = PayPal;
-    simpleCart.currency = GBP;
+    simpleCart.currency = USD;
     simpleCart.cartHeaders = ["name", "Total"];
   </script>
   <script type="text/javascript" charset="utf-8">
@@ -16,120 +16,44 @@
       $("#item_photo_1").show();
       $("#upload_image_button").show();
     }
+
+    
   </script>
+
   
 <% end %>
 
 <hr class="space">
+<hr class="space">
 
 <span class="simpleCart_shopPrefix" style="display: none;">sc<%= @shop.id %>_</span>
+<% if !@shop.background_id.nil? %>
+  <% background = Background.find_by_id(@shop.background_id) %>
+  <% if !background.nil? %>
+    <span id="background_url" style="display: none;"><%= background.background_image.url(:profile) %></span>
+  <% end %>
+<% end %>
 
 <div id="left" class="span-17">
-    
-    <hr class="space">
-    <% if (session[:shop_id].to_i == @shop.id) or (user_signed_in? and @shop.user == current_user) %>
-      <h1 style="margin:20px 0 15px 0;text-align:center;">Your list of things for sale:</h1>
-    <% else %>
-      <h1 style="margin:20px 0 15px 0;text-align:center;"><%= @shop.url %>&#x27;<% if @shop.url[-1,1] != "s" %>s<% end %> list of things for sale:</h1>
-    <% end %>
-    
-      <div id="listview">
-        <% @sorted_items = @shop.items.sort{ |a,b| ( a.sort_order and b.sort_order ) ? a.sort_order.to_i <=> b.sort_order.to_i : ( a.sort_order ? -1 : 1 ) } %>
-        <% @in_stock_items = @sorted_items.select{ |i| i.quantity > 0 }.in_groups_of(3) %>
-        <% @in_stock_items.each do |in_stock_items| %>
-          <ul class="product-list">
-            <% in_stock_items.each do |in_stock_item| %>
-              <% if in_stock_item %>
-                <%= render :partial => "items/show_public", :locals => { :item => in_stock_item, :item_index => @sorted_items.index(in_stock_item) } %>
-              <% end %>
-            <% end %>
-          </ul>
-        <% end %>
-        <% @sold_out_items = @sorted_items.select{ |i| i.quantity == 0 }.in_groups_of(3) %>
-        <% @sold_out_items.each do |sold_out_items| %>
-          <ul class="product-list">
-            <% sold_out_items.each do |sold_out_item| %>
-              <% if sold_out_item %>
-                <%= render :partial => "items/show_public", :locals => { :item => sold_out_item, :item_index => @sorted_items.index(sold_out_item) } %>
-              <% end %>
-            <% end %>
-          </ul>
-        <% end %>
-      </div>
+  <% if (session[:shop_id].to_i == @shop.id) or (user_signed_in? and @shop.user == current_user) %>
+    <h1 style="text-align:center;">Your list of things for sale:</h1>
+  <% else %>
+    <h1 style="text-align:center;"><%= @shop.url %>&#x27;<% if @shop.url[-1,1] != "s" %>s<% end %> list of things for sale:</h1>
+  <% end %>
+  <%= render :partial => 'list', :locals => {:shop => @shop} %>
+</div>
 
-      
-      <div id="listform" style="display: none;">
-        <%= form_for @shop, :html => { :id => "shop_edit_items" } do |f| %>
-          <%= f.text_area :description, :id => "list1", :rows => "5", :cols => "20", :style => "width: 640px; height: 250px; margin-top:0; font-size: 0.9em;font-family: Courier;" %>
-          <div class="column span-3 prepend-7 append-8">
-            <a href="javascript:;" id="listsubmit" type="submit" class="button positive" name="listsubmit" onClick="$('form#shop_edit_items').submit()">Save <img src="/css/plugins/buttons/icons/arrow_right.png" alt=""></a>
-          </div>
-        <% end %>
-        <hr class="space">
-        <hr class="space">
-      </div>
-    </div>
-    <div class="span-6 last alpha60" style="padding: 20px; margin-top: 55px;">
-      <div class="span-6 last">
-  
-  
-              <!-- <p class="box success">Success!<br/>
-              <b>3 items were added to your list</b><br/>
-              You're ready to start selling online. Sign up below and upload some images!
-                </p>
+  <%= render :partial => 'sidebar' %>
 
-
-          <p class="box error">Oops, something went wrong:<br/>
-            <b>Bespoke Error Message</b><br/>
-            </p> -->
-
-
-                <p style="text-align: center;" class="sidey">
-
-             <a href="http://listofthingsforsale.com"> <img src="/images/list240.gif" alt="list of things for sale" /></a><br/>
-        <span id="tagline" class="highlight"><a href="http://listofthingsforsale.com">the minimal way to sell online</a></span></p>
-
-
-              <div id="cart">
-                  <p style="margin: 10px 0 5px;">
-                      You have <span class="simpleCart_quantity"></span>&nbsp;items in your Cart:</p>
-                  <div class="simpleCart_items">
-                  </div>
-                  <hr style="margin-bottom: 10px;" />
-                  <!--use a class of simpleCart_empty to empty the cart and simpleCart_checkout to checkout -->
-                  <p>
-                      Total <span class="simpleCart_total"></span>
-                      <br />
-                      <a href="javascript:;" class="simpleCart_empty">Empty Cart</a> &nbsp;|&nbsp; <a href="javascript:;"
-                          class="simpleCart_checkout">Checkout</a></p>
-              </div>
-  
-  
-  
-      </div>
-      <hr class="space">
-    </div>
-    <hr class="space">
-
+  </div>
+  <hr class="space">
+</div>
+<hr class="space">
 </div>
 
 
 <script type="text/javascript">
-  function hideAccount() {
-    if ($("#account").is(":visible")) {
-      $('#account').slideToggle('slow');
-    };
-  };
-  function hideImages() {
-    if ($("#images").is(":visible")) {
-      $('#images').slideToggle('slow');
-    };
-  };
-  function hideConfig() {
-    if ($("#config").is(":visible")) {
-      $('#config').slideToggle('slow');
-    };
-  };
+  // ** Hide **
   function hideList() {
     if ($("#listform").is(":visible")) {
       $('#listform').fadeToggle('fast', function () {
@@ -137,48 +61,179 @@
       });
     };
   };
+  function hideSidebar() {
+    if ($("#sidebarform").is(":visible")) {
+      $('#sidebarform').fadeToggle('fast', function () {
+          $('#sidebarview').fadeToggle('fast');
+      });
+    };
+  };
+  function hideStyling() {
+    if ($("#styling").is(":visible")) {
+      $('#styling').slideToggle('slow');
+    };
+  };
+  function hideConfig() {
+    if ($("#config").is(":visible")) {
+      $('#config').slideToggle('slow');
+    };
+  };
+  function hideAccount() {
+    if ($("#account").is(":visible")) {
+      $('#account').slideToggle('slow');
+    };
+  };
+  function hidePrepublish() {
+    if ($("div#prepublish").is(":visible")) {
+      $('a#prepublish-action').text("Publish It");
+      $('div#prepublish').slideToggle('slow', function() {
+        $('div#prepublish').remove();
+      });
+    };
+  };
+  // ** Unused **
+  function hideImages() {
+    if ($("#images").is(":visible")) {
+      $('#images').slideToggle('slow');
+    };
+  };
+  function hideAll() {
+    hideList();
+    hideConfig();
+    hideAccount();
+    hideImages();
+    hidePrepublish();
+    hideSidebar();
+    hideStyling();
+  };
+  // ** Show **
+  function showList() {
+    editinglist = $("#listform").is(":visible");
+    if (editinglist) {
+      $('#listform').fadeToggle('fast', function () {
+          $('#listview').fadeToggle('fast');
+      });
+    } else {
+      $('#listview').fadeToggle('fast', function () {
+          $('#listform').fadeToggle('fast');
+      });
+    };
+    hideConfig();
+    hideAccount();
+    hideImages();
+    hidePrepublish();
+    hideSidebar();
+    hideStyling();
+  };
+  
+  function showSidebar() {
+    editingsidebar = $("#sidebarform").is(":visible");
+    if (editingsidebar) {
+      $('#sidebarform').fadeToggle('fast', function () {
+          $('#sidebarview').fadeToggle('fast');
+      });
+    } else {
+      $('#sidebarview').fadeToggle('fast', function () {
+          $('#sidebarform').fadeToggle('fast');
+      });
+    };
+    hideList();
+    hideConfig();
+    hideAccount();
+    hideImages();
+    hidePrepublish();
+    hideStyling();
+  };
+  function showStyling() {
+    $('#styling').slideToggle('slow');
+    hideList();
+    hideConfig();
+    hideAccount();
+    hideImages();
+    hidePrepublish();
+    hideSidebar();
+  };
+  
+  function showAccount() {
+      $('#account').slideToggle('slow');
+    hideList();
+    hideConfig();
+    hideImages();
+    hidePrepublish();
+    hideSidebar();
+    hideStyling();
+  };
+  function showImages() {
+    $('#images').slideToggle('slow');
+    hideList();
+    hideAccount();
+    hideConfig();
+    hidePrepublish();
+    hideSidebar();
+    hideStyling();
+  };
+  function showConfig() {
+      $('#config').slideToggle('slow');
+    hideList();
+    hideAccount();
+    hideImages();
+    hidePrepublish();
+    hideSidebar();
+    hideStyling();
+  };
+  
+  function showPrepublish() {
+    if (!$("div#prepublish").is(":visible")) {
+      $('a#prepublish-action').text("Cancel");
+      $('a#prepublish-action').click(hidePrepublish());
+      $('div#prepublish').slideToggle('slow');
+    };
+    hideList();
+    // hideConfig();
+    // hideAccount();
+    hideImages();
+    hideSidebar();
+    hideStyling();
+  };
+  
+  function updateBackgroundSelected() {
+    // Update background to that selected
+    if ($(".currentbg img").length > 0) {
+      url = $(".currentbg img").attr('src');
+    } else {
+      url = $("span#background_url").text();
+    };
+    $("body").attr('style', 'background: url(\'' + url.replace(/'/g, "\\'") + '\') top left repeat;');
+  }
+  
   $(document).ready(function () {
+    updateBackgroundSelected();
+    
     $('#editlist').click(function () {
-      editinglist = $("#listform").is(":visible");
-      if (editinglist) {
-        $('#listform').fadeToggle('fast', function () {
-            $('#listview').fadeToggle('fast');
-        });
-      } else {
-        $('#listview').fadeToggle('fast', function () {
-            $('#listform').fadeToggle('fast');
-        });
-      };
-      hideConfig();
-      hideAccount();
-      hideImages();
+      showList();
+    });
+
+    $('#editsidebar').click(function () {
+      showSidebar();
+    });
+
+    $('#editstyling').click(function () {
+      showStyling();
     });
   
     $('#editconfig').click(function () {
-      $('#config').slideToggle('slow');
-      hideList();
-      hideAccount();
-      hideImages();
-    });
-
-    $('#editimages').click(function () {
-      $('#images').slideToggle('slow');
-      hideList();
-      hideAccount();
-      hideConfig();
+      showConfig()
     });
 
     $('#editaccount').click(function () {
-      $('#account').slideToggle('slow');
-      hideList();
-      hideConfig();
-      hideImages();
+      showAccount();
     });
 
+    $('#editimages').click(function () {
+      showImages();
+    });
   });
-  
 </script>
-
 
 <script type="text/javascript">
 $(document).ready(function () {
@@ -188,8 +243,9 @@ $(document).ready(function () {
           $("#item2").click(function () { 
             $("#item-desc2").fadeToggle('slow'); 
           }); 
-          $("#item3").click(function 
-() { $("#item-desc3").fadeToggle('slow'); }); $("#item4").click(function () {
+          $("#item3").click(function () { 
+            $("#item-desc3").fadeToggle('slow'); 
+          }); $("#item4").click(function () {
   $("#item-desc4").fadeToggle('slow');
 }); $("#item5").click(function () { $("#item-desc5").fadeToggle('slow'); });
       });

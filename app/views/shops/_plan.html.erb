@@ -1,0 +1,83 @@
+<fieldset id="your_plan" class="column span-21" style="border-bottom:1px solid #ccc; padding:20px;">
+  <legend>Your Plan</legend>
+  <div id="your-plan-select">
+    <% @user = setup_user(current_user) %>
+    <% form_for(@user, :remote => true, :html => { :id => "change-plan" }) do |f| %>
+   <table class="pricing">
+       <tr>
+           <th>
+               <h3 style="margin-bottom:5px;">
+                   Early Adopter Account</h3>
+               </th>
+           </th>
+           <th class="last">
+               <h3 style="margin-bottom:5px;">
+                   Free Basic Account</h3>
+           </th>
+       </tr>
+       <tr>
+           <td>
+               $10 / Month, flat rate
+           </td>
+           <td class="last">
+               Free forever
+           </td>
+       </tr>
+        <tr>
+          <td>
+            $0 Listing Fee
+          </td>
+          <td class="last">
+             $0 Listing Fee 
+          </td>
+        </tr>
+
+           <tr>
+           <td>0% Sales Fee</td>
+           <td class="last">
+             0% Sales Fee</td></tr>
+       <tr>
+           <td>
+             100 items
+           </td>
+           <td class="last">
+              5 items
+           </td>
+       </tr>
+       <tr>
+        
+        <%= f.fields_for :subscription do |subscription| -%>
+          <td><%= subscription.radio_button :plan_id, '2' %>
+          <%= subscription.label :plan_id_2, 'I want the Early Adopter Account' %></td>
+          <td class="last"><%= subscription.radio_button :plan_id, '' %>
+          <%= subscription.label :plan_id_, 'I want the Free Basic Account' %>
+          <%= subscription.hidden_field :paypal_customer_token %>
+          <%= subscription.hidden_field :paypal_payment_token %></td>
+
+        <% end -%>
+      </tr>
+
+       <%= f.check_box :plan_selected, :style => "display: none;" %>
+	</table>
+
+  <div class="span-3 prepend-9 append-9 last"  id="paypal_checkout" style="display:none;">
+    <%= link_to image_tag("https://www.paypal.com/en_US/i/btn/btn_xpressCheckout.gif"), paypal_checkout_path() %>
+  </div>
+  
+  <div class="span-3 prepend-9 append-9 last" id="user_submit"><button class="button positive" onclick="$('form#change-plan').submit();">Submit <img src="css/plugins/buttons/icons/arrow_right.png" alt="" /></button></div>
+  <% end %>
+  
+    </div>
+  
+
+  
+  
+  <div id="show-plan">
+    <p>
+      You're on the <span id="plan-name"><%= @user.subscription_plan_name %></span> plan.
+    </p>
+    <a href="javascript:;" onClick="showSelectPlan()">Change</a>
+  </div>
+</fieldset>
+
+

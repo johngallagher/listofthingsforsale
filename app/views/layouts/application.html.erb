@@ -11,19 +11,20 @@
     <link rel="stylesheet" href="/css/plugins/fancy-type/screen.css" type="text/css" media="screen, projection">
     <link rel="stylesheet" href="/css/plugins/buttons/screen.css" type="text/css" media="screen, projection">
     <link rel="stylesheet" href="/css/listy.css" type="text/css" media="screen, projection">
-    <link rel="stylesheet" href="/css/src/forms.css" type="text/css" media="screen, projection"><%= csrf_meta_tag %><!-- start -->
-    <%= javascript_include_tag :defaults %><!-- end -->
+    <link rel="stylesheet" href="/css/src/forms.css" type="text/css" media="screen, projection">
+    <%= csrf_meta_tag %><!-- start -->
+    <%= javascript_include_tag "http://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js" %>
+    <%= javascript_include_tag :defaults %>
+    <!-- end -->
     <!-- <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script> -->
 
-    <script type="text/javascript" src="/javascripts/jquery.easing.1.3.js">
-</script>
-    <script type="text/javascript" src="/javascripts/jquery.coda-slider-2.0.js">
-</script><%= yield :dynamic_javascripts %>
+  <%= yield :dynamic_javascripts %>
   </head>
   <body style="background-color:#fff;">
     
     <div class="container" style="background-color: transparent;">
       <hr class="space">
+      <%= render :partial => 'shared/login_signup' %>
       <%= render :partial => "shops/admin_bar", :locals => { :shop => @shop } %>
 
       <% flash.each do |name, msg| %>

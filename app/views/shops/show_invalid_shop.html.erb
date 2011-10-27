@@ -1,1 +1,20 @@
-<h1>No shop <%= @shop_ref %> found!</h1>
+  <div id="left" class="prepend-3 span-12">
+    <h2 style="margin-top:40px;">
+      List Not Found
+    </h2>
+    <p style="text-align:left;">
+      This user's list is either no longer here, or they haven't published it yet. Sorry about that.<br>
+      <br>
+      Try the following:<br>
+      <br>
+      Go to <%= link_to "your list", root_url %>.<br>
+      Or use the back button in your browser.
+    </p>
+  </div>
+  <div class="span-7 last">
+    <p style="margin-top:60px; text-align: center;">
+      <!--text-align: center;-->
+       <a href="http://listofthingsforsale.com"><img src="images/listy.gif" alt="list of things for sale"></a><br>
+      <span id="tagline" class="highlight" style="text-align:center">the minimal way to sell online</span>
+    </p>
+  </div>

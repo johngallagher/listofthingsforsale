@@ -1,27 +1,40 @@
 Things3::Application.routes.draw do
+
+  resources :backgrounds
+  
+  resources :subscriptions, :except => [:index, :destroy]
+  get 'paypal/checkout', to: 'subscriptions#paypal_checkout'
+
   match "new" => 'shops#new'
   get "pages/order_success"
   get "pages/order_failure"
 
-  resources :email_orders
-
+  resources :email_orders, :except => [:index, :destroy]
+  
+  resources :users, :only => [:update]
+  match "users/:id/subscribe" => "users#update"
+  
   devise_for :users, :controllers => { :registrations => "registrations", :confirmations => "confirmations", :sessions => "sessions" }
 
-  resources :items
+  resources :items, :except => [:index, :destroy]
   
   
   match 'simple_cart/check_stock' => 'simple_cart#check_stock'
   match 'simple_cart/home' => 'simple_cart#home'
   match 'simple_cart/change' => 'simple_cart#change'
   
-  resources :simple_cart
+  resources :simple_cart, :except => [:index, :destroy]
   
   match 'payment/ipn' => 'payment_notifications#ipn'
+
   
-  resources :shops
+  resources :shops, :except => [:index, :destroy]
   
   match ':url' => 'shops#show', :constraints => { :url => /[a-z|0-9]{4,30}/ }
 
+  match ':url/prepublish' => 'shops#prepublish', :constraints => { :url => /[a-z|0-9]{4,30}/ }
+  match ':url/publish' => 'shops#publish', :constraints => { :url => /[a-z|0-9]{4,30}/ }
+  match ':url/unpublish' => 'shops#unpublish', :constraints => { :url => /[a-z|0-9]{4,30}/ }
 
   
   # match ':url' => 'shops#show', :constraints => { :url => /[a-z|0-9]{4,30}/ }

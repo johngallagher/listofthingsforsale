@@ -11,12 +11,22 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111013190612) do
+ActiveRecord::Schema.define(:version => 20111021174236) do
 
   create_table "authentications", :force => true do |t|
     t.integer  "user_id"
     t.string   "provider"
     t.string   "uid"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "backgrounds", :force => true do |t|
+    t.string   "name"
+    t.string   "background_image_file_name"
+    t.string   "background_image_content_type"
+    t.integer  "background_image_file_size"
+    t.datetime "background_image_updated_at"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -78,6 +88,14 @@ ActiveRecord::Schema.define(:version => 20111013190612) do
     t.integer  "item_id"
   end
 
+  create_table "plans", :force => true do |t|
+    t.string   "name"
+    t.decimal  "price"
+    t.integer  "items"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "shops", :force => true do |t|
     t.string   "url"
     t.string   "name"
@@ -95,6 +113,13 @@ ActiveRecord::Schema.define(:version => 20111013190612) do
     t.text     "description"
     t.text     "collection_description"
     t.string   "cached_slug"
+    t.text     "about_me"
+    t.string   "style"
+    t.string   "profile_photo_file_name"
+    t.string   "profile_photo_content_type"
+    t.integer  "profile_photo_file_size"
+    t.datetime "profile_photo_updated_at"
+    t.integer  "background_id"
   end
 
   add_index "shops", ["cached_slug"], :name => "index_shops_on_cached_slug", :unique => true
@@ -111,6 +136,16 @@ ActiveRecord::Schema.define(:version => 20111013190612) do
 
   add_index "slugs", ["name", "sluggable_type", "sequence", "scope"], :name => "index_slugs_on_n_s_s_and_s", :unique => true
   add_index "slugs", ["sluggable_id"], :name => "index_slugs_on_sluggable_id"
+
+  create_table "subscriptions", :force => true do |t|
+    t.integer  "plan_id"
+    t.string   "email"
+    t.string   "paypal_customer_token"
+    t.string   "paypal_recurring_profile_token"
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "users", :force => true do |t|
     t.string   "email",                                 :default => "", :null => false
@@ -130,6 +165,7 @@ ActiveRecord::Schema.define(:version => 20111013190612) do
     t.datetime "updated_at"
     t.string   "user_status"
     t.string   "full_name"
+    t.boolean  "plan_selected"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true

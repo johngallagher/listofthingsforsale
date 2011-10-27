@@ -2,14 +2,33 @@
   <span class="item_shopid" style="display:none;"><%= @shop.id %></span>
   <span class="item_itemid" style="display:none;"><%= item.id %></span>
     
-  <% if item.photo_1.file? %>
-  <div style="width: 180px; height: 135px; padding: 0; margin: 0 0 14px 0; text-align: center;">
-    <%= link_to(image_tag(item.photo_1.url(:thumb)), item.photo_1.url(:medium), :class => "item_image") %>
-  </div>
-  <% else %>
-      <div class="no-image">Image Coming Soon</div>
-    <!-- <img src="/images/no-image-small.jpg" alt=""> -->
-  <% end %>
+  
+    <% if shop and ((session[:shop_id].to_i == shop.id) or (user_signed_in? and shop.user == current_user)) %>
+      <% form_for item, :remote => true, :html => { :multipart => true, :id => "item_edit_" + item.id.to_s } do |f| -%>
+        <div style="position: relative; display: block; height: 135px; width: 180px; overflow: hidden;" id="upload-input">
+          <%= f.file_field :photo_1, :maxlength => "99999", :id => "item_photo_1", :style => "display: block; position: absolute; text-align: right; top: 0pt; right: 0pt; cursor: pointer; font-size: 135px; opacity:0; z-index: 2;filter: alpha(opacity = 0);" %>
+        
+          <% if item.photo_1.file? %>
+            <%= image_tag(item.photo_1.url(:thumb), :alt => "Browse") %>
+          <% else %>
+            <img width="180px" height="135px" style="width:180px;height:135px;" alt="Browse" src="/images/click-to-upload2.jpg">
+          <% end %>
+        </div>
+        
+      <% end -%>
+      
+    <% else %>
+    
+      <% if item.photo_1.file? %>
+        <div style="width: 180px; height: 135px; padding: 0; margin: 0 0 14px 0; text-align: center;">
+          <%= link_to(image_tag(item.photo_1.url(:thumb)), item.photo_1.url(:medium), :class => "item_image") %>
+        </div>
+      <% else %>
+        <div class="no-image">Image Coming Soon</div>
+      <% end %>
+      
+    <% end %>
+    
 
   <a class="item_name itemtitle" href="javascript:;" id="item<%= item_index + 1 %>" name="item<%= item_index + 1 %>"><%= item.name %></a>
   <div class="item_description" id="item-desc<%= item_index + 1 %>" style="display: none;"><%= item.description_text %><br />
@@ -28,6 +47,6 @@
     <div class="added-to-cart" style="<%= "display:none;" if item.quantity > 0 %>">Sold Out</div>
   </span>
   
-  <span class="item_price price"><%= number_to_currency(item.price, :unit => "£") %></span>
+  <span class="item_price price"><%= number_to_currency(item.price, :unit => "$") %></span>
   
 </li>

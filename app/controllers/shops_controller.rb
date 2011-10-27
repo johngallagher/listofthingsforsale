@@ -18,23 +18,28 @@ class ShopsController < ApplicationController
       @shop = Shop.where(:url => @shop_ref).first
     else
       @shop_ref = params[:id]
-      @shop = Shop.find_by_id(@shop_ref)
-      if !@shop.nil? 
+      begin
+        @shop = Shop.find(@shop_ref)
         redirect_to "/" + @shop.url 
         return
+      rescue
       end
     end
-    
     if @shop.nil?
       respond_to do |format|
         format.html { render 'show_invalid_shop', :object => @shop_ref and return }
-        format.js
+      end
+    end
+
+    current_user_editing_own_shop = ((session[:shop_id].to_i == @shop.id) or (user_signed_in? and @shop.user == current_user))
+    if (!current_user_editing_own_shop and @shop.status == ShopStatus::Offline)
+      respond_to do |format|
+        format.html { render 'show_invalid_shop', :object => @shop_ref and return }
       end
     end
     
     respond_to do |format|
-      format.html { render 'show' =>  @shop } # show.html.erb
-      # format.js
+      format.html { render 'show' =>  @shop }
     end    
   end
 
@@ -46,6 +51,7 @@ class ShopsController < ApplicationController
         @shop = current_user.shop
         respond_to do |format|
           format.html {  redirect_to :action => 'show', :id => @shop.id and return } # show.html.erb
+          
         end
       end
     end
@@ -84,7 +90,7 @@ class ShopsController < ApplicationController
 
     @shop_name = nil
     @shop_url = (0...8).map{65.+(rand(25)).chr}.join.downcase
-    @shop = Shop.new(:name => @shop_name, :description => @shop_items_description, :status => ShopStatus::LIVE_FREE, :url => @shop_url)
+    @shop = Shop.new(:name => @shop_name, :description => @shop_items_description, :url => @shop_url)
 
     @new_items = ItemGenerator.new(:new_description => @shop_items_description, :old_description => "", :items => []).generate_items
     @shop.items = @new_items
@@ -121,13 +127,15 @@ class ShopsController < ApplicationController
     updated_list = (!params[:shop].nil? and !params[:shop][:description].nil?)
     updated_config = (!params[:shop].nil? and !params[:shop][:payment_type].nil?)
     updated_url = (!params[:shop].nil? and !params[:shop][:url].nil?)
-    updated_images = (!params[:shop].nil? and !params[:item].nil?)
+    updated_about_me = (!params[:shop].nil? and !params[:shop][:about_me].nil?)
+    updated_background = (!params[:shop].nil? and !params[:shop][:background_id].nil?)
     
+    hide_all_panes_after_update = !updated_background
     
     respond_to do |format|
       if @shop.update_attributes(params[:shop])
        # logger.debug("params changed were #{params[:shop].inspect}")
-        new_description = params[:shop][:description]
+        new_description = params[:shop][:description] unless params[:shop].nil?
         old_description = @shop.description
         if !new_description.nil?
           @old_items = Array.new(@shop.items)
@@ -139,14 +147,13 @@ class ShopsController < ApplicationController
 
         end
         @shop.save
-       # logger.debug("After update Shop is #{@shop.inspect} with items #{@shop.items.inspect}")
 
-        # format.html { redirect_to(@shop, :notice => 'Shop was successfully created.') }
-        format.html { redirect_to "/#{@shop.url}" }
-        format.js
+        format.html { redirect_to "/#{@shop.url}" and return }
+        format.js { render :action => "update", :locals => {:shop => @shop, :hide_all => hide_all_panes_after_update }}
+        
       else
-        format.html { render :action => "edit" }
-        format.xml  { render :xml => @shop.errors, :status => :unprocessable_entity }
+        format.html { render :action => "edit" and return }
+        format.xml  { render :xml => @shop.errors, :status => :unprocessable_entity and return }
       end
     end
   end
@@ -161,6 +168,26 @@ class ShopsController < ApplicationController
       format.html { redirect_to(shops_url) }
       format.xml  { head :ok }
     end
+  end
+  
+  def prepublish
+    @shop = Shop.where(:url => params[:url]).first
+    ShopPublisher.new(:shop => @shop).prepublish
+    render :action => "prepublish"
+  end
+
+  def publish
+    @shop = Shop.where(:url => params[:url]).first
+    @shop.status = ShopStatus::Online
+    @shop.save
+    render :action => "refresh"
+  end
+  
+  def unpublish
+    @shop = Shop.where(:url => params[:url]).first
+    @shop.status = ShopStatus::Offline
+    @shop.save
+    render :action => "refresh"
   end
 end
 

@@ -1,0 +1,18 @@
+<div class="column span-23 last alpha60" id="prepublish" style="border-bottom:1px solid #aaa; display:none;padding:20px;">
+  <% if shop.publishing_errors.empty? %>
+    <% form_for(shop, :url => {:action => "publish"}, :remote => true, :html => { :id => "shop_publish" }) do |s| -%>
+    <h2 style="">Ready to go!</h2>
+    <!-- <p>Superb, it's time to put it online. Click this button:</p> -->
+    <a class="button positive" style=" text-align: center; margin-top: 0px" onClick="$('form#shop_publish').submit()"><img src="css/plugins/buttons/icons/tick.png" alt=""/>Publish my list!</a>
+    <% end -%>
+  <% else %>
+  			<h2>Almost There</h2>
+  			<p>You're nearly ready to put your list online. Just do this first:</p>
+  			<ol>
+    <% shop.publishing_errors.each do |error| %>
+      <li><a href="javascript:;" onclick="show<%= error.domain %>()"><%= error.message %></a></li>
+    <% end %>
+    </ol>
+		Once you've done these <%=  shop.publishing_errors.count %> things, hit publish to put your list online.
+  <% end %>
+</div>

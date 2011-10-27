@@ -1,108 +1,193 @@
+
 <% if shop and ((session[:shop_id].to_i == shop.id) or (user_signed_in? and shop.user == current_user)) %>
-  <div id="adminbar" class="box" style="font-size: 1.2em; background-color: #fff000; padding: 10px;margin-bottom:0;">
+  <div id="adminbar" class="box" style="font-size: 1.2em; background-color: #fff000; padding: 10px; margin-bottom:0; float: left; width: 930px;">
     <!--border-bottom:1px solid #000;-->
-    Edit your: <a id="editlist" onclick="javascript:;" name="editlist">List</a>, <a id="editconfig" onclick="javascript:;" name="editconfig">Config</a>, <a id="editaccount" onclick="javascript:;" name="editaccount">Account</a>, <a id="editimages" onclick="javascript:;" name="editimages">Images</a> 
-    <span style="float: right">
-      <% if user_signed_in? %>
-        <%= link_to "Log out", destroy_user_session_path, :method => :delete %>
+    Edit your: <a id="editlist" onclick="javascript:;" name="editlist">List</a>, <a id="editsidebar" onclick="javascript:;" name="editsidebar">Sidebar</a>, <a id="editstyling" onclick="javascript:;" name="editstyling">Background</a>, <a id="editconfig" onclick="javascript:;" name="editconfig">Config</a>, <a id="editaccount" onclick="javascript:;" name="editaccount">Account</a>
+    
+    <div style="float: right; text-align: right;">
+      Your list is <%= if @shop.status == ShopStatus::Online then  "online" else "offline" end %>.
+      <% if @shop.status == ShopStatus::Online %>
+        <%= link_to "Unpublish It", {:action => "unpublish"}, :remote => true, :id => "unpublish-action" %></div>
       <% else %>
-        <%= link_to "Login", new_user_session_path %>
+        <%= link_to "Publish It", {:action => "prepublish"}, :remote => true, :id => "prepublish-action" %></div>
       <% end %>
-    </span>
   </div>
-  <div class="column span-23 last alpha60" id="config" style="border-bottom:1px solid #aaa; display:none;padding:20px;">
-    <% form_for shop, :remote => true, :html => { :id => "shop_configure_cart" } do |f| %>
-      <div class="columnn span-11">
-        <p>
-          <fieldset style="height: 140px;margin-top:5px;">
-            <legend style="text-align: center;font-weight:normal;">Payment</legend>
-            <%= f.radio_button :payment_type, 'paypal', :checked => true %> 
-            <%= f.label :payment_type, 'Receive payments via Paypal: ', :value => 'paypal', :style => "font-weight: normal;" %>
-            <%= f.text_field :paypal_email, :size => "25", :placeholder => "Paypal email address" %><br/>
-            <%= f.radio_button :payment_type, 'email' %> 
-            <%= f.label :payment_type, 'Just email me', :value => 'email', :style => "font-weight: normal;" %>
-          </fieldset>
-        </p>
-      </div>
-      <div class="columnn span-11 last">
-        <p>
-           <fieldset style="height: 140px;margin-top:5px;">
-             <legend style="text-align: center;font-weight:normal;">Fulfilling Orders</legend>
-            <%= f.radio_button :delivery_method, 'post', :checked => true %> 
-            <%= f.label :delivery_method, 'Prices include', :value => 'post', :style => "font-weight: normal;" %> <select style="margin-bottom: 0px;">
-               <option>
-                 UK
-               </option>
-               <option>
-                 USA
-               </option>
-               <option>
-                 Worldwide
-               </option>
-             </select> postage<br>
-            <%= f.radio_button :delivery_method, 'collection' %>
-            <%= f.label :delivery_method, 'Collection / Other', :value => 'collection', :style => "font-weight: normal;" %>
-            <%= f.text_area :collection_description, :placeholder => "Example: I'm at Sloans Market every Saturday.", :rows => "5", :style => "height: 70px;" %>
-          </fieldset>
-        </p>
-      </div>
-    <% end %>
-    <div class="column span-6 prepend-9"><a class="button positive" style=" text-align: center; margin-top: 0px" onClick="$('form#shop_configure_cart').submit()"><img src="css/plugins/buttons/icons/tick.png" alt=""/>Save Configuration</a>
-    </div>
-  </div>
-  <div class="column span-23 last alpha60" id="account" style="border-bottom:1px solid #aaa; display:none;padding:20px;">
+  
+  <%= render :partial => 'edit_config', :locals => {:shop => shop} %>
+  <%= render :partial => 'edit_account', :locals => {:shop => shop}  %>
+  <%= render :partial => 'edit_styling', :locals => {:shop => shop}  %>
+  <%= render :partial => 'edit_images', :locals => {:shop => shop}  %>
+  
+  <!-- Scripts to update visibility of forms on page load -->
+  
+  <script type="text/javascript">
+    function showSignUp () {
+      hideSelectAndShowPlan();
+      $("fieldset#signupform").show();
+      $("fieldset#aftersignup").hide();
+    }
+    function showVerify () {
+      hideSelectAndShowPlan();
+      $("fieldset#signupform").hide();
+      $("fieldset#aftersignup").show();
+    }
+    function setChangePlanSubmitEnabled (enabled) {
+      $("div#user_submit").attr("disabled", !enabled);
+    }
+    function setChangePlanSubmitVisible (visible) {
+      if (visible) {
+        $("div#user_submit").show();
+      } else {
+        $("div#user_submit").hide();
+      };
+    }
+    function setPaypalCheckoutVisible (visible) {
+      if (visible) {
+        $("div#paypal_checkout").show();
+      } else {
+        $("div#paypal_checkout").hide();
+      };
+    }
+    
+    function hideOtherAccountDetails () {
+      $("fieldset#Fieldset1").hide();
+      $("fieldset#your_account").hide();
+    }
 
-    <!-- 1. Sign Up -->
-    <% if !user_signed_in? and shop.user_id.nil? %>
-      <%= render 'devise/registrations/new_short' %>
-    <% end %>
-
-
-    <!-- 2. Verification resend -->
-    <% if !shop.user_id.nil? %>
-      <% if !User.find(shop.user_id).confirmation_token.nil? %>
-        <%= render 'devise/confirmations/new' %>
-      <% end %>
-    <% end %>
-
-    <!-- 3. Change password and email address -->
-
-    <% if user_signed_in? %>
-      Logged in as <%= current_user.email %>. Not you?
-      <%= link_to "Log out", destroy_user_session_path, :method => :delete %>
-    <p>
-    </p>
-    <% end %>
-
-    <!-- 4. Change url -->
-
-    <%= render :partial => "public_url" %>
-  </div>
-  <div class="column span-23 last alpha60" id="images" style="border-bottom:1px solid #aaa; display:none;padding:20px;">
-    <fieldset style="height: 60px; margin-top:5px;">
-      <legend style="font-weight:normal;">Upload one image for each of your items. Multiple images coming soon.</legend>
-      <% @sorted_items = shop.items.sort{ |a,b| ( a.sort_order and b.sort_order ) ? a.sort_order.to_i <=> b.sort_order.to_i : ( a.sort_order ? -1 : 1 ) } %>
-      <% if @sorted_items.count > 0 %>
-        <% @item = @sorted_items.first %>
-        <% form_for @item, :html => { :multipart => true, :class => "edit_item_images inline" }, :remote => true do |f| %>
-          <%= select :item_image_name, :item_image_id, @sorted_items.collect {|p| [ p.name, p.id ] }, options = {:onChange => "changeItemPhoto()", :include_blank => 'Select item'}, html_options = {:onChange => "changeItemPhoto()", :style => "float: left; width: 200px", :class => "inline"} %>
-
-
-          <%= f.file_field :photo_1, :required => true, :class=> "button inline", :style => "float: left; margin: 5px 0 5px 10px; display:none;" %>
-          <a class="button inline" href="javascript:;" style="margin: 0 0 5px 10px; display:none;" onClick="$(this).closest('form').submit()" id="upload_image_button"><img src="css/plugins/buttons/icons/tick.png" alt="">Upload Image</a>
+    function showOtherAccountDetails () {
+      $("fieldset#Fieldset1").show();
+      $("fieldset#your_account").show();
+    }
+    
+    function updateOtherAccountDetailsVisibility () {
+      no_plan_selected = !$("#user_plan_selected").is(':checked')
+      if (no_plan_selected) {
+        hideOtherAccountDetails();
+      } else {
+        showOtherAccountDetails();
+      };
+    }
+    
+    function updateChangePlanForm () {
+      on_business_plan = ($("span#plan-name").text() == "Early Adopter");
+      personal_plan_selected = $("input#user_subscription_attributes_plan_id_").is(':checked')
+      business_plan_selected = $("input#user_subscription_attributes_plan_id_2").is(':checked')
+      updateOtherAccountDetailsVisibility();
+      
+      if(personal_plan_selected) {
+        setChangePlanSubmitEnabled(true);
+        setChangePlanSubmitVisible(true);
+        setPaypalCheckoutVisible(false);
+        
+      } else if(business_plan_selected) {
+        setChangePlanSubmitEnabled(true);
+        setChangePlanSubmitVisible(false);
+        if (on_business_plan) {
+          setPaypalCheckoutVisible(false);
+        } else {
+          setPaypalCheckoutVisible(true);
+        };
+      };
+    }
+    
+    function showSelectPlan () {
+      updateOtherAccountDetailsVisibility();
+      hideSignUpAndVerify();
+      $("form#change-plan").show();
+      $("div#show-plan").hide();
+    }
+    function showShowPlan () {
+      updateOtherAccountDetailsVisibility();
+      hideSignUpAndVerify();
+      $("form#change-plan").hide();
+      $("div#show-plan").show();
+    }
+    
+    function hideSignUpAndVerify () {
+      $("fieldset#signupform").hide();
+      $("fieldset#aftersignup").hide();
+    }
+    function hideSelectAndShowPlan () {
+      $("form#change-plan").hide();
+      $("div#show-plan").hide();
+    }
+    
+    function showChangeEmailAndPassword () {
+      $("fieldset#changeemail").show();
+    }
+    function hideChangeEmailAndPassword () {
+      $("fieldset#changeemail").hide();
+    }
+    
+    $(document).ready(function () {
+      <% if user_signed_in? %>
+        showChangeEmailAndPassword();
+        updateChangePlanForm();
+        <% if current_user.plan_selected %>
+          showShowPlan();
+        <% else %>
+          showSelectPlan();
+        <% end %>
+      <% else %>
+        hideChangeEmailAndPassword();
+        <% if @shop.user_id.nil? %>
+          showSignUp();
+        <% else %>
+          showVerify();
         <% end %>
       <% end %>
-    </fieldset>
-  </div>
-
-<% else %>
-<ul class="navigation" style="width: 930px; margin: 0;padding: 10px;padding-bottom: 5px;border-top-width: 0px;padding-top: 5px;"> 
-    <li class="login" style="float:right; font-size: 1.2em;">
-    <% if user_signed_in? %>
-      <%= link_to "Log out", destroy_user_session_path, :method => :delete %>
-    <% else %>
-      <%= link_to "Login", new_user_session_path %>
-    <% end %>
-  </li>
-</ul>
+    });
+    
+    function updateBackgroundForm() {
+      $("form#shop-background-edit-form").submit();
+    }
+    
+  </script>
+  
+  <script type="text/javascript">
+  $(document).ready(function () {
+    $("table.pricing").attr('style', 'background:transparent;'); // For weird Chrome bug where table rows don't alternate correctly.
+    $("input:radio[name='user[subscription_attributes][plan_id]']").change(function() {
+      updateChangePlanForm();
+    });
+    $("form#user_new").bind('ajax:success', function(evt, data, status, xhr) {
+      if(data.success == true) {
+        console.log("Successful sign up");
+        // window.location.href = data.redirect;
+        showVerify();
+        
+      } else {
+        console.log("Sign Up Failure");
+        // Show errors
+      }
+    });
+    $("form#change-plan").bind('ajax:success', function(evt, data, status, xhr) {
+      if(data.success == true) {
+        $("#user_plan_selected").attr('checked','checked');
+        updateOtherAccountDetailsVisibility();
+        
+        $("div#show-plan span#plan-name").text(data.plan_name);
+        showShowPlan();
+      } else {
+        console.log("Plan Change Failure");
+        // Show errors
+      }
+    });
+    $("input:radio[name='shop[background_id]']").change(function(evt, data, status, xhr) {
+      // Update background selected
+      $(".background-select").removeClass("currentbg");
+      $(".background-select input:radio:checked").parent().addClass("currentbg");
+      updateBackgroundSelected();
+    });
+    $("input#item_photo_1").change(function () { 
+      form_id_changed = this.parentNode.parentNode.id;
+      console.log("Form id to be submitted: " + form_id_changed);
+      $("form#" + form_id_changed).submit();
+    });
+    
+    
+  });
+  </script>  
 <% end -%>
+
+
