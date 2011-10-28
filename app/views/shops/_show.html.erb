@@ -237,14 +237,15 @@
 
 <script type="text/javascript">
 $(document).ready(function () {
-  $('a.[id^="item"]').click(function () {
-    if ($(this).siblings(".item_description").is(':visible')) {
-      $(this).siblings(".item_description").fadeToggle('slow', function() {
-        $("a.itemtitle").css("height", "18px");
-      });
+  $('a.item_name').click(function () {
+    var a_clicked = this;
+    if ($(a_clicked).siblings(".item_description").is(':hidden')) {
+      $(a_clicked).css("height", "auto");
+      $(a_clicked).siblings(".item_description").fadeToggle('slow');
     } else {
-      $("a.itemtitle").css("height", "auto");
-      $(this).siblings(".item_description").fadeToggle('slow');
+      $(a_clicked).siblings(".item_description").fadeToggle('slow', function() {
+        $(a_clicked).css("height", "18px");
+      });
     };
   }); 
 });
