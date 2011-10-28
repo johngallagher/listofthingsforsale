@@ -30,8 +30,8 @@
     <% end %>
     
 
-  <a class="item_name itemtitle truncated" href="javascript:;" id="item<%= item_index + 1 %>" name="item<%= item_index + 1 %>"><%= truncate(item.name, :length => 8, :separator => ' ') %></a>
-  <a class="item_name itemtitle" href="javascript:;" id="item<%= item_index + 1 %>" name="item<%= item_index + 1 %>" style="display: none; height: auto;"><%= item.name %></a>
+  <a class="item_name itemtitle truncated" href="javascript:;" id="item<%= item_index + 1 %>" name="item<%= item_index + 1 %>"><%= truncate(item.name, :length => 25) %></a>
+  <a class="item_name itemtitle full" href="javascript:;" id="item<%= item_index + 1 %>" name="item<%= item_index + 1 %>" style="display: none; height: auto;"><%= item.name %></a>
 
   
   <div class="item_description" id="item-desc<%= item_index + 1 %>" style="display: none;"><%= item.description_text %><br />

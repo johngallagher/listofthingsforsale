@@ -240,11 +240,15 @@ $(document).ready(function () {
   $('a.item_name').click(function () {
     var a_clicked = this;
     if ($(a_clicked).siblings(".item_description").is(':hidden')) {
-      $(a_clicked).css("height", "auto");
+      $(a_clicked).hide();
+      $(a_clicked).siblings("a.full").show();
+      // $(a_clicked).css("height", "auto");
       $(a_clicked).siblings(".item_description").fadeToggle('slow');
     } else {
+      $(a_clicked).hide();
+      $(a_clicked).siblings("a.truncated").show();
       $(a_clicked).siblings(".item_description").fadeToggle('slow', function() {
-        $(a_clicked).css("height", "18px");
+        // $(a_clicked).css("height", "18px");
       });
     };
   }); 
