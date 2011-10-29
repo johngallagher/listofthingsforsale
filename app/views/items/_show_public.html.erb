@@ -50,6 +50,6 @@
     <div class="added-to-cart" style="<%= "display:none;" if item.quantity > 0 %>">Sold Out</div>
   </span>
   
-  <span class="item_price price"><%= number_to_currency(item.price, :unit => "$") %></span>
+  <span class="item_price price"><%= if item.price > 0 then number_to_currency(item.price, :unit => "$") else "FREE" end %></span>
   
 </li>
