@@ -49,13 +49,17 @@ class ItemGenerator
   end
   
   def matches_from_description(description)
-    description.match(/([[:print:]]+) \$(\d+\.*\d*)( [[:print:]][^\+]*)?(\+(\d+))?/)
-    # description.match(/([[:print:]]+) $(\d+\.*\d*) ([[:print:]]+)/)
+    Rails.logger.debug "About to match #{description}"
+    # description.match(/([[:print:]]+) \$(\d+\.*\d*)([[:print:]][^\+#]*)?(\+(\d+))?( #([[:print:]][^#]*))?( #([[:print:]][^#]*))?( #([[:print:]][^#]*))?( #([[:print:]][^#]*))?( #([[:print:]][^#]*))?$/)
+    # description.match(/(?<name>[[:print:]]+) \$(?<price>\d+\.*\d*)(?<descr> [[:print:]][^\+#]*)?(?<quantity>\+(\d+))?(?<cat1> #([[:print:]][^#]*))?( #(?<cat2>[[:print:]][^#]*))?( #(?<cat3>[[:print:]][^#]*))?( #(?<cat4>[[:print:]][^#]*))?( #(?<cat5>[[:print:]][^#]*))?$/)
+    description.chomp.match(/(?<name>[[:print:]]+) \$(?<price>\d+\.*\d*)(?<description_text> [[:print:]][^\+#]*)?(?<quantity>\+(\d+))?(?<cat1> #([[:print:]][^#]*))?$/)
+    # description.chomp.match(/(?<name>[[:print:]]+) \$(?<price>\d+\.*\d*)(?<description_text> [[:print:]][^\+#]*)?(?<quantity>\+(\d+))?(?<cat1> #([[:print:]][^#]*))?( #(?<cat2>[[:print:]][^#]*))?( #(?<cat3>[[:print:]][^#]*))?( #(?<cat4>[[:print:]][^#]*))?( #(?<cat5>[[:print:]][^#]*))$/)
+    # description.match(/([[:print:]]+) \$(\d+\.*\d*)( [[:print:]][^\+]*)?(\+(\d+))?/)
   end
   
   def item_hash_from_description(description)
     this_item_matches = matches_from_description(description)
-    # Rails.logger.debug "This item matches is #{this_item_matches.inspect}"
+    Rails.logger.debug "This item matches is #{this_item_matches.inspect}"
     if this_item_matches and this_item_matches.length >= 4
       return item_hash_from_matches(this_item_matches)
     else
@@ -69,18 +73,32 @@ class ItemGenerator
     # t.text     "description_text"
     # t.decimal  "price"
 
-    item[:name] = matches[1]
-    item[:description_text] = matches[3]
-    item[:price] = matches[2].to_f
-    if matches[5]
-      if matches[5].to_i > 1
+    item[:name] = matches[:name]
+    item[:description_text] = matches[:description_text]
+    item[:price] = matches[:price].to_f
+    if matches[:price]
+      if matches[:price].to_i > 1
         item[:quantity] = 1       # remove this when we implement quantities
       else
-        item[:quantity] = matches[5].to_i
+        item[:quantity] = matches[:price].to_i
       end
     else 
       item[:quantity] = 1
     end
+    item[:cat1] = matches[:cat1]
+    # item[:name] = matches[1]
+    # item[:description_text] = matches[3]
+    # item[:price] = matches[2].to_f
+    # if matches[2]
+    #   if matches[2].to_i > 1
+    #     item[:quantity] = 1       # remove this when we implement quantities
+    #   else
+    #     item[:quantity] = matches[2].to_i
+    #   end
+    # else 
+    #   item[:quantity] = 1
+    # end
+    Rails.logger.debug "Here's the item - #{item.inspect}"
     return item
   end
 end
