@@ -4,6 +4,11 @@ class ItemMatcher
     @criteria = args[:criteria]
   end
   def match
-    @items[0]
+    perfect_item_match = @items.select(:name => @criteria[:name], :price => @criteria[:price], :description_text => @criteria[:description_text])
+    if perfect_item_match
+      perfect_item_match
+    else
+      nil
+    end
   end
 end
