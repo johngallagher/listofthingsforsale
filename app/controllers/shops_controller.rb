@@ -94,15 +94,14 @@ class ShopsController < ApplicationController
 
     @new_items = ItemGenerator.new(:new_description => @shop_items_description, :old_description => "", :items => []).generate_items
     @shop.items = @new_items
-    if @shop.save
 
-      if user_signed_in?
-        if current_user.shop.nil?
-          current_user.shop = @shop
-          current_user.save
-        end
+    if user_signed_in?
+      if current_user.shop.nil?
+        @shop.user = current_user
       end
-
+    end
+    
+    if @shop.save
       session[:shop_id] = @shop.id
       
       respond_to do |format|
