@@ -45,16 +45,7 @@ Factory.define :johns_pending_order_for_bag_and_wallet, :parent => :pending_orde
   end
 end
 
-# Can't get this working yet.
-# Factory.define :johns_pending_order_for_bag_and_wallet_from_matthias_shop, :parent => :johns_pending_order_for_bag_and_wallet do |order|
-#   order.after_create do |o|
-#     o.shop { Shop.where(:name => "Matthias' List of Things for Sale").first || Factory(:matthias_shop) }
-#   end
-# end
 
-
-
-# Deliberately similar to above - only difference is the number of items and type of items.
 Factory.define :johns_pending_order_for_jacket_and_belt, :parent => :pending_order_for_33_33 do |order|
   order.after_create do |o|
     # add line items
@@ -72,8 +63,6 @@ Factory.define :johns_pending_order_for_jacket, :parent => :pending_order_for_33
     o.line_items << @j.line_items.first
   end
 end
-
-
 
 # Payment Notification
 Factory.define :payment_notification do |t|
@@ -160,3 +149,17 @@ Factory.define :belt_item_with_line_item, :parent => :belt_item, do |item|
   item.after_create { |i| Factory(:belt_line_item, :item => i) }
 end
 
+# duplicate descriptions
+Factory.define :excellent_condition_item_1, :class => 'Item' do |item|
+  item.name "item 1"
+  item.description_text "excellent condition"
+  item.price 11.11
+  item.quantity 1
+end
+
+Factory.define :excellent_condition_item_2, :class => 'Item' do |item|
+  item.name "item 2"
+  item.description_text "excellent condition"
+  item.price 11.11
+  item.quantity 1
+end

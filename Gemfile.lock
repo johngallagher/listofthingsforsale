@@ -216,6 +216,7 @@ GEM
     systemu (2.2.0)
     term-ansicolor (1.0.6)
     test-unit (2.4.0)
+    text (0.2.0)
     thor (0.14.6)
     treetop (1.4.10)
       polyglot
@@ -258,3 +259,4 @@ DEPENDENCIES
   ruby-prof
   sqlite3
   test-unit
+  text
