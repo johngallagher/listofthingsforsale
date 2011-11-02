@@ -11,8 +11,9 @@ class LineHashConverter
     if matching_item_found
       matching_item_found.update_attributes(@line_hash)
     else
-      create_item
+      matching_item_found = create_item
     end
+    matching_item_found
   end
   
   def find_matching_item
