@@ -5,16 +5,16 @@ class Item < ActiveRecord::Base
   has_many :photos
   has_many :line_items
   
-  def matches?(criteria)
-    name == criteria[:name] and price == criteria[:price] and description_text == criteria[:description_text]
+  def matches?(line_hash)
+    name == line_hash[:name] and price == line_hash[:price] and description_text == line_hash[:description_text]
   end
-  def name_and_price_match?(criteria)
-    name == criteria[:name] and price == criteria[:price]
+  def name_and_price_match?(line_hash)
+    name == line_hash[:name] and price == line_hash[:price]
   end
-  def price_and_description_match?(criteria)
-    description_text == criteria[:description_text] and price == criteria[:price]
+  def price_and_description_match?(line_hash)
+    description_text == line_hash[:description_text] and price == line_hash[:price]
   end
-  def name_and_description_match?(criteria)
-    description_text == criteria[:description_text] and name == criteria[:name]
+  def name_and_description_match?(line_hash)
+    description_text == line_hash[:description_text] and name == line_hash[:name]
   end
 end
