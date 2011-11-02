@@ -13,8 +13,8 @@ class LineHashesConverterTest < Test::Unit::TestCase
     
     assert_equal(converted_items.first, existing_item_1)
     assert_equal(converted_items.second, existing_item_2)
-    assert_equal("item 1", existing_item_1)
-    assert_equal("item 2", existing_item_2)
+    assert_equal("item 1", existing_item_1.name)
+    assert_equal("item 2", existing_item_2.name)
   end
   test "second item name has been changed " do
     existing_item_1 = Factory.build(:excellent_condition_item_1)
@@ -26,8 +26,8 @@ class LineHashesConverterTest < Test::Unit::TestCase
     
     assert_equal(converted_items.first, existing_item_1)
     assert_equal(converted_items.second, existing_item_2)
-    assert_equal("item 1", existing_item_1)
-    assert_equal("item", existing_item_2)
+    assert_equal("item 1", existing_item_1.name)
+    assert_equal("item", existing_item_2.name)
   end
   test "first item name has been changed " do
     existing_item_1 = Factory.build(:excellent_condition_item_1)
@@ -39,7 +39,7 @@ class LineHashesConverterTest < Test::Unit::TestCase
     
     assert_equal(converted_items.first, existing_item_1)
     assert_equal(converted_items.second, existing_item_2)
-    assert_equal("item", existing_item_1)
-    assert_equal("item 2", existing_item_2)
+    assert_equal("item", existing_item_1.name)
+    assert_equal("item 2", existing_item_2.name)
   end
 end
