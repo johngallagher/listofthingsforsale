@@ -20,4 +20,13 @@ class TestItemFinder < Test::Unit::TestCase
     found_item = ItemFinder.new(:existing_items => [wallet_1, wallet_2], :line_hash => {:name => wallet_2.name, :price => 22.23, :description_text => wallet_2.description_text}).find_partial_match
     assert_equal(wallet_2, found_item)
   end
+  test "given two description and price matches should return item with the nearest price" do
+    wallet_1 = Factory.build(:wallet_item)
+    wallet_2 = Factory.build(:wallet_item)
+    wallet_1.name = "wallet"
+    wallet_2.name = "dolcer and gammana wallet"
+    
+    found_item = ItemFinder.new(:existing_items => [wallet_1, wallet_2], :line_hash => {:name => "dolce and gabbana wallet", :price => wallet_2.price, :description_text => wallet_2.description_text}).find_partial_match
+    assert_equal(wallet_2, found_item)
+  end
 end

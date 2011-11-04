@@ -163,3 +163,4 @@ Factory.define :excellent_condition_item_2, :class => 'Item' do |item|
   item.price 11.11
   item.quantity 1
 end
+
