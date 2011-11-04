@@ -8,10 +8,10 @@ class LineHashesConverter
     # @converted_line_hashes = []
   end
   def convert_to_items
-    
     @remaining_items = @existing_items
     convert_exact_matches
     convert_partial_matches
+    convert_new_items
     @converted_items
   end
   
@@ -24,8 +24,6 @@ class LineHashesConverter
         @remaining_items.delete(@converted_item)
       end
     end
-    # @line_hashes -= @converted_line_hashes
-    # @converted_line_hashes = []
   end
   
   def convert_partial_matches
@@ -37,8 +35,15 @@ class LineHashesConverter
         @remaining_items.delete(@converted_item)
       end
     end
-    # @line_hashes -= @converted_line_hashes
-    # @converted_line_hashes = []
+  end
+  def convert_new_items
+    @line_hashes.select{|l| l.class == Hash }.each do |this_line_hash|
+      this_line_hash.delete(:cat1)
+      new_item = Item.create(this_line_hash)
+      new_item.save
+      puts "I just created #{new_item.inspect}"
+      replace_item_hash_with_item(:item_hash => this_line_hash, :item => new_item)
+    end
   end
   # To replace item hash with item
   def replace_item_hash_with_item(args)

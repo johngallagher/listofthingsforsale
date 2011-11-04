@@ -5,10 +5,10 @@ class LineParser
   end
   def self.matches_to_hash(matches)
     {
-      :name             => matches[:name]
-      :price            => matches[:price].to_f
-      :description_text => matches[:description_text]
-      :quantity         => (matches[:quantity] || 1).to_i
+      :name             => matches[:name],
+      :price            => matches[:price].to_f,
+      :description_text => matches[:description_text],
+      :quantity         => (matches[:quantity] || 1).to_i,
       :cat1             => matches[:cat1]
     }
   end

@@ -1,17 +1,36 @@
 # encoding: UTF-8
 class ItemGenerator
-  attr_accessor :new_description
-  
   def initialize(args)
-    @new_description = args[:new_description]
-    @old_description = args[:old_description]
-    @current_items = args[:items]
+    @items        = args[:items]
+    @description  = args[:description]
+    @generated_items = []
+    @line_hashes = []
   end
-  
   def generate_items
-    @items = []
-    @item_index = 0
-    @new_description.split("\n").each do |this_item_description|
+    parse_lines
+    convert_line_hashes
+    remove_old_items
+    @generated_items
+  end
+  def parse_lines
+    @description.split("\n").each do |line|
+      line_hash = LineParser.parse(line)
+      @line_hashes << line_hash unless line_hash.nil?
+    end
+  end
+  def convert_line_hashes
+    @generated_items = LineHashesConverter.new(:line_hashes => @line_hashes, :existing_items => @items).convert_to_items
+  end
+  def remove_old_items
+    if @items.present?
+      @old_items = @items - @generated_items 
+      @old_items.destroy_all
+    end
+  end
+  def generate_items_old
+    @generated_items = []
+    # @item_index = 0
+    @description.split("\n").each do |line|
       item_hash = item_hash_from_description(this_item_description)
       if !item_hash.nil?
         @item_index = @item_index + 1

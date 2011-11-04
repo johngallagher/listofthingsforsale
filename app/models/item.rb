@@ -18,6 +18,6 @@ class Item < ActiveRecord::Base
     description_text == line_hash[:description_text] and name == line_hash[:name]
   end
   def equal_to_item?(item)
-    matches?(item.attributes) and quantity = item.quantity # add in categories
+    name == item.name and price == item.price and description_text == item.description_text and quantity == item.quantity
   end
 end

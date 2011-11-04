@@ -4,9 +4,38 @@ class LineHashesConverterTest < Test::Unit::TestCase
   def setup
     @existing_item_1 = Factory.build(:excellent_condition_item_1)
     @existing_item_2 = Factory.build(:excellent_condition_item_2)
-    @line_hash_1 = {:name => "item 1", :price => 11.11, :description_text => "excellent condition"}
-    @line_hash_2 = {:name => "item belt and trousers 2", :price => 11.11, :description_text => "excellent condition"}
+    @line_hash_1 = {:name => "item 1",                   :price => 11.11, :description_text => "excellent condition", :quantity => 1}
+    @line_hash_2 = {:name => "item belt and trousers 2", :price => 11.11, :description_text => "excellent condition", :quantity => 1}
   end
+  # with no items
+  test "with no existing items one line hash should create an item" do
+    converted_items = LineHashesConverter.new(:line_hashes => [@line_hash_1]).convert_to_items
+    assert_equal(converted_items.length, 1)
+    first_item     = converted_items.first
+    assert_equal(Item,                  first_item.class)
+    assert_equal("item 1",              first_item.name)
+    assert_equal(11.11,                 first_item.price)
+    assert_equal("excellent condition", first_item.description_text)
+    assert_equal(1,                     first_item.quantity)
+  end
+
+  test "with no existing items two line hashes should create items" do
+    converted_items = LineHashesConverter.new(:line_hashes => [@line_hash_1, @line_hash_2]).convert_to_items
+    assert_equal(converted_items.length, 2)
+    first_item     = converted_items.first
+    second_item    = converted_items.second
+    assert_equal(Item,                  first_item.class)
+    assert_equal("item 1",              first_item.name)
+    assert_equal(11.11,                 first_item.price)
+    assert_equal("excellent condition", first_item.description_text)
+    assert_equal(1,                     first_item.quantity)
+    assert_equal(Item,                  second_item.class)
+    assert_equal("item belt and trousers 2",              second_item.name)
+    assert_equal(11.11,                 second_item.price)
+    assert_equal("excellent condition", second_item.description_text)
+    assert_equal(1,                     second_item.quantity)
+  end
+  
   # with two items with same price and description
   # no changing
   test "no items have been changed " do
