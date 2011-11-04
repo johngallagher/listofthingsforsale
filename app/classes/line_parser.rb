@@ -9,6 +9,12 @@ class LineParser
     keys.each do |key|
       if key == :price
         hash[key] = matches[key].to_f
+      elsif key == :quantity
+        if matches[key].nil?
+          hash[key] = 1
+        else
+          hash[key] = matches[key].to_i
+        end
       else
         hash[key] = matches[key]
       end

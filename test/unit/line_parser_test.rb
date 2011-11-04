@@ -16,7 +16,7 @@ class LineParserTest < ActiveSupport::TestCase
     assert_equal "item name",             parsed_item[:name]
     assert_equal 3.45,                  parsed_item[:price]
     assert_equal nil,                     parsed_item[:description_text]
-    assert_equal nil,                     parsed_item[:quantity]
+    assert_equal 1,                     parsed_item[:quantity]
     assert_equal nil,                     parsed_item[:cat1]
   end
   test "name price and description" do
@@ -24,7 +24,7 @@ class LineParserTest < ActiveSupport::TestCase
     assert_equal "item name",             parsed_item[:name]
     assert_equal 3.45,                  parsed_item[:price]
     assert_equal "excellent condition",   parsed_item[:description_text]
-    assert_equal nil,                     parsed_item[:quantity]
+    assert_equal 1,                     parsed_item[:quantity]
     assert_equal nil,                     parsed_item[:cat1]
   end
   test "name price and quantity" do
@@ -32,7 +32,7 @@ class LineParserTest < ActiveSupport::TestCase
     assert_equal "item name",             parsed_item[:name]
     assert_equal 3.45,                  parsed_item[:price]
     assert_equal nil,                     parsed_item[:description_text]
-    assert_equal "5",                     parsed_item[:quantity]
+    assert_equal 5,                     parsed_item[:quantity]
     assert_equal nil,                     parsed_item[:cat1]
   end
   test "name price and category" do
@@ -40,7 +40,7 @@ class LineParserTest < ActiveSupport::TestCase
     assert_equal "item name",             parsed_item[:name]
     assert_equal 3.45,                  parsed_item[:price]
     assert_equal nil,                     parsed_item[:description_text]
-    assert_equal nil,                     parsed_item[:quantity]
+    assert_equal 1,                     parsed_item[:quantity]
     assert_equal "wow",                   parsed_item[:cat1]
   end
   test "name price description and quantity" do
@@ -48,7 +48,7 @@ class LineParserTest < ActiveSupport::TestCase
     assert_equal "item name",             parsed_item[:name]
     assert_equal 3.45,                  parsed_item[:price]
     assert_equal "excellent condition",  parsed_item[:description_text]
-    assert_equal "5",                     parsed_item[:quantity]
+    assert_equal 5,                     parsed_item[:quantity]
     assert_equal nil,                     parsed_item[:cat1]
   end
   test "name price quantity and category" do
@@ -56,7 +56,7 @@ class LineParserTest < ActiveSupport::TestCase
     assert_equal "item name",             parsed_item[:name]
     assert_equal 3.45,                  parsed_item[:price]
     assert_equal nil,                     parsed_item[:description_text]
-    assert_equal "5",                     parsed_item[:quantity]
+    assert_equal 5,                     parsed_item[:quantity]
     assert_equal "wow",                   parsed_item[:cat1]
   end
   test "name price description and category" do
@@ -64,7 +64,7 @@ class LineParserTest < ActiveSupport::TestCase
     assert_equal "item name",             parsed_item[:name]
     assert_equal 3.45,                  parsed_item[:price]
     assert_equal "excellent condition",  parsed_item[:description_text]
-    assert_equal nil,                     parsed_item[:quantity]
+    assert_equal 1,                     parsed_item[:quantity]
     assert_equal "wow",                   parsed_item[:cat1]
   end
   test "name price description quantity and category" do
@@ -72,7 +72,7 @@ class LineParserTest < ActiveSupport::TestCase
     assert_equal "item name",             parsed_item[:name]
     assert_equal 3.45,                  parsed_item[:price]
     assert_equal "excellent condition",  parsed_item[:description_text]
-    assert_equal "5",                     parsed_item[:quantity]
+    assert_equal 5,                     parsed_item[:quantity]
     assert_equal "wow",                   parsed_item[:cat1]
   end
 end
