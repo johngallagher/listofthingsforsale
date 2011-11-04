@@ -158,7 +158,7 @@ Factory.define :excellent_condition_item_1, :class => 'Item' do |item|
 end
 
 Factory.define :excellent_condition_item_2, :class => 'Item' do |item|
-  item.name "item 2"
+  item.name "item belt and trousers 2"
   item.description_text "excellent condition"
   item.price 11.11
   item.quantity 1
