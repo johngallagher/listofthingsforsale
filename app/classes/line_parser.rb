@@ -1,6 +1,6 @@
 class LineParser
   def self.parse(line)
-    line_matches = line.chomp.match(/(?<name>[[:print:]]+) \$(?<price>\d+\.*\d*)( +?(?<description_text>[^\+#]([[:print:]][^\+#])*))?( +?(\+(?<quantity>\d+)))?( +?#(?<cat1>[[:print:]][^#]*))?$/)
+    line_matches = line.chomp.match(/(?<name>[[:print:]]+) \$(?<price>\d+\.*\d*)( +?(?<description_text>[^#\+][[:print:]]*?))?( +?(\+(?<quantity>\d+)))?( +?#(?<cat1>[[:print:]][^#]*))?$/)
     matches_to_hash(line_matches) unless line_matches.nil?
   end
   def self.matches_to_hash(matches)

@@ -12,7 +12,8 @@ class LineHashesConverter
     convert_exact_matches
     convert_partial_matches
     convert_new_items
-    @converted_items
+    add_sort_indexes
+    @line_hashes
   end
   
   def convert_exact_matches
@@ -38,11 +39,15 @@ class LineHashesConverter
   end
   def convert_new_items
     @line_hashes.select{|l| l.class == Hash }.each do |this_line_hash|
-      this_line_hash.delete(:cat1)
       new_item = Item.create(this_line_hash)
       new_item.save
-      puts "I just created #{new_item.inspect}"
       replace_item_hash_with_item(:item_hash => this_line_hash, :item => new_item)
+    end
+  end
+  def add_sort_indexes
+    @line_hashes.each do |this_item|
+      this_item.sort_order = @line_hashes.index(this_item)
+      this_item.save
     end
   end
   # To replace item hash with item

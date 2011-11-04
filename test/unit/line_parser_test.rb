@@ -86,4 +86,13 @@ class LineParserTest < ActiveSupport::TestCase
     assert_equal 5,                     parsed_item[:quantity]
     assert_equal "wow",                   parsed_item[:cat1]
   end
+  test "strings quartet one line should make one item" do
+    parsed_item = LineParser.parse("My Love is like a Red Red Rose arranged for String Quartet $3.50 Sheet music Score and Parts emailed as a PDF")
+    assert_not_nil(parsed_item)
+    assert_equal "My Love is like a Red Red Rose arranged for String Quartet",             parsed_item[:name]
+    assert_equal 3.50,                  parsed_item[:price]
+    assert_equal "Sheet music Score and Parts emailed as a PDF",  parsed_item[:description_text]
+    assert_equal 1,                     parsed_item[:quantity]
+    assert_equal nil,                   parsed_item[:cat1]
+  end
 end

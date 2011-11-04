@@ -15,16 +15,25 @@ class ItemGenerator
   def parse_lines
     @description.split("\n").each do |line|
       line_hash = LineParser.parse(line)
-      @line_hashes << line_hash unless line_hash.nil?
+      if line_hash.nil?
+        Rails.logger.debug("----- Ignored line: #{line.inspect}")
+      else
+        Rails.logger.debug("----- Just added line: #{line.inspect} with hash #{line_hash}")
+        line_hash.delete(:cat1)
+        @line_hashes << line_hash
+      end
     end
   end
   def convert_line_hashes
     @generated_items = LineHashesConverter.new(:line_hashes => @line_hashes, :existing_items => @items).convert_to_items
+    Rails.logger.debug "----Generated items #{@generated_items.inspect}\n------Line Hashes #{@line_hashes.inspect}\n------Old items #{@items.inspect}"
   end
   def remove_old_items
     if @items.present?
       @old_items = @items - @generated_items 
-      @old_items.destroy_all
+      @old_items.each do |item|
+        item.delete
+      end
     end
   end
   def generate_items_old

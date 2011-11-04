@@ -92,7 +92,8 @@ class ShopsController < ApplicationController
     @shop_url = (0...8).map{65.+(rand(25)).chr}.join.downcase
     @shop = Shop.new(:name => @shop_name, :description => @shop_items_description, :url => @shop_url)
 
-    @new_items = ItemGenerator.new(:new_description => @shop_items_description, :old_description => "", :items => []).generate_items
+    @new_items = ItemGenerator.new(:description => @shop_items_description).generate_items
+    # @new_items = ItemGenerator.new(:new_description => @shop_items_description, :old_description => "", :items => []).generate_items
     @shop.items = @new_items
 
     if user_signed_in?
@@ -136,14 +137,14 @@ class ShopsController < ApplicationController
        # logger.debug("params changed were #{params[:shop].inspect}")
         new_description = params[:shop][:description] unless params[:shop].nil?
         old_description = @shop.description
-        if !new_description.nil?
+        if new_description.present?
           @old_items = Array.new(@shop.items)
-          @new_items = ItemGenerator.new(:new_description => new_description, :old_description => old_description, :items => @old_items).generate_items
+          @new_items = ItemGenerator.new(:items => @old_items, :description => new_description).generate_items
+          # @new_items = ItemGenerator.new(:new_description => new_description, :old_description => old_description, :items => @old_items).generate_items
           @shop.items.clear
           @new_items.each do |this_item|
             @shop.items << Item.find(this_item.id)
           end
-
         end
         @shop.save
 
