@@ -32,6 +32,8 @@ gem "friendly_id", "~> 3.3.0"
 
 gem 'paypal-recurring'
 
+gem 'text'
+
 # Use unicorn as the web server
 # gem 'unicorn'
 
