@@ -6,8 +6,14 @@ class LineHashConverter
     @existing_items = args[:existing_items]
     @line_hash = args[:line_hash]
   end
-  def convert_to_item
-    matching_item_found = find_matching_item
+  
+  def convert_to_item(args)
+    if args[:exact]
+      matching_item_found = find_matching_item_exact
+    else
+      matching_item_found = find_matching_item_partial
+    end
+    
     if matching_item_found
       matching_item_found.update_attributes(@line_hash)
     else
@@ -16,10 +22,12 @@ class LineHashConverter
     matching_item_found
   end
   
-  def find_matching_item
+  def find_matching_item_exact
     perfect_item_match = @existing_items.select{ |i| i.matches?(@line_hash) }.first
     return perfect_item_match unless perfect_item_match.nil?
-    
+  end
+  
+  def find_matching_item_partial
     name_and_price_match = @existing_items.select{ |i| i.name_and_price_match?(@line_hash) }.first
     return name_and_price_match unless name_and_price_match.nil?
     
