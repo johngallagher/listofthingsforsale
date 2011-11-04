@@ -11,6 +11,17 @@ require 'test_helper'
 # x     x     x           x         x y
 
 class LineParserTest < ActiveSupport::TestCase
+  # No Matches
+  test "only name should give no matches" do
+    assert_nil(LineParser.parse("item name"))
+  end
+  test "only price should give no matches" do
+    assert_nil(LineParser.parse("$3.45"))
+  end
+  test "only price and description should give no matches" do
+    assert_nil(LineParser.parse("$3.45 excellent"))
+  end
+  # Matches
   test "name and price" do
     parsed_item = LineParser.parse("item name $3.45")
     assert_equal "item name",             parsed_item[:name]
