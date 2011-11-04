@@ -19,7 +19,7 @@ class LineHashesConverter
   def convert_exact_matches
     @line_hashes.each do |this_line_hash|
       found_item = ItemFinder.new(:line_hash => this_line_hash, :existing_items => @remaining_items).find_exact_match
-      if found_item
+      if found_item.present?
         found_item.update_attributes(this_line_hash)
         replace_item_hash_with_item(:item_hash => this_line_hash, :item => found_item)
         @remaining_items.delete(@converted_item)
@@ -30,8 +30,9 @@ class LineHashesConverter
   def convert_partial_matches
     @line_hashes.each do |this_line_hash|
       found_item = ItemFinder.new(:line_hash => this_line_hash, :existing_items => @remaining_items).find_partial_match
-      if found_item
+      if found_item.present?
         found_item.update_attributes(this_line_hash)
+        found_item.save
         replace_item_hash_with_item(:item_hash => this_line_hash, :item => found_item)
         @remaining_items.delete(@converted_item)
       end

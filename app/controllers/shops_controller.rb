@@ -140,10 +140,10 @@ class ShopsController < ApplicationController
         if new_description.present?
           @old_items = Array.new(@shop.items)
           @new_items = ItemGenerator.new(:items => @old_items, :description => new_description).generate_items
-          # @new_items = ItemGenerator.new(:new_description => new_description, :old_description => old_description, :items => @old_items).generate_items
           @shop.items.clear
           @new_items.each do |this_item|
             @shop.items << Item.find(this_item.id)
+            @shop.save
           end
         end
         @shop.save
