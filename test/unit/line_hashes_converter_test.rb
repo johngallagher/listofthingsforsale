@@ -6,7 +6,7 @@ class LineHashesConverterTest < Test::Unit::TestCase
     @existing_item_2 = Factory.build(:excellent_condition_item_2)
     @line_hash_1 = {:name => "item 1",                   :price => 11.11, :description_text => "excellent condition", :quantity => 1}
     @line_hash_2 = {:name => "item belt and trousers 2", :price => 11.11, :description_text => "excellent condition", :quantity => 1}
-    @line_hash_1_with_categories = {:name => "item belt and trousers 2", :price => 11.11, :description_text => "excellent condition", :quantity => 1, :categories => ["cat1", "cat2"]}
+    @line_hash_1_with_categories = {:name => "item 1", :price => 11.11, :description_text => "excellent condition", :quantity => 1, :categories => ["cat1", "cat2"]}
   end
   # with no items
   test "with no existing items one line hash should create an item" do
@@ -91,7 +91,7 @@ class LineHashesConverterTest < Test::Unit::TestCase
   
   # categories
   # no items
-  test "with no existing items one line hash should create an item" do
+  test "one line hash with two categories should create item with two categories" do
     converted_items = LineHashesConverter.new(:line_hashes => [@line_hash_1_with_categories]).convert_to_items
     assert_equal(converted_items.length, 1)
     item     = converted_items.first
