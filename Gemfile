@@ -34,6 +34,8 @@ gem 'paypal-recurring'
 
 gem 'text'
 
+gem 'facets'
+
 # Use unicorn as the web server
 # gem 'unicorn'
 

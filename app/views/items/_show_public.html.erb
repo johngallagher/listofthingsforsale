@@ -1,5 +1,13 @@
 <li class="simpleCart_shelfItem">
-  <span class="item_shopid" style="display:none;"><%= @shop.id %></span>
+  <div style="display:none;">
+    <span class="category_1"><%= if item.categories.count > 0 then item.categories[0].name end %></span>  
+    <span class="category_2"><%= if item.categories.count > 1 then item.categories[1].name end %></span>  
+    <span class="category_3"><%= if item.categories.count > 2 then item.categories[2].name end %></span>  
+    <span class="category_4"><%= if item.categories.count > 3 then item.categories[3].name end %></span>  
+    <span class="category_5"><%= if item.categories.count > 4 then item.categories[4].name end %></span>  
+    <span class="category_6"><%= if item.categories.count > 5 then item.categories[5].name end %></span>  
+  </div>
+    <span class="item_shopid" style="display:none;"><%= @shop.id %></span>
   <span class="item_itemid" style="display:none;"><%= item.id %></span>
     
   
@@ -32,8 +40,6 @@
 
   <a class="item_name itemtitle truncated" href="javascript:;" id="item<%= item_index + 1 %>" name="item<%= item_index + 1 %>"><%= truncate(item.name, :length => 25) %></a>
   <a class="item_name itemtitle full" href="javascript:;" id="item<%= item_index + 1 %>" name="item<%= item_index + 1 %>" style="display: none; height: auto;"><%= item.name %></a>
-
-  
   <div class="item_description" id="item-desc<%= item_index + 1 %>" style="display: none;"><%= item.description_text %><br />
     <% if item.quantity > 0 %>
       <%= item.quantity %> Available
@@ -49,7 +55,6 @@
     </span>  
     <div class="added-to-cart" style="<%= "display:none;" if item.quantity > 0 %>">Sold Out</div>
   </span>
-  
   <span class="item_price price"><%= if item.price > 0 then number_to_currency(item.price, :unit => "$") else "FREE" end %></span>
   
 </li>
