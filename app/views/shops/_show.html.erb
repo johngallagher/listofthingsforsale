@@ -44,7 +44,7 @@
     <div class="filter">
       <a href="javascript:;" id="filter-none">all</a>
       <% @shop.items.collect{|i| i.categories }.flatten.uniq.each do |category| %>
-      <a href="javascript:;" id="filter-<%= category.name %>"><%= category.name %></a>
+      <a href="javascript:;" id="filter-<%= category.css_name %>"><%= category.name %></a>
       <% end %>
     </div>
   </div>
@@ -281,17 +281,17 @@ $(document).ready(function () {
     var featureList = new List('listview', templates);
     
     <% @shop.items.collect{|i| i.categories }.flatten.each do |category| %>
-    $('#filter-<%= category.name %>').click(function() {
+    $('#filter-<%= category.css_name %>').click(function() {
         featureList.filter(function(values) {
             return true;
         });
         featureList.filter(function(values) {
-            if (values.category_1 == "<%= category.name %>" || 
-            values.category_2 == "<%= category.name %>" || 
-            values.category_3 == "<%= category.name %>" || 
-            values.category_4 == "<%= category.name %>" || 
-            values.category_5 == "<%= category.name %>" || 
-            values.category_6 == "<%= category.name %>") {
+            if (values.category_1 == "<%= category.css_name %>" || 
+            values.category_2 == "<%= category.css_name %>" || 
+            values.category_3 == "<%= category.css_name %>" || 
+            values.category_4 == "<%= category.css_name %>" || 
+            values.category_5 == "<%= category.css_name %>" || 
+            values.category_6 == "<%= category.css_name %>") {
                 return true;
             } else {
                 return false;

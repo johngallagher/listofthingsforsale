@@ -1,3 +1,4 @@
+require 'category_name_sanitizer'
 # Converts line hashes to items
 # As we go through the items, we remove the ones we've matched.
 class LineHashesConverter
@@ -69,15 +70,18 @@ class LineHashesConverter
     item            = args[:item]
     category_names  = args[:category_names]
     if category_names.nil? or item.nil? then return end
-      
+    
     item.categories.clear
     
     category_names.each do |category_name|
-      item_category = Category.where(:name => category_name)
+      category_css_name = CategoryNameSanitizer.new(category_name).sanitize
+      item_category = Category.where(:css_name => category_css_name)
       if item_category.present?
         item.categories << item_category
       else
-        item.categories.create(:name => category_name)
+        c = Category.create(:name => category_name, :css_name => category_css_name)
+        c.save
+        item.categories << c
       end
       item.save
     end
