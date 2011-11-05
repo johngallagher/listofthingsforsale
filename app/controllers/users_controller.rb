@@ -37,7 +37,6 @@ class UsersController < ApplicationController
     @subscription.email = @subscription.paypal.checkout_details.email
     @subscription.save_with_payment
     @user.save
-    StatsMix.track("Subscription Bought")
     redirect_to "/" + @user.shop.url, :notice => "Subscription successful! Thankyou."
     return
   end

@@ -49,6 +49,4 @@ class OrderFinderTest < ActiveSupport::TestCase
     
     assert_nil(order_found)
   end
-
-  
 end

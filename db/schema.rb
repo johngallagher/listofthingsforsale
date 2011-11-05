@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111021174236) do
+ActiveRecord::Schema.define(:version => 20111104233931) do
 
   create_table "authentications", :force => true do |t|
     t.integer  "user_id"
@@ -29,6 +29,17 @@ ActiveRecord::Schema.define(:version => 20111021174236) do
     t.datetime "background_image_updated_at"
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "categories", :force => true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "categories_items", :id => false, :force => true do |t|
+    t.integer "item_id"
+    t.integer "category_id"
   end
 
   create_table "items", :force => true do |t|
