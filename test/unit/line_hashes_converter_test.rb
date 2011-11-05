@@ -6,6 +6,7 @@ class LineHashesConverterTest < Test::Unit::TestCase
     @existing_item_2 = Factory.build(:excellent_condition_item_2)
     @line_hash_1 = {:name => "item 1",                   :price => 11.11, :description_text => "excellent condition", :quantity => 1}
     @line_hash_2 = {:name => "item belt and trousers 2", :price => 11.11, :description_text => "excellent condition", :quantity => 1}
+    @line_hash_1_with_categories = {:name => "item belt and trousers 2", :price => 11.11, :description_text => "excellent condition", :quantity => 1, :categories => ["cat1", "cat2"]}
   end
   # with no items
   test "with no existing items one line hash should create an item" do
@@ -88,4 +89,22 @@ class LineHashesConverterTest < Test::Unit::TestCase
     assert_equal("item belt and trousers 2", @existing_item_2.name)
   end
   
+  # categories
+  # no items
+  test "with no existing items one line hash should create an item" do
+    converted_items = LineHashesConverter.new(:line_hashes => [@line_hash_1_with_categories]).convert_to_items
+    assert_equal(converted_items.length, 1)
+    item     = converted_items.first
+    assert_equal(Item,                  item.class)
+    assert_equal("item 1",              item.name)
+    assert_equal(11.11,                 item.price)
+    assert_equal("excellent condition", item.description_text)
+    assert_equal(1,                     item.quantity)
+    
+    assert_equal(2,                     item.categories.count)
+    assert_equal(Category,              item.categories.first.class)
+    assert_equal("cat1" ,               item.categories.first.name)
+    assert_equal(Category,              item.categories.second.class)
+    assert_equal("cat2",                item.categories.second.name)
+  end
 end
