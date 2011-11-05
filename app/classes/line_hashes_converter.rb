@@ -15,20 +15,20 @@ class LineHashesConverter
   end
   
   def convert_exact_matches
-    line_hashes_to_items(:existing_matches => true, :partial => false)
+    line_hashes_to_items(:existing => true, :partial => false)
   end
   
   def convert_partial_matches
-    line_hashes_to_items(:existing_matches => true, :partial => true)
+    line_hashes_to_items(:existing => true, :partial => true)
   end
 
   def convert_new_items
-    line_hashes_to_items(:existing_matches => false)
+    line_hashes_to_items
   end
 
-  def line_hashes_to_items(args)
+  def line_hashes_to_items(args={})
     @converted_items.select{|l| l.class == Hash }.each do |this_line_hash|
-      if args[:existing_matches]
+      if args[:existing]
         item = ItemFinder.new(:line_hash => this_line_hash, :existing_items => @existing_items, :partial => args[:partial]).find_match
         replace_line_hash_with_item(:item => item, :line_hash => this_line_hash) unless item.nil?
       else
