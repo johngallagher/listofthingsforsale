@@ -15,11 +15,15 @@ class LineHashesConverter
   end
   
   def convert_exact_matches
-    line_hashes_to_items(:partial => false, :existing_matches => true)
+    line_hashes_to_items(:existing_matches => true, :partial => false)
   end
   
   def convert_partial_matches
-    line_hashes_to_items(:partial => true, :existing_matches => true)
+    line_hashes_to_items(:existing_matches => true, :partial => true)
+  end
+
+  def convert_new_items
+    line_hashes_to_items(:existing_matches => false)
   end
 
   def line_hashes_to_items(args)
@@ -49,17 +53,6 @@ class LineHashesConverter
     replace_item_hash_with_item(:item_hash => this_line_hash, :item => item)
   end
   
-  def convert_new_items
-    @converted_items.select{|l| l.class == Hash }.each do |this_line_hash|
-      categories_hash = this_line_hash.delete(:categories) unless this_line_hash[:categories].nil?
-
-      new_item = Item.create(this_line_hash)
-      new_item.save
-      
-      update_categories(:category_names => categories_hash, :item => new_item)
-      replace_item_hash_with_item(:item_hash => this_line_hash, :item => new_item)
-    end
-  end
 
   def add_sort_indexes
     @converted_items.each do |this_line_hash|
