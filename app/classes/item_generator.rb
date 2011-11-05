@@ -16,14 +16,12 @@ class ItemGenerator
     @description.split("\n").each do |line|
       line_hash = LineParser.parse(line)
       unless line_hash.nil?
-        line_hash.delete(:cat1)
         @line_hashes << line_hash
       end
     end
   end
   def convert_line_hashes
     @generated_items = LineHashesConverter.new(:line_hashes => @line_hashes, :existing_items => @items).convert_to_items
-    Rails.logger.debug "----Generated items #{@generated_items.inspect}\n------Line Hashes #{@line_hashes.inspect}\n------Old items #{@items.inspect}"
   end
   def remove_old_items
     if @items.present?

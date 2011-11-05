@@ -65,6 +65,7 @@ GEM
       rack
     erubis (2.6.6)
       abstract (>= 1.0.0)
+    facets (2.9.2)
     factory_girl (2.1.2)
       activesupport
     faraday (0.7.5)
@@ -239,6 +240,7 @@ DEPENDENCIES
   capybara
   devise (= 1.4.5)
   dragonfly (~> 0.9.8)
+  facets
   factory_girl
   friendly_id (~> 3.3.0)
   geo_location
