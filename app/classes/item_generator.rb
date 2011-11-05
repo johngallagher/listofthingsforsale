@@ -16,7 +16,7 @@ class ItemGenerator
     @description.split("\n").each do |line|
       line_hash = LineParser.parse(line)
       unless line_hash.nil?
-        line_hash.delete(:cat1)
+        line_hash.delete(:categories)
         @line_hashes << line_hash
       end
     end

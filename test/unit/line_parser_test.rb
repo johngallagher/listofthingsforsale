@@ -28,7 +28,7 @@ class LineParserTest < ActiveSupport::TestCase
     assert_equal 3.45,                  parsed_item[:price]
     assert_equal nil,                     parsed_item[:description_text]
     assert_equal 1,                     parsed_item[:quantity]
-    assert_equal nil,                     parsed_item[:cat1]
+    assert_equal [],                     parsed_item[:categories]
   end
   test "name price and description" do
     parsed_item = LineParser.parse("item name $3.45 excellent condition")
@@ -36,7 +36,7 @@ class LineParserTest < ActiveSupport::TestCase
     assert_equal 3.45,                  parsed_item[:price]
     assert_equal "excellent condition",   parsed_item[:description_text]
     assert_equal 1,                     parsed_item[:quantity]
-    assert_equal nil,                     parsed_item[:cat1]
+    assert_equal [],                     parsed_item[:categories]
   end
   test "name price and quantity" do
     parsed_item = LineParser.parse("item name $3.45 +5")
@@ -44,7 +44,7 @@ class LineParserTest < ActiveSupport::TestCase
     assert_equal 3.45,                  parsed_item[:price]
     assert_equal nil,                     parsed_item[:description_text]
     assert_equal 5,                     parsed_item[:quantity]
-    assert_equal nil,                     parsed_item[:cat1]
+    assert_equal [],                     parsed_item[:categories]
   end
   test "name price and category" do
     parsed_item = LineParser.parse("item name $3.45 #wow")
@@ -52,7 +52,7 @@ class LineParserTest < ActiveSupport::TestCase
     assert_equal 3.45,                  parsed_item[:price]
     assert_equal nil,                     parsed_item[:description_text]
     assert_equal 1,                     parsed_item[:quantity]
-    assert_equal "wow",                   parsed_item[:cat1]
+    assert_equal ["wow"],                   parsed_item[:categories]
   end
   test "name price description and quantity" do
     parsed_item = LineParser.parse("item name $3.45 excellent condition +5")
@@ -60,7 +60,7 @@ class LineParserTest < ActiveSupport::TestCase
     assert_equal 3.45,                  parsed_item[:price]
     assert_equal "excellent condition",  parsed_item[:description_text]
     assert_equal 5,                     parsed_item[:quantity]
-    assert_equal nil,                     parsed_item[:cat1]
+    assert_equal [],                     parsed_item[:categories]
   end
   test "name price quantity and category" do
     parsed_item = LineParser.parse("item name $3.45 +5 #wow")
@@ -68,7 +68,7 @@ class LineParserTest < ActiveSupport::TestCase
     assert_equal 3.45,                  parsed_item[:price]
     assert_equal nil,                     parsed_item[:description_text]
     assert_equal 5,                     parsed_item[:quantity]
-    assert_equal "wow",                   parsed_item[:cat1]
+    assert_equal ["wow"],                   parsed_item[:categories]
   end
   test "name price description and category" do
     parsed_item = LineParser.parse("item name $3.45 excellent condition #wow")
@@ -76,7 +76,7 @@ class LineParserTest < ActiveSupport::TestCase
     assert_equal 3.45,                  parsed_item[:price]
     assert_equal "excellent condition",  parsed_item[:description_text]
     assert_equal 1,                     parsed_item[:quantity]
-    assert_equal "wow",                   parsed_item[:cat1]
+    assert_equal ["wow"],                   parsed_item[:categories]
   end
   test "name price description quantity and category" do
     parsed_item = LineParser.parse("item name $3.45 excellent condition +5 #wow")
@@ -84,7 +84,7 @@ class LineParserTest < ActiveSupport::TestCase
     assert_equal 3.45,                  parsed_item[:price]
     assert_equal "excellent condition",  parsed_item[:description_text]
     assert_equal 5,                     parsed_item[:quantity]
-    assert_equal "wow",                   parsed_item[:cat1]
+    assert_equal ["wow"],                   parsed_item[:categories]
   end
   test "strings quartet one line should make one item" do
     parsed_item = LineParser.parse("My Love is like a Red Red Rose arranged for String Quartet $3.50 Sheet music Score and Parts emailed as a PDF")
@@ -93,6 +93,6 @@ class LineParserTest < ActiveSupport::TestCase
     assert_equal 3.50,                  parsed_item[:price]
     assert_equal "Sheet music Score and Parts emailed as a PDF",  parsed_item[:description_text]
     assert_equal 1,                     parsed_item[:quantity]
-    assert_equal nil,                   parsed_item[:cat1]
+    assert_equal [],                   parsed_item[:categories]
   end
 end
