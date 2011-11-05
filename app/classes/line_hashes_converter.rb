@@ -15,43 +15,56 @@ class LineHashesConverter
   end
   
   def convert_exact_matches
-    line_hashes_to_items(:partial => false)
+    line_hashes_to_items(:partial => false, :existing_matches => true)
   end
   
   def convert_partial_matches
-    line_hashes_to_items(:partial => true)
+    line_hashes_to_items(:partial => true, :existing_matches => true)
   end
 
   def line_hashes_to_items(args)
-    @converted_items.each do |this_item|
-      found_item = ItemFinder.new(:line_hash => this_item, :existing_items => @existing_items, :partial => args[:partial]).find_match
-      if found_item.present?
-        category_names = this_item.delete(:categories) unless this_item[:categories].nil?
-        update_categories(:category_names => category_names, :item => found_item)
-        
-        found_item.update_attributes(this_item)
-        
-        replace_item_hash_with_item(:item_hash => this_item, :item => found_item)
+    @converted_items.select{|l| l.class == Hash }.each do |this_line_hash|
+      if args[:existing_matches]
+        item = ItemFinder.new(:line_hash => this_line_hash, :existing_items => @existing_items, :partial => args[:partial]).find_match
+        replace_line_hash_with_item(:item => item, :line_hash => this_line_hash) unless item.nil?
+      else
+        replace_line_hash_with_item(:item => item, :line_hash => this_line_hash)
       end
     end
   end
 
-  def convert_new_items
-    @converted_items.select{|l| l.class == Hash }.each do |this_item|
-      categories_hash = this_item.delete(:categories) unless this_item[:categories].nil?
+  def replace_line_hash_with_item(args)
+    this_line_hash = args[:line_hash]
+    item = args[:item]
+    category_names = this_line_hash.delete(:categories) unless this_line_hash[:categories].nil?
 
-      new_item = Item.create(this_item)
+    if item.nil?
+      item = Item.create(this_line_hash)
+      item.save
+    else
+      item.update_attributes(this_line_hash)
+    end
+
+    update_categories(:category_names => category_names, :item => item)
+    replace_item_hash_with_item(:item_hash => this_line_hash, :item => item)
+  end
+  
+  def convert_new_items
+    @converted_items.select{|l| l.class == Hash }.each do |this_line_hash|
+      categories_hash = this_line_hash.delete(:categories) unless this_line_hash[:categories].nil?
+
+      new_item = Item.create(this_line_hash)
       new_item.save
       
       update_categories(:category_names => categories_hash, :item => new_item)
-      replace_item_hash_with_item(:item_hash => this_item, :item => new_item)
+      replace_item_hash_with_item(:item_hash => this_line_hash, :item => new_item)
     end
   end
 
   def add_sort_indexes
-    @converted_items.each do |this_item|
-      this_item.sort_order = @converted_items.index(this_item)
-      this_item.save
+    @converted_items.each do |this_line_hash|
+      this_line_hash.sort_order = @converted_items.index(this_line_hash)
+      this_line_hash.save
     end
   end
 
