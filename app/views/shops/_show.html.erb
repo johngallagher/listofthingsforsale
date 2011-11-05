@@ -40,7 +40,7 @@
   <% else %>
     <h1 style="text-align:center;"><%= @shop.url %>&#x27;<% if @shop.url[-1,1] != "s" %>s<% end %> list of things for sale:</h1>
   <% end %>
-  <div style="width: 100%; height: 40px;">
+  <div style="width: 100%; margin-bottom: 10px;">
     <div class="filter">
       <a href="javascript:;" id="filter-none">all</a>
       <% @shop.items.collect{|i| i.categories }.flatten.uniq.each do |category| %>
@@ -67,6 +67,7 @@
     if ($("#listform").is(":visible")) {
       $('#listform').fadeToggle('fast', function () {
           $('#listview').fadeToggle('fast');
+          $('.filter').fadeToggle('fast');
       });
     };
   };
@@ -121,8 +122,10 @@
     if (editinglist) {
       $('#listform').fadeToggle('fast', function () {
           $('#listview').fadeToggle('fast');
+          $('.filter').fadeToggle('fast');
       });
     } else {
+      $('.filter').fadeToggle('fast');
       $('#listview').fadeToggle('fast', function () {
           $('#listform').fadeToggle('fast');
       });
