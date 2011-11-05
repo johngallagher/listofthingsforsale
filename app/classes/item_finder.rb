@@ -1,18 +1,27 @@
 require 'text'
 class ItemFinder
   def initialize(args)
-    @existing_items = args[:existing_items]
-    @line_hash = args[:line_hash]
+    @existing_items     = args[:existing_items]
+    @line_hash          = args[:line_hash]
+    @find_partial_match   = args[:partial]
+    if @find_partial_match.nil? then @find_partial_match = false end
   end
-  def find_exact_match
+
+  def find_match
     if @existing_items.nil? then return end
-      
+    if @find_partial_match
+      find_partial_match
+    else
+      find_exact_match
+    end
+  end
+
+  def find_exact_match
     perfect_item_match = @existing_items.select{ |i| i.matches?(@line_hash) }.first
     return perfect_item_match unless perfect_item_match.nil?
   end
+
   def find_partial_match
-    if @existing_items.nil? then return end
-      
     name_and_price_matches = @existing_items.select{ |i| i.name_and_price_match?(@line_hash) }
     name_and_price_match = name_and_price_matches.sort { |a,b| Text::Levenshtein.distance(a.description_text, @line_hash[:description_text]) <=> Text::Levenshtein.distance(b.description_text, @line_hash[:description_text])}.first
     return name_and_price_match unless name_and_price_match.nil?
