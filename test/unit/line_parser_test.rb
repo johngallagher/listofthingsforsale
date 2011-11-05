@@ -95,6 +95,7 @@ class LineParserTest < ActiveSupport::TestCase
     assert_equal 1,                     parsed_item[:quantity]
     assert_equal [],                   parsed_item[:categories]
   end
+  
   # Categories
   test "name price and 1 category" do
     parsed_item = LineParser.parse("item name $3.45 #wow")

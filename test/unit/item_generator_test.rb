@@ -23,4 +23,17 @@ class ItemGeneratorTest < Test::Unit::TestCase
     generated_items = ItemGenerator.new(:description => description).generate_items
     assert_equal(14, generated_items.length)
   end
+  test "one line with two categories" do
+    generated_items = ItemGenerator.new(:description => "iPhone $34 brand new #phone #new").generate_items
+    assert_equal(1, generated_items.count)
+    
+    generated_item = generated_items.first
+    assert_equal("iPhone",    generated_item.name)
+    assert_equal(34.0,        generated_item.price)
+    assert_equal("brand new", generated_item.description_text)
+    assert_equal(2,           generated_item.categories.count)
+    assert_equal("phone" ,    generated_item.categories.first.name)
+    assert_equal("new",       generated_item.categories.second.name)
+  end
+  
 end
