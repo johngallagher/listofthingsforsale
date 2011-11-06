@@ -42,7 +42,7 @@
   <% end %>
   <div style="width: 100%; margin-bottom: 10px;">
     <div class="filter">
-      <a href="javascript:;" id="filter-none">all</a>
+      <a href="javascript:;" id="filter-none">All</a>
       <% @shop.items.collect{|i| i.categories }.flatten.uniq.each do |category| %>
       <a href="javascript:;" id="filter-<%= category.css_name %>"><%= category.name %></a>
       <% end %>
