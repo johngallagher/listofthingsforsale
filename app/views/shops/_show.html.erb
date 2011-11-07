@@ -262,11 +262,17 @@ $(document).ready(function () {
 </script>
 
 <script type="text/javascript">
+function makeRows() {
+  $('.row').removeClass('row');
+  $('li.simpleCart_shelfItem:nth-child(3n+1)').addClass('row');
+};
+
 $(document).ready(function () {
-        
+  
   /* 
   * LOVELY THINGS
   */
+  makeRows();
   
   var templates = {
     valueNames: [ 'category_1', 'category_2','category_3', 'category_4','category_5', 'category_6' ],
@@ -292,6 +298,7 @@ $(document).ready(function () {
             return false;
         }
     });
+    makeRows();
     return false;
   });
   <% end %>
@@ -312,6 +319,7 @@ $(document).ready(function () {
       featureList.filter(function(values) {
           return true;
       });
+      makeRows();
       return false;
   });
 });
