@@ -74,12 +74,13 @@ class LineHashesConverter
     item.categories.clear
     
     category_names.each do |category_name|
-      category_css_name = CategoryNameSanitizer.new(category_name).sanitize
+      category_css_name = CategoryNameSanitizer.new(category_name).sanitize.downcase
+      Rails.logger.debug "Cat name is #{category_css_name} from #{category_name}"
       item_category = Category.where(:css_name => category_css_name)
       if item_category.present?
-        item.categories << item_category
+        item.categories << item_category.first
       else
-        c = Category.create(:name => category_name, :css_name => category_css_name)
+        c = Category.create(:name => category_name.titleize, :css_name => category_css_name)
         c.save
         item.categories << c
       end

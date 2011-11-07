@@ -1,0 +1,8 @@
+<div class="filter">
+  <% if @shop_categories.count > 0 %>
+    <a href="javascript:;" id="filter-none">All</a>
+    <% @shop_categories.each do |category| %>
+      <a href="javascript:;" id="filter-<%= category.css_name %>"><%= category.name %></a>
+    <% end %>
+  <% end %>
+</div>

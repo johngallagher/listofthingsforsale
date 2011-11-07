@@ -7,7 +7,7 @@ class CategoryNameSanitizer
     if @name.match(/^-?[_a-zA-Z]+[_a-zA-Z0-9-]*$/).nil?
       clean
     end
-    @name
+    @name.downcase
   end
   
   def clean

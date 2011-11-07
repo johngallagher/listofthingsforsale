@@ -7,4 +7,7 @@ class CategoryNameSanitizerTest < Test::Unit::TestCase
   test "should remove other chars" do
     assert_equal("onsale", CategoryNameSanitizer.new("onsale;,.").sanitize)
   end
+  test "should downcase" do
+    assert_equal("home-furnishings", CategoryNameSanitizer.new("Home furnishings").sanitize)
+  end
 end
