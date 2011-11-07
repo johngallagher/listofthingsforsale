@@ -1,10 +1,6 @@
 <div id="listview">
-  <div class="filter">
-    <a href="javascript:;" id="filter-none">all</a>
-    <% @shop.items.collect{|i| i.categories }.flatten.uniq.each do |category| %>
-    <a href="javascript:;" id="filter-<%= category.css_name %>"><%= category.name %></a>
-    <% end %>
-  </div>
+  <% @shop_categories = @shop.items.collect{|i| i.categories }.flatten.uniq %>
+  <%= render :partial => 'shop_filter_bar' %>
   <% @sorted_items = shop.items.sort{ |a,b| ( a.sort_order and b.sort_order ) ? a.sort_order.to_i <=> b.sort_order.to_i : ( a.sort_order ? -1 : 1 ) } %>
   <% @in_stock_items = @sorted_items.select{ |i| i.quantity > 0 } %>
   <ul class="product-list">
