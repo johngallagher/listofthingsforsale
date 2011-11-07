@@ -1,12 +1,10 @@
 <li class="simpleCart_shelfItem">
-  <div style="display:none;">
     <span class="category_1"><%= if item.categories.count > 0 then item.categories[0].css_name end %></span>  
     <span class="category_2"><%= if item.categories.count > 1 then item.categories[1].css_name end %></span>  
     <span class="category_3"><%= if item.categories.count > 2 then item.categories[2].css_name end %></span>  
     <span class="category_4"><%= if item.categories.count > 3 then item.categories[3].css_name end %></span>  
     <span class="category_5"><%= if item.categories.count > 4 then item.categories[4].css_name end %></span>  
     <span class="category_6"><%= if item.categories.count > 5 then item.categories[5].css_name end %></span>  
-  </div>
     <span class="item_shopid" style="display:none;"><%= @shop.id %></span>
   <span class="item_itemid" style="display:none;"><%= item.id %></span>
     

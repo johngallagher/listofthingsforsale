@@ -41,12 +41,6 @@
     <h1 style="text-align:center;"><%= @shop.url %>&#x27;<% if @shop.url[-1,1] != "s" %>s<% end %> list of things for sale:</h1>
   <% end %>
   <div style="width: 100%; margin-bottom: 10px;">
-    <div class="filter">
-      <a href="javascript:;" id="filter-none">all</a>
-      <% @shop.items.collect{|i| i.categories }.flatten.uniq.each do |category| %>
-      <a href="javascript:;" id="filter-<%= category.css_name %>"><%= category.name %></a>
-      <% end %>
-    </div>
   </div>
   
   <%= render :partial => 'list', :locals => {:shop => @shop} %>
@@ -268,55 +262,57 @@ $(document).ready(function () {
 </script>
 
 <script type="text/javascript">
+$(document).ready(function () {
         
-    /* 
-    * LOVELY THINGS
-    */
-    
-    var templates = {
-	    valueNames: [ 'category_1', 'category_2','category_3', 'category_4','category_5', 'category_6' ],
-	    listClass: 'product-list'
-    };
+  /* 
+  * LOVELY THINGS
+  */
+  
+  var templates = {
+    valueNames: [ 'category_1', 'category_2','category_3', 'category_4','category_5', 'category_6' ],
+    listClass: 'product-list'
+  };
 
-    var featureList = new List('listview', templates);
-    
-    <% @shop.items.collect{|i| i.categories }.flatten.each do |category| %>
-    $('#filter-<%= category.css_name %>').click(function() {
-        featureList.filter(function(values) {
-            return true;
-        });
-        featureList.filter(function(values) {
-            if (values.category_1 == "<%= category.css_name %>" || 
-            values.category_2 == "<%= category.css_name %>" || 
-            values.category_3 == "<%= category.css_name %>" || 
-            values.category_4 == "<%= category.css_name %>" || 
-            values.category_5 == "<%= category.css_name %>" || 
-            values.category_6 == "<%= category.css_name %>") {
-                return true;
-            } else {
-                return false;
-            }
-        });
-        return false;
+  var featureList = new List('listview', templates);
+  
+  <% @shop.items.collect{|i| i.categories }.flatten.uniq.each do |category| %>
+  $('#filter-<%= category.css_name %>').click(function() {
+    featureList.filter(function(values) {
+        return true;
     });
-    <% end %>
-    
-    // 
-    // $('#filter-wowser').click(function() {
-    //     featureList.filter(function(values) {
-    //         if (values.category == "wowser") {
-    //             return true;
-    //         } else {
-    //             return false;
-    //         }
-    //     });
-    //     return false;
-    // });
-    
-    $('#filter-none').click(function() {
-        featureList.filter(function(values) {
+    featureList.filter(function(values) {
+        if (values.category_1 == "<%= category.css_name %>" || 
+        values.category_2 == "<%= category.css_name %>" || 
+        values.category_3 == "<%= category.css_name %>" || 
+        values.category_4 == "<%= category.css_name %>" || 
+        values.category_5 == "<%= category.css_name %>" || 
+        values.category_6 == "<%= category.css_name %>") {
             return true;
-        });
-        return false;
+        } else {
+            return false;
+        }
     });
+    return false;
+  });
+  <% end %>
+  
+  // 
+  // $('#filter-wowser').click(function() {
+  //     featureList.filter(function(values) {
+  //         if (values.category == "wowser") {
+  //             return true;
+  //         } else {
+  //             return false;
+  //         }
+  //     });
+  //     return false;
+  // });
+  
+  $('#filter-none').click(function() {
+      featureList.filter(function(values) {
+          return true;
+      });
+      return false;
+  });
+});
 </script>
