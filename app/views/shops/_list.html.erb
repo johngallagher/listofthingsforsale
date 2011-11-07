@@ -1,18 +1,22 @@
 <div id="listview">
+  <div class="filter">
+    <a href="javascript:;" id="filter-none">all</a>
+    <% @shop.items.collect{|i| i.categories }.flatten.uniq.each do |category| %>
+    <a href="javascript:;" id="filter-<%= category.css_name %>"><%= category.name %></a>
+    <% end %>
+  </div>
   <% @sorted_items = shop.items.sort{ |a,b| ( a.sort_order and b.sort_order ) ? a.sort_order.to_i <=> b.sort_order.to_i : ( a.sort_order ? -1 : 1 ) } %>
-  <% @in_stock_items = @sorted_items.select{ |i| i.quantity > 0 }.in_groups_of(3) %>
-  <% @in_stock_items.each do |in_stock_items| %>
-    <ul class="product-list">
-      <% in_stock_items.each do |in_stock_item| %>
+  <% @in_stock_items = @sorted_items.select{ |i| i.quantity > 0 } %>
+  <ul class="product-list">
+  <% @in_stock_items.each do |in_stock_item| %>
         <% if in_stock_item %>
           <%= render :partial => "items/show_public", :locals => { :shop => shop, :item => in_stock_item, :item_index => @sorted_items.index(in_stock_item) } %>
         <% end %>
-      <% end %>
-    </ul>
   <% end %>
+</ul>
   <% @sold_out_items = @sorted_items.select{ |i| i.quantity == 0 }.in_groups_of(3) %>
   <% @sold_out_items.each do |sold_out_items| %>
-    <ul class="product-list">
+    <ul class="product-list-sold">
       <% sold_out_items.each do |sold_out_item| %>
         <% if sold_out_item %>
           <%= render :partial => "items/show_public", :locals => { :shop => shop, :item => sold_out_item, :item_index => @sorted_items.index(sold_out_item) } %>

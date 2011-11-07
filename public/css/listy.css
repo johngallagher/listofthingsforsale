@@ -84,6 +84,9 @@ overflow-y: scroll;
     position: relative;
 }
 
+.simpleCart_shelfItem.row {
+  clear: both;
+}
 
 .itemContainer
 {
@@ -419,5 +422,4 @@ margin:5px 0 0 0;
   text-align: left;
   margin: 5px 0 0 0;
 }
-
 
