@@ -1,4 +1,4 @@
-<li class="simpleCart_shelfItem">
+<li class="simpleCart_shelfItem"<% if item_index % 3 == 0 then %>style="clear:both;"<% end %> >  
     <span class="category_1"><%= if item.categories.count > 0 then item.categories[0].css_name end %></span>  
     <span class="category_2"><%= if item.categories.count > 1 then item.categories[1].css_name end %></span>  
     <span class="category_3"><%= if item.categories.count > 2 then item.categories[2].css_name end %></span>  
