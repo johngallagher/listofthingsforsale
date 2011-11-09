@@ -13,4 +13,12 @@ class CurrencySwitcherTest < ActiveSupport::TestCase
     currency = CurrencySwitcher.new('£3.00').get_currency
     assert_equal(Currency::GBP, currency)
   end
+  test "should be dollars for single price" do
+    currency = CurrencySwitcher.new('$3').get_currency
+    assert_equal(Currency::USD, currency)
+  end
+  test "should be dollars for single price with pence" do
+    currency = CurrencySwitcher.new('$3.00').get_currency
+    assert_equal(Currency::USD, currency)
+  end
 end
