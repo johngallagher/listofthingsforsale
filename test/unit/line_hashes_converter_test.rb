@@ -90,7 +90,6 @@ class LineHashesConverterTest < Test::Unit::TestCase
   end
   
   # categories
-  # no items
   test "one line hash with two categories should create item with two categories" do
     converted_items = LineHashesConverter.new(:line_hashes => [@line_hash_1_with_categories]).convert_to_items
     assert_equal(converted_items.length, 1)
