@@ -52,6 +52,7 @@ class LineHashesConverter
 
     update_categories(:category_names => category_names, :item => item)
     replace_item_hash_with_item(:item_hash => this_line_hash, :item => item)
+    @existing_items.delete(item)
   end
   
 
