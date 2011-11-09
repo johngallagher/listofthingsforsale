@@ -32,8 +32,10 @@ class ItemGeneratorTest < Test::Unit::TestCase
     assert_equal(34.0,        generated_item.price)
     assert_equal("brand new", generated_item.description_text)
     assert_equal(2,           generated_item.categories.count)
-    assert_equal("phone" ,    generated_item.categories.first.name)
-    assert_equal("new",       generated_item.categories.second.name)
+    assert_equal("Phone" ,    generated_item.categories.first.name)
+    assert_equal("phone" ,    generated_item.categories.first.css_name)
+    assert_equal("New",       generated_item.categories.second.name)
+    assert_equal("new",       generated_item.categories.second.css_name)
   end
-  
+  # 1 Item
 end
