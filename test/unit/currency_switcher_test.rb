@@ -25,10 +25,8 @@ class CurrencySwitcherTest < ActiveSupport::TestCase
     currency = CurrencySwitcher.new("name $3 \nname £3").get_currency
     assert_equal(Currency::USD, currency)
   end
-  test "should ignore multiple lines" do
+  test "should handle multiple lines" do
     currency = CurrencySwitcher.new("name $3\nname  £3\nname £3").get_currency
     assert_equal(Currency::GBP, currency)
   end
-  
-  #with actual reg exp
 end

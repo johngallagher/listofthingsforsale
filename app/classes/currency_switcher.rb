@@ -16,6 +16,3 @@ class CurrencySwitcher
     end
   end
 end
-
-
-# /(?<name>[[:print:]]+) \$(?<price>\d+\.*\d*)( +?(?<description_text>[^#\+][[:print:]]*?))?( +?(\+(?<quantity>\d+)))?( +?#(?<category_1>[[:print:]][^#]*))?( +?#(?<category_2>[[:print:]][^#]*))?( +?#(?<category_3>[[:print:]][^#]*))?( +?#(?<category_4>[[:print:]][^#]*))?( +?#(?<category_5>[[:print:]][^#]*))?( +?#(?<category_6>[[:print:]][^#]*))?$/
