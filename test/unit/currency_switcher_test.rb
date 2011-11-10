@@ -6,19 +6,29 @@ class CurrencySwitcherTest < ActiveSupport::TestCase
     assert_equal(Currency::USD, CurrencySwitcher.new('').get_currency)
   end
   test "should be pounds for single price" do
-    currency = CurrencySwitcher.new('£3').get_currency
+    currency = CurrencySwitcher.new('name £3').get_currency
     assert_equal(Currency::GBP, currency)
   end
   test "should be pounds for single price with pence" do
-    currency = CurrencySwitcher.new('£3.00').get_currency
+    currency = CurrencySwitcher.new('name £3.00').get_currency
     assert_equal(Currency::GBP, currency)
   end
   test "should be dollars for single price" do
-    currency = CurrencySwitcher.new('$3').get_currency
+    currency = CurrencySwitcher.new('name $3').get_currency
     assert_equal(Currency::USD, currency)
   end
   test "should be dollars for single price with pence" do
-    currency = CurrencySwitcher.new('$3.00').get_currency
+    currency = CurrencySwitcher.new('name $3.00').get_currency
     assert_equal(Currency::USD, currency)
   end
+  test "should be dollars for equal number of prices" do
+    currency = CurrencySwitcher.new("name $3 \nname £3").get_currency
+    assert_equal(Currency::USD, currency)
+  end
+  test "should ignore multiple lines" do
+    currency = CurrencySwitcher.new("name $3\nname  £3\nname £3").get_currency
+    assert_equal(Currency::GBP, currency)
+  end
+  
+  #with actual reg exp
 end
