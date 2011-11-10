@@ -49,12 +49,15 @@ group :development, :test do
   gem 'factory_girl'
   gem 'mocha', '0.10.0', :require => false
   gem 'ruby-prof'
-  gem 'test-unit'
   gem 'heroku_san'
   gem 'rspec-rails'
   gem 'capybara'
   gem "guard-rspec"
-  gem "spork"
+  gem "spork", "> 0.9.0.rc"
+  gem "guard-spork"
+  gem 'rb-fsevent'
+  gem 'growl_notify'
+  gem 'growl'
 end
 
 group :production do

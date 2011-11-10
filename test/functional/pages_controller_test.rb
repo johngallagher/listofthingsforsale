@@ -1,4 +1,4 @@
-require 'test_helper'
+require 'spec_helper'
 
 describe "PagesController", ActionController::TestCase do
   it "should get home" do

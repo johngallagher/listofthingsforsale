@@ -14,11 +14,6 @@ describe "PaypalParamsGenerator" do
     @order.total_price.should_not ==   nil
   end
 
-  # Can't get this test to pass without it crashing - test unit doesn't catch the crash as it should do.
-  # test "raise exception for nil order" do
-  #   assert_raise(PaypalParamsGenerator.new(:order => nil).generate_params)
-  # end
-  
   it "test status is the same" do
     paypal_params = PaypalParamsGenerator.new(:order => @order, :payment_status => Status::Completed).generate_params
     paypal_params["payment_status"].should == Status::Completed

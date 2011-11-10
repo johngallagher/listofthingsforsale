@@ -1,4 +1,4 @@
-require 'test_helper'
+require 'spec_helper'
 
 describe "ItemsController", ActionController::TestCase do
   # setup do

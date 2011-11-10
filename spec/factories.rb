@@ -14,8 +14,7 @@ end
 
 # Shops
 Factory.define :matthias_shop, :class => "Shop" do |shop|
-  shop.sequence(:id) { |n| n }
-  shop.url "matthias#{n}"
+  shop.url "matthias"
   shop.name "Matthias' List of Things for Sale"
   shop.after_create do |s|
     Factory(:matthias_seller, :shop => s)

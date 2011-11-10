@@ -11,7 +11,7 @@ describe "ItemFinder" do
     found_item = ItemFinder.new(:existing_items => [wallet_1, wallet_2], :line_hash => {:name => wallet_1.name, :price => wallet_1.price, :description_text => "brand spanking new"}, :partial => true).find_match
     assert_equal(wallet_2, found_item)
   end
-  it "given two name and description matches should return item with the nearest price" do
+  it "given two name and description matches should return item with nearest price" do
     wallet_1 = Factory.build(:wallet_item)
     wallet_2 = Factory.build(:wallet_item)
     wallet_1.price = 11.11
