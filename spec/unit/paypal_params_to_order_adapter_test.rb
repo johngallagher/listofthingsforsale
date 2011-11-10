@@ -20,8 +20,8 @@ quantity
 unit price
 
 =end
-describe "PaypalParamsToOrderAdapter", ActiveSupport::TestCase do
-  setup do
+describe "PaypalParamsToOrderAdapter" do
+  before(:each) do
     @matthias_shop = Factory(:matthias_shop)
     @order = Factory(:johns_pending_order_for_bag_and_wallet, :shop => @matthias_shop)
 
@@ -71,7 +71,7 @@ describe "PaypalParamsToOrderAdapter", ActiveSupport::TestCase do
   end
   
   it "should create order with same currency" do
-    paypal_params = PaypalParamsGenerator.new(:order => @order).generate_params
+    paypal_params = PaypalParamsGenerator.new(:order => @order, :currency => Currency::GBP).generate_params
     adapted_order = PaypalParamsToOrderAdapter.new(paypal_params).adapt
     adapted_order.currency.should == @order.currency
   end

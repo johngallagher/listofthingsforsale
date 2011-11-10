@@ -1,9 +1,9 @@
 require 'spec_helper'
 
-describe "PaypalParamsGenerator", ActionController::TestCase do
-  setup do
-    @matthias_shop = Factory(:matthias_shop)
-    @order = Factory(:johns_pending_order_for_bag_and_wallet, :shop => @matthias_shop)
+describe "PaypalParamsGenerator" do
+  before(:each) do
+    @matthias_shop = Factory.create(:matthias_shop)
+    @order = Factory.create(:johns_pending_order_for_bag_and_wallet, :shop => @matthias_shop)
 
     # make sure the factory has set it all up right.
     @order.shop_id.should_not ==   nil

@@ -2,9 +2,9 @@ require 'test_helper'
 require File.expand_path('../../paypal_ipn_mock', __FILE__)
 require 'payment_notifications_controller'
 
-describe "PaymentNotificationsController", ActionController::TestCase do
+class PaymentNotificationsControllerTest < ActionController::TestCase
 
-  setup do
+  before(:each) do
     @controller = PaymentNotificationsController.new
 
     @request    = ActionController::TestRequest.new
@@ -62,7 +62,7 @@ describe "PaymentNotificationsController", ActionController::TestCase do
   end
 
   # Happy Path
-  it "if ipn is acknowledged, order is complete, transaction is unique and pending order is found, we should complete the transaction" do
+  test "if ipn is acknowledged, order is complete, transaction is unique and pending order is found, we should complete the transaction" do
     ipn_params = @ipn_params.merge("acknowledge" => "true", "payment_status" => "Completed")
 
     notification = Factory.build(:payment_notification, :params => ipn_params,  :status => ipn_params[:payment_status], :transaction_id => ipn_params[:txn_id])
@@ -83,10 +83,10 @@ describe "PaymentNotificationsController", ActionController::TestCase do
 
     post :create, ipn_params
     assert_response :success
-    notification.acknowledged.should.not == nil
+    assert notification.acknowledged
   end
   
-  it "if ipn is acknowledged, order is complete, transaction is unique and pending order is NOT found, we should NOT complete the transaction" do
+  test "if ipn is acknowledged, order is complete, transaction is unique and pending order is NOT found, we should NOT complete the transaction" do
     ipn_params = @ipn_params.merge("acknowledge" => "true", "payment_status" => "Completed")
 
     notification = Factory.build(:payment_notification, :params => ipn_params,  :status => ipn_params[:payment_status], :transaction_id => ipn_params[:txn_id])
@@ -102,10 +102,10 @@ describe "PaymentNotificationsController", ActionController::TestCase do
 
     post :create, ipn_params
     assert_response :success
-    notification.acknowledged.should.not == nil
+    assert notification.acknowledged
   end
 
-  it "if ipn is acknowledged, order is complete, transaction is a duplicate we should not complete the transaction" do
+  test "if ipn is acknowledged, order is complete, transaction is a duplicate we should not complete the transaction" do
     ipn_params = @ipn_params.merge("acknowledge" => "true", "payment_status" => "Completed")
 
     notification = Factory.build(:payment_notification, :params => ipn_params,  :status => ipn_params[:payment_status], :transaction_id => ipn_params[:txn_id])
@@ -120,10 +120,10 @@ describe "PaymentNotificationsController", ActionController::TestCase do
 
     post :create, ipn_params
     assert_response :success
-    notification.acknowledged.should.not == nil
+    assert notification.acknowledged
   end
 
-  it "if ipn is acknowledged, order is pending we should not complete the transaction" do
+  test "if ipn is acknowledged, order is pending we should not complete the transaction" do
     ipn_params = @ipn_params.merge("acknowledge" => "true", "payment_status" => "Pending")
 
     notification = Factory.build(:payment_notification, :params => ipn_params,  :status => ipn_params[:payment_status], :transaction_id => ipn_params[:txn_id])
@@ -135,10 +135,10 @@ describe "PaymentNotificationsController", ActionController::TestCase do
 
     post :create, ipn_params
     assert_response :success
-    notification.acknowledged.should.not == nil
+    assert notification.acknowledged
   end
 
-  it "if ipn is not acknowledged, we should not complete the transaction" do
+  test "if ipn is not acknowledged, we should not complete the transaction" do
     ipn_params = @ipn_params.merge("acknowledge" => "false")
 
     notification = Factory.build(:payment_notification, :params => ipn_params,  :status => ipn_params[:payment_status], :transaction_id => ipn_params[:txn_id])
@@ -150,7 +150,7 @@ describe "PaymentNotificationsController", ActionController::TestCase do
 
     post :create, ipn_params
     assert_response :success
-    notification.acknowledged.should.not == true
+    assert !notification.acknowledged
   end
   
 end

@@ -1,14 +1,14 @@
 require 'test_helper'
 require 'transaction_completor'
 
-describe "TransactionCompletor", ActionController::TestCase do
-  setup do
+class TransactionCompletorTest < ActionController::TestCase
+  before(:each) do
     @notification = Factory.build(:payment_notification, :params => "",  :status => "", :transaction_id => "")
     @pending_order = Factory.build(:order, :status => "pending")
     @transaction_completor = TransactionCompletor.new(:notification => @notification, :pending_order => @pending_order)
   end
   
-  it "when we complete transaction order should be completed" do
+  test "when we complete transaction order should be completed" do
     completed_order = Factory.build(:order, :status => "completed")
     
     order_completor = mock('order_completor')
