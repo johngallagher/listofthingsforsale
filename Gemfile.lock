@@ -75,6 +75,10 @@ GEM
     friendly_id (3.3.0.1)
       babosa (~> 0.3.0)
     geo_location (0.4.2)
+    guard (0.8.8)
+      thor (~> 0.14.6)
+    guard-rspec (0.5.2)
+      guard (>= 0.8.4)
     heroku (2.9.0)
       launchy (>= 0.3.2)
       rest-client (~> 1.6.1)
@@ -243,6 +247,7 @@ DEPENDENCIES
   factory_girl
   friendly_id (~> 3.3.0)
   geo_location
+  guard-rspec
   heroku_san
   jquery-rails (>= 1.0.12)
   mocha (= 0.10.0)
