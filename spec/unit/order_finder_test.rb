@@ -16,8 +16,8 @@ describe "OrderFinder", ActiveSupport::TestCase do
   end
   
   it "if order params match pending order in database should return that order" do
-    matthias_shop = Factory(:matthias_shop)
-    pending_order = Factory(:johns_pending_order_for_bag_and_wallet, :shop => matthias_shop)
+    matthias_shop = Factory.build(:matthias_shop)
+    pending_order = Factory.build(:johns_pending_order_for_bag_and_wallet, :shop => matthias_shop)
 
     params_order = PaypalParamsGenerator.new(:order => pending_order).generate_params
     
@@ -27,9 +27,9 @@ describe "OrderFinder", ActiveSupport::TestCase do
   end
 
   it "with two similar orders should return the correct order" do
-    matthias_shop = Factory(:matthias_shop)
-    pending_order = Factory(:johns_pending_order_for_bag_and_wallet, :shop => matthias_shop)
-    similar_pending_order =  Factory(:johns_pending_order_for_jacket_and_belt, :shop => matthias_shop) #has the same no of items and total price
+    matthias_shop = Factory.build(:matthias_shop)
+    pending_order = Factory.build(:johns_pending_order_for_bag_and_wallet, :shop => matthias_shop)
+    similar_pending_order =  Factory.build(:johns_pending_order_for_jacket_and_belt, :shop => matthias_shop) #has the same no of items and total price
     
     params_order = PaypalParamsGenerator.new(:order => pending_order).generate_params
     
@@ -39,8 +39,8 @@ describe "OrderFinder", ActiveSupport::TestCase do
   end
 
   it "similar orders with less line items in param order than in pending order should return nil" do
-    matthias_shop = Factory(:matthias_shop)
-    pending_order = Factory(:johns_pending_order_for_jacket_and_belt, :shop => matthias_shop)
+    matthias_shop = Factory.build(:matthias_shop)
+    pending_order = Factory.build(:johns_pending_order_for_jacket_and_belt, :shop => matthias_shop)
 
     template_order = Factory.build(:johns_pending_order_for_jacket, :shop => matthias_shop)
     params_order = PaypalParamsGenerator.new(:order => template_order).generate_params
