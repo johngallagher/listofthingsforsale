@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "OrderFinder", ActiveSupport::TestCase do
+describe "OrderFinder" do
   
   it "if nil order params should raise" do
     assert_raise(RuntimeError) { OrderFinder.new(:params_order => nil).find_pending }
