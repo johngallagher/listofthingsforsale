@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class ItemsControllerTest < ActionController::TestCase
+describe "ItemsController", ActionController::TestCase do
   # setup do
   #   @item = items(:one)
   # end

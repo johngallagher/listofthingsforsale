@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class PhotosControllerTest < ActionController::TestCase
+describe "PhotosController", ActionController::TestCase do
   # setup do
   #   @photo = photos(:one)
   # end

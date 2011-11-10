@@ -2,7 +2,7 @@ require 'test_helper'
 require File.expand_path('../../paypal_ipn_mock', __FILE__)
 require 'payment_notifications_controller'
 
-class PaymentNotificationsControllerTest < ActionController::TestCase
+describe "PaymentNotificationsController", ActionController::TestCase do
 
   setup do
     @controller = PaymentNotificationsController.new
@@ -62,7 +62,7 @@ class PaymentNotificationsControllerTest < ActionController::TestCase
   end
 
   # Happy Path
-  test "if ipn is acknowledged, order is complete, transaction is unique and pending order is found, we should complete the transaction" do
+  it "if ipn is acknowledged, order is complete, transaction is unique and pending order is found, we should complete the transaction" do
     ipn_params = @ipn_params.merge("acknowledge" => "true", "payment_status" => "Completed")
 
     notification = Factory.build(:payment_notification, :params => ipn_params,  :status => ipn_params[:payment_status], :transaction_id => ipn_params[:txn_id])
@@ -83,10 +83,10 @@ class PaymentNotificationsControllerTest < ActionController::TestCase
 
     post :create, ipn_params
     assert_response :success
-    assert notification.acknowledged
+    notification.acknowledged.should.not == nil
   end
   
-  test "if ipn is acknowledged, order is complete, transaction is unique and pending order is NOT found, we should NOT complete the transaction" do
+  it "if ipn is acknowledged, order is complete, transaction is unique and pending order is NOT found, we should NOT complete the transaction" do
     ipn_params = @ipn_params.merge("acknowledge" => "true", "payment_status" => "Completed")
 
     notification = Factory.build(:payment_notification, :params => ipn_params,  :status => ipn_params[:payment_status], :transaction_id => ipn_params[:txn_id])
@@ -102,10 +102,10 @@ class PaymentNotificationsControllerTest < ActionController::TestCase
 
     post :create, ipn_params
     assert_response :success
-    assert notification.acknowledged
+    notification.acknowledged.should.not == nil
   end
 
-  test "if ipn is acknowledged, order is complete, transaction is a duplicate we should not complete the transaction" do
+  it "if ipn is acknowledged, order is complete, transaction is a duplicate we should not complete the transaction" do
     ipn_params = @ipn_params.merge("acknowledge" => "true", "payment_status" => "Completed")
 
     notification = Factory.build(:payment_notification, :params => ipn_params,  :status => ipn_params[:payment_status], :transaction_id => ipn_params[:txn_id])
@@ -120,10 +120,10 @@ class PaymentNotificationsControllerTest < ActionController::TestCase
 
     post :create, ipn_params
     assert_response :success
-    assert notification.acknowledged
+    notification.acknowledged.should.not == nil
   end
 
-  test "if ipn is acknowledged, order is pending we should not complete the transaction" do
+  it "if ipn is acknowledged, order is pending we should not complete the transaction" do
     ipn_params = @ipn_params.merge("acknowledge" => "true", "payment_status" => "Pending")
 
     notification = Factory.build(:payment_notification, :params => ipn_params,  :status => ipn_params[:payment_status], :transaction_id => ipn_params[:txn_id])
@@ -135,10 +135,10 @@ class PaymentNotificationsControllerTest < ActionController::TestCase
 
     post :create, ipn_params
     assert_response :success
-    assert notification.acknowledged
+    notification.acknowledged.should.not == nil
   end
 
-  test "if ipn is not acknowledged, we should not complete the transaction" do
+  it "if ipn is not acknowledged, we should not complete the transaction" do
     ipn_params = @ipn_params.merge("acknowledge" => "false")
 
     notification = Factory.build(:payment_notification, :params => ipn_params,  :status => ipn_params[:payment_status], :transaction_id => ipn_params[:txn_id])
@@ -150,7 +150,7 @@ class PaymentNotificationsControllerTest < ActionController::TestCase
 
     post :create, ipn_params
     assert_response :success
-    assert !notification.acknowledged
+    notification.acknowledged.should.not == true
   end
   
 end

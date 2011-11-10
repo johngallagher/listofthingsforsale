@@ -13,6 +13,4 @@ class OrderValidator
   def num_cart_items_match?
     @pending_order.line_items.count == @params_order["num_cart_items"].to_i
   end
-  
-
 end

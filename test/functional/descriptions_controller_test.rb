@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class DescriptionsControllerTest < ActionController::TestCase
+describe "DescriptionsController", ActionController::TestCase do
   # setup do
   #   @description = descriptions(:one)
   # end

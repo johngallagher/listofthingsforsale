@@ -54,6 +54,7 @@ group :development, :test do
   gem 'rspec-rails'
   gem 'capybara'
   gem "guard-rspec"
+  gem "spork"
 end
 
 group :production do
