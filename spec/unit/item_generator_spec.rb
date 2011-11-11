@@ -1,3 +1,4 @@
+# encoding: UTF-8
 require 'spec_helper'
 
 describe "ItemGenerator" do
@@ -37,5 +38,19 @@ describe "ItemGenerator" do
     assert_equal("New",       generated_item.categories.second.name)
     assert_equal("new",       generated_item.categories.second.css_name)
   end
-  # 1 Item
+  # Pounds Currency
+  it "should detect pounds when passing in pounds" do
+    generated_items = ItemGenerator.new(:description => "iPhone £34 brand new #phone #new").generate_items
+    assert_equal(1, generated_items.count)
+    
+    generated_item = generated_items.first
+    assert_equal("iPhone",    generated_item.name)
+    assert_equal(34.0,        generated_item.price)
+    assert_equal("brand new", generated_item.description_text)
+    assert_equal(2,           generated_item.categories.count)
+    assert_equal("Phone" ,    generated_item.categories.first.name)
+    assert_equal("phone" ,    generated_item.categories.first.css_name)
+    assert_equal("New",       generated_item.categories.second.name)
+    assert_equal("new",       generated_item.categories.second.css_name)
+  end
 end

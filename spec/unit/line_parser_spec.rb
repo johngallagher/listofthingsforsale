@@ -1,6 +1,6 @@
 # encoding: UTF-8
 require 'spec_helper'
-
+require 'line_parser'
 # item  price description quantity  category
 # x     x     -           -         -
 # x     x     x           -         -

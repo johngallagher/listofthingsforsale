@@ -25,6 +25,9 @@ class Shop < ActiveRecord::Base
   end
   
   def update_currency
-    self.currency = CurrencySwitcher.new(self.description).get_currency
+    Rails.logger.debug "---- Description! #{self.description.inspect}"
+    c = CurrencySwitcher.new(self.description).get_currency
+    self.currency = c
+    Rails.logger.debug "---- Changed the currency of the shop into #{c}"
   end
 end

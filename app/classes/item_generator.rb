@@ -5,6 +5,7 @@ class ItemGenerator
     @description  = args[:description]
     @generated_items = []
     @line_hashes = []
+    @currency     = CurrencySwitcher.new(@description).get_currency
   end
   def generate_items
     parse_lines
@@ -14,7 +15,7 @@ class ItemGenerator
   end
   def parse_lines
     @description.split("\n").each do |line|
-      line_hash = LineParser.parse(line)
+      line_hash = LineParser.parse(line, :currency => @currency)
       unless line_hash.nil?
         @line_hashes << line_hash
       end
