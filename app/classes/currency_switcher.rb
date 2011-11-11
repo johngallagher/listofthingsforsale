@@ -1,7 +1,7 @@
 # encoding: UTF-8
 class CurrencySwitcher
   def initialize(args)
-    @description = args
+    @description = args ? args : ""
     @highest_matches = 0
     @winning_currency = Currency::Supported.first
   end

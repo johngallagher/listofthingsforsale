@@ -1,3 +1,4 @@
+# encoding: UTF-8
 require 'spec_helper'
 
 # item  price description quantity  category
@@ -10,7 +11,7 @@ require 'spec_helper'
 # x     x     -           x         x y
 # x     x     x           x         x y
 
-describe "LineParser", ActiveSupport::TestCase do
+describe "LineParser" do
   # No Matches
   it "only name should give no matches" do
     assert_nil(LineParser.parse("item name"))
@@ -112,5 +113,14 @@ describe "LineParser", ActiveSupport::TestCase do
     parsed_item[:description_text].should == nil
     parsed_item[:quantity].should == 1
     assert_equal ["cat1", "cat2", "cat3", "cat4", "cat5", "cat6"],      parsed_item[:categories]
+  end
+  
+  it "can parse for pounds" do
+    parsed_item = LineParser.parse("item name £3.45 excellent condition +5 #wow", :currency => Currency::GBP)
+    parsed_item[:name].should == "item name"
+    parsed_item[:price].should == 3.45
+    parsed_item[:description_text].should == "excellent condition"
+    parsed_item[:quantity].should == 5
+    parsed_item[:categories].should == ["wow"]
   end
 end
