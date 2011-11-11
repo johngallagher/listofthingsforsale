@@ -8,5 +8,4 @@ class OrderCompletor
     @pending_order.save
     return @pending_order
   end
-  
 end
