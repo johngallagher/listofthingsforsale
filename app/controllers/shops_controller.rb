@@ -93,7 +93,6 @@ class ShopsController < ApplicationController
     @shop = Shop.new(:name => @shop_name, :description => @shop_items_description, :url => @shop_url)
 
     @new_items = ItemGenerator.new(:description => @shop_items_description).generate_items
-    # @new_items = ItemGenerator.new(:new_description => @shop_items_description, :old_description => "", :items => []).generate_items
     @shop.items = @new_items
 
     if user_signed_in?

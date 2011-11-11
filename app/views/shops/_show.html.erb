@@ -4,7 +4,7 @@
   <script type="text/javascript">
     simpleCart.email = "<% if @shop.paypal_email.nil? %>testing@listofthingsforsale.com<% else %><%= @shop.paypal_email %><% end %>";
     simpleCart.checkoutTo = PayPal;
-    simpleCart.currency = USD;
+    simpleCart.currency = <%= @shop.currency %>;
     simpleCart.cartHeaders = ["name", "Total"];
   </script>
   <script type="text/javascript" charset="utf-8">
