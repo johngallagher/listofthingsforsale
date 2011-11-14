@@ -52,12 +52,17 @@ group :development, :test do
   gem 'heroku_san'
   gem 'rspec-rails'
   gem 'capybara'
-  gem "guard-rspec"
+  
   gem "spork", "> 0.9.0.rc"
+
+  gem "guard"
+  gem "guard-rspec"
+  gem "guard-bundler"
   gem "guard-spork"
+  
   gem 'rb-fsevent'
-  gem 'growl_notify'
   gem 'growl'
+  gem 'growl_notify'
 end
 
 group :production do

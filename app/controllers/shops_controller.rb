@@ -86,7 +86,7 @@ class ShopsController < ApplicationController
   # POST /shops.xml
   def create
     session[:selected_tab] = 2
-    @shop_items_description = params[:shop][:description]
+    @shop_items_description = DescriptionFilterer.new(params[:shop][:description]).replace_unwanted_currencies unless params[:shop].nil?
 
     @shop_name = nil
     @shop_url = (0...8).map{65.+(rand(25)).chr}.join.downcase
@@ -131,11 +131,12 @@ class ShopsController < ApplicationController
     
     hide_all_panes_after_update = !updated_background
     
+    params[:shop][:description] = DescriptionFilterer.new(params[:shop][:description]).replace_unwanted_currencies unless params[:shop].nil?
+    
     respond_to do |format|
       if @shop.update_attributes(params[:shop])
        # logger.debug("params changed were #{params[:shop].inspect}")
         new_description = params[:shop][:description] unless params[:shop].nil?
-        old_description = @shop.description
         if new_description.present?
           @old_items = Array.new(@shop.items)
           @new_items = ItemGenerator.new(:items => @old_items, :description => new_description).generate_items
