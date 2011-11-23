@@ -12,6 +12,7 @@ describe "PaypalParamsGenerator" do
     @order.session_id.blank?.should_not ==   true
     @order.session_id.nil?.should_not ==   true
     @order.total_price.should_not ==   nil
+    @order.currency.should == Currency::GBP
   end
 
   it "test status is the same" do

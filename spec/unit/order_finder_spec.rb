@@ -1,3 +1,4 @@
+
 require 'spec_helper'
 
 describe "OrderFinder" do
@@ -20,7 +21,7 @@ describe "OrderFinder" do
     pending_order = Factory.create(:johns_pending_order_for_bag_and_wallet, :shop => matthias_shop)
 
     params_order = PaypalParamsGenerator.new(:order => pending_order).generate_params
-    
+    puts "Orders are #{Order.all} params for order are #{params_order.inspect}"
     order_found = OrderFinder.new(:params_order => params_order).find_pending
     
     assert_equal(pending_order, order_found)
