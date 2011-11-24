@@ -20,7 +20,6 @@ class OrderFinder
   end
   
   def find_orders
-    puts "\n\nBefore find orders query #{query_hash.inspect}"
     @found_orders = Order.where(query_hash).all
   end
   
