@@ -20,6 +20,7 @@ class OrderFinder
   end
   
   def find_orders
+    puts "\n\nBefore find orders query #{query_hash.inspect}"
     @found_orders = Order.where(query_hash).all
   end
   
@@ -42,7 +43,7 @@ class OrderFinder
   def query_hash
     { 
       :status => Status::Pending, 
-      :shop_id => @params_order["option_selection2_1"].to_i,
+      :shop_id => @params_order["option_selection1_1"].to_i,
       :total_price => BigDecimal.new(@params_order["mc_gross"])
     }
   end

@@ -96,7 +96,7 @@ private
         "quantity#{li_index_inc}"=>"1",
         "mc_gross_#{li_index_inc}"=>"#{@order.line_items[li_index].unit_price}",
         "item_name#{li_index_inc}"=>"#{@order.line_items[li_index].name}",
-        "item_number#{li_index_inc}"=>"#{li_index_inc}",
+        "item_number#{li_index_inc}"=>"#{li_index_inc}"
       }
       @params.merge!(this_item)
     end

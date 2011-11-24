@@ -19,9 +19,11 @@ describe "OrderFinder" do
   it "if order params match pending order in database should return that order" do
     matthias_shop = Factory.create(:matthias_shop)
     pending_order = Factory.create(:johns_pending_order_for_bag_and_wallet, :shop => matthias_shop)
+    puts "After shop create shop is #{matthias_shop.inspect}"
+    puts "After pending order create pending order #{pending_order.inspect}"
 
     params_order = PaypalParamsGenerator.new(:order => pending_order).generate_params
-    puts "Orders are #{Order.all} params for order are #{params_order.inspect}"
+    puts "\n\n\nAfter Params generate, they are #{params_order}"
     order_found = OrderFinder.new(:params_order => params_order).find_pending
     
     assert_equal(pending_order, order_found)
