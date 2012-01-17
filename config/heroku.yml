@@ -20,3 +20,7 @@ staging:
 demo: 
   app: show-seller-6123
   config: *default
+
+backup:
+  app: list-backup
+  config: *default
