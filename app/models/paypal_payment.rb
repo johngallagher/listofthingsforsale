@@ -14,7 +14,8 @@ class PaypalPayment
   def make_recurring
     process :create_recurring_profile, period: :monthly, frequency: 1, start_at: Time.zone.now
   end
-  
+
+
 private
 
   def process(action, options = {})
