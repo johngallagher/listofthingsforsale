@@ -14,13 +14,13 @@ class ShopsController < ApplicationController
   # GET /shops/1.xml
   def show
     if params[:url]
-      @shop_ref = params[:url]
+      @shop_ref = params[:url].downcase
       @shop = Shop.where(:url => @shop_ref).first
     else
       @shop_ref = params[:id]
       begin
         @shop = Shop.find(@shop_ref)
-        redirect_to "/" + @shop.url 
+        redirect_to "/" + @shop.url.downcase
         return
       rescue
       end

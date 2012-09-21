@@ -34,6 +34,8 @@ gem 'paypal-recurring'
 
 gem 'text'
 
+gem 'client_side_validations'
+
 # gem 'facets'
 
 # Use unicorn as the web server
@@ -65,7 +67,7 @@ group :development, :test do
   gem 'capybara'
 end
 
-gem 'jquery-rails', '>= 1.0.12'
+gem 'jquery-rails'
 
 group :production do
   gem 'rack-google_analytics', :require => "rack/google_analytics"
