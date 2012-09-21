@@ -10,12 +10,11 @@ Things3::Application.routes.draw do
   get "pages/order_failure"
 
   resources :email_orders, :except => [:index, :destroy]
-
-  devise_for :users, :controllers => { :registrations => "registrations", :confirmations => "confirmations", :sessions => "sessions" }
-
+  
   resources :users, :only => [:update]
   match "users/:id/subscribe" => "users#update"
-
+  
+  devise_for :users, :controllers => { :registrations => "registrations", :confirmations => "confirmations", :sessions => "sessions" }
 
   resources :items, :except => [:index, :destroy]
   
