@@ -171,20 +171,20 @@ class ShopsController < ApplicationController
   end
   
   def prepublish
-    @shop = Shop.where(:url => params[:url]).first
+    @shop = Shop.where(:url => params[:url].downcase).first
     ShopPublisher.new(:shop => @shop).prepublish
     render :action => "prepublish"
   end
 
   def publish
-    @shop = Shop.where(:url => params[:url]).first
+    @shop = Shop.where(:url => params[:url].downcase).first
     @shop.status = ShopStatus::Online
     @shop.save
     render :action => "refresh"
   end
   
   def unpublish
-    @shop = Shop.where(:url => params[:url]).first
+    @shop = Shop.where(:url => params[:url].downcase).first
     @shop.status = ShopStatus::Offline
     @shop.save
     render :action => "refresh"

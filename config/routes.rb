@@ -31,11 +31,11 @@ Things3::Application.routes.draw do
   
   resources :shops, :except => [:index, :destroy]
   
-  match ':url' => 'shops#show', :constraints => { :url => /[a-z_\-0-9]{4,30}/ }
+  match ':url' => 'shops#show', :constraints => { :url => /[A-Za-z_\-0-9]{4,30}/ }
 
-  match ':url/prepublish' => 'shops#prepublish', :constraints => { :url => /[a-z_\-0-9]{4,30}/ }
-  match ':url/publish' => 'shops#publish', :constraints => { :url => /[a-z_\-0-9]{4,30}/ }
-  match ':url/unpublish' => 'shops#unpublish', :constraints => { :url => /[a-z_\-0-9]{4,30}/ }
+  match ':url/prepublish' => 'shops#prepublish', :constraints => { :url => /[A-Za-z_\-0-9]{4,30}/ }
+  match ':url/publish' => 'shops#publish', :constraints => { :url => /[A-Za-z_\-0-9]{4,30}/ }
+  match ':url/unpublish' => 'shops#unpublish', :constraints => { :url => /[A-Za-z_\-0-9]{4,30}/ }
 
   
   # match ':url' => 'shops#show', :constraints => { :url => /[a-z_\-0-9]{4,30}/ }
