@@ -2,7 +2,7 @@ class Shop < ActiveRecord::Base
   has_attached_file :profile_photo, :styles => {:profile => "270x220>"}, :storage => :s3, :s3_credentials => "#{::Rails.root.to_s}/config/s3.yml", :path => "/:style/:id/:filename"
   has_friendly_id :url, :use_slug => true
 
-  validates_uniqueness_of :url
+  validates_uniqueness_of :url, :case_sensitive => false
   validates_format_of :url, :with => /^[A-Za-z\-_0-9]+$/, :message => "only letters/numbers please"
   validates_length_of :url, :maximum => 30, :minimum => 4, :message => "4-30 characters please"
 
