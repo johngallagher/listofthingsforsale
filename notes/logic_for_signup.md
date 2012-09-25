@@ -43,7 +43,7 @@ Since we don't have a plan when the screen is shown, even if we have a user, Rai
 To get around this, we could use the accepts_nested_attributes_for :subscription
 
 
-<% form_for @user do |f| %>
+<%= form_for @user do |f| %>
   <%= f.error_messages %>
   <p>
     <%= f.label :name %><br />

@@ -1,6 +1,6 @@
 <fieldset id="Fieldset1" style="height: 100px;" class="columnn span-11 last">
 <legend style="font-weight:normal;">Choose a url (web address) for your list</legend>
-<% form_for @shop, :html => { :id => "shop_url_edit" }, :validate => true do |f| -%>
+<%= form_for @shop, :html => { :id => "shop_url_edit" }, :validate => true do |f| -%>
  listofthingsforsale.com/ <%= f.text_field :url, :class => "text", :style => "width:200px;" %><br>
   <a class="button positive" onClick="$('form#shop_url_edit').submit()"><img src="/css/plugins/buttons/icons/tick.png" alt="">Save</a><br>
 <% end -%>

@@ -1,5 +1,5 @@
 <div class="column span-24 alpha60 last" id="styling" style="border-bottom:1px solid #ccc; display:none;">
-  <% form_for(@shop, :remote => true, :html => { :id => "shop-background-edit-form"}) do |f| -%>
+  <%= form_for(@shop, :remote => true, :html => { :id => "shop-background-edit-form"}) do |f| -%>
 	<ul id="backgrounds">
 		<li onclick="updateBackgroundForm()" class="background-select<%= if @shop.background_id.nil? || @shop.background_id == 0 then " currentbg" end %>">
     <%= f.radio_button :background_id, 0, :style => "display:none;" %>

@@ -12,7 +12,7 @@
     
   
     <% if shop and ((session[:shop_id].to_i == shop.id) or (user_signed_in? and shop.user == current_user)) %>
-      <% form_for item, :remote => true, :html => { :multipart => true, :id => "item_edit_" + item.id.to_s } do |f| -%>
+      <%= form_for item, :remote => true, :html => { :multipart => true, :id => "item_edit_" + item.id.to_s } do |f| %>
         <div style="position: relative; display: block; height: 135px; width: 180px; margin: 0 0 14px 0; overflow: hidden;" id="upload-input">
           <%= f.file_field :photo_1, :maxlength => "99999", :id => "item_photo_1", :style => "display: block; position: absolute; text-align: right; top: 0pt; right: 0pt; cursor: pointer; font-size: 135px; opacity:0; z-index: 2;filter: alpha(opacity = 0);" %>
         
