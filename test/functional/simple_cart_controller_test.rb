@@ -1,8 +1,8 @@
-require 'test_helper'
+require 'spec_helper'
 
-class SimpleCartControllerTest < ActionController::TestCase
+describe "SimpleCartController", ActionController::TestCase do
   # Replace this with your real tests.
-  test "the truth" do
-    assert true
+  it "the truth" do
+    true.should_not == nil
   end
 end

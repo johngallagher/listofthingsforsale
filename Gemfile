@@ -36,21 +36,11 @@ gem 'text'
 
 gem 'titleize'
 
-# Use unicorn as the web server
-# gem 'unicorn'
-
-# Deploy with Capistrano
-# gem 'capistrano'
+gem 'jquery-rails', '>= 1.0.12'
 
 # To use debugger (ruby-debug for Ruby 1.8.7+, ruby-debug19 for Ruby 1.9.2+)
 # gem 'ruby-debug'
 # gem 'ruby-debug19', :require => 'ruby-debug'
-
-# Bundle the extra gems:
-# gem 'bj'
-# gem 'nokogiri'
-# gem 'sqlite3-ruby', :require => 'sqlite3'
-# gem 'aws-s3', :require => 'aws/s3'
 
 # Bundle gems for the local environment. Make sure to
 # put test-only gems in this group so their generators
@@ -59,16 +49,30 @@ group :development, :test do
   gem 'factory_girl'
   gem 'mocha', '0.10.0', :require => false
   gem 'ruby-prof'
-  gem 'test-unit'
   gem 'heroku_san'
   gem 'rspec-rails'
   gem 'capybara'
-end
+  
+  gem "spork", "> 0.9.0.rc"
 
-gem 'jquery-rails', '>= 1.0.12'
+  gem "guard"
+  gem "guard-rspec"
+  gem "guard-bundler"
+  gem "guard-spork"
+  
+  gem 'rb-fsevent'
+  gem 'growl'
+  gem 'growl_notify'
+end
 
 group :production do
   gem 'rack-google_analytics', :require => "rack/google_analytics"
 end
 
 gem "rake", "0.8.7"
+
+# Bundle the extra gems:
+# gem 'bj'
+# gem 'nokogiri'
+# gem 'sqlite3-ruby', :require => 'sqlite3'
+# gem 'aws-s3', :require => 'aws/s3'

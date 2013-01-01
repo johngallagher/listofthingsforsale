@@ -1,11 +1,11 @@
-require 'test_helper'
+require 'spec_helper'
 
 class UserNotifierTest < ActionMailer::TestCase
-  test "activation" do
+  it "activation" do
     mail = UserNotifier.activation
-    assert_equal "Activation", mail.subject
-    assert_equal ["john@synapticmishap.co.uk"], mail.to
-    assert_equal ["jgediting@gmail.com"], mail.from
+    mail.subject.should == "Activation"
+    mail.to.should == ["john@synapticmishap.co.uk"]
+    mail.from.should == ["jgediting@gmail.com"]
     assert_match "Hi", mail.body.encoded
   end
 

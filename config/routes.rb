@@ -1,5 +1,4 @@
 Things3::Application.routes.draw do
-
   resources :backgrounds
   
   resources :subscriptions, :except => [:index, :destroy]
@@ -17,7 +16,6 @@ Things3::Application.routes.draw do
   devise_for :users, :controllers => { :registrations => "registrations", :confirmations => "confirmations", :sessions => "sessions" }
 
   resources :items, :except => [:index, :destroy]
-  
   
   match 'simple_cart/check_stock' => 'simple_cart#check_stock'
   match 'simple_cart/home' => 'simple_cart#home'

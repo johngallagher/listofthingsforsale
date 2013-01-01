@@ -1,6 +1,6 @@
-require 'test_helper'
+require 'spec_helper'
 
-class ShopsControllerTest < ActionController::TestCase
+describe "ShopsController", ActionController::TestCase do
   # setup do
   #   @shop = shops(:one)
   # end
