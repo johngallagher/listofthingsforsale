@@ -267,7 +267,7 @@ DEPENDENCIES
   guard-rspec
   guard-spork
   heroku_san
-  jquery-rails
+  jquery-rails (>= 1.0.12)
   mocha (= 0.10.0)
   nifty-generators
   nokogiri
