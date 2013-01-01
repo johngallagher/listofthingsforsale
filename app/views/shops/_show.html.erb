@@ -34,7 +34,7 @@
   <% end %>
 <% end %>
 
-<div id="left" class="span-17">
+<div id="left" class="span-17" style="min-height: 230px;">
   <% if (session[:shop_id].to_i == @shop.id) or (user_signed_in? and @shop.user == current_user) %>
     <h1 style="text-align:center;">Your list of things for sale:</h1>
   <% else %>

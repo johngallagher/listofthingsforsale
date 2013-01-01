@@ -2,7 +2,7 @@
   <legend>Your Plan</legend>
   <div id="your-plan-select">
     <% @user = setup_user(current_user) %>
-    <% form_for(@user, :remote => true, :html => { :id => "change-plan" }) do |f| %>
+    <%= form_for(@user, :remote => true, :html => { :id => "change-plan" }) do |f| %>
    <table class="pricing">
        <tr>
            <th>
