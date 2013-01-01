@@ -9,11 +9,12 @@ Things3::Application.routes.draw do
   get "pages/order_failure"
 
   resources :email_orders, :except => [:index, :destroy]
-  
+
+  devise_for :users, :controllers => { :registrations => "registrations", :confirmations => "confirmations", :sessions => "sessions" }
+
   resources :users, :only => [:update]
   match "users/:id/subscribe" => "users#update"
-  
-  devise_for :users, :controllers => { :registrations => "registrations", :confirmations => "confirmations", :sessions => "sessions" }
+
 
   resources :items, :except => [:index, :destroy]
   
@@ -28,14 +29,14 @@ Things3::Application.routes.draw do
   
   resources :shops, :except => [:index, :destroy]
   
-  match ':url' => 'shops#show', :constraints => { :url => /[a-z|0-9]{4,30}/ }
+  match ':url' => 'shops#show', :constraints => { :url => /[A-Za-z_\-0-9]{4,30}/ }
 
-  match ':url/prepublish' => 'shops#prepublish', :constraints => { :url => /[a-z|0-9]{4,30}/ }
-  match ':url/publish' => 'shops#publish', :constraints => { :url => /[a-z|0-9]{4,30}/ }
-  match ':url/unpublish' => 'shops#unpublish', :constraints => { :url => /[a-z|0-9]{4,30}/ }
+  match ':url/prepublish' => 'shops#prepublish', :constraints => { :url => /[A-Za-z_\-0-9]{4,30}/ }
+  match ':url/publish' => 'shops#publish', :constraints => { :url => /[A-Za-z_\-0-9]{4,30}/ }
+  match ':url/unpublish' => 'shops#unpublish', :constraints => { :url => /[A-Za-z_\-0-9]{4,30}/ }
 
   
-  # match ':url' => 'shops#show', :constraints => { :url => /[a-z|0-9]{4,30}/ }
+  # match ':url' => 'shops#show', :constraints => { :url => /[a-z_\-0-9]{4,30}/ }
   # 
   root :to => "shops#new"
 

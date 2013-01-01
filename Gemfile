@@ -35,6 +35,9 @@ gem 'paypal-recurring'
 gem 'text'
 
 gem 'titleize'
+gem 'client_side_validations'
+
+# gem 'facets'
 
 gem 'jquery-rails', '>= 1.0.12'
 
