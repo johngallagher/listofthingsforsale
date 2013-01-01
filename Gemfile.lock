@@ -55,6 +55,7 @@ GEM
       xpath (~> 0.1.4)
     childprocess (0.2.2)
       ffi (~> 1.0.6)
+    client_side_validations (3.1.4)
     cocaine (0.2.0)
     devise (1.4.5)
       bcrypt-ruby (~> 3.0)
@@ -238,13 +239,14 @@ DEPENDENCIES
   activemerchant
   aws-s3
   capybara
+  client_side_validations
   devise (= 1.4.5)
   dragonfly (~> 0.9.8)
   factory_girl
   friendly_id (~> 3.3.0)
   geo_location
   heroku_san
-  jquery-rails (>= 1.0.12)
+  jquery-rails
   mocha (= 0.10.0)
   nifty-generators
   nokogiri

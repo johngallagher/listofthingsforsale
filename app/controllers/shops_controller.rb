@@ -14,13 +14,13 @@ class ShopsController < ApplicationController
   # GET /shops/1.xml
   def show
     if params[:url]
-      @shop_ref = params[:url]
+      @shop_ref = params[:url].downcase
       @shop = Shop.where(:url => @shop_ref).first
     else
       @shop_ref = params[:id]
       begin
         @shop = Shop.find(@shop_ref)
-        redirect_to "/" + @shop.url 
+        redirect_to "/" + @shop.url.downcase
         return
       rescue
       end
@@ -171,20 +171,20 @@ class ShopsController < ApplicationController
   end
   
   def prepublish
-    @shop = Shop.where(:url => params[:url]).first
+    @shop = Shop.where(:url => params[:url].downcase).first
     ShopPublisher.new(:shop => @shop).prepublish
     render :action => "prepublish"
   end
 
   def publish
-    @shop = Shop.where(:url => params[:url]).first
+    @shop = Shop.where(:url => params[:url].downcase).first
     @shop.status = ShopStatus::Online
     @shop.save
     render :action => "refresh"
   end
   
   def unpublish
-    @shop = Shop.where(:url => params[:url]).first
+    @shop = Shop.where(:url => params[:url].downcase).first
     @shop.status = ShopStatus::Offline
     @shop.save
     render :action => "refresh"

@@ -35,6 +35,9 @@ gem 'paypal-recurring'
 gem 'text'
 
 gem 'titleize'
+gem 'client_side_validations'
+
+# gem 'facets'
 
 # Use unicorn as the web server
 # gem 'unicorn'
