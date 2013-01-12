@@ -1,6 +1,6 @@
 source 'http://rubygems.org'
 
-gem 'rails', '3.2.11'
+gem 'rails', '3.0.10'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
@@ -22,19 +22,19 @@ gem "remotipart", "~> 1.0"
 gem 'dragonfly', '~>0.9.8'
 gem 'rack-cache', :require => 'rack/cache'
 
-gem 'aws-s3'
+gem 'aws-s3', '0.6.2'
 
-gem 'paperclip'
+gem 'paperclip', '2.4.1'
 
-gem 'omniauth'
+gem 'omniauth', '~> 1.1.1'
 
-gem "friendly_id", "~> 3.3.0"
+gem "friendly_id", "3.3.0.1"
 
 gem 'paypal-recurring'
 
-gem 'text'
+gem 'text', '0.2.0'
 
-gem 'client_side_validations'
+gem 'client_side_validations', '3.1.4'
 
 # gem 'facets'
 
@@ -73,4 +73,4 @@ group :production do
   gem 'rack-google_analytics', :require => "rack/google_analytics"
 end
 
-gem "rake", "0.8.7"
+gem "rake"#, "0.8.7"
