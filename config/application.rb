@@ -22,7 +22,8 @@ module Things3
 
     # Activate observers that should always be running.
     # config.active_record.observers = :cacher, :garbage_collector, :forum_observer
-
+    config.active_record.observers = :category_observer
+    
     # Set Time.zone default to the specified zone and make Active Record auto-convert to this zone.
     # Run "rake -D time" for a list of tasks for finding time zone names. Default is UTC.
     # config.time_zone = 'Central Time (US & Canada)'
@@ -42,7 +43,7 @@ module Things3
     
     config.autoload_paths += %W( #{config.root}/test/mocks/#{Rails.env} )
     config.autoload_paths += %W( #{ config.root }/lib/middleware )    
-    
+
     if Rails.env == "production"
       config.middleware.use("Rack::GoogleAnalytics", :web_property_id => "UA-26531520-1")
     end

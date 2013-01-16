@@ -1,22 +1,22 @@
-require 'test_helper'
+require 'spec_helper'
 
-class PagesControllerTest < ActionController::TestCase
-  test "should get home" do
+describe "PagesController", ActionController::TestCase do
+  it "should get home" do
     get :home
     assert_response :success
   end
 
-  test "should get pricing" do
+  it "should get pricing" do
     get :pricing
     assert_response :success
   end
 
-  test "should get contact" do
+  it "should get contact" do
     get :contact
     assert_response :success
   end
 
-  test "should get help" do
+  it "should get help" do
     get :help
     assert_response :success
   end

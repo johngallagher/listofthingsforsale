@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111104233931) do
+ActiveRecord::Schema.define(:version => 20111111203559) do
 
   create_table "authentications", :force => true do |t|
     t.integer  "user_id"
@@ -35,6 +35,7 @@ ActiveRecord::Schema.define(:version => 20111104233931) do
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "css_name"
   end
 
   create_table "categories_items", :id => false, :force => true do |t|
@@ -131,6 +132,7 @@ ActiveRecord::Schema.define(:version => 20111104233931) do
     t.integer  "profile_photo_file_size"
     t.datetime "profile_photo_updated_at"
     t.integer  "background_id"
+    t.string   "currency"
   end
 
   add_index "shops", ["cached_slug"], :name => "index_shops_on_cached_slug", :unique => true

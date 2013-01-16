@@ -5,7 +5,7 @@ class PaypalParamsGenerator
     raise "Order cannot be nil" if args[:order].nil?
     @order = args[:order]
     @payment_status = args[:payment_status].nil? ? @order.status : args[:payment_status]
-    @currency = args[:currency].nil? ? "USD" : args[:currency]
+    @currency = args[:order].currency
   end
   
   def generate_params
@@ -96,7 +96,7 @@ private
         "quantity#{li_index_inc}"=>"1",
         "mc_gross_#{li_index_inc}"=>"#{@order.line_items[li_index].unit_price}",
         "item_name#{li_index_inc}"=>"#{@order.line_items[li_index].name}",
-        "item_number#{li_index_inc}"=>"#{li_index_inc}",
+        "item_number#{li_index_inc}"=>"#{li_index_inc}"
       }
       @params.merge!(this_item)
     end

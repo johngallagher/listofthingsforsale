@@ -1,5 +1,4 @@
 Things3::Application.routes.draw do
-
   resources :backgrounds
   
   resources :subscriptions, :except => [:index, :destroy]
@@ -18,7 +17,6 @@ Things3::Application.routes.draw do
 
 
   resources :items, :except => [:index, :destroy]
-  
   
   match 'simple_cart/check_stock' => 'simple_cart#check_stock'
   match 'simple_cart/home' => 'simple_cart#home'
