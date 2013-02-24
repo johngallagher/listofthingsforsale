@@ -18,31 +18,64 @@ describe ListsController do
   describe "POST create" do
     let(:valid_attributes) { { :list => { products_text: "This is my list" } } }
 
-    context "on success" do
-      before do
-        post :create, valid_attributes
-      end
+    before do
+      post :create, valid_attributes
+    end
 
-      it "redirects to lists" do
-        response.should redirect_to(list_path(assigns[:list]))
-      end
+    it "redirects to lists" do
+      response.should redirect_to(list_path(assigns[:list]))
     end
   end
 
-  describe "GET show" do
-    let(:list) { FactoryGirl.create :list }
-    let(:valid_attributes) { {:id => list.to_param} }
+  describe "when a list exists" do    
 
-    before do
-      get :show, valid_attributes
+    describe "GET show" do
+      let(:list) { FactoryGirl.create :list }
+      let(:valid_attributes) { {:id => list.to_param} }
+
+      before do
+        get :show, valid_attributes
+      end
+
+      it "renders the show template" do
+        response.should render_template :show      
+      end
+
+      it "assigns a list" do
+        assigns[:list].should be_present
+      end
     end
 
-    it "renders the show template" do
-      response.should render_template :show      
+    describe "GET edit" do
+      let(:list) { FactoryGirl.create :list }
+      let(:valid_attributes) { {:id => list.to_param} }
+
+      before do
+        list.save!
+        get :edit, valid_attributes
+      end
+
+      it "renders the edit template" do
+        response.should render_template :edit      
+      end
+
+      it "assigns a list" do
+        assigns[:list].should be_present
+      end
     end
-    
-    it "assigns a list" do
-      assigns[:list].should be_present
+
+    describe "PUT update" do
+      let(:list) { FactoryGirl.create :list }
+      let(:valid_attributes) { {:id => list.to_param, :list => { :products_text => "Updated list" } } }
+
+      before do
+        list.save!
+        put :update, valid_attributes
+      end
+
+      it "redirects to list" do
+        response.should redirect_to list
+      end
     end
   end
 end

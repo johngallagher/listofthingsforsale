@@ -1,6 +1,6 @@
 ListOfThingsForSale::Application.routes.draw do
 
-  resources :lists, :only => [:new, :create, :show]
+  resources :lists, :only => [:new, :create, :show, :edit, :update]
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

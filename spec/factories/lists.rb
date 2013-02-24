@@ -2,5 +2,6 @@
 
 FactoryGirl.define do
   factory :list do
+    products_text "Initial products"
   end
 end
