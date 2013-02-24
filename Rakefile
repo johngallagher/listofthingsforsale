@@ -4,4 +4,4 @@
 
 require File.expand_path('../config/application', __FILE__)
 
-List::Application.load_tasks
+ListOfThingsForSale::Application.load_tasks

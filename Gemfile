@@ -4,6 +4,8 @@ gem 'rails', '3.2.11'
 
 gem 'sqlite3'
 
+gem 'simple_form'
+
 group :assets do
   gem 'sass-rails',   '~> 3.2.3'
   gem 'coffee-rails', '~> 3.2.1'
